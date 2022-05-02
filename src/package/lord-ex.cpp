@@ -543,7 +543,7 @@ public:
         TriggerList skill_list;
         if (player == NULL || player->isDead() || player->getPhase() != Player::Play || player->hasFlag("MidaoUsed") || player->isKongcheng()) return skill_list;
         CardUseStruct use = data.value<CardUseStruct>();
-        if ((use.card->getTypeId() == Card::TypeBasic || isDamageTrick(use.card)) && use.card->subcardsLength() > 0) {
+        if ((use.card->isKindOf("Slash") || isDamageTrick(use.card)) && use.card->subcardsLength() > 0) {
             QList<ServerPlayer *> zhanglus = room->findPlayersBySkillName("midao");
             foreach (ServerPlayer *zhanglu, zhanglus) {
                 if (player->isFriendWith(zhanglu) && zhanglu != player && zhanglu->hasShownSkill("midao"))
@@ -3021,7 +3021,7 @@ public:
         TriggerList skill_list;
         CardUseStruct use = data.value<CardUseStruct>();
         if (player == NULL || player->isDead()) return skill_list;
-        if (use.card->getTypeId() != Card::TypeSkill && use.to.size() > 1) {
+        if (use.card->getTypeId() != Card::TypeSkill && use.to.length() > 1) {
             QList<ServerPlayer *> xuyous = room->findPlayersBySkillName(objectName());
             foreach (ServerPlayer *xuyou, xuyous) {
                 if (player->isFriendWith(xuyou))
@@ -4291,6 +4291,7 @@ void HuaiyiCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &) 
     QList<int> blacks;
     QList<int> reds;
     foreach (const Card *c, source->getHandcards()) {
+        if (source->isJilei(c)) continue;
         if (c->isRed())
             reds << c->getId();
         else

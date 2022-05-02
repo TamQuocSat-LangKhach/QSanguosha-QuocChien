@@ -77,6 +77,9 @@ public:
     // property getters/setters
     int getDoubleMaxHp() const;
     QString getKingdom() const;
+	bool isDoubleKingdoms() const;
+    QString getSubordinateKingdom() const;
+    QStringList getKingdoms() const;
     bool isMale() const;
     bool isFemale() const;
     bool isNeuter() const;
@@ -132,6 +135,7 @@ public:
     void setMaxHp(int max_hp);
     int getLostHp() const;
     bool isWounded() const;
+    bool canRecover() const;
     General::Gender getGender() const;
     virtual void setGender(General::Gender gender);
     bool isMale() const;
@@ -153,6 +157,10 @@ public:
 
     QString getKingdom() const;
     void setKingdom(const char *kingdom);
+
+    QString getSeemingKingdom() const;
+
+    bool isBigKingdomPlayer() const;
 
     void setRole(const char *role);
     QString getRole() const;
@@ -490,6 +498,9 @@ public:
     void gainAnExtraTurn();
 
     void copyFrom(ServerPlayer *sp);
+
+    int getCardUsedTimes(const char *pattern);
+    int getCardRespondedTimes(const char *pattern);
 
     // static function
     static bool CompareByActionOrder(ServerPlayer *a, ServerPlayer *b);
@@ -1092,6 +1103,18 @@ public:
 
     bool cardIsAvailable(const Player *player) const{
         return $self->Card::isAvailable(player);
+    }
+	
+	void setTag(const char *key, QVariant &value) {
+        $self->tag[key] = value;
+    }
+
+    QVariant getTag(const char *key) {
+        return $self->tag[key];
+    }
+
+    void removeTag(const char *tag_name) {
+        $self->tag.remove(tag_name);
     }
 };
 
