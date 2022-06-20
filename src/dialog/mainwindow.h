@@ -115,7 +115,6 @@ private:
     QPushButton *menu;
 
     QNetworkReply *versionInfomationReply;
-    QNetworkReply *changeLogReply;
 
     void restoreFromConfig();
     void region(const QPoint &cursorGlobalPoint);
@@ -159,7 +158,6 @@ private slots:
     void on_actionManage_Ban_IP_triggered();
 
     void onVersionInfomationGotten();
-    void onChangeLogGotten();
 
 signals:
     void about_to_close();

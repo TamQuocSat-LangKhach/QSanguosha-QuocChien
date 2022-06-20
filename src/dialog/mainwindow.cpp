@@ -147,7 +147,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), isLeftPressDown(false),
     scene(NULL), ui(new Ui::MainWindow), server(NULL), about_window(NULL),
     minButton(NULL), maxButton(NULL), normalButton(NULL), closeButton(NULL),
-    versionInfomationReply(NULL), changeLogReply(NULL)
+    versionInfomationReply(NULL)
 {
     ui->setupUi(this);
     setWindowTitle(tr("QSanguosha-Hegemony") + " " + Sanguosha->getVersion());
@@ -490,18 +490,14 @@ void MainWindow::fetchUpdateInformation()
 {
     static QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
 #ifdef QT_DEBUG
-    QString URL1 = "http://ver.qsanguosha.org/test/UpdateInfo";
-    QString URL2 = "http://ver.qsanguosha.org/test/whatsnew.html";
+    QString URL1 = "http://mrkey94.github.io/test/updateinfo.txt";
 #else
-    QString URL1 = "http://ver.qsanguosha.org/UpdateInfo";
-    QString URL2 = "http://ver.qsanguosha.org/whatsnew.html";
+    QString URL1 = "http://mrkey94.github.io/updateinfo.txt";
 #endif
 
     versionInfomationReply = mgr->get(QNetworkRequest(QUrl(URL1)));
-    changeLogReply = mgr->get(QNetworkRequest(QUrl(URL2)));
 
     connect(versionInfomationReply, &QNetworkReply::finished, this, &MainWindow::onVersionInfomationGotten);
-    connect(changeLogReply, &QNetworkReply::finished, this, &MainWindow::onChangeLogGotten);
 }
 
 void MainWindow::roundCorners()
@@ -1320,6 +1316,7 @@ void MainWindow::onVersionInfomationGotten()
     while (!versionInfomationReply->atEnd()) {
         QString line = versionInfomationReply->readLine();
         line.remove('\n');
+        line.remove('\r');
 
         QStringList texts = line.split('|', QString::SkipEmptyParts);
 
@@ -1346,25 +1343,27 @@ void MainWindow::onVersionInfomationGotten()
                 setWindowTitle(tr("New Version Available") + "  " + windowTitle());
         } else if ("Address" == key) {
             updateInfomation.address = value;
+        } else if ("ChangeLog" == key) {
+            QString fileName = "info.html";
+            QFile file(fileName);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+                qDebug() << "Cannot open the file: " << fileName;
+                return;
+            }
+            file.write(value.toUtf8());
+            file.close();
         }
         if (!updateInfomation.address.isNull() && !updateInfomation.version_number.isNull())
             ui->actionCheckUpdate->setEnabled(true);
     }
     versionInfomationReply->deleteLater();
-}
-
-void MainWindow::onChangeLogGotten()
-{
-    QString fileName = "info.html";
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        qDebug() << "Cannot open the file: " << fileName;
-        return;
+    if (!updateInfomation.address.isNull()
+            && !updateInfomation.version_number.isNull()) {
+        QSanVersionNumber latest_version = Sanguosha->getVersionNumber();
+        latest_version.tryParse(updateInfomation.version_number);
+        if (Sanguosha->getVersionNumber() < latest_version)
+            on_actionCheckUpdate_triggered();
     }
-    QByteArray codeContent = changeLogReply->readAll();
-    file.write(codeContent);
-    file.close();
-    changeLogReply->deleteLater();
 }
 
 void MainWindow::on_actionCheckUpdate_triggered()
