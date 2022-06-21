@@ -490,9 +490,9 @@ void MainWindow::fetchUpdateInformation()
 {
     static QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
 #ifdef QT_DEBUG
-    QString URL1 = "http://mrkey94.github.io/test/updateinfo.txt";
+    QString URL1 = "http://tamquocsat.langkhach.org/test/updateinfo.txt";
 #else
-    QString URL1 = "http://mrkey94.github.io/updateinfo.txt";
+    QString URL1 = "http://tamquocsat.langkhach.org/updateinfo.txt";
 #endif
 
     versionInfomationReply = mgr->get(QNetworkRequest(QUrl(URL1)));
