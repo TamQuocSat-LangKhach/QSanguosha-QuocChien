@@ -102,6 +102,7 @@
      <addaction name="actionDamage_maker"/>
      <addaction name="actionDeath_note"/>
      <addaction name="actionRevive_wand"/>
+	 <addaction name="actionGet_card"/>
      <addaction name="actionExecute_script_at_server_side"/>
     </widget>
     <widget class="QMenu" name="menuHelp">
@@ -320,6 +321,14 @@
   <action name="actionRevive_wand">
    <property name="text">
     <string>Revive wand ...</string>
+   </property>
+  </action>
+  <action name="actionGet_card">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Get a card ...</string>
    </property>
   </action>
   <action name="actionCard_editor">

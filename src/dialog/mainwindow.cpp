@@ -751,6 +751,15 @@ void MainWindow::enterRoom()
         connect(ui->actionDeath_note, &QAction::triggered, room_scene, &RoomScene::makeKilling);
         connect(ui->actionDamage_maker, &QAction::triggered, room_scene, &RoomScene::makeDamage);
         connect(ui->actionRevive_wand, &QAction::triggered, room_scene, &RoomScene::makeReviving);
+        #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+        if (ServerInfo.FreeChoose) {
+            ui->actionGet_card->setEnabled(true);
+            connect(ui->actionGet_card, &QAction::triggered, this, &MainWindow::on_actionCard_Overview_triggered);
+        } else {
+            ui->actionGet_card->setEnabled(false);
+            ui->actionGet_card->disconnect();
+        }
+        #endif
         connect(ui->actionExecute_script_at_server_side, &QAction::triggered, room_scene, &RoomScene::doScript);
     } else {
 #if !defined(Q_OS_IOS)
@@ -760,6 +769,10 @@ void MainWindow::enterRoom()
         ui->actionDamage_maker->disconnect();
         ui->actionRevive_wand->disconnect();
         ui->actionSend_lowlevel_command->disconnect();
+        #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+        ui->actionGet_card->setEnabled(false);
+        ui->actionGet_card->disconnect();
+        #endif
         ui->actionExecute_script_at_server_side->disconnect();
     }
 

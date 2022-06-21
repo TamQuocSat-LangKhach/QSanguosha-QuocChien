@@ -252,7 +252,7 @@ void CardOverview::on_tableWidget_itemDoubleClicked(QTableWidgetItem *)
 
 void CardOverview::askCard()
 {
-    if (!ServerInfo.EnableCheat || !ClientInstance)
+    if (!ServerInfo.EnableCheat || !ServerInfo.FreeChoose || !ClientInstance)
         return;
 
 #ifdef Q_OS_IOS
@@ -340,7 +340,7 @@ void CardOverview::on_playAudioEffectButton_clicked()
 
 void CardOverview::showEvent(QShowEvent *)
 {
-    if (ServerInfo.EnableCheat && ClientInstance) {
+    if (ServerInfo.EnableCheat && ServerInfo.FreeChoose && ClientInstance) {
         ui->getCardButton->show();
     } else {
         ui->getCardButton->hide();

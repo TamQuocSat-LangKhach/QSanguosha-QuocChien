@@ -215,6 +215,14 @@
     <string>Revive wand ...</string>
    </property>
   </action>
+  <action name="actionGet_card">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Get a card ...</string>
+   </property>
+  </action>
   <action name="actionCard_editor">
    <property name="text">
     <string>Card editor ...</string>
