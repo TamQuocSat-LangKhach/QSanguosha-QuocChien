@@ -52,13 +52,15 @@ UpdateChecker::UpdateChecker()
 void UpdateChecker::fill(UpdateInfoStruct info)
 {
     QString state;
-    QString postfix = " : " + info.version_number;
+    QString postfix;
     if (info.version_number > Sanguosha->getVersionNumber()) {
+        postfix = " : " + info.version_number;
         if (info.is_patch)
             state = tr("New Patch Available") + postfix;
         else
             state = tr("New Client Available") + postfix;
     } else {
+        postfix = " : " + Sanguosha->getVersionNumber();
         state = tr("Lastest Version Already") + postfix;
     }
     state_label->setText(state);
