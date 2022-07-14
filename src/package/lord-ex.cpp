@@ -178,7 +178,7 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             if (damage.card && damage.card->hasFlag("liangfanEffect") && !damage.chain && !damage.transfer && damage.by_user) {
                 ServerPlayer *target = damage.to;
-                if (target && player->canGetCard(target, "he")) {
+                if (target && target->isAlive() && player->isAlive() && player->canGetCard(target, "he")) {
                     return QStringList(objectName());
                 }
             }
@@ -843,7 +843,9 @@ public:
             if (player->isFriendWith(target) || !target->hasShownOneGeneral()) {
 
                 if (player->handCards().contains(card_id)) {
-                    QStringList record_list = player->property("wenji_record").toString().split("+");
+                    QStringList record_list;
+                    if (!player->property("wenji_record").isNull())
+                        record_list = player->property("wenji_record").toString().split("+");
                     record_list << QString::number(card_id);
                     room->setPlayerProperty(player, "wenji_record", record_list.join("+"));
                 }
@@ -896,7 +898,7 @@ public:
          if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
              room->setPlayerProperty(player, "wenji_record", QVariant());
          }
-         if (triggerEvent == CardsMoveOneTime) {
+         if (triggerEvent == CardsMoveOneTime && !player->property("wenji_record").isNull()) {
              QStringList new_list, record_list = player->property("wenji_record").toString().split("+");
 
              foreach (QString record, record_list) {
@@ -904,8 +906,10 @@ public:
                      new_list << record;
                  }
              }
-
-             room->setPlayerProperty(player, "wenji_record", new_list.join("+"));
+             if (new_list.isEmpty())
+                room->setPlayerProperty(player, "wenji_record", QVariant());
+             else
+                room->setPlayerProperty(player, "wenji_record", new_list.join("+"));
          }
          if (triggerEvent == PreCardUsed) {
              CardUseStruct use = data.value<CardUseStruct>();
@@ -968,7 +972,7 @@ public:
 
     virtual int getResidueNum(const Player *from, const Card *card, const Player *) const
     {
-        if (!Sanguosha->matchExpPattern(pattern, from, card)|| from->property("wenji_record").toString().isEmpty())
+        if (!Sanguosha->matchExpPattern(pattern, from, card)|| from->property("wenji_record").isNull())
             return 0;
 
         QStringList record_list = from->property("wenji_record").toString().split("+");
@@ -1249,10 +1253,7 @@ void PaiyiCard::onEffect(const CardEffectStruct &effect) const
     ServerPlayer *target = effect.to;
     Room *room = zhonghui->getRoom();
 
-    int x = qMin(zhonghui->getPile("power_pile").length(), 7);
-
-    if (x > 0)
-        target->drawCards(x, objectName());
+    target->drawCards(2, objectName());
 
     if (target->getHandcardNum() > zhonghui->getHandcardNum())
         room->damage(DamageStruct("paiyi", zhonghui, target));
@@ -1269,7 +1270,7 @@ public:
 
     virtual bool isEnabledAtPlay(const Player *player) const
     {
-        return !player->getPile("power_pile").isEmpty() && !player->hasUsed("PaiyiCard");
+        return !player->getPile("power_pile").isEmpty() && player->usedTimes("PaiyiCard") < 2;
     }
 
     virtual const Card *viewAs(const Card *c) const
@@ -1866,6 +1867,7 @@ public:
 
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
+        if (player->getPhase() != Player::Play) return QStringList();
         DamageStruct damage = data.value<DamageStruct>();
         if (!damage.flags.contains("zhidao")) return QStringList();
         ServerPlayer *target = damage.to;
@@ -2137,6 +2139,7 @@ public:
 ImperialEdictAttachCard::ImperialEdictAttachCard()
 {
     target_fixed = true;
+    handling_method = Card::MethodNone;
 }
 
 void ImperialEdictAttachCard::onUse(Room *room, const CardUseStruct &card_use) const
@@ -2730,7 +2733,7 @@ public:
             }
         } else if (triggerEvent == CardUsed) {
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.card->getTypeId() == Card::TypeTrick && !use.card->isKindOf("ThreatenEmperor"))
+            if (use.card->getTypeId() == Card::TypeTrick)
                 return QStringList(objectName());
         } else if (triggerEvent == CardsMoveOneTime) {
             QVariantList move_datas = data.toList();
