@@ -417,6 +417,11 @@ void Room::killPlayer(ServerPlayer *victim, DamageStruct *reason)
     victim->detachAllSkills();
     thread->trigger(BuryVictim, this, victim, data);
 
+    foreach (ServerPlayer *p, players_with_victim) {
+        if (p->isAlive() || p == victim)
+            thread->trigger(DeathFinished, this, p, data);
+    }
+
     if (!victim->isAlive()) {
         bool expose_roles = true;
         foreach (ServerPlayer *player, m_alivePlayers) {
@@ -512,6 +517,12 @@ void Room::sendJudgeResult(const JudgeStruct *judge)
 QList<int> Room::getNCards(int n, bool update_pile_number, bool from_up)
 {
     QList<int> card_ids;
+    if (n > m_drawPile->length()) {
+        if (n > m_drawPile->length() + m_discardPile->length())
+            gameOver(".");
+        swapPile();
+    }
+
     for (int i = 0; i < n; i++)
         card_ids << drawCard(from_up);
 
@@ -1470,6 +1481,12 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
 
     bool result = !thread->trigger(CardUsed, this, repliedPlayer, data1);
 
+    if (result) {
+        CardUseStruct cheak_use = data1.value<CardUseStruct>();
+        if (cheak_use.nullified_list.contains("_ALL_TARGETS"))
+            result = false;
+    }
+
     thread->delay(500);
 
     QVariant decisionData = QVariant::fromValue("Nullification:" + QString(trick->getClassName())
@@ -1863,6 +1880,9 @@ const Card *Room::askForCard(ServerPlayer *player, const QString &pattern, const
             resp.m_data = data;
             QVariant _data = QVariant::fromValue(resp);
             thread->trigger(CardResponded, this, player, _data);
+
+            card = _data.value<CardResponseStruct>().m_card;
+
             if (method == Card::MethodUse) {
 
                 CardUseStruct card_use;
@@ -2698,7 +2718,7 @@ void Room::broadcast(const QByteArray &message, ServerPlayer *except)
 
 void Room::swapPile()
 {
-    if (m_discardPile->isEmpty()) {
+    if (m_drawPile->isEmpty() && m_discardPile->isEmpty()) {
         // the standoff
         gameOver(".");
     }
@@ -4369,6 +4389,7 @@ bool Room::isJinkEffected(ServerPlayer *user, const Card *jink)
     if (jink == NULL || user == NULL)
         return false;
     Q_ASSERT(jink->isKindOf("Jink"));
+    if (jink->tag["ResponseNegated"].toBool()) return false;
     QVariant jink_data = QVariant::fromValue((const Card *)jink);
     return !thread->trigger(JinkEffect, this, user, jink_data);
 }
