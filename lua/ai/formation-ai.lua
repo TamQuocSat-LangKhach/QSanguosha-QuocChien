@@ -393,7 +393,7 @@ sgs.ai_card_intention.ShangyiCard = 50
 
 --徐盛
 sgs.ai_skill_invoke.yicheng = function(self, data)
-	if not self:willShowForDefence() then
+	if not self:willShowForDefence() and not self:willShowForAttack() then
 		return false
 	end
 	return true
@@ -401,7 +401,7 @@ end
 
 sgs.ai_skill_discard.yicheng = function(self, discard_num, min_num, optional, include_equip)
 	if self.player:hasSkill("hongyan") then
-		return self:askForDiscard("dummyreason", 1, 1, false, true)
+		return self:askForDiscard("dummyreason", discard_num, min_num, false, true)
 	end
 
 	local unpreferedCards = {}
@@ -448,8 +448,10 @@ sgs.ai_skill_discard.yicheng = function(self, discard_num, min_num, optional, in
 		if not self.player:isJilei(sgs.Sanguosha:getCard(unpreferedCards[index])) then return { unpreferedCards[index] } end
 	end
 
-	return self:askForDiscard("dummyreason", 1, 1, false, true)
+	return self:askForDiscard("dummyreason", discard_num, min_num, false, true)
 end
+
+sgs.ai_skill_choice.yicheng = "yes"
 
 --于吉
 sgs.ai_skill_invoke.qianhuan = function(self, data)
@@ -496,7 +498,7 @@ local invoke_qianhuan = function(self, use)
 	if (use.from and self:isFriend(use.from)) then return false end
 	if use.to:isEmpty() then return false end
 	if use.card:isKindOf("Peach") or use.card:isKindOf("Analeptic") then return false end
-	if use.card:isKindOf("Lightning") then return end
+	if use.card:isKindOf("Lightning") or use.card:isKindOf("KnownBoth") then return end
 	local to = use.to:first()
 	if use.card:isKindOf("Slash") and not self:slashIsEffective(use.card, to, use.from) then return end
 	if use.card:isKindOf("TrickCard") and not self:trickIsEffective(use.card, to, use.from) then return end
