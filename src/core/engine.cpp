@@ -187,8 +187,8 @@ void Engine::addSkills(const QList<const Skill *> &all_skills)
             QMessageBox::warning(NULL, "", tr("The engine tries to add an invalid skill"));
             continue;
         }
-        if (skills.contains(skill->objectName()))
-            QMessageBox::warning(NULL, "", tr("Duplicated skill : %1").arg(skill->objectName()));
+//        if (skills.contains(skill->objectName()))
+//            QMessageBox::warning(NULL, "", tr("Duplicated skill : %1").arg(skill->objectName()));
 
         skills.insert(skill->objectName(), skill);
 
