@@ -8,31 +8,41 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown;
+        events << GeneralShown << Dying;
         frequency = Compulsory;
     }
 
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (triggerEvent == GeneralShown) {
-            if (TriggerSkill::triggerable(player)) {
+        if (TriggerSkill::triggerable(player)) {
+            if (triggerEvent == GeneralShown) {
                 if ((data.toBool() && player->getMark("HaventShowGeneral") > 0)
                         || (!data.toBool() && player->getMark("HaventShowGeneral2") > 0))
                 return QStringList(objectName());
+            } else if (triggerEvent == Dying) {
+                DyingStruct dying = data.value<DyingStruct>();
+                if (dying.who == player)
+                    return QStringList(objectName());
             }
         }
+
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent , Room *room, ServerPlayer *player, QVariant &, ServerPlayer *ask_who) const
+    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *ask_who) const
     {
-        if (!ask_who->hasShownSkill(this)) return false;
+        if (!ask_who->hasShownSkill(this)){
+            if (triggerEvent == GeneralShown) return false;
+            DyingStruct dying = data.value<DyingStruct>();
+            if (dying.who == player)
+                return player->askForSkillInvoke(this, data);
+        }
         room->sendCompulsoryTriggerLog(player, "bianhua");
         room->broadcastSkillInvoke("bianhua");
         return true;
     }
 
-    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         if (player->cheakSkillLocation(objectName(), true)) {
             if (data.toBool()) {
@@ -86,6 +96,12 @@ public:
                     room->removeTag("bianhua-choice");
                 }
             }
+        } else {
+            LogMessage log;
+            log.type = "#CheatingDeputyCareerist";
+            log.from = player;
+            log.to << room->getAllPlayers();
+            room->sendLog(log);
         }
 
         return false;
@@ -120,17 +136,31 @@ bool MilitaryOrder::isAvailable(const Player *player) const
 
 void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
 {
-    if (effect.from->getPhase() == Player::Play)
-        effect.from->setFlags("Global_PlayPhaseTerminated");
-    effect.to->setMark("MilitaryOrderExtraTurn", 1);
+    Room *room = effect.to->getRoom();
+    room->setEmotion(effect.to, "military_order");
+    if (effect.from->getPhase() == Player::Play) {
+        int num = 0;
+        foreach (ServerPlayer *p, room->getAlivePlayers()) {
+            if (p->isFriendWith(effect.from)) continue;
+            if (p->hasShownOneGeneral()) {
+                int kingdomCount = p->getPlayerNumWithKingdom();
+                if (kingdomCount > num)
+                    num = kingdomCount;
+            }
+        }
+        if (num > 0) effect.to->drawCards(num);
+        effect.to->setMark("MilitaryOrder", 1);
+    }
+        //effect.from->setFlags("Global_PlayPhaseTerminated");
+    //effect.to->setMark("MilitaryOrderExtraTurn", 1);
 }
 
 class MilitaryOrderSkill : public TriggerSkill
 {
 public:
-    MilitaryOrderSkill() : TriggerSkill("threaten_emperor")
+    MilitaryOrderSkill() : TriggerSkill("military_order")
     {
-        events << EventPhaseEnd << DeathFinished;
+        events << EventPhaseChanging << Death;
         global = true;
     }
 
@@ -141,133 +171,78 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
-            foreach (ServerPlayer *p, room->getAllPlayers()) {
-                room->setPlayerMark(p, "MilitaryOrderExtraTurn", 0);
-            }
-        }
+//        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
+//            foreach (ServerPlayer *p, room->getAllPlayers()) {
+//                room->setPlayerMark(p, "MilitaryOrderExtraTurn", 0);
+//            }
+//        }
     }
 
     virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        TriggerList list;
-        if (triggerEvent != EventPhaseEnd || player->getPhase() != Player::Discard) return list;
-        foreach(ServerPlayer *p, room->getAllPlayers())
-            if (p->getMark("MilitaryOrderExtraTurn") > 0)
-                list.insert(p, QStringList(objectName()));
+//        TriggerList list;
+//        if (triggerEvent != EventPhaseEnd || player->getPhase() != Player::Discard) return list;
+//        foreach(ServerPlayer *p, room->getAllPlayers())
+//            if (p->getMark("MilitaryOrderExtraTurn") > 0)
+//                list.insert(p, QStringList(objectName()));
 
-        return list;
+//        return list;
     }
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
     {
-        return room->askForCard(ask_who, ".", "@threaten_emperor", data);
+        return true;
     }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *ask_who) const
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
-        LogMessage l;
-        l.type = "#Fangquan";
-        l.to << ask_who;
-        room->sendLog(l);
+        if (triggerEvent == Death && player->getMark("MilitaryOrder") > 0) {
+            DeathStruct death = data.value<DeathStruct>();
+            ServerPlayer *from = death.damage->from;
+            if (from == player) {
+                player->setMark("MilitaryOrder", 0);
+                if (player->getPhase() == Player::Play) {
+                    player->setFlags("Global_PlayPhaseTerminated");
+                    player->setMark("MilitaryOrderComplete", 1);
+                }
+            }
+        } else if (triggerEvent == EventPhaseChanging) {
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to != Player::NotActive) return false;
+            if (player->getMark("MilitaryOrderComplete") > 0) {
+                player->setMark("MilitaryOrderComplete", 0);
+            } else if (player->getMark("MilitaryOrder") > 0) {
+                player->setMark("MilitaryOrder", 0);
+                if (player->isAlive()) {
+                    room->killPlayer(player);
+                }
+            }
+        }
+//        LogMessage l;
+//        l.type = "#Fangquan";
+//        l.to << ask_who;
+//        room->sendLog(l);
 
-        ask_who->gainAnExtraTurn();
+//        ask_who->gainAnExtraTurn();
         return false;
     }
 };
 
-ImperialOrder::ImperialOrder(Suit suit, int number)
-    : GlobalEffect(suit, number)
+class MilitaryOrderMaxCards : public MaxCardsSkill
 {
-    setObjectName("imperial_order");
-}
-
-bool ImperialOrder::targetRated(const Player *to_select, const Player *) const
-{
-    return !to_select->hasShownOneGeneral();
-}
-
-bool ImperialOrder::isAvailable(const Player *player) const
-{
-    bool invoke = !player->hasShownOneGeneral();
-    if (!invoke) {
-        foreach (const Player *p, player->getAliveSiblings()) {
-            if (targetRated(p, player) && !player->isProhibited(p, this)) {
-                invoke = true;
-                break;
-            }
-        }
+public:
+    MilitaryOrderMaxCards() : MaxCardsSkill("#militaryorder-maxcards")
+    {
     }
-    return invoke && TrickCard::isAvailable(player);
-}
 
-void ImperialOrder::onUse(Room *room, const CardUseStruct &card_use) const
-{
-    ServerPlayer *source = card_use.from;
-    QList<ServerPlayer *> targets;
-    if (card_use.to.isEmpty()) {
-        foreach (ServerPlayer *p, room->getAllPlayers()) {
-            if (p->hasShownOneGeneral())
-                continue;
-            const Skill *skill = room->isProhibited(source, p, this);
-            if (skill) {
-                if (skill && skill->isVisible()) {
-                    LogMessage log;
-                    log.type = "#SkillAvoid";
-                    log.from = p;
-                    log.arg = skill->objectName();
-                    log.arg2 = objectName();
-                    room->sendLog(log);
-
-                    room->broadcastSkillInvoke(skill->objectName());
-                }
-                continue;
-            }
-            targets << p;
-        }
-    } else
-        targets = card_use.to;
-
-    CardUseStruct use = card_use;
-    use.to = targets;
-    Q_ASSERT(!use.to.isEmpty());
-    TrickCard::onUse(room, use);
-}
-
-void ImperialOrder::onEffect(const CardEffectStruct &effect) const
-{
-    Room *room = effect.to->getRoom();
-   // if (room->askForCard(effect.to, "EquipCard", "@imperial_order-equip"))
-   //     return;
-    QStringList choices;
-
-    if (!effect.to->hasShownGeneral1() && effect.to->disableShow(true).isEmpty())
-        choices << "show_head";
-    if (effect.to->getGeneral2() && !effect.to->hasShownGeneral2() && effect.to->disableShow(false).isEmpty())
-        choices << "show_deputy";
-
-    QList<int> to_discard = effect.to->forceToDiscard(1, "EquipCard", QString(), true);
-    if (!to_discard.isEmpty())
-        choices << "dis_equip";
-
-    choices << "losehp";
-
-    QString all_choices = "show_head+show_deputy+dis_equip+losehp";
-
-    QString choice = room->askForChoice(effect.to, objectName(), choices.join("+"), QVariant(), "@imperial_order-choose", all_choices);
-    if (choice.contains("show")) {
-        effect.to->showGeneral(choice == "show_head");
-        effect.to->drawCards(1, objectName());
-    } else if (choice == "dis_equip"){
-        if (!room->askForCard(effect.to, "EquipCard!", "@imperial_order-equip")) {
-            const Card *card = Sanguosha->getCard(to_discard.first());
-            CardMoveReason reason(CardMoveReason::S_REASON_THROW, effect.to->objectName());
-            room->moveCardTo(card, effect.to, NULL, Player::DiscardPile, reason, true);
-        }
-    } else if (choice == "losehp"){
-        room->loseHp(effect.to);
+    virtual int getFixed(const Player *target) const
+    {
+        if (target->getMark("MilitaryOrderComplete") > 0)
+            return target->getMaxHp();
+        else
+            return -1;
     }
-}
+};
 
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach")
