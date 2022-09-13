@@ -42,8 +42,9 @@ public:
         return true;
     }
 
-    virtual bool effect(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
+        if (triggerEvent == Dying) return false;
         if (player->cheakSkillLocation(objectName(), true)) {
             if (data.toBool()) {
                 QList<ServerPlayer *> targets;
@@ -136,6 +137,12 @@ bool MilitaryOrder::isAvailable(const Player *player) const
 
 void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
 {
+    if (effect.to != effect.from) {
+        return;
+    }
+    if (effect.card->getSkillName() != NULL) {
+        return;
+    }
     Room *room = effect.to->getRoom();
     room->setEmotion(effect.to, "military_order");
     if (effect.from->getPhase() == Player::Play) {
@@ -149,6 +156,13 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
             }
         }
         if (num > 0) effect.to->drawCards(num);
+        foreach(const Skill *skill, effect.to->getSkillList()) {
+            QString translation = skill->getDescription();
+            if (translation.contains("Một lần trong giai đoạn hành động")) {
+
+            }
+        }
+
         effect.to->setMark("MilitaryOrder", 1);
     }
         //effect.from->setFlags("Global_PlayPhaseTerminated");
@@ -243,6 +257,86 @@ public:
             return -1;
     }
 };
+
+Poison::Poison(Suit suit, int number, bool is_transferable) : BasicCard(suit, number)
+{
+    setObjectName("poison");
+    target_fixed = true;
+    transferable = is_transferable;
+}
+
+QString Poison::getSubtype() const
+{
+    return "poison_card";
+}
+
+bool Poison::targetRated(const Player *to_select, const Player *self) const
+{
+    return to_select == self;
+}
+
+void Poison::onUse(Room *room, const CardUseStruct &card_use) const
+{
+    CardUseStruct use = card_use;
+    if (use.to.isEmpty())
+        use.to << use.from;
+    BasicCard::onUse(room, use);
+}
+
+void Poison::onEffect(const CardEffectStruct &) const
+{
+}
+
+bool Poison::isAvailable(const Player *player) const
+{
+    return !player->isProhibited(player, this) && BasicCard::isAvailable(player);
+}
+
+class PoisonSkill : public TriggerSkill
+{
+public:
+    PoisonSkill() : TriggerSkill("poison")
+    {
+        events << CardsMoveOneTime;
+        frequency = Compulsory;
+    }
+
+    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        QStringList trigger_skill;
+        if (TriggerSkill::triggerable(player)) {
+
+            QVariantList move_datas = data.toList();
+            foreach (QVariant move_data, move_datas) {
+                CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+                if (move.from == player && (move.from_places.contains(Player::PlaceHand))
+                    && !(move.to == player && (move.to_place == Player::PlaceHand))
+                        && move.open.at(0)) {
+                    int i = 0;
+                    foreach (int id, move.card_ids) {
+                        bool open = move.open.at(i);
+                        i++;
+                        if (open && Sanguosha->getCard(id)->getName() == "poison")
+                            trigger_skill << objectName();
+                    }
+                }
+            }
+        }
+        return trigger_skill;
+    }
+
+    virtual bool cost(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer *) const
+    {
+        return true;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
+    {
+        room->loseHp(player);
+        return false;
+    }
+};
+
 
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach")
