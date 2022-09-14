@@ -50,7 +50,7 @@ ConnectionDialog::ConnectionDialog(QWidget *parent)
 #endif
     ui->setupUi(this);
     //QMetaObject::connect(ui->cancelButton, SIGNAL(QPushButton::click()), this, SLOT(reject());)
-    ui->nameLineEdit->setText(Config.UserName.left(8));
+    ui->nameLineEdit->setText(Config.UserName.left(20));
 
     ui->hostComboBox->addItems(Config.HistoryIPs);
     ui->hostComboBox->lineEdit()->setText(Config.HostAddress);

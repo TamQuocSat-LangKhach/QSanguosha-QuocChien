@@ -12,6 +12,22 @@ public:
     LangKhachPackage();
 };
 
+class LangKhachCardPackage : public Package
+{
+    Q_OBJECT
+
+public:
+    LangKhachCardPackage();
+};
+
+class PoisonCardPackage : public Package
+{
+    Q_OBJECT
+
+public:
+    PoisonCardPackage();
+};
+
 class MilitaryOrder : public SingleTargetTrick
 {
     Q_OBJECT

@@ -2,6 +2,7 @@
 #include "skill.h"
 #include "engine.h"
 #include "general.h"
+#include "package.h"
 
 class Bianhua : public TriggerSkill
 {
@@ -299,9 +300,10 @@ public:
     {
         events << CardsMoveOneTime;
         frequency = Compulsory;
+        global = true;
     }
 
-    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         QStringList trigger_skill;
         if (TriggerSkill::triggerable(player)) {
@@ -310,13 +312,12 @@ public:
             foreach (QVariant move_data, move_datas) {
                 CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
                 if (move.from == player && (move.from_places.contains(Player::PlaceHand))
-                    && !(move.to == player && (move.to_place == Player::PlaceHand))
-                        && move.open.at(0)) {
-                    int i = 0;
+                    && !(move.to == player && (move.to_place == Player::PlaceHand))) {
+                    //int i = 0;
                     foreach (int id, move.card_ids) {
-                        bool open = move.open.at(i);
-                        i++;
-                        if (open && Sanguosha->getCard(id)->getName() == "poison")
+                        //bool open = move.open.at(i);
+                        //i++;
+                        if (Sanguosha->getCard(id)->isKindOf("Poison"))
                             trigger_skill << objectName();
                     }
                 }
@@ -325,8 +326,9 @@ public:
         return trigger_skill;
     }
 
-    virtual bool cost(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer *) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
     {
+        room->broadcastSkillInvoke(objectName(), player);
         return true;
     }
 
@@ -346,3 +348,35 @@ LangKhachPackage::LangKhachPackage()
 }
 
 ADD_PACKAGE(LangKhach)
+
+LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPack)
+{
+    QList<Card *> cards;
+
+    cards
+        << new MilitaryOrder(Card::Club, 3);
+
+    foreach(Card *card, cards)
+        card->setParent(this);
+
+    skills << new MilitaryOrderSkill << new MilitaryOrderMaxCards;
+}
+
+ADD_PACKAGE(LangKhachCard)
+
+PoisonCardPackage::PoisonCardPackage() : Package("poison_card", CardPack)
+{
+    QList<Card *> cards;
+
+    cards
+        << new Poison(Card::Spade, 3)
+        << new Poison(Card::Spade, 9)
+        << new Poison(Card::Club, 3);
+
+    foreach(Card *card, cards)
+        card->setParent(this);
+
+    skills << new PoisonSkill;
+}
+
+ADD_PACKAGE(PoisonCard)
