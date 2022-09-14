@@ -9,7 +9,7 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown << Dying;
+        events << GeneralShown;// << Dying;
         frequency = Compulsory;
     }
 
@@ -20,23 +20,25 @@ public:
                 if ((data.toBool() && player->getMark("HaventShowGeneral") > 0)
                         || (!data.toBool() && player->getMark("HaventShowGeneral2") > 0))
                 return QStringList(objectName());
-            } else if (triggerEvent == Dying) {
-                DyingStruct dying = data.value<DyingStruct>();
-                if (dying.who == player)
-                    return QStringList(objectName());
             }
+//            else if (triggerEvent == Dying) {
+//                DyingStruct dying = data.value<DyingStruct>();
+//                if (dying.who == player)
+//                    return QStringList(objectName());
+//            }
         }
 
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *ask_who) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *ask_who) const
     {
         if (!ask_who->hasShownSkill(this)){
-            if (triggerEvent == GeneralShown) return false;
-            DyingStruct dying = data.value<DyingStruct>();
-            if (dying.who == player)
-                return player->askForSkillInvoke(this, data);
+//            if (triggerEvent == GeneralShown)
+                return false;
+//            DyingStruct dying = data.value<DyingStruct>();
+//            if (dying.who == player)
+//                return player->askForSkillInvoke(this, data);
         }
         room->sendCompulsoryTriggerLog(player, "bianhua");
         room->broadcastSkillInvoke("bianhua");
@@ -45,7 +47,7 @@ public:
 
     virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
-        if (triggerEvent == Dying) return false;
+        //if (triggerEvent == Dying) return false;
         if (player->cheakSkillLocation(objectName(), true)) {
             if (data.toBool()) {
                 QList<ServerPlayer *> targets;
@@ -62,7 +64,7 @@ public:
                     }
                 }
                 if (targets.isEmpty()) return false;
-                ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "bianhua-invoke", false, true);
+                ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", false, true);
                 if (to != NULL) {
                     QStringList choicelist;
                     if (to->hasShownGeneral1() && !to->getActualGeneral1Name().contains("sujiang")) {
@@ -71,7 +73,7 @@ public:
                     if (to->hasShownGeneral2() && !to->getActualGeneral2Name().contains("sujiang")) {
                         choicelist << to->getActualGeneral2Name();
                     }
-                    QString choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant::fromValue(to), "@bianhua-choose::"+to->objectName());
+                    QString choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant::fromValue(to), "@bianhua-choose");
                     const General *general = Sanguosha->getGeneral(choice);
                     QList<const Skill *> skills = general->getVisibleSkillList();
         //                pg->setGender(general->getGender());
@@ -91,6 +93,7 @@ public:
                     } else {
                         room->setTag("bianhua-choice", choice);
                     }
+                    room->addPlayerMark(player, choice);
                 }
             } else {
                 if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
@@ -102,7 +105,6 @@ public:
             LogMessage log;
             log.type = "#CheatingDeputyCareerist";
             log.from = player;
-            log.to << room->getAllPlayers();
             room->sendLog(log);
         }
 
@@ -157,18 +159,40 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
             }
         }
         if (num > 0) effect.to->drawCards(num);
-        foreach(const Skill *skill, effect.to->getSkillList()) {
-            QString translation = skill->getDescription();
-            if (translation.contains("Một lần trong giai đoạn hành động")) {
+
+        foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
+            if (skill->inherits("ViewAsSkill") && !skill->inherits("OneCardViewAsSkill")) {
 
             }
         }
-
+        QString choice;
+        if (choice == "slash") {
+            effect.to->addMark("MilitaryOrder_Slash");
+        }
         effect.to->setMark("MilitaryOrder", 1);
     }
         //effect.from->setFlags("Global_PlayPhaseTerminated");
     //effect.to->setMark("MilitaryOrderExtraTurn", 1);
 }
+
+class MilitaryOrderTarget : public TargetModSkill
+{
+public:
+    MilitaryOrderTarget() : TargetModSkill("#militaryorder-target")
+    {
+    }
+
+    virtual int getResidueNum(const Player *from, const Card *card, const Player *) const
+    {
+        if (card->isKindOf("Slash")) {
+            return from->getMark("MilitaryOrder_Slash");
+        }
+        if (card->isKindOf("Analeptic")) {
+            return from->getMark("MilitaryOrder_Analeptic");
+        }
+        return 0;
+    }
+};
 
 class MilitaryOrderSkill : public TriggerSkill
 {
@@ -232,6 +256,10 @@ public:
                     room->killPlayer(player);
                 }
             }
+            if (player->getMark("MilitaryOrder_Slash") > 0)
+                player->setMark("MilitaryOrder_Slash", 0);
+            if (player->getMark("MilitaryOrder_Analeptic") > 0)
+                player->setMark("MilitaryOrder_Analeptic", 0);
         }
 //        LogMessage l;
 //        l.type = "#Fangquan";
@@ -268,7 +296,7 @@ Poison::Poison(Suit suit, int number, bool is_transferable) : BasicCard(suit, nu
 
 QString Poison::getSubtype() const
 {
-    return "poison_card";
+    return "harmful_card";
 }
 
 bool Poison::targetRated(const Player *to_select, const Player *self) const
@@ -303,7 +331,7 @@ public:
         global = true;
     }
 
-    virtual QStringList triggerable(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         QStringList trigger_skill;
         if (TriggerSkill::triggerable(player)) {
@@ -332,7 +360,7 @@ public:
         return true;
     }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *player) const
     {
         room->loseHp(player);
         return false;
