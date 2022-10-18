@@ -164,7 +164,7 @@ function SetInitialTables()
 						  "bushi|shicai|quanji|zhaoxin|fankui_simazhao|wanggui|sidi|shangshi|benyu"
 	sgs.defense_skill = "qingguo|longdan|kongcheng|niepan|bazhen|kanpo|xiangle|tianxiang|liuli|qianxun|leiji|duanchang|beige|weimu|" ..
 						"tuntian|shoucheng|yicheng|qianhuan|jizhao|wanwei|enyuan|buyi|keshou|qiuan|biluan|jiancai|aocai|" ..
-						"xibing|zhente|qiao|shejian|yusui|deshao|yuanyu|mingzhe|jilei|shigong|dingke"
+						"xibing|zhente|qiao|shejian|yusui|deshao|yuanyu|mingzhe|jilei|shigong|dingke|shefu"
 	sgs.usefull_skill = "tiandu|qiaobian|xingshang|xiaoguo|wusheng|guanxing|qicai|jizhi|kuanggu|lianhuan|huoshou|juxiang|shushen|zhiheng|keji|" ..
 						"duoshi|xiaoji|hongyan|haoshi|guzheng|zhijian|shuangxiong|guidao|guicai|xiongyi|mashu|lirang|yizhi|shengxi|" ..
 						"xunxun|wangxi|yingyang|hunshang|biyue"
@@ -359,6 +359,23 @@ function SmartAI:getTurnUse()
 	local slashes = {}
 
 	for _, card in ipairs(cards) do
+
+		local next = false
+		for _, c in ipairs(turnUse) do--减少同名牌重复检索
+			if c:objectName() == card:objectName() and c:sameColorWith(card) then
+				if card:isKindOf("Slash")  then
+					table.insert(slashes, card)
+				else
+					table.insert(turnUse, card)
+				end
+				next = true
+				break
+			end
+		end
+		if next then
+			continue
+		end
+
 		local dummy_use = { isDummy = true }
 
 		local type = card:getTypeId()
@@ -5142,7 +5159,7 @@ end
 
 function SmartAI:useBasicCard(card, use)
 	if not card then Global_room:writeToConsole(debug.traceback()) return end
-	if self:needRende() then return end
+	--if self:needRende() then return end
 	self:useCardByClassName(card, use)
 end
 
@@ -5572,7 +5589,7 @@ end
 
 function SmartAI:useTrickCard(card, use)
 	if not card then Global_room:writeToConsole(debug.traceback()) return end
-	if self:needRende() and not card:isKindOf("ExNihilo") then return end
+	--if self:needRende() and not card:isKindOf("ExNihilo") then return end
 	self:useCardByClassName(card, use)
 end
 

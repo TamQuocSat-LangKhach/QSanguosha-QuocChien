@@ -447,7 +447,7 @@ sgs.ai_skill_playerchosen.qinzhong = function(self, targets)
     local myg2_value = g2value(self.player)
     self:sort(targets, "hp")
     for _, p in ipairs(targets) do
-        if self.player:getHp() >= p:getHp() and myg2_value <= g2value(p) then
+        if self.player:getHp() >= p:getHp() and myg2_value < g2value(p) then
             return p
         end
     end
@@ -1340,7 +1340,7 @@ sgs.ai_skill_use["@@yuancong_usecard"] = function(self, prompt, method)
         local type = card:getTypeId()
         self["use" .. sgs.ai_type_name[type + 1]](self, card, dummyuse)
 
-        Global_room:writeToConsole("元从dummyuse")
+        Global_room:writeToConsole("元从dummyuse:"..card:objectName())
         if dummyuse.card and not card:isKindOf("Analeptic") then--详细考虑？
             Global_room:writeToConsole("元从使用牌")
             if not card:targetFixed() then
@@ -1462,18 +1462,24 @@ sgs.ai_skill_invoke.benyu = function(self, data)
 end
 
 sgs.ai_skill_choice.benyu = function(self, choices, data)
-    Global_room:writeToConsole("贲育选项:"..choices)
     local target = data:toPlayer()
     if target and not self:isFriend(target) then
-        local difference = target:getHandcardNum() - self.player:getHandcardNum()
-        if (difference > 2 and self:slashIsAvailable(target)) or (difference > 5 and not self:isWeak()) then
+        if self.player:getHandcardNum() >= 5 then
+            Global_room:writeToConsole("贲育弃牌1:"..sgs.Sanguosha:translate(target:getGeneralName()).."/"..sgs.Sanguosha:translate(target:getGeneral2Name()))
             return "discard"
+        end
+        if target:getHandcardNum() > 5 then
+            local difference = target:getHandcardNum() - self.player:getHandcardNum()
+            if (difference > 2 and self:slashIsAvailable(target)) or not self:isWeak() or self:getCardsNum({"Peach", "Analeptic"}) > 0 then
+                Global_room:writeToConsole("贲育弃牌2:"..sgs.Sanguosha:translate(target:getGeneralName()).."/"..sgs.Sanguosha:translate(target:getGeneral2Name()))
+                return "discard"
+            end
         end
     end
     return "draw"
 end
 
-sgs.ai_skill_discard.benyu = function(self, discard_num, min_num, optional, include_equip)
+sgs.ai_skill_discard.benyu_damage = function(self, discard_num, min_num, optional, include_equip)
     --缺来源信息
     return {}
 end

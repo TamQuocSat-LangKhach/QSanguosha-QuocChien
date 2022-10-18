@@ -2101,7 +2101,11 @@ sgs.ai_skill_askforag.flamemap = function(self, card_ids)
 		local card = sgs.Sanguosha:getCard(id)
 		if card:isKindOf("LuminousPearl") then
 			return id
-		elseif card:isKindOf("DragonPhoenix") then
+		end
+	end
+	for _, id in ipairs(card_ids) do
+		local card = sgs.Sanguosha:getCard(id)
+		if card:isKindOf("DragonPhoenix") then
 			local lord = self.room:getLord("shu")
 			if not lord or self:isFriend(lord) then
 				return id
@@ -2116,8 +2120,6 @@ sgs.ai_skill_askforag.flamemap = function(self, card_ids)
 			if not lord or self:isFriend(lord) then
 				return id
 			end
-		else
-			return id
 		end
 	end
 	return card_ids[1]

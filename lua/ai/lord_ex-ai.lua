@@ -962,19 +962,22 @@ local paiyi_skill = {}
 paiyi_skill.name = "paiyi"
 table.insert(sgs.ai_skills, paiyi_skill)
 paiyi_skill.getTurnUseCard = function(self)
-	if self.player:getPile("power_pile"):length() > 0 then--self.player:usedTimes("PaiyiCard") < 2
+  if self.player:getPile("power_pile"):length() > 0 and not self.player:hasUsed("PaiyiCard") then
+		return sgs.Card_Parse("@PaiyiCard=" .. self.player:getPile("power_pile"):first())
+	end
+	--[[if self.player:getPile("power_pile"):length() > 0 then--self.player:usedTimes("PaiyiCard") < 2
     if self.player:getHandcardNum() < 2
     or self.player:getHandcardNum() + (self:isWeak() and 1 or 2) < self.player:getMaxCards() then
       return sgs.Card_Parse("@PaiyiCard=" .. self.player:getPile("power_pile"):first())
     end
-	end
+	end]]
 	return nil
 end
 
 sgs.ai_skill_use_func.PaiyiCard = function(card, use, self)
   sgs.ai_use_priority.PaiyiCard = 2.4
 	local target
-  --if self.player:getPile("power_pile"):length() > 3 then--技能修改
+  if self.player:getPile("power_pile"):length() > 3 then--技能修改
     self:sort(self.friends, "defense")
 	  for _, friend in ipairs(self.friends) do
 		  if friend:getHandcardNum() < 2 and not self:needKongcheng(friend, true) and self.player:isFriendWith(friend) then
@@ -985,7 +988,7 @@ sgs.ai_skill_use_func.PaiyiCard = function(card, use, self)
 	  if not target then
 		  target = self.player
 	  end
-  --[[else--4权以下，排异打伤害优先度多少合适？
+  else--4权以下，排异打伤害优先度多少合适？
  	  self:sort(self.enemies, "hp")
 	  if not target then
 		  for _, enemy in ipairs(self.enemies) do
@@ -1000,8 +1003,8 @@ sgs.ai_skill_use_func.PaiyiCard = function(card, use, self)
 			  end
 	    end
     end
-  end]]
-  if self.player:getPile("power_pile"):length() > 5 then
+  end
+  if self.player:getPile("power_pile"):length() > 7 then
     sgs.ai_use_priority.PaiyiCard = 10
   end
 	if target then
