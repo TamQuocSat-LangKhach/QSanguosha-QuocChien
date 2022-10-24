@@ -12,47 +12,47 @@ public:
     LangKhachPackage();
 };
 
-class LangKhachCardPackage : public Package
-{
-    Q_OBJECT
+//class LangKhachCardPackage : public Package
+//{
+//    Q_OBJECT
 
-public:
-    LangKhachCardPackage();
-};
+//public:
+//    LangKhachCardPackage();
+//};
 
-class PoisonCardPackage : public Package
-{
-    Q_OBJECT
+//class PoisonCardPackage : public Package
+//{
+//    Q_OBJECT
 
-public:
-    PoisonCardPackage();
-};
+//public:
+//    PoisonCardPackage();
+//};
 
-class MilitaryOrder : public SingleTargetTrick
-{
-    Q_OBJECT
+//class MilitaryOrder : public SingleTargetTrick
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE MilitaryOrder(Card::Suit suit, int number);
-    virtual bool targetRated(const Player *to_select, const Player *Self) const;
-    virtual void onUse(Room *room, const CardUseStruct &card_use) const;
-    virtual void onEffect(const CardEffectStruct &effect) const;
-    virtual bool isAvailable(const Player *player) const;
+//public:
+//    Q_INVOKABLE MilitaryOrder(Card::Suit suit, int number);
+//    virtual bool targetRated(const Player *to_select, const Player *Self) const;
+//    virtual void onUse(Room *room, const CardUseStruct &card_use) const;
+//    virtual void onEffect(const CardEffectStruct &effect) const;
+//    virtual bool isAvailable(const Player *player) const;
 
-protected:
-    QMap<QString, QString> marks;
-};
+//protected:
+//    QMap<QString, QString> marks;
+//};
 
-class Poison : public BasicCard
-{
-    Q_OBJECT
+//class Poison : public BasicCard
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE Poison(Card::Suit suit, int number, bool is_transferable = false);
-    virtual QString getSubtype() const;
-    virtual bool targetRated(const Player *to_select, const Player *Self) const;
-    virtual void onUse(Room *room, const CardUseStruct &card_use) const;
-    virtual void onEffect(const CardEffectStruct &effect) const;
-    virtual bool isAvailable(const Player *player) const;
-};
+//public:
+//    Q_INVOKABLE Poison(Card::Suit suit, int number, bool is_transferable = false);
+//    virtual QString getSubtype() const;
+//    virtual bool targetRated(const Player *to_select, const Player *Self) const;
+//    virtual void onUse(Room *room, const CardUseStruct &card_use) const;
+//    virtual void onEffect(const CardEffectStruct &effect) const;
+//    virtual bool isAvailable(const Player *player) const;
+//};
 #endif

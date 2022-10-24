@@ -112,113 +112,116 @@ public:
     }
 };
 
-MilitaryOrder::MilitaryOrder(Suit suit, int number)
-    : SingleTargetTrick(suit, number)
-{
-    setObjectName("military_order");
-    target_fixed = true;
-    transferable = true;
-}
+//MilitaryOrder::MilitaryOrder(Suit suit, int number)
+//    : SingleTargetTrick(suit, number)
+//{
+//    setObjectName("military_order");
+//    target_fixed = true;
+//    transferable = true;
+//}
 
-bool MilitaryOrder::targetRated(const Player *to_select, const Player *Self) const
-{
-    return to_select == Self;
-}
+//bool MilitaryOrder::targetRated(const Player *to_select, const Player *Self) const
+//{
+//    return to_select == Self;
+//}
 
-void MilitaryOrder::onUse(Room *room, const CardUseStruct &card_use) const
-{
-    CardUseStruct use = card_use;
-    if (use.to.isEmpty())
-        use.to << use.from;
-    SingleTargetTrick::onUse(room, use);
-}
+//void MilitaryOrder::onUse(Room *room, const CardUseStruct &card_use) const
+//{
+//    CardUseStruct use = card_use;
+//    if (use.to.isEmpty())
+//        use.to << use.from;
+//    SingleTargetTrick::onUse(room, use);
+//}
 
-bool MilitaryOrder::isAvailable(const Player *player) const
-{
-    return !player->isProhibited(player, this) && TrickCard::isAvailable(player);
-}
+//bool MilitaryOrder::isAvailable(const Player *player) const
+//{
+//    return !player->isProhibited(player, this) && TrickCard::isAvailable(player);
+//}
 
-void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
-{
-    if (effect.to != effect.from) {
-        return;
-    }
-    if (effect.card->getSkillName() != NULL) {
-        return;
-    }
-    Room *room = effect.to->getRoom();
-    room->setEmotion(effect.to, "military_order");
-    if (effect.from->getPhase() == Player::Play) {
-        int num = 0;
-        foreach (ServerPlayer *p, room->getAlivePlayers()) {
-            if (p->isFriendWith(effect.from)) continue;
-            if (p->hasShownOneGeneral()) {
-                int kingdomCount = p->getPlayerNumWithKingdom();
-                if (kingdomCount > num)
-                    num = kingdomCount;
-            }
-        }
-        if (num > 0) effect.to->drawCards(num);
+//void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
+//{
+//    if (effect.to != effect.from) {
+//        return;
+//    }
+//    if (effect.card->getSkillName() != NULL) {
+//        return;
+//    }
+//    Room *room = effect.to->getRoom();
+//    room->setEmotion(effect.to, "military_order");
+//    if (effect.from->getPhase() == Player::Play) {
+//        int num = 0;
+//        foreach (ServerPlayer *p, room->getAlivePlayers()) {
+//            if (p->isFriendWith(effect.from)) continue;
+//            if (p->hasShownOneGeneral()) {
+//                int kingdomCount = p->getPlayerNumWithKingdom();
+//                if (kingdomCount > num)
+//                    num = kingdomCount;
+//            }
+//        }
+//        if (num > 0) effect.to->drawCards(num);
 
-        foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
-            if (skill->inherits("ViewAsSkill") && !skill->inherits("OneCardViewAsSkill")) {
+//        foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
+//            if (skill->inherits("ViewAsSkill") && !skill->inherits("OneCardViewAsSkill")) {
 
-            }
-        }
-        QString choice;
-        if (choice == "slash") {
-            effect.to->addMark("MilitaryOrder_Slash");
-        }
-        effect.to->setMark("MilitaryOrder", 1);
-    }
+//            }
+//        }
+//        QString choice;
+//        if (choice == "slash") {
+//            effect.to->addMark("MilitaryOrder_Slash");
+//        } else (choice == ) {
+//            effect.to->addMark("MilitaryOrder_Analeptic");
+//        }
+
+//        effect.to->setMark("MilitaryOrder", 1);
+//    }
         //effect.from->setFlags("Global_PlayPhaseTerminated");
     //effect.to->setMark("MilitaryOrderExtraTurn", 1);
-}
+//}
 
-class MilitaryOrderTarget : public TargetModSkill
-{
-public:
-    MilitaryOrderTarget() : TargetModSkill("#militaryorder-target")
-    {
-    }
+//class MilitaryOrderTarget : public TargetModSkill
+//{
+//public:
+//    MilitaryOrderTarget() : TargetModSkill("#militaryorder-target")
+//    {
+//    }
 
-    virtual int getResidueNum(const Player *from, const Card *card, const Player *) const
-    {
-        if (card->isKindOf("Slash")) {
-            return from->getMark("MilitaryOrder_Slash");
-        }
-        if (card->isKindOf("Analeptic")) {
-            return from->getMark("MilitaryOrder_Analeptic");
-        }
-        return 0;
-    }
-};
+//    virtual int getResidueNum(const Player *from, const Card *card, const Player *) const
+//    {
+//        if (card->isKindOf("Slash")) {
+//            return from->getMark("MilitaryOrder_Slash");
+//        }
+//        if (card->isKindOf("Analeptic")) {
+//            return from->getMark("MilitaryOrder_Analeptic");
+//        }
+//        return 0;
+//    }
+//};
 
-class MilitaryOrderSkill : public TriggerSkill
-{
-public:
-    MilitaryOrderSkill() : TriggerSkill("military_order")
-    {
-        events << EventPhaseChanging << Death;
-        global = true;
-    }
+//class MilitaryOrderSkill : public TriggerSkill
+//{
+//public:
+//    MilitaryOrderSkill() : TriggerSkill("military_order")
+//    {
+//        events << EventPhaseChanging << Death;
+//        global = true;
+//    }
 
-    virtual int getPriority() const
-    {
-        return 1;
-    }
+//    virtual int getPriority() const
+//    {
+//        return 1;
+//    }
 
-    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
-    {
+//    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+//    {
 //        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
 //            foreach (ServerPlayer *p, room->getAllPlayers()) {
 //                room->setPlayerMark(p, "MilitaryOrderExtraTurn", 0);
 //            }
 //        }
-    }
+//    }
 
-    virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
-    {
+//    virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+//    {
 //        TriggerList list;
 //        if (triggerEvent != EventPhaseEnd || player->getPhase() != Player::Discard) return list;
 //        foreach(ServerPlayer *p, room->getAllPlayers())
@@ -226,146 +229,146 @@ public:
 //                list.insert(p, QStringList(objectName()));
 
 //        return list;
-    }
+//    }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
-    {
-        return true;
-    }
+//    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
+//    {
+//        return true;
+//    }
 
-    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
-    {
-        if (triggerEvent == Death && player->getMark("MilitaryOrder") > 0) {
-            DeathStruct death = data.value<DeathStruct>();
-            ServerPlayer *from = death.damage->from;
-            if (from == player) {
-                player->setMark("MilitaryOrder", 0);
-                if (player->getPhase() == Player::Play) {
-                    player->setFlags("Global_PlayPhaseTerminated");
-                    player->setMark("MilitaryOrderComplete", 1);
-                }
-            }
-        } else if (triggerEvent == EventPhaseChanging) {
-            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
-            if (change.to != Player::NotActive) return false;
-            if (player->getMark("MilitaryOrderComplete") > 0) {
-                player->setMark("MilitaryOrderComplete", 0);
-            } else if (player->getMark("MilitaryOrder") > 0) {
-                player->setMark("MilitaryOrder", 0);
-                if (player->isAlive()) {
-                    room->killPlayer(player);
-                }
-            }
-            if (player->getMark("MilitaryOrder_Slash") > 0)
-                player->setMark("MilitaryOrder_Slash", 0);
-            if (player->getMark("MilitaryOrder_Analeptic") > 0)
-                player->setMark("MilitaryOrder_Analeptic", 0);
-        }
+//    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+//    {
+//        if (triggerEvent == Death && player->getMark("MilitaryOrder") > 0) {
+//            DeathStruct death = data.value<DeathStruct>();
+//            ServerPlayer *from = death.damage->from;
+//            if (from == player) {
+//                player->setMark("MilitaryOrder", 0);
+//                if (player->getPhase() == Player::Play) {
+//                    player->setFlags("Global_PlayPhaseTerminated");
+//                    player->setMark("MilitaryOrderComplete", 1);
+//                }
+//            }
+//        } else if (triggerEvent == EventPhaseChanging) {
+//            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+//            if (change.to != Player::NotActive) return false;
+//            if (player->getMark("MilitaryOrderComplete") > 0) {
+//                player->setMark("MilitaryOrderComplete", 0);
+//            } else if (player->getMark("MilitaryOrder") > 0) {
+//                player->setMark("MilitaryOrder", 0);
+//                if (player->isAlive()) {
+//                    room->killPlayer(player);
+//                }
+//            }
+//            if (player->getMark("MilitaryOrder_Slash") > 0)
+//                player->setMark("MilitaryOrder_Slash", 0);
+//            if (player->getMark("MilitaryOrder_Analeptic") > 0)
+//                player->setMark("MilitaryOrder_Analeptic", 0);
+//        }
 //        LogMessage l;
 //        l.type = "#Fangquan";
 //        l.to << ask_who;
 //        room->sendLog(l);
 
 //        ask_who->gainAnExtraTurn();
-        return false;
-    }
-};
+//        return false;
+//    }
+//};
 
-class MilitaryOrderMaxCards : public MaxCardsSkill
-{
-public:
-    MilitaryOrderMaxCards() : MaxCardsSkill("#militaryorder-maxcards")
-    {
-    }
+//class MilitaryOrderMaxCards : public MaxCardsSkill
+//{
+//public:
+//    MilitaryOrderMaxCards() : MaxCardsSkill("#militaryorder-maxcards")
+//    {
+//    }
 
-    virtual int getFixed(const Player *target) const
-    {
-        if (target->getMark("MilitaryOrderComplete") > 0)
-            return target->getMaxHp();
-        else
-            return -1;
-    }
-};
+//    virtual int getFixed(const Player *target) const
+//    {
+//        if (target->getMark("MilitaryOrderComplete") > 0)
+//            return target->getMaxHp();
+//        else
+//            return -1;
+//    }
+//};
 
-Poison::Poison(Suit suit, int number, bool is_transferable) : BasicCard(suit, number)
-{
-    setObjectName("poison");
-    target_fixed = true;
-    transferable = is_transferable;
-}
+//Poison::Poison(Suit suit, int number, bool is_transferable) : BasicCard(suit, number)
+//{
+//    setObjectName("poison");
+//    target_fixed = true;
+//    transferable = is_transferable;
+//}
 
-QString Poison::getSubtype() const
-{
-    return "harmful_card";
-}
+//QString Poison::getSubtype() const
+//{
+//    return "harmful_card";
+//}
 
-bool Poison::targetRated(const Player *to_select, const Player *self) const
-{
-    return to_select == self;
-}
+//bool Poison::targetRated(const Player *to_select, const Player *self) const
+//{
+//    return to_select == self;
+//}
 
-void Poison::onUse(Room *room, const CardUseStruct &card_use) const
-{
-    CardUseStruct use = card_use;
-    if (use.to.isEmpty())
-        use.to << use.from;
-    BasicCard::onUse(room, use);
-}
+//void Poison::onUse(Room *room, const CardUseStruct &card_use) const
+//{
+//    CardUseStruct use = card_use;
+//    if (use.to.isEmpty())
+//        use.to << use.from;
+//    BasicCard::onUse(room, use);
+//}
 
-void Poison::onEffect(const CardEffectStruct &) const
-{
-}
+//void Poison::onEffect(const CardEffectStruct &) const
+//{
+//}
 
-bool Poison::isAvailable(const Player *player) const
-{
-    return !player->isProhibited(player, this) && BasicCard::isAvailable(player);
-}
+//bool Poison::isAvailable(const Player *player) const
+//{
+//    return !player->isProhibited(player, this) && BasicCard::isAvailable(player);
+//}
 
-class PoisonSkill : public TriggerSkill
-{
-public:
-    PoisonSkill() : TriggerSkill("poison")
-    {
-        events << CardsMoveOneTime;
-        frequency = Compulsory;
-        global = true;
-    }
+//class PoisonSkill : public TriggerSkill
+//{
+//public:
+//    PoisonSkill() : TriggerSkill("poison")
+//    {
+//        events << CardsMoveOneTime;
+//        frequency = Compulsory;
+//        global = true;
+//    }
 
-    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
-    {
-        QStringList trigger_skill;
-        if (TriggerSkill::triggerable(player)) {
+//    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+//    {
+//        QStringList trigger_skill;
+//        if (TriggerSkill::triggerable(player)) {
 
-            QVariantList move_datas = data.toList();
-            foreach (QVariant move_data, move_datas) {
-                CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
-                if (move.from == player && (move.from_places.contains(Player::PlaceHand))
-                    && !(move.to == player && (move.to_place == Player::PlaceHand))) {
-                    //int i = 0;
-                    foreach (int id, move.card_ids) {
-                        //bool open = move.open.at(i);
-                        //i++;
-                        if (Sanguosha->getCard(id)->isKindOf("Poison"))
-                            trigger_skill << objectName();
-                    }
-                }
-            }
-        }
-        return trigger_skill;
-    }
+//            QVariantList move_datas = data.toList();
+//            foreach (QVariant move_data, move_datas) {
+//                CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+//                if (move.from == player && (move.from_places.contains(Player::PlaceHand))
+//                    && !(move.to == player && (move.to_place == Player::PlaceHand))) {
+//                    //int i = 0;
+//                    foreach (int id, move.card_ids) {
+//                        //bool open = move.open.at(i);
+//                        //i++;
+//                        if (Sanguosha->getCard(id)->isKindOf("Poison"))
+//                            trigger_skill << objectName();
+//                    }
+//                }
+//            }
+//        }
+//        return trigger_skill;
+//    }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
-    {
-        room->broadcastSkillInvoke(objectName(), player);
-        return true;
-    }
+//    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
+//    {
+//        room->broadcastSkillInvoke(objectName(), player);
+//        return true;
+//    }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *player) const
-    {
-        room->loseHp(player);
-        return false;
-    }
-};
+//    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *player) const
+//    {
+//        room->loseHp(player);
+//        return false;
+//    }
+//};
 
 
 LangKhachPackage::LangKhachPackage()
@@ -377,34 +380,34 @@ LangKhachPackage::LangKhachPackage()
 
 ADD_PACKAGE(LangKhach)
 
-LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPack)
-{
-    QList<Card *> cards;
+//LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPack)
+//{
+//    QList<Card *> cards;
 
-    cards
-        << new MilitaryOrder(Card::Club, 3);
+//    cards
+//        << new MilitaryOrder(Card::Club, 3);
 
-    foreach(Card *card, cards)
-        card->setParent(this);
+//    foreach(Card *card, cards)
+//        card->setParent(this);
 
-    skills << new MilitaryOrderSkill << new MilitaryOrderMaxCards;
-}
+//    skills << new MilitaryOrderSkill << new MilitaryOrderMaxCards;
+//}
 
-ADD_PACKAGE(LangKhachCard)
+//ADD_PACKAGE(LangKhachCard)
 
-PoisonCardPackage::PoisonCardPackage() : Package("poison_card", CardPack)
-{
-    QList<Card *> cards;
+//PoisonCardPackage::PoisonCardPackage() : Package("poison_card", CardPack)
+//{
+//    QList<Card *> cards;
 
-    cards
-        << new Poison(Card::Spade, 3)
-        << new Poison(Card::Spade, 9)
-        << new Poison(Card::Club, 3);
+//    cards
+//        << new Poison(Card::Spade, 3)
+//        << new Poison(Card::Spade, 9)
+//        << new Poison(Card::Club, 3);
 
-    foreach(Card *card, cards)
-        card->setParent(this);
+//    foreach(Card *card, cards)
+//        card->setParent(this);
 
-    skills << new PoisonSkill;
-}
+//    skills << new PoisonSkill;
+//}
 
-ADD_PACKAGE(PoisonCard)
+//ADD_PACKAGE(PoisonCard)
