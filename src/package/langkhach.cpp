@@ -13,14 +13,23 @@ public:
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == GeneralShown && !data.toBool() && player->getMark("HaventShowGeneral2") > 0) {
+            if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
+                room->addPlayerMark(player, "@companion");
+                room->removeTag("bianhua-choice");
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         if (TriggerSkill::triggerable(player)) {
-            if (triggerEvent == GeneralShown) {
-                if ((data.toBool() && player->getMark("HaventShowGeneral") > 0)
-                        || (!data.toBool() && player->getMark("HaventShowGeneral2") > 0))
-                return QStringList(objectName());
-            }
+//            if (triggerEvent == GeneralShown) {
+            if (data.toBool() && player->getMark("HaventShowGeneral") > 0)
+            return QStringList(objectName());
+//            }
 //            else if (triggerEvent == Dying) {
 //                DyingStruct dying = data.value<DyingStruct>();
 //                if (dying.who == player)
@@ -31,7 +40,7 @@ public:
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *ask_who) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *ask_who) const
     {
         if (!ask_who->hasShownSkill(this)){
 //            if (triggerEvent == GeneralShown)
@@ -40,72 +49,65 @@ public:
 //            if (dying.who == player)
 //                return player->askForSkillInvoke(this, data);
         }
+        if (!player->cheakSkillLocation(objectName(), true)) {
+            return false;
+        }
         room->sendCompulsoryTriggerLog(player, "bianhua");
         room->broadcastSkillInvoke("bianhua");
         return true;
     }
 
-    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
-        //if (triggerEvent == Dying) return false;
-        if (player->cheakSkillLocation(objectName(), true)) {
-            if (data.toBool()) {
-                QList<ServerPlayer *> targets;
+        QList<ServerPlayer *> targets;
 
-                foreach (ServerPlayer *p, room->getAlivePlayers()) {
-                    if (p == player) continue;
-                    if (p->hasShownGeneral1() && !p->getActualGeneral1Name().contains("sujiang")) {
-                        targets << p;
-                        continue;
-                    }
-                    if (p->hasShownGeneral2() && !p->getActualGeneral2Name().contains("sujiang")) {
-                        targets << p;
-                        continue;
-                    }
-                }
-                if (targets.isEmpty()) return false;
-                ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", false, true);
-                if (to != NULL) {
-                    QStringList choicelist;
-                    if (to->hasShownGeneral1() && !to->getActualGeneral1Name().contains("sujiang")) {
-                        choicelist << to->getActualGeneral1Name();
-                    }
-                    if (to->hasShownGeneral2() && !to->getActualGeneral2Name().contains("sujiang")) {
-                        choicelist << to->getActualGeneral2Name();
-                    }
-                    QString choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant::fromValue(to), "@bianhua-choose");
-                    const General *general = Sanguosha->getGeneral(choice);
-                    QList<const Skill *> skills = general->getVisibleSkillList();
-        //                pg->setGender(general->getGender());
-        //                pg->addCompanion(general->getCompanions());
-                    foreach (const Skill *skill, skills) {
-        //                    player->getActualGeneral1()->addSkill(skill);
-                        if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
-                        if (skill->relateToPlace(false)) continue;
-                        room->acquireSkill(player, skill, true, true);
-                        if (!skill->getLimitMark().isEmpty()) {
-                            room->setPlayerMark(player, skill->getLimitMark(), 1);
-                        }
-                    }
-                    player->setGender(general->getGender());
-                    if (player->hasShownGeneral2() && player->getActualGeneral2()->isCompanionWith(choice)) {
-                        room->addPlayerMark(player, "@companion");
-                    } else {
-                        room->setTag("bianhua-choice", choice);
-                    }
-                    room->addPlayerMark(player, choice);
-                }
-            } else {
-                if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
-                    room->addPlayerMark(player, "@companion");
-                    room->removeTag("bianhua-choice");
+        foreach (ServerPlayer *p, room->getAlivePlayers()) {
+            if (p == player) continue;
+            if (p->hasShownGeneral1() && !p->getActualGeneral1Name().contains("sujiang")) {
+                targets << p;
+                continue;
+            }
+            if (p->hasShownGeneral2() && !p->getActualGeneral2Name().contains("sujiang")) {
+                targets << p;
+                continue;
+            }
+        }
+        if (targets.isEmpty()) return false;
+        ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", false, true);
+        if (to != NULL) {
+            QStringList choicelist;
+            if (to->hasShownGeneral1() && !to->getActualGeneral1Name().contains("sujiang")) {
+                choicelist << to->getActualGeneral1Name();
+            }
+            if (to->hasShownGeneral2() && !to->getActualGeneral2Name().contains("sujiang")) {
+                choicelist << to->getActualGeneral2Name();
+            }
+            QString choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant::fromValue(to), "@bianhua-choose");
+            const General *general = Sanguosha->getGeneral(choice);
+            LogMessage log;
+            log.type = "#bianhua-choice";
+            log.from = player;
+            log.arg = choice;
+            room->sendLog(log);
+            room->addPlayerMark(player, "##" + choice);
+            QList<const Skill *> skills = general->getVisibleSkillList();
+//                pg->setGender(general->getGender());
+//                pg->addCompanion(general->getCompanions());
+            foreach (const Skill *skill, skills) {
+//                    player->getActualGeneral1()->addSkill(skill);
+                if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
+                if (skill->relateToPlace(false)) continue;
+                room->acquireSkill(player, skill, true, true);
+                if (!skill->getLimitMark().isEmpty()) {
+                    room->setPlayerMark(player, skill->getLimitMark(), 1);
                 }
             }
-        } else {
-            LogMessage log;
-            log.type = "#CheatingDeputyCareerist";
-            log.from = player;
-            room->sendLog(log);
+            player->setGender(general->getGender());
+            if (player->hasShownGeneral2() && player->getActualGeneral2()->isCompanionWith(choice)) {
+                room->addPlayerMark(player, "@companion");
+            } else {
+                room->setTag("bianhua-choice", choice);
+            }
         }
 
         return false;
