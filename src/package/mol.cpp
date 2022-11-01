@@ -2526,14 +2526,10 @@ public:
         return true;
     }
 
-    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
         if (!TriggerSkill::triggerable(player) || player->isNude()) return QStringList();
-        DamageStruct damage = data.value<DamageStruct>();
-        QStringList trigger_skill;
-        for (int i = 1; i <= damage.damage; i++)
-            trigger_skill << objectName();
-        return trigger_skill;
+        return QStringList(objectName());
     }
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
@@ -3742,7 +3738,7 @@ public:
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
         if (TriggerSkill::triggerable(player)) {
-            if (triggerEvent == TurnedOver || (triggerEvent == ChainStateChanged && player->isChained())) {
+            if ((triggerEvent == TurnedOver && !player->faceUp()) || (triggerEvent == ChainStateChanged && player->isChained())) {
                 return QStringList(objectName());
             } else if (triggerEvent == CommandVerifying) {
                 return QStringList(objectName());
