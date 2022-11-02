@@ -808,7 +808,7 @@
     </message>
     <message>
         <source>NoGender</source>
-        <translation>Không phân biệt</translation>
+        <translation>Vô tính</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2640,7 +2640,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>NoGender</source>
-        <translation>Không phân biệt</translation>
+        <translation>Vô tính</translation>
     </message>
     <message>
         <source>&lt;font color=%1&gt;This is an Lua extension&lt;/font&gt;</source>

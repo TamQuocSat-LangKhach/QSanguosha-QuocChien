@@ -13,15 +13,19 @@ public:
         frequency = Compulsory;
     }
 
-    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-    {
-        if (triggerEvent == GeneralShown && !data.toBool() && player->getMark("HaventShowGeneral2") > 0) {
-            if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
-                room->addPlayerMark(player, "@companion");
-                room->removeTag("bianhua-choice");
-            }
-        }
-    }
+//    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+//    {
+//        if (triggerEvent == GeneralShown && !data.toBool() && player->getMark("HaventShowGeneral2") > 0) {
+//            if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
+//                room->setPlayerFlag(player, "FakeCompanion");
+//                room->removeTag("bianhua-choice");
+//            }
+//        }
+//        if (triggerEvent == GeneralShowed && player->hasFlag("FakeCompanion")) {
+//            room->setPlayerFlag(player, "-FakeCompanion");
+//            room->addPlayerMark(player, "@companion");
+//        }
+//    }
 
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
@@ -103,11 +107,11 @@ public:
                 }
             }
             player->setGender(general->getGender());
-            if (player->hasShownGeneral2() && player->getActualGeneral2()->isCompanionWith(choice)) {
-                room->addPlayerMark(player, "@companion");
-            } else {
-                room->setTag("bianhua-choice", choice);
-            }
+            if (player->getActualGeneral2()->isCompanionWith(choice))
+                room->addPlayerMark(player, "CompanionEffect");
+//            } else {
+//                room->setTag("bianhua-choice", choice);
+//            }
         }
 
         return false;
@@ -377,6 +381,7 @@ LangKhachPackage::LangKhachPackage()
     : Package("langkhach")
 {
     General *wuding = new General(this, "wuding", "careerist", 3);
+    wuding->setGender(General::Neuter);
     wuding->addSkill(new Bianhua);
 }
 
