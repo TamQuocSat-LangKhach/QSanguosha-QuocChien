@@ -9,36 +9,26 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown;// << Dying;
+        events << GeneralShown;
         frequency = Compulsory;
     }
 
-//    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-//    {
-//        if (triggerEvent == GeneralShown && !data.toBool() && player->getMark("HaventShowGeneral2") > 0) {
-//            if (!room->getTag("bianhua-choice").isNull() && player->getActualGeneral2()->isCompanionWith(room->getTag("bianhua-choice").toString())) {
-//                room->setPlayerFlag(player, "FakeCompanion");
-//                room->removeTag("bianhua-choice");
-//            }
-//        }
-//        if (triggerEvent == GeneralShowed && player->hasFlag("FakeCompanion")) {
-//            room->setPlayerFlag(player, "-FakeCompanion");
-//            room->addPlayerMark(player, "@companion");
-//        }
-//    }
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    {
+        if (triggerEvent == GeneralShowed && player->hasShownAllGenerals()) {
+            if (player->getMark("CompanionEffect") > 0 && !player->getMark("BianhuaCompanionChecked") > 0) {
+                room->addPlayerMark(player, "@companion");
+            }
+            room->addPlayerMark(player, "BianhuaCompanionChecked");
+            room->removePlayerMark(player, "CompanionEffect");
+        }
+    }
 
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         if (TriggerSkill::triggerable(player)) {
-//            if (triggerEvent == GeneralShown) {
             if (data.toBool() && player->getMark("HaventShowGeneral") > 0)
             return QStringList(objectName());
-//            }
-//            else if (triggerEvent == Dying) {
-//                DyingStruct dying = data.value<DyingStruct>();
-//                if (dying.who == player)
-//                    return QStringList(objectName());
-//            }
         }
 
         return QStringList();
@@ -47,11 +37,7 @@ public:
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *ask_who) const
     {
         if (!ask_who->hasShownSkill(this)){
-//            if (triggerEvent == GeneralShown)
-                return false;
-//            DyingStruct dying = data.value<DyingStruct>();
-//            if (dying.who == player)
-//                return player->askForSkillInvoke(this, data);
+            return false;
         }
         if (!player->cheakSkillLocation(objectName(), true)) {
             return false;
@@ -95,10 +81,7 @@ public:
             room->sendLog(log);
             room->addPlayerMark(player, "##" + choice);
             QList<const Skill *> skills = general->getVisibleSkillList();
-//                pg->setGender(general->getGender());
-//                pg->addCompanion(general->getCompanions());
             foreach (const Skill *skill, skills) {
-//                    player->getActualGeneral1()->addSkill(skill);
                 if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
                 if (skill->relateToPlace(false)) continue;
                 room->acquireSkill(player, skill, true, true);
@@ -109,12 +92,9 @@ public:
             player->setGender(general->getGender());
             if (player->getActualGeneral2()->isCompanionWith(choice))
                 room->addPlayerMark(player, "CompanionEffect");
-//            } else {
-//                room->setTag("bianhua-choice", choice);
-//            }
         }
 
-        return false;
+        return true;
     }
 };
 

@@ -129,7 +129,8 @@ SOURCES += \
     src/package/lord-ex.cpp \
     src/package/newsgs.cpp \
     src/package/mol.cpp\
-    src/package/langkhach.cpp
+    src/package/langkhach.cpp\
+    src/package/joy.cpp\
 
 HEADERS += \
     src/client/aux-skills.h \
@@ -250,7 +251,8 @@ HEADERS += \
     src/package/lord-ex.h \
     src/package/newsgs.h \
     src/package/mol.h\
-    src/package/langkhach.h
+    src/package/langkhach.h\
+    src/package/joy.h\
 
 FORMS += \
     src/dialog/cardoverview.ui \
