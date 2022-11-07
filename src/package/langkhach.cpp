@@ -9,24 +9,24 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown;
+        events << GeneralShown << GeneralShowed;
         frequency = Compulsory;
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
         if (triggerEvent == GeneralShowed && player->hasShownAllGenerals()) {
-            if (player->getMark("CompanionEffect") > 0 && !player->getMark("BianhuaCompanionChecked") > 0) {
+            if (player->getMark("FakeCompanion") > 0 && !player->getMark("BianhuaCompanionChecked") > 0) {
                 room->addPlayerMark(player, "@companion");
             }
             room->addPlayerMark(player, "BianhuaCompanionChecked");
-            room->removePlayerMark(player, "CompanionEffect");
+            room->removePlayerMark(player, "FakeCompanion");
         }
     }
 
-    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (TriggerSkill::triggerable(player)) {
+        if (triggerEvent == GeneralShown && TriggerSkill::triggerable(player)) {
             if (data.toBool() && player->getMark("HaventShowGeneral") > 0)
             return QStringList(objectName());
         }
@@ -91,10 +91,10 @@ public:
             }
             player->setGender(general->getGender());
             if (player->getActualGeneral2()->isCompanionWith(choice))
-                room->addPlayerMark(player, "CompanionEffect");
+                room->addPlayerMark(player, "FakeCompanion");
         }
 
-        return true;
+        return false;
     }
 };
 
