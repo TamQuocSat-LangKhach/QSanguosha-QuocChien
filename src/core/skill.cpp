@@ -68,7 +68,7 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
     if (canShowInPlay() && getFrequency() != Compulsory)
         desc.prepend(QString("<font color=gray>(%1)</font><br/>").arg(Sanguosha->translate("canshowinplay")));
     else if (!canPreshow()) {
-        desc.prepend(QString("<font color=gray>(%1)</font><br/>").arg(tr("this skill cannot preshow")));
+        //desc.prepend(QString("<font color=gray>(%1)</font><br/>").arg(tr("this skill cannot preshow")));
     }
 
     QString skill_name = objectName();

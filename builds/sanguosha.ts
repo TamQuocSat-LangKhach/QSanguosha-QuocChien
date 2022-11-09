@@ -3370,7 +3370,7 @@ Lý do:
     </message>
     <message>
         <source>this skill can show in play</source>
-        <translation></translation>
+        <translation>Có thể lật tướng trong giai đoạn hành động</translation>
     </message>
 </context>
 <context>
