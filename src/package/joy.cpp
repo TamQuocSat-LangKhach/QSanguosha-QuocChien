@@ -38,27 +38,33 @@ public:
         global = true;
     }
 
-    virtual bool effect(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data) const {
-
+    virtual void record(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (player->getPhase() == Player::NotActive) return;
         CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
         if (!move.from)
-            return false;
+            return;
         if (move.from->objectName() != player->objectName())
-            return false;
+            return;
         if (move.to_place == Player::PlaceTable || move.to_place == Player::DiscardPile) {
 
-            QList<Card *> shits;
+            QList<int> shits;
             for (int index = 0; index < move.card_ids.length(); index++) {
                 Card *shit = Sanguosha->getCard(move.card_ids.at(index));
                 if (shit->isKindOf("Shit")) {
                     if (move.from_places.at(index) == Player::PlaceHand)
-                        shits.append(shit);
+                        shits.append(shit->getId());
                 }
             }
             if (shits.isEmpty())
-                return false;
+                return;
+            if (shits.length() > 1) {
+                AskForMoveCardsStruct data = room->askForArrangeCards(player, shits, Room::GuanxingUpOnly);
+                shits = data.top;
+            }
 
-            foreach(Card *shit, shits) {
+            foreach(int shitId, shits) {
+                Card *shit = Sanguosha->getCard(shitId);
                 LogMessage log;
                 log.card_str = shit->toString();
                 log.from = player;
@@ -97,13 +103,7 @@ public:
                     break;
             }
         }
-        return false;
-    }
 
-    virtual bool triggerable(Player *target) const {
-        if (target)
-            return target->getPhase() != Player::NotActive;
-        return false;
     }
 
     int getPriority() const {
@@ -111,6 +111,31 @@ public:
     }
 };
 
+
+//class PoisonSkill : public TriggerSkill
+//{
+//public:
+//    PoisonSkill() : TriggerSkill("poison")
+//    {
+//        events << CardsMoveOneTime;
+//        frequency = Compulsory;
+//        global = true;
+//    }
+
+
+
+//    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
+//    {
+//        room->broadcastSkillInvoke(objectName(), player);
+//        return true;
+//    }
+
+//    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *player) const
+//    {
+//        room->loseHp(player);
+//        return false;
+//    }
+//};
 // -----------  Deluge -----------------
 
 Deluge::Deluge(Card::Suit suit, int number)
