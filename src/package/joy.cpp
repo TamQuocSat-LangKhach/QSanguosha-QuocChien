@@ -297,47 +297,47 @@ void MudSlide::takeEffect(ServerPlayer *target) const
     }
 }
 
-class GrabPeach : public TriggerSkill
-{
-public:
-    GrabPeach() :TriggerSkill("grab_peach")
-    {
-        events << CardUsed;
-        global = true;
-    }
+//class GrabPeach : public TriggerSkill
+//{
+//public:
+//    GrabPeach() :TriggerSkill("grab_peach")
+//    {
+//        events << CardUsed;
+//        global = true;
+//    }
 
-    bool triggerable(const ServerPlayer *target) const
-    {
-        return target != NULL;
-    }
+//    bool triggerable(const ServerPlayer *target) const
+//    {
+//        return target != NULL;
+//    }
 
-    bool trigger(TriggerEvent, Room* room, ServerPlayer *player, QVariant &data) const
-    {
-        CardUseStruct use = data.value<CardUseStruct>();
-        if (use.card->isKindOf("Peach")) {
-            QList<ServerPlayer *> players = room->getOtherPlayers(player);
+//    bool trigger(TriggerEvent, Room* room, ServerPlayer *player, QVariant &data) const
+//    {
+//        CardUseStruct use = data.value<CardUseStruct>();
+//        if (use.card->isKindOf("Peach")) {
+//            QList<ServerPlayer *> players = room->getOtherPlayers(player);
 
-            foreach (ServerPlayer *p, players) {
-                if (p->getOffensiveHorse() != NULL && p->getOffensiveHorse()->isKindOf("Monkey") && p->getMark("Equips_Nullified_to_Yourself") == 0 &&
-                    p->askForSkillInvoke("grab_peach", data)) {
-                    room->throwCard(p->getOffensiveHorse(), p);
-                    p->obtainCard(use.card);
+//            foreach (ServerPlayer *p, players) {
+//                if (p->getOffensiveHorse() != NULL && p->getOffensiveHorse()->isKindOf("Monkey") && p->getMark("Equips_Nullified_to_Yourself") == 0 &&
+//                    p->askForSkillInvoke("grab_peach", data)) {
+//                    room->throwCard(p->getOffensiveHorse(), p);
+//                    p->obtainCard(use.card);
 
-                    use.to.clear();
-                    data = QVariant::fromValue(use);
-                }
-            }
-        }
+//                    use.to.clear();
+//                    data = QVariant::fromValue(use);
+//                }
+//            }
+//        }
 
-        return false;
-    }
-};
+//        return false;
+//    }
+//};
 
-Monkey::Monkey(Card::Suit suit, int number)
-    :OffensiveHorse(suit, number)
-{
-    setObjectName("monkey");
-}
+//Monkey::Monkey(Card::Suit suit, int number)
+//    :OffensiveHorse(suit, number)
+//{
+//    setObjectName("monkey");
+//}
 
 
 //class GaleShellSkill : public ArmorSkill
@@ -600,63 +600,63 @@ JoyPackage::JoyPackage()
     skills << new ShitEffect;
 }
 
-class YxSwordSkill : public WeaponSkill
-{
-public:
-    YxSwordSkill() :WeaponSkill("yx_sword")
-    {
-        events << DamageCaused;
-    }
+//class YxSwordSkill : public WeaponSkill
+//{
+//public:
+//    YxSwordSkill() :WeaponSkill("yx_sword")
+//    {
+//        events << DamageCaused;
+//    }
 
-    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-    {
-        DamageStruct damage = data.value<DamageStruct>();
-        if (damage.card && damage.card->isKindOf("Slash")) {
-            QList<ServerPlayer *> players = room->getOtherPlayers(player);
-            QMutableListIterator<ServerPlayer *> itor(players);
+//    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+//    {
+//        DamageStruct damage = data.value<DamageStruct>();
+//        if (damage.card && damage.card->isKindOf("Slash")) {
+//            QList<ServerPlayer *> players = room->getOtherPlayers(player);
+//            QMutableListIterator<ServerPlayer *> itor(players);
 
-            while (itor.hasNext()) {
-                itor.next();
-                if (!player->inMyAttackRange(itor.value()))
-                    itor.remove();
-            }
+//            while (itor.hasNext()) {
+//                itor.next();
+//                if (!player->inMyAttackRange(itor.value()))
+//                    itor.remove();
+//            }
 
-            if (players.isEmpty())
-                return false;
+//            if (players.isEmpty())
+//                return false;
 
-            QVariant _data = QVariant::fromValue(damage);
-            room->setTag("YxSwordData", _data);
-            ServerPlayer *target = room->askForPlayerChosen(player, players, objectName(), "@yxsword-select", true, true);
-            room->removeTag("YxSwordData");
-            if (target != NULL) {
-                damage.from = target;
-                data = QVariant::fromValue(damage);
-                room->moveCardTo(player->getWeapon(), player, target, Player::PlaceHand,
-                    CardMoveReason(CardMoveReason::S_REASON_TRANSFER, player->objectName(), objectName(), QString()));
-            }
-        }
-        return damage.to->isDead();
-    }
-};
+//            QVariant _data = QVariant::fromValue(damage);
+//            room->setTag("YxSwordData", _data);
+//            ServerPlayer *target = room->askForPlayerChosen(player, players, objectName(), "@yxsword-select", true, true);
+//            room->removeTag("YxSwordData");
+//            if (target != NULL) {
+//                damage.from = target;
+//                data = QVariant::fromValue(damage);
+//                room->moveCardTo(player->getWeapon(), player, target, Player::PlaceHand,
+//                    CardMoveReason(CardMoveReason::S_REASON_TRANSFER, player->objectName(), objectName(), QString()));
+//            }
+//        }
+//        return damage.to->isDead();
+//    }
+//};
 
-YxSword::YxSword(Suit suit, int number)
-    :Weapon(suit, number, 3)
-{
-    setObjectName("yx_sword");
-}
+//YxSword::YxSword(Suit suit, int number)
+//    :Weapon(suit, number, 3)
+//{
+//    setObjectName("yx_sword");
+//}
 
-JoyEquipPackage::JoyEquipPackage()
-    : Package("JoyEquip")
-{
-    (new Monkey(Card::Diamond, 5))->setParent(this);
+//JoyEquipPackage::JoyEquipPackage()
+//    : Package("JoyEquip")
+//{
+//    (new Monkey(Card::Diamond, 5))->setParent(this);
 //    (new GaleShell(Card::Heart, 1))->setParent(this);
-    (new YxSword(Card::Club, 9))->setParent(this);
+//    (new YxSword(Card::Club, 9))->setParent(this);
 //    (new FiveLines(Card::Heart, 5))->setParent(this);
 
-    type = CardPack;
-    skills << new YxSwordSkill << new GrabPeach;
-}
+//    type = CardPack;
+//    skills << new YxSwordSkill << new GrabPeach;
+//}
 
 ADD_PACKAGE(Joy)
 ADD_PACKAGE(Disaster)
-ADD_PACKAGE(JoyEquip)
+//ADD_PACKAGE(JoyEquip)

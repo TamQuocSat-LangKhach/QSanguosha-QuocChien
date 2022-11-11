@@ -20,13 +20,13 @@ public:
     DisasterPackage();
 };
 
-class JoyEquipPackage : public Package
-{
-    Q_OBJECT
+//class JoyEquipPackage : public Package
+//{
+//    Q_OBJECT
 
-public:
-    JoyEquipPackage();
-};
+//public:
+//    JoyEquipPackage();
+//};
 
 class Shit: public BasicCard
 {
@@ -88,13 +88,13 @@ public:
     void takeEffect(ServerPlayer *target) const;
 };
 
-class Monkey : public OffensiveHorse
-{
-    Q_OBJECT
+//class Monkey : public OffensiveHorse
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE Monkey(Card::Suit suit, int number);
-};
+//public:
+//    Q_INVOKABLE Monkey(Card::Suit suit, int number);
+//};
 
 //class GaleShell :public Armor
 //{
@@ -106,13 +106,13 @@ public:
 //    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
 //};
 
-class YxSword : public Weapon
-{
-    Q_OBJECT
+//class YxSword : public Weapon
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE YxSword(Card::Suit suit, int number);
-};
+//public:
+//    Q_INVOKABLE YxSword(Card::Suit suit, int number);
+//};
 
 //class FiveLines : public Armor
 //{
