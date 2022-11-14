@@ -32,7 +32,7 @@ QString Shit::getSubtype() const{
 class ShitEffect : public TriggerSkill
 {
 public:
-    ShitEffect() : TriggerSkill("shit_effect") {
+    ShitEffect() : TriggerSkill("shit") {
         events << CardsMoveOneTime;
         frequency = Compulsory;
         global = true;
@@ -41,12 +41,17 @@ public:
     virtual void record(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (player->getPhase() == Player::NotActive) return;
-        CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
-        if (!move.from)
-            return;
-        if (move.from->objectName() != player->objectName())
-            return;
-        if (move.to_place == Player::PlaceTable || move.to_place == Player::DiscardPile) {
+        QVariantList move_datas = data.toList();
+
+        foreach (QVariant move_data, move_datas) {
+            CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+
+            if (!move.from)
+                return;
+            if (move.from->objectName() != player->objectName())
+                return;
+            if (move.to_place != Player::PlaceTable && move.to_place != Player::DiscardPile)
+                return;
 
             QList<int> shits;
             for (int index = 0; index < move.card_ids.length(); index++) {
@@ -102,11 +107,11 @@ public:
                 if (player->isDead())
                     break;
             }
-        }
 
+        }
     }
 
-    int getPriority() const {
+    virtual int getPriority() const {
         return 1;
     }
 };
