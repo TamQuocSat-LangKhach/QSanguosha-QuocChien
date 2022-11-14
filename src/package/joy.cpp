@@ -111,6 +111,11 @@ public:
         }
     }
 
+    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *, QVariant &, ServerPlayer* &) const
+    {
+        return QStringList();
+    }
+
     virtual int getPriority() const {
         return 1;
     }

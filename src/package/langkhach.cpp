@@ -148,8 +148,24 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         QStringList choicelist;
         choicelist << "slash" << "analeptic";
         foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
-            if (skill->inherits("ViewAsSkill") && skill->getDescription().contains("lần trong giai đoạn hành động")) {
-                choicelist << skill->objectName();
+//            static QSet<QString> skill_set;
+//            if (skill_set.isEmpty()) {
+//                skill_set.insert("qice");
+//                skill_set.insert("zaoyun");
+//                skill_set.insert("mingfa");
+//            }
+            if (skill->getDescription().contains("lần trong giai đoạn hành động")) {
+                if (skill->inherits("ViewAsSkill")) {
+                    choicelist << skill->objectName();
+                } else if (skill->inherits("TriggerSkill")) {
+                    QList<const Skill*> relatedSkillList = Sanguosha->getRelatedSkills(skill->objectName());
+                    foreach (const Skill *relatedSkill, relatedSkillList) {
+                        if (relatedSkill->inherits("ViewAsSkill")) {
+                            choicelist << skill->objectName();
+                            break;
+                        }
+                    }
+                }
             }
         }
         QString choice = room->askForChoice(effect.to, "military_order", choicelist.join("+"), QVariant(), "military_order_choose", choicelist.join("+"));
@@ -158,6 +174,7 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         } else if (choice == "analeptic") {
             room->addPlayerMark(effect.to, "MilitaryOrder_Analeptic");
         } else if (choice != NULL) {
+            room->addPlayerHistory(effect.to, "ViewAsSkill_" + choice + "Card", -1);
             room->addPlayerHistory(effect.to, QString(choice.at(0).toUpper()) + choice.mid(1) + "Card", -1);
         }
         room->setPlayerMark(effect.to, "MilitaryOrder", 1);
@@ -244,6 +261,163 @@ public:
     }
 };
 
+//class FemaleOutfitSkill : public ArmorSkill
+//{
+//public:
+//    FemaleOutfitSkill() : ArmorSkill("FemaleOutfit")
+//    {
+//        events << CardsMoveOneTime;
+//        frequency = Compulsory;
+//    }
+
+//    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+//    {
+//        if (player->isMale()) {
+//            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+//            if (player->hasFlag("TianjituDiscard")) {
+//                if (move.to == player && move.to_place == Player::PlaceEquip) {
+//                    for (int i = 0; i < move.card_ids.size(); i++) {
+//                        const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
+//                        if (card->objectName() == objectName()) {
+//                            player->setFlags("-TianjituDiscard");
+//                            room->setEmotion(player, "treasure/tianjitu");
+
+//                            bool discard = false;
+//                            foreach (const Card *card, player->getCards("he")) {
+//                                if (card->objectName() == objectName()) continue;
+//                                int id = card->getEffectiveId();
+//                                if (!player->canDiscard(player, id)) continue;
+//                                discard = true;
+//                            }
+//                            if (discard)
+//                                room->askForDiscard(player, objectName(), 1, 1, false, true, QString(), "^Tianjitu");
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return QStringList();
+//    }
+
+//    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+//    {
+//        if (triggerEvent == CardsMoveOneTime) return true;
+//        return ArmorSkill::cost(room, player, data);
+//    }
+
+//    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+//    {
+//        if (triggerEvent == DamageInflicted) {
+//            DamageStruct damage = data.value<DamageStruct>();
+//            room->setEmotion(player, "armor/silver_lion");
+//            LogMessage log;
+//            log.type = "#SilverLion";
+//            log.from = player;
+//            log.arg = QString::number(damage.damage);
+//            log.arg2 = objectName();
+//            room->sendLog(log);
+
+//            damage.damage = 1;
+//            data = QVariant::fromValue(damage);
+//        } else {
+
+//            room->notifySkillInvoked(player, objectName());
+
+//            room->setEmotion(player, "armor/silver_lion");
+//            RecoverStruct recover;
+//            room->recover(player, recover);
+
+//            return false;
+//        }
+//        return false;
+//    }
+
+//    bool triggerable(const ServerPlayer *target) const
+//    {
+//        return target != NULL && target->isAlive();
+//    }
+
+//    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+//    {
+//        CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
+//        if (player->hasFlag("TianjituDiscard")) {
+//            if (move.to == player && move.to_place == Player::PlaceEquip) {
+//                for (int i = 0; i < move.card_ids.size(); i++) {
+//                    const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
+//                    if (card->objectName() == objectName()) {
+//                        player->setFlags("-TianjituDiscard");
+//                        room->setEmotion(player, "treasure/tianjitu");
+
+//                        bool discard = false;
+//                        foreach (const Card *card, player->getCards("he")) {
+//                            if (card->objectName() == objectName()) continue;
+//                            int id = card->getEffectiveId();
+//                            if (!player->canDiscard(player, id)) continue;
+//                            discard = true;
+//                        }
+//                        if (discard)
+//                            room->askForDiscard(player, objectName(), 1, 1, false, true, QString(), "^Tianjitu");
+//                    }
+//                }
+//            }
+//        }
+//        if (player->hasFlag("TianjituDraw")) {
+//            if (move.from != player || !move.from_places.contains(Player::PlaceEquip)) return false;
+//            for (int i = 0; i < move.card_ids.size(); i++) {
+//                if (move.from_places[i] != Player::PlaceEquip) continue;
+//                const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
+//                if (card->objectName() == objectName()) {
+//                    player->setFlags("-TianjituDraw");
+//                    room->setEmotion(player, "treasure/tianjitu");
+//                    player->drawCards(5 - player->getHandcardNum(), objectName());
+//                }
+//            }
+//        }
+//        return false;
+//    }
+//};
+
+FemaleOutfit::FemaleOutfit(Suit suit, int number) :Armor(suit, number)
+{
+    setObjectName("FemaleOutfit");
+
+    target_fixed = false;
+}
+
+bool FemaleOutfit::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
+{
+    return targets.isEmpty();
+}
+
+
+void FemaleOutfit::onInstall(ServerPlayer *player) const
+{
+    if (player->isAlive() && player->isMale() && player->hasArmorEffect(objectName())) {
+    Room *room = player->getRoom();
+    JudgeStruct judge;
+    judge.pattern = ".|heart";
+    judge.good = true;
+    judge.reason = objectName();
+    judge.who = player;
+
+    room->judge(judge);
+
+    if (judge.isBad())
+        room->askForDiscard(player, "FemaleOutfit_discard", 2, 2, false, true);
+    }
+    Armor::onInstall(player);
+}
+
+BrokenHalberd::BrokenHalberd(Suit suit, int number) : Weapon(suit, number, 0)
+{
+    setObjectName("BrokenHalberd");
+    target_fixed = false;
+}
+
+bool BrokenHalberd::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
+{
+    return targets.isEmpty();
+}
 
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach")
@@ -268,3 +442,18 @@ LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPac
 }
 
 ADD_PACKAGE(LangKhachCard)
+
+GiftCardPackage::GiftCardPackage() : Package("gift_card", CardPack)
+{
+    QList<Card *> cards;
+
+    cards
+        << new BrokenHalberd(Card::Club, 3);
+    cards
+        << new FemaleOutfit(Card::Heart, 3);
+
+    foreach(Card *card, cards)
+        card->setParent(this);
+}
+
+ADD_PACKAGE(GiftCard)

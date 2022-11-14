@@ -2111,7 +2111,7 @@ public:
 
     virtual bool isEnabledAtPlay(const Player *player) const
     {
-        return player->usedTimes("ViewAsSkill_mumengCard") == 0;
+        return player->usedTimes("ViewAsSkill_mumengCard") < 1;
     }
 };
 
