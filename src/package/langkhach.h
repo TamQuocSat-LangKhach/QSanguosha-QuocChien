@@ -20,13 +20,13 @@ public:
     LangKhachCardPackage();
 };
 
-class GiftCardPackage : public Package
-{
-    Q_OBJECT
+//class GiftCardPackage : public Package
+//{
+//    Q_OBJECT
 
-public:
-    GiftCardPackage();
-};
+//public:
+//    GiftCardPackage();
+//};
 
 class MilitaryOrder : public SingleTargetTrick
 {
@@ -40,23 +40,23 @@ public:
     virtual bool isAvailable(const Player *player) const;
 };
 
-class BrokenHalberd :public Weapon
-{
-    Q_OBJECT
+//class BrokenHalberd :public Weapon
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE BrokenHalberd(Card::Suit suit, int number);
+//public:
+//    Q_INVOKABLE BrokenHalberd(Card::Suit suit, int number);
 
-    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
-};
+//    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+//};
 
-class FemaleOutfit :public Armor
-{
-    Q_OBJECT
+//class FemaleOutfit :public Armor
+//{
+//    Q_OBJECT
 
-public:
-    Q_INVOKABLE FemaleOutfit(Card::Suit suit, int number);
-    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
-    void onInstall(ServerPlayer *player) const;
-};
+//public:
+//    Q_INVOKABLE FemaleOutfit(Card::Suit suit, int number);
+//    bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+//    void onInstall(ServerPlayer *player) const;
+//};
 #endif

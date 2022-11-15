@@ -1213,7 +1213,7 @@ class Package: public QObject {
 public:
     enum Type { GeneralPack, CardPack, MixedPack, SpecialPack };
 
-    Package(const char *name, Type pack_type = GeneralPack);
+    Package(const char *name, Type pack_type = GeneralPack, bool is_diy = true);
     void insertRelatedSkills(const char *main_skill, const char *related_skill);
     void insertConvertPairs(const char *from, const char *to);
 };

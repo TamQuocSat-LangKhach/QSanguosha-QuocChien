@@ -59,10 +59,11 @@ public:
         GeneralPack, CardPack, MixedPack, SpecialPack
     };
 
-    Package(const QString &name, Type pack_type = GeneralPack)
+    Package(const QString &name, Type pack_type = GeneralPack, bool is_diy = false)
     {
         setObjectName(name);
         type = pack_type;
+        diy = is_diy;
     }
 
     QList<const QMetaObject *> getMetaObjects() const
@@ -95,6 +96,11 @@ public:
         return type;
     }
 
+    bool isDIY() const
+    {
+        return diy;
+    }
+
     template<typename T>
     void addMetaObject()
     {
@@ -122,6 +128,7 @@ protected:
     QMultiMap<QString, QString> related_skills;
     QMultiMap<QString, QString> convert_pairs;
     Type type;
+    bool diy;
 };
 
 typedef QHash<QString, Package *> PackageHash;

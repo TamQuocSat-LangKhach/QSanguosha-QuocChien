@@ -616,6 +616,7 @@ DisasterPackage::DisasterPackage()
         card->setParent(this);
 
     type = CardPack;
+    diy = true;
 }
 
 JoyPackage::JoyPackage()
@@ -632,6 +633,7 @@ JoyPackage::JoyPackage()
     card->setParent(this);
 
     type = CardPack;
+    diy = true;
     skills << new ShitEffect;
 }
 

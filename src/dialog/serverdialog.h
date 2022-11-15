@@ -76,6 +76,7 @@ private:
     QWidget *createAiTab();
 #endif
     QWidget *createPackageTab();
+    QWidget *createDIYTab();
     //************************************
     // Method:    createAdvancedTab
     // FullName:  ServerDialog::createAdvancedTab
@@ -145,6 +146,7 @@ private:
     QCheckBox *disable_lua_checkbox;
 
     QButtonGroup *extension_group;
+    QButtonGroup *diy_group;
     QButtonGroup *mode_group;
 
 

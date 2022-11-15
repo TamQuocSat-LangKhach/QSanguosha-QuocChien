@@ -146,7 +146,8 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         }
         if (num > 0) effect.to->drawCards(num);
         QStringList choicelist;
-        choicelist << "slash" << "analeptic";
+        choicelist << "slash";
+                   //<< "analeptic";
         foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
 //            static QSet<QString> skill_set;
 //            if (skill_set.isEmpty()) {
@@ -193,9 +194,9 @@ public:
         if (card->isKindOf("Slash")) {
             return from->getMark("MilitaryOrder_Slash");
         }
-        if (card->getName() == "analeptic") {
-            return from->getMark("MilitaryOrder_Analeptic");
-        }
+//        if (card->getName() == "analeptic") {
+//            return from->getMark("MilitaryOrder_Analeptic");
+//        }
         return 0;
     }
 };
@@ -218,6 +219,9 @@ public:
     {
         if (triggerEvent == Death && player->getMark("MilitaryOrder") > 0) {
             DeathStruct death = data.value<DeathStruct>();
+            if (death.who == player) {
+                return;
+            }
             ServerPlayer *from = death.damage->from;
             if (from == player) {
                 room->setPlayerMark(player, "MilitaryOrder", 0);
@@ -377,47 +381,47 @@ public:
 //    }
 //};
 
-FemaleOutfit::FemaleOutfit(Suit suit, int number) :Armor(suit, number)
-{
-    setObjectName("FemaleOutfit");
+//FemaleOutfit::FemaleOutfit(Suit suit, int number) :Armor(suit, number)
+//{
+//    setObjectName("FemaleOutfit");
 
-    target_fixed = false;
-}
+//    target_fixed = false;
+//}
 
-bool FemaleOutfit::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
-{
-    return targets.isEmpty();
-}
+//bool FemaleOutfit::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
+//{
+//    return targets.isEmpty();
+//}
 
 
-void FemaleOutfit::onInstall(ServerPlayer *player) const
-{
-    if (player->isAlive() && player->isMale() && player->hasArmorEffect(objectName())) {
-    Room *room = player->getRoom();
-    JudgeStruct judge;
-    judge.pattern = ".|heart";
-    judge.good = true;
-    judge.reason = objectName();
-    judge.who = player;
+//void FemaleOutfit::onInstall(ServerPlayer *player) const
+//{
+//    if (player->isAlive() && player->isMale() && player->hasArmorEffect(objectName())) {
+//    Room *room = player->getRoom();
+//    JudgeStruct judge;
+//    judge.pattern = ".|heart";
+//    judge.good = true;
+//    judge.reason = objectName();
+//    judge.who = player;
 
-    room->judge(judge);
+//    room->judge(judge);
 
-    if (judge.isBad())
-        room->askForDiscard(player, "FemaleOutfit_discard", 2, 2, false, true);
-    }
-    Armor::onInstall(player);
-}
+//    if (judge.isBad())
+//        room->askForDiscard(player, "FemaleOutfit_discard", 2, 2, false, true);
+//    }
+//    Armor::onInstall(player);
+//}
 
-BrokenHalberd::BrokenHalberd(Suit suit, int number) : Weapon(suit, number, 0)
-{
-    setObjectName("BrokenHalberd");
-    target_fixed = false;
-}
+//BrokenHalberd::BrokenHalberd(Suit suit, int number) : Weapon(suit, number, 0)
+//{
+//    setObjectName("BrokenHalberd");
+//    target_fixed = false;
+//}
 
-bool BrokenHalberd::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
-{
-    return targets.isEmpty();
-}
+//bool BrokenHalberd::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
+//{
+//    return targets.isEmpty();
+//}
 
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach")
@@ -425,11 +429,13 @@ LangKhachPackage::LangKhachPackage()
     General *wuding = new General(this, "wuding", "careerist", 3);
     wuding->setGender(General::Neuter);
     wuding->addSkill(new Bianhua);
+
+    diy = true;
 }
 
 ADD_PACKAGE(LangKhach)
 
-LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPack)
+LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPack, true)
 {
     QList<Card *> cards;
 
@@ -443,17 +449,17 @@ LangKhachCardPackage::LangKhachCardPackage() : Package("langkhach_card", CardPac
 
 ADD_PACKAGE(LangKhachCard)
 
-GiftCardPackage::GiftCardPackage() : Package("gift_card", CardPack)
-{
-    QList<Card *> cards;
+//ExodiaCardPackage::ExodiaCardPackage() : Package("gift_card", CardPack)
+//{
+//    QList<Card *> cards;
 
-    cards
-        << new BrokenHalberd(Card::Club, 3);
-    cards
-        << new FemaleOutfit(Card::Heart, 3);
+//    cards
+//        << new BrokenHalberd(Card::Club, 3);
+//    cards
+//        << new FemaleOutfit(Card::Heart, 3);
 
-    foreach(Card *card, cards)
-        card->setParent(this);
-}
+//    foreach(Card *card, cards)
+//        card->setParent(this);
+//}
 
-ADD_PACKAGE(GiftCard)
+//ADD_PACKAGE(GiftCard)

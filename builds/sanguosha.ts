@@ -125,6 +125,10 @@
         <translation>Bản mở rộng</translation>
     </message>
     <message>
+        <source>DIY Package Selection</source>
+        <translation>Bản DIY</translation>
+    </message>
+    <message>
         <source>AI delay After Death</source>
         <translation>Trì hoãn AI sau khi chỉ còn AI</translation>
     </message>

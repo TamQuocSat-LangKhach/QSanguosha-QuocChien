@@ -61,6 +61,7 @@ ServerDialog::ServerDialog(QWidget *parent)
 #endif
     tab_widget->addTab(createBasicTab(), tr("Basic"));
     tab_widget->addTab(createPackageTab(), tr("Game Pacakge Selection"));
+    tab_widget->addTab(createDIYTab(), tr("DIY Package Selection"));
     tab_widget->addTab(createAdvancedTab(), tr("Advanced"));
     tab_widget->addTab(createConversionTab(), tr("Conversion Selection"));
 #if ((defined Q_OS_IOS) || (defined Q_OS_ANDROID))
@@ -78,7 +79,7 @@ ServerDialog::ServerDialog(QWidget *parent)
     setMinimumSize(parent->width(), parent->height());
     setStyleSheet("background-color: #F0FFF0; color: black;");
 #else
-    setMinimumSize(574, 380);
+    setMinimumSize(780, 400);
 #endif
 }
 
@@ -183,7 +184,7 @@ QWidget *ServerDialog::createPackageTab()
     int row = 0, column = 0;
     const QList<const Package *> &packages = Sanguosha->getPackages();
     foreach (const Package *package, packages) {
-        if (package->inherits("Scenario"))
+        if (package->isDIY() ||  package->inherits("Scenario"))
             continue;
 
         const QString &extension = package->objectName();
@@ -226,6 +227,75 @@ QWidget *ServerDialog::createPackageTab()
     QWidget *widget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(disable_lua_checkbox);
+    layout->addWidget(box1);
+    layout->addWidget(box2);
+
+    widget->setLayout(layout);
+    return widget;
+}
+
+QWidget *ServerDialog::createDIYTab()
+{
+
+    diy_group = new QButtonGroup(this);
+    diy_group->setExclusive(false);
+
+    QSet<QString> diy_packages = Config.DiyPackages.toSet();
+
+    QGroupBox *box1 = new QGroupBox(tr("General package"));
+    QGroupBox *box2 = new QGroupBox(tr("Card package"));
+
+    QGridLayout *layout1 = new QGridLayout;
+    QGridLayout *layout2 = new QGridLayout;
+    box1->setLayout(layout1);
+    box2->setLayout(layout2);
+
+    int i = 0, j = 0;
+    int row = 0, column = 0;
+    const QList<const Package *> &packages = Sanguosha->getPackages();
+    foreach (const Package *package, packages) {
+        if (!package->isDIY() ||  package->inherits("Scenario"))
+            continue;
+
+        const QString &extension = package->objectName();
+        bool forbid_package = Config.value("ForbidPackages").toStringList().contains(extension);
+        QCheckBox *checkbox = new QCheckBox;
+#ifdef Q_OS_ANDROID
+        QFont f = checkbox->font();
+        f.setPointSize(6);
+        checkbox->setFont(f);
+#endif
+        checkbox->setObjectName(extension);
+        checkbox->setText(Sanguosha->translate(extension));
+        checkbox->setChecked(diy_packages.contains(extension) && !forbid_package);
+        checkbox->setEnabled(!forbid_package);
+
+        diy_group->addButton(checkbox);
+
+        switch (package->getType()) {
+        case Package::GeneralPack: {
+            row = i / 5;
+            column = i % 5;
+            i++;
+
+            layout1->addWidget(checkbox, row, column + 1);
+            break;
+        }
+        case Package::CardPack: {
+            row = j / 5;
+            column = j % 5;
+            j++;
+
+            layout2->addWidget(checkbox, row, column + 1);
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
+    QWidget *widget = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(box1);
     layout->addWidget(box2);
 
@@ -712,9 +782,21 @@ bool ServerDialog::config()
             ban_packages.insert(package_name);
         }
     }
+    QSet<QString> diy_packages;
+    foreach (QAbstractButton *checkbox, diy_group->buttons()) {
+        QString package_name = checkbox->objectName();
+        if (!checkbox->isChecked()) {
+            Sanguosha->addBanPackage(package_name);
+            ban_packages.insert(package_name);
+        } else {
+            diy_packages.insert(package_name);
+        }
+    }
 
     Config.BanPackages = ban_packages.toList();
     Config.setValue("BanPackages", Config.BanPackages);
+    Config.DiyPackages = diy_packages.toList();
+    Config.setValue("DiyPackages", Config.DiyPackages);
     Config.setValue("EnableLordConvertion", convert_lord->isChecked());
 
     QStringList card_conversions;

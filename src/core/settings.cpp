@@ -93,6 +93,7 @@ void Settings::init()
     GameMode = value("GameMode", "08p").toString();
 
     BanPackages = value("BanPackages", "Test").toStringList();
+    DiyPackages = value("DiyPackages", "").toStringList();
     RandomSeat = value("RandomSeat", true).toBool();
     EnableCheat = value("EnableCheat", false).toBool();
     FreeChoose = EnableCheat && value("FreeChoose", false).toBool();

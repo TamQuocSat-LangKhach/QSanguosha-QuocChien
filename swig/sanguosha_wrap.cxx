@@ -50358,6 +50358,32 @@ static int _wrap_new_Package__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   Package::Type arg2 ;
+  bool arg3 ;
+  Package *result = 0 ;
+  
+  SWIG_check_num_args("Package::Package",3,3)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("Package::Package",1,"char const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Package::Package",2,"Package::Type");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Package::Package",3,"bool");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (Package::Type)(int)lua_tonumber(L, 2);
+  arg3 = (lua_toboolean(L, 3)!=0);
+  result = (Package *)new Package((char const *)arg1,arg2,arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_Package,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Package__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  Package::Type arg2 ;
   Package *result = 0 ;
   
   SWIG_check_num_args("Package::Package",2,2)
@@ -50377,7 +50403,7 @@ fail:
 }
 
 
-static int _wrap_new_Package__SWIG_1(lua_State* L) {
+static int _wrap_new_Package__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   char *arg1 = (char *) 0 ;
   Package *result = 0 ;
@@ -50399,8 +50425,8 @@ fail:
 
 static int _wrap_new_Package(lua_State* L) {
   int argc;
-  int argv[3]={
-    1,2,3
+  int argv[4]={
+    1,2,3,4
   };
   
   argc = lua_gettop(L);
@@ -50410,7 +50436,7 @@ static int _wrap_new_Package(lua_State* L) {
       _v = SWIG_lua_isnilstring(L,argv[0]);
     }
     if (_v) {
-      return _wrap_new_Package__SWIG_1(L);
+      return _wrap_new_Package__SWIG_2(L);
     }
   }
   if (argc == 2) {
@@ -50423,13 +50449,33 @@ static int _wrap_new_Package(lua_State* L) {
         _v = lua_isnumber(L,argv[1]);
       }
       if (_v) {
-        return _wrap_new_Package__SWIG_0(L);
+        return _wrap_new_Package__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      _v = SWIG_lua_isnilstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_new_Package__SWIG_0(L);
+        }
       }
     }
   }
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'new_Package'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Package::Package(char const *,Package::Type,bool)\n"
     "    Package::Package(char const *,Package::Type)\n"
     "    Package::Package(char const *)\n");
   lua_error(L);return 0;
