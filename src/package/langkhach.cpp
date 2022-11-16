@@ -147,7 +147,7 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         if (num > 0) effect.to->drawCards(num);
         QStringList choicelist;
         choicelist << "slash";
-                   //<< "analeptic";
+//        choicelist << "analeptic";
         foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
 //            static QSet<QString> skill_set;
 //            if (skill_set.isEmpty()) {
@@ -156,16 +156,9 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
 //                skill_set.insert("mingfa");
 //            }
             if (skill->getDescription().contains("lần trong giai đoạn hành động")) {
-                if (skill->inherits("ViewAsSkill")) {
+                if (skill->inherits("ViewAsSkill") ||
+                        (skill->inherits("TriggerSkill") && qobject_cast<const TriggerSkill*>(skill)->getViewAsSkill() != NULL)) {
                     choicelist << skill->objectName();
-                } else if (skill->inherits("TriggerSkill")) {
-                    QList<const Skill*> relatedSkillList = Sanguosha->getRelatedSkills(skill->objectName());
-                    foreach (const Skill *relatedSkill, relatedSkillList) {
-                        if (relatedSkill->inherits("ViewAsSkill")) {
-                            choicelist << skill->objectName();
-                            break;
-                        }
-                    }
                 }
             }
         }
@@ -224,6 +217,10 @@ public:
             }
             ServerPlayer *from = death.damage->from;
             if (from == player) {
+                LogMessage log;
+                log.type = "#military_order_successed";
+                log.from = player;
+                room->sendLog(log);
                 room->setPlayerMark(player, "MilitaryOrder", 0);
                 if (player->getPhase() == Player::Play) {
                     room->setPlayerFlag(player, "Global_PlayPhaseTerminated");
@@ -238,6 +235,10 @@ public:
             } else if (player->getMark("MilitaryOrder") > 0) {
                 room->setPlayerMark(player, "MilitaryOrder", 0);
                 if (player->isAlive()) {
+                    LogMessage log;
+                    log.type = "#military_order_failed";
+                    log.from = player;
+                    room->sendLog(log);
                     room->killPlayer(player);
                 }
             }
