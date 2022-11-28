@@ -313,7 +313,7 @@
     </message>
     <message>
         <source>Six dragons lead my chariot, I will ride the wind with the greatest speed.With all of the feudal lords under my command,to rule the world with one name!</source>
-        <translation>Giá lục long, thừa phong chi hành, cửu hợp chư hầu, nhất thống thiên hạ!</translation>
+        <translation>Lục long tham giá, thừa phong chi hành, cửu hợp chư hầu, nhất thống thiên hạ!</translation>
     </message>
     <message>
         <source>Search...</source>
