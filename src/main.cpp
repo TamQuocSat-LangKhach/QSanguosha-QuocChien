@@ -85,11 +85,7 @@ int main(int argc, char *argv[])
     QSplashScreen *splash = NULL;
     if (!noGui) {
         QPixmap raraLogo;
-        QDate currentDate = QDate::currentDate();
-        if (currentDate.month() == 11 && currentDate.day() == 30)
-            raraLogo.load("image/system/developers/logo_rara.png");
-        else
-            raraLogo.load("image/system/developers/logo.png");
+        raraLogo.load("image/system/developers/logo.png");
 
         splash = new QSplashScreen(raraLogo);
         splash->show();
