@@ -131,6 +131,7 @@ SOURCES += \
     src/package/mol.cpp\
     src/package/langkhach.cpp\
     src/package/joy.cpp\
+    src/ui/fieldcardtransferbox.cpp
 
 HEADERS += \
     src/client/aux-skills.h \
@@ -253,6 +254,7 @@ HEADERS += \
     src/package/mol.h\
     src/package/langkhach.h\
     src/package/joy.h\
+    src/ui/fieldcardtransferbox.h
 
 FORMS += \
     src/dialog/cardoverview.ui \
