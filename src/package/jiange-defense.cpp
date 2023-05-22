@@ -2148,7 +2148,7 @@ public:
 
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (TriggerSkill::triggerable(player) && player->getHp() > 1) {
+        if (TriggerSkill::triggerable(player) && player->getHp() > 1 && !player->isRemoved()) {
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who && dying.who->isFriendWith(player) && dying.who->getHp() < 1)
             return QStringList(objectName());
@@ -2397,7 +2397,7 @@ JiangeDefensePackage::JiangeDefensePackage()
     taotie->addSkill(new JGTanshi);
     taotie->addSkill(new JGTunshi);
 
-    General *yazi = new General(this, "jg_yazi_machine", "wei", 4, true, true);
+    General *yazi = new General(this, "jg_yazi_machine", "wei", 5, true, true);
     yazi->addSkill(new JGJiguan("yazi"));
     yazi->addSkill(new JGNailuo);
 

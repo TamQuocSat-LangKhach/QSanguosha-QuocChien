@@ -1679,7 +1679,11 @@ public:
     bool askForYiji(ServerPlayer *guojia, QList<int> &cards, const char *skill_name = NULL,
         bool is_preview = false, bool visible = false, bool optional = true, int max_num = -1,
         QList<ServerPlayer *> players = QList<ServerPlayer *>(), CardMoveReason reason = CardMoveReason(),
-        const char *prompt = "", const char *expand_pile = "", bool notify_skill = false);
+        const char *prompt = NULL, const char *expand_pile = NULL, bool notify_skill = false);
+    bool askForRende(ServerPlayer *liubei, QList<int> &cards, const char *skill_name = NULL,
+        bool is_preview = false, bool visible = false, bool optional = true, int max_num = -1, int min_num = 0,
+        QList<ServerPlayer *> players = QList<ServerPlayer *>(), CardMoveReason reason = CardMoveReason(),
+        const char *prompt = NULL, const char *expand_pile = NULL, bool notify_skill = false);
     QList<const Card *> askForPindianRace(ServerPlayer *from, const QList<ServerPlayer *> &to, const char *reason);
     ServerPlayer *askForPlayerChosen(ServerPlayer *player, const QList<ServerPlayer *> &targets, const char *reason,
         const char *prompt = NULL, bool optional = false, bool notify_skill = false);
@@ -1704,11 +1708,13 @@ public:
     void updateCardsOnGet(const CardsMoveStruct &move);
 
     // this function must be called in Scenario::assign ONLY.
-   void chooseGenerals(QList<ServerPlayer *> &assign_players,bool has_assign = false,bool is_scenario = false);
+    void chooseGenerals(QList<ServerPlayer *> &assign_players,bool has_assign = false,bool is_scenario = false);
 
     // these 2 functions puts here, for convenience
     static void cancelTarget(CardUseStruct &use, const char *name);
     static void cancelTarget(CardUseStruct &use, ServerPlayer *player);
+
+    bool doCareeristRule();
 };
 
 %extend Room {

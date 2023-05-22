@@ -837,7 +837,7 @@ void Card::onUse(Room *room, const CardUseStruct &use) const
                     int num = 0;
                     QList<ServerPlayer *> all_players = room->getAllPlayers(true);
                     foreach (ServerPlayer *p, all_players) {
-                        if (p->hasShownOneGeneral() && p->getRole() != "careerist" && p->getKingdom() == kingdom)
+                        if (p->hasShownOneGeneral() && p->getRole() != "careerist" && p->getSeemingKingdom() == kingdom)
                             num++;
                     }
                     if (num < room->getPlayers().length() / 2)

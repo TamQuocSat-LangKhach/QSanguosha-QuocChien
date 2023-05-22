@@ -1369,7 +1369,7 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
         }
         if (!targets.isEmpty()) {
             foreach (ServerPlayer *p, targets) {
-                if (p->getRole() != "careerist" && p->hasShownOneGeneral() && p->getKingdom() == to->getKingdom()) {
+                if (p->getRole() != "careerist" && p->hasShownOneGeneral() && p->getSeemingKingdom() == to->getSeemingKingdom()) {
                     isHegNullification = true;
                     break;
                 }
@@ -1377,7 +1377,7 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
         }
         if (isHegNullification) {
             heg_nullification_selection = askForChoice(repliedPlayer, "heg_nullification", "single%to:" + to->objectName() +
-                "+all%to:" + to->objectName() + "%log:" + Sanguosha->translate(to->getKingdom()), data, "@heg_nullification-choose");
+                "+all%to:" + to->objectName() + "%log:" + Sanguosha->translate(to->getSeemingKingdom()), data, "@heg_nullification-choose");
         }
         if (heg_nullification_selection.contains("all"))
             heg_nullification_selection = "all";
@@ -2764,9 +2764,6 @@ void Room::transformDeputyGeneral(ServerPlayer *player, const QString &_name, bo
 {
     if (!player->getGeneral2()) return;
 
-    if (!player->hasShownGeneral1() && !show)
-        player->showGeneral(true, false, false);
-
     if (!player->hasShownGeneral2())
         player->showGeneral(false, false, false);
 
@@ -2803,7 +2800,6 @@ void Room::transformDeputyGeneral(ServerPlayer *player, const QString &_name, bo
 
     }
 
-    //handleUsedGeneral("-" + player->getActualGeneral2Name());
     handleUsedGeneral(general_name);
 
     player->removeGeneral(false);
@@ -6117,6 +6113,7 @@ void Room::activate(ServerPlayer *player, CardUseStruct &card_use)
                 return activate(player, card_use);
         } else {
             if (Config.EnableCheat && makeCheat(player)) {
+                freeChain();
                 if (player->isAlive()) return activate(player, card_use);
                 return;
             }
@@ -8254,4 +8251,64 @@ QList<ServerPlayer *> Room::getUseAliveTargets(CardUseStruct card_use)
             targets << p;
     }
     return targets;
+}
+
+bool Room::doCareeristRule()
+{
+    bool no_game_over = false;
+    QList<ServerPlayer *> players = m_alivePlayers;
+    sortByActionOrder(players);
+
+    foreach (ServerPlayer *p, players) {
+        if (p->hasShownGeneral1() || p->getSeemingKingdom() == "careerist") continue;
+        if (p->getActualGeneral1()->getKingdom() == "careerist") {
+            no_game_over = true;
+
+            LogMessage log;
+            log.type = "#GameRule_CareeristShow";
+            log.from = p;
+            sendLog(log);
+
+            setTag("GlobalCareeristShow", true);
+            p->showGeneral(true, false);
+            setTag("GlobalCareeristShow", false);
+
+            QString careerist_kingdom = "careerist_" + p->getActualGeneral1()->objectName();
+
+            p->setRole(careerist_kingdom);
+            broadcastProperty(p, "role");
+
+            if (players.length() > 2) {
+                foreach (ServerPlayer *p2, players) {
+                    if (!p2->getRole().startsWith("careerist") && !p2->isLord()) {
+                        QStringList choices;
+
+                        choices << "no";
+                        if (p2->getActualGeneral1()->getKingdom() != "careerist")
+                            choices << "yes";
+
+                        if (askForChoice(p2, "GameRule:CareeristAdd", choices.join("+"), QVariant(), "@careerist-add:" + p->objectName(), "yes+no") == "yes") {
+
+                            LogMessage log;
+                            log.type = "#GameRule_CareeristAdd";
+                            log.from = p2;
+                            log.to << p;
+                            sendLog(log);
+
+                            setPlayerProperty(p2, "scenario_role_shown", true);
+                            p2->setRole(careerist_kingdom);
+                            broadcastProperty(p2, "role");
+
+                            p2->fillHandCards(4);
+                            recover(p2, RecoverStruct());
+
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    return no_game_over;
 }

@@ -501,6 +501,8 @@ public:
 
     void chooseGenerals(QList<ServerPlayer *> &assign_players, bool has_assign = false, bool is_scenario = false);
 
+    bool doCareeristRule();
+
 protected:
     virtual void run();
     int _m_Id;

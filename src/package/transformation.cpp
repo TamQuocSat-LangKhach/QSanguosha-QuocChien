@@ -63,6 +63,7 @@ public:
     {
         Room *room = xunyu->getRoom();
         xunyu->drawCards(1, objectName());
+        if (xunyu->isDead() || xunyu->isKongcheng()) return;
         room->showAllCards(xunyu);
         bool same = true;
         bool isRed = xunyu->getHandcards().first()->isRed();
@@ -72,7 +73,7 @@ public:
                 break;
             }
         }
-        if (same && damage.from && !damage.from->isKongcheng() && damage.from->canDiscard(damage.from, "h"))
+        if (same && damage.from && damage.from->isAlive())
             room->askForDiscard(damage.from, objectName(), 1, 1);
     }
 };

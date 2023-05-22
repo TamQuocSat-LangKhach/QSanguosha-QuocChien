@@ -204,7 +204,7 @@ void ClientPlayer::changeGeneralPile(const QString &pile_name, const QStringList
 
 QString ClientPlayer::getDeathPixmapPath() const
 {
-    QString basename = getRole() == "careerist" ? "careerist" : getKingdom();
+    QString basename = getSeemingKingdom();
 
     if (basename.isEmpty())
         basename = "unknown";

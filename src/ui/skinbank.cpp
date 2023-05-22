@@ -545,7 +545,7 @@ QString QSanRoomSkin::getPlayerAudioEffectPath(const QString &eventName, const Q
                         || player->getActualGeneral1()->getRelatedSkillNames().contains(eventName)) && player->canShowGeneral("h")) {
                 general = player->getActualGeneral1Name();
                 skinId = player->getHeadSkinId();
-            } else if ((player->inDeputySkills(eventName) || player->getActualGeneral2()->hasSkill(eventName)
+            } else if (player->getActualGeneral2() && (player->inDeputySkills(eventName) || player->getActualGeneral2()->hasSkill(eventName)
                         || player->getActualGeneral2()->getRelatedSkillNames().contains(eventName)) && player->canShowGeneral("d")) {
                 general = player->getActualGeneral2Name();
                 skinId = player->getDeputySkinId();

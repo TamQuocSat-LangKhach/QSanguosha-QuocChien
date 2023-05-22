@@ -3154,7 +3154,7 @@ class Shilu : public TriggerSkill
 public:
     Shilu() : TriggerSkill("shilu")
     {
-        events << Death << EventPhaseStart;
+        events << DeathFinished << EventPhaseStart;
         view_as_skill = new ShiluViewAsSkill;
     }
 
@@ -3166,13 +3166,13 @@ public:
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         if (TriggerSkill::triggerable(player)) {
-            if (triggerEvent == Death) {
+            if (triggerEvent == DeathFinished) {
                 DeathStruct death = data.value<DeathStruct>();
                 if (!death.who->getGeneral()->objectName().contains("sujiang") || (death.who->getGeneral2() &&
                         !death.who->getGeneral2()->objectName().contains("sujiang")))
                 return QStringList(objectName());
             } else if (triggerEvent == EventPhaseStart && player->getPhase() == Player::Start) {
-                if (!player->isNude() && !Self->getGeneralPile("massacre").isEmpty())
+                if (!player->isNude() && !player->getGeneralPile("massacre").isEmpty())
                     return QStringList(objectName());
             }
 
@@ -3182,7 +3182,7 @@ public:
 
     virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
-        if (triggerEvent == Death) {
+        if (triggerEvent == DeathFinished) {
             DeathStruct death = data.value<DeathStruct>();
             if (death.who && player->askForSkillInvoke(this, QVariant::fromValue(death.who))) {
                 int n = qrand()%2+1;
@@ -3210,7 +3210,7 @@ public:
 
     virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
-        if (triggerEvent == Death) {
+        if (triggerEvent == DeathFinished) {
             DeathStruct death = data.value<DeathStruct>();
             ServerPlayer *target = death.who;
 
@@ -3820,7 +3820,6 @@ public:
         if (triggerEvent == Death) {
             DeathStruct death = data.value<DeathStruct>();
             if (death.damage && death.damage->card && death.damage->card->getSkillName() == objectName() && death.damage->from == player) {
-
                 room->setPlayerFlag(player, "xisheKilledPlayer");
             }
         }
@@ -4555,8 +4554,6 @@ void TonglingCard::onUse(Room *room, const CardUseStruct &card_use) const
     }
 }
 
-
-
 class TonglingUseCard : public OneCardViewAsSkill
 {
 public:
@@ -4632,8 +4629,10 @@ public:
         }
         if (to_choose.isEmpty()) return false;
 
+        player->tag["tongling-damage"] = data;
         ServerPlayer *to = room->askForPlayerChosen(player, to_choose, objectName(),
                 "@tongling-invoke::" + damage.to->objectName(), true, true);
+        player->tag.remove("tongling-damage");
         if (to != NULL) {
             room->broadcastSkillInvoke(objectName(), player);
             player->setFlags("tonglingUsed");
@@ -4659,7 +4658,7 @@ public:
                 room->setPlayerProperty(to, "tongling_usetarget", damage.to->objectName());
                 to->tag["tongling-damage"] = data;
                 room->askForUseCard(to, "@@tongling_usecard", "@tongling-usecard::" + damage.to->objectName(), -1, Card::MethodUse, false);
-
+                to->tag.remove("tongling-damage");
             }
         }
         return false;
@@ -4724,9 +4723,8 @@ public:
         }
         room->sortByActionOrder(targets);
         foreach (ServerPlayer *p, targets) {
-            if (p->isAlive()) {
+            if (p->isAlive() && p->getGeneral2()) {
                 if (p->hasShownAllGenerals()) {
-
                     QStringList generals, allchoices;
                     allchoices << "head" << "deputy";
                     if (!p->getActualGeneral1Name().contains("sujiang") && !p->isLord())
@@ -4772,9 +4770,9 @@ public:
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
-        if (player->askForSkillInvoke(this)) {
+        if (player->askForSkillInvoke(this, data)) {
             room->broadcastSkillInvoke(objectName(), player);
             return true;
         }
@@ -4875,7 +4873,11 @@ public:
     virtual bool cost(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         DyingStruct dying = data.value<DyingStruct>();
-        if (dying.who && dying.who->isAlive() && player->askForSkillInvoke(this, QVariant::fromValue(dying.who))) {
+        if (dying.who == NULL || dying.who->isDead()) return false;
+        player->tag["jujianDyingdata"] = data;
+        bool invoke = player->askForSkillInvoke(this, QVariant::fromValue(dying.who));
+        player->tag.remove("jujianDyingdata");
+        if (invoke) {
             room->broadcastSkillInvoke(objectName(), player);
             room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), dying.who->objectName());
             return true;

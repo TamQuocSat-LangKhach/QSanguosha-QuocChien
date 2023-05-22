@@ -3991,7 +3991,7 @@ void RoomScene::fillTable(QTableWidget *table, const QList<const ClientPlayer *>
 
         item = new QTableWidgetItem;
 
-        QString str = player->getRole() == "careerist" ? "careerist" : player->getKingdom();
+        QString str = player->getSeemingKingdom();
         QIcon icon(QString("image/system/roles/%1.png").arg(str));
         item->setIcon(icon);
         item->setText(Sanguosha->translate(str));

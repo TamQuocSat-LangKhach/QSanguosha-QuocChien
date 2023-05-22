@@ -184,7 +184,7 @@ public:
             room->addPlayerMark(player, "##xibing");
         }
 
-        if (huaxin->hasShownAllGenerals() && player->hasShownAllGenerals()) {
+        if (huaxin->hasShownAllGenerals() && huaxin->getGeneral2() && player->hasShownAllGenerals() && player->getGeneral2()) {
             if (doXiBing(huaxin, huaxin, true))
                 doXiBing(huaxin, player, false);
         }
@@ -417,7 +417,7 @@ public:
     virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         TriggerList skill_list;
-        if (triggerEvent == Death && player->hasShownAllGenerals()) {
+        if (triggerEvent == Death) {
             DeathStruct death = data.value<DeathStruct>();
             ServerPlayer *dead = death.who;
             ServerPlayer *AssistTarget = player->tag["ZhiweiTarget"].value<ServerPlayer *>();
@@ -532,7 +532,7 @@ public:
             log.arg = "zhiwei";
             room->sendLog(log);
             room->notifySkillInvoked(luyusheng, "zhiwei");
-            if (luyusheng->getGeneral()->ownSkill("zhiwei") && luyusheng->hasShownAllGenerals()) {
+            if (luyusheng->getGeneral()->ownSkill("zhiwei") && luyusheng->hasShownAllGenerals() && luyusheng->getGeneral2()) {
                 luyusheng->hideGeneral();
             }
             if (luyusheng->getGeneral2() && luyusheng->getGeneral2()->ownSkill("zhiwei") && luyusheng->hasShownAllGenerals()) {

@@ -892,7 +892,7 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
 
         if (player->getGeneral()->isLord() && player == data.value<DeathStruct>().who) {
             foreach (ServerPlayer *p, room->getOtherPlayers(player, true)) {
-                if (p->getKingdom() == player->getKingdom()) {
+                if (p->getKingdom() == player->getKingdom() && !p->getRole().startsWith("careerist")) {
                     if (p->hasShownOneGeneral()) {
                         room->setPlayerProperty(p, "role", "careerist");
                     } else {
@@ -1104,95 +1104,8 @@ QString GameRule::getWinner(ServerPlayer *victim) const
         if (has_diff_kingdoms) return QString();    //if has enemy, hehe
 
         //careerist rule
-
-        QList<ServerPlayer *> careerists;
-
-        bool careerist_rule = false;
-        foreach (ServerPlayer *p, players) {
-            if (!p->hasShownGeneral1() && p->getSeemingKingdom() != "careerist" && p->getActualGeneral1()->getKingdom() == "careerist") {
-                careerist_rule = true;
-                break;
-            }
-        }
-
-        if (careerist_rule) {
-            foreach (ServerPlayer *p, players) {
-                if (p->hasShownGeneral1() || p->getSeemingKingdom() == "careerist") continue;
-                if (p->getActualGeneral1()->getKingdom() == "careerist") {
-                    if (room->askForChoice(p, "GameRule:CareeristShow", "yes+no", QVariant(), "@careerist-show") == "yes") {
-
-                        LogMessage log;
-                        log.type = "#GameRule_CareeristShow";
-                        log.from = p;
-                        room->sendLog(log);
-
-                        room->setTag("GlobalCareeristShow", true);
-                        p->showGeneral(true, false);
-                        room->setTag("GlobalCareeristShow", false);
-
-                        careerists << p;
-                    }
-                } else
-                    room->askForChoice(p, "GameRule:CareeristShow", "no", QVariant(), "@careerist-show", "yes+no");
-            }
-        }
-
-        if (room->alivePlayerCount() > 2) {
-            foreach (ServerPlayer *p, careerists) {
-                QList<ServerPlayer *> to_ask;
-
-                foreach (ServerPlayer *p2, players) {
-                    if (p2->isLord()) continue;
-                    if (p2->hasShownGeneral1() && p2->getGeneral()->getKingdom() == "careerist") continue;
-                    if (p2->property("CareeristFriend").toString().isEmpty())
-                        to_ask << p2;
-                }
-
-                if (to_ask.isEmpty()) break;
-
-                if (room->askForChoice(p, "GameRule:CareeristSummon", "yes+no", QVariant(), "@careerist-summon") == "yes") {
-
-                    LogMessage log;
-                    log.type = "#GameRule_CareeristSummon";
-                    log.from = p;
-                    room->sendLog(log);
-
-                     foreach (ServerPlayer *p2, to_ask) {
-                         if (room->askForChoice(p2, "GameRule:CareeristAdd", "yes+no", QVariant(), "@careerist-add:" + p->objectName()) == "yes") {
-                             room->setPlayerMark(p2, "@"+p->getGeneral()->objectName(), 1);
-
-                             LogMessage log;
-                             log.type = "#GameRule_CareeristAdd";
-                             log.from = p2;
-                             log.to << p;
-                             room->sendLog(log);
-
-                             room->setPlayerProperty(p, "CareeristFriend", p2->objectName());
-                             room->setPlayerProperty(p2, "CareeristFriend", p->objectName());
-
-                             room->setPlayerProperty(p2, "role", "careerist");
-                             room->getThread()->trigger(DFDebut, room, p2);
-
-                             p2->fillHandCards(4);
-
-                             room->recover(p2, RecoverStruct());
-
-                             break;
-                         }
-
-                     }
-                }
-            }
-        }
-
-        if (!careerists.isEmpty()) return QString();
-
-        foreach (ServerPlayer *p, players) {
-            if (p->hasShownGeneral1() || p->getSeemingKingdom() == "careerist") continue;
-            if (p->getActualGeneral1()->getKingdom() == "careerist") {
-                careerists << p;
-            }
-        }
+        if (room->doCareeristRule())
+            return QString();
 
         // if run here, all are friend.
 
@@ -1201,11 +1114,7 @@ QString GameRule::getWinner(ServerPlayer *victim) const
                 p->showGeneral(true, false, false); // dont trigger event
             if (!p->hasShownGeneral2())
                 p->showGeneral(false, false, false);
-            if (win_player->getRole() == "careerist" && !careerists.contains(p))
-                win_player = p;
         }
-
-        if (careerists.length() == room->alivePlayerCount()) return "."; //if all careerists, hehe
 
         foreach (ServerPlayer *p, room->getPlayers()) {
             if (win_player->isFriendWith(p))

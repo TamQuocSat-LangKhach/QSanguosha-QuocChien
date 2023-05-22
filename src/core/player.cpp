@@ -441,7 +441,7 @@ void Player::setRole(const QString &role)
     if (role.isEmpty()) return;
     if (this->role != role) {
         this->role = role;
-        emit role_changed(role);
+        //emit role_changed(role);
         if (role == "careerist")
             emit kingdom_changed("careerist");
         else
@@ -920,6 +920,7 @@ QString Player::getSeemingKingdom() const
 {
     if (!hasShownOneGeneral()) return QString();
     if (getRole() == "careerist") return "careerist";
+    if (getRole().startsWith("careerist_")) return getRole();
     return getKingdom();
 }
 
@@ -2103,11 +2104,12 @@ bool Player::isFriendWith(const Player *player) const
 
     if (this == player) return true;
 
-    if (property("CareeristFriend").toString() == player->objectName()) return true;
-
     if (!hasShownOneGeneral() || !player->hasShownOneGeneral()) return false;
 
     if (role == "careerist" || player->role == "careerist") return false;
+
+    if (role.startsWith("careerist"))
+        return role == player->role;
 
     return kingdom == player->kingdom;
 }
@@ -2129,7 +2131,7 @@ bool Player::willBeFriendWith(const Player *player) const
 
         if (!has_lord) {
             foreach (const Player *p, getSiblings()) {
-                if (p->getKingdom() == kingdom) {
+                if (p->getSeemingKingdom() == kingdom) {
                     if (p->isAlive() && p->isLord()) {
                         has_lord = true;
                         break;
@@ -2142,7 +2144,7 @@ bool Player::willBeFriendWith(const Player *player) const
 
         if (!has_lord && i > (parent()->findChildren<const Player *>().length() / 2))
             return false;
-        else if (kingdom == player->getKingdom())
+        else if (kingdom == player->getSeemingKingdom())
             return true;
     }
     return false;

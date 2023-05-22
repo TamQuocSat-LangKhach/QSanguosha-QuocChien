@@ -958,7 +958,7 @@ public:
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         ServerPlayer *from = data.value<DamageStruct>().from;
-        if (from && from->isAlive() && player->askForSkillInvoke(this, data)) {
+        if (from && from->isAlive() && player->askForSkillInvoke(this, QVariant::fromValue(from))) {
             room->broadcastSkillInvoke(objectName(), player);
             room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), from->objectName());
             return true;
@@ -2143,7 +2143,7 @@ public:
         QList<ServerPlayer *> alls = room->getAlivePlayers();
         room->sortByActionOrder(alls);
         foreach(ServerPlayer *anjiang, alls) {
-            if (source->getRole() == "careerist") break;
+            if (source->getRole().startsWith("careerist")) break;
             if (anjiang->hasShownOneGeneral()) continue;
 
             QString kingdom = source->getKingdom();
