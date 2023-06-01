@@ -672,7 +672,7 @@
     <name>DamageMakerDialog</name>
     <message>
         <source>OK</source>
-        <translation>Xác định</translation>
+        <translation>Xác nhận</translation>
     </message>
     <message>
         <source>Fire</source>
@@ -1859,7 +1859,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>%1 initiated a vote for disadvataged side to claim capitulation. Click &quot;OK&quot; to surrender or &quot;Cancel&quot; to resist.</source>
-        <translation>%1 yêu cầu biểu quyết đầu hàng. Chọn Xác định để đồng ý hoặc Huỷ để bác bỏ.</translation>
+        <translation>%1 yêu cầu biểu quyết đầu hàng. Chọn Xác nhận để đồng ý hoặc Huỷ bỏ để từ chối.</translation>
     </message>
     <message>
         <source>Please give %1 to %2 cards to exchange</source>
@@ -2026,7 +2026,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>The OK button should be disabled when client is not active!</source>
-        <translation>Nút Xác định bị vô hiệu hoá khi máy khách không hoạt động!</translation>
+        <translation>Nút Xác nhận bị vô hiệu hoá khi máy khách không hoạt động!</translation>
     </message>
     <message>
         <source>Save record</source>
@@ -2050,7 +2050,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>The OK button should be disabled when client is in executing dialog</source>
-        <translation>Nút Xác định sẽ bị khoá khi máy khách đang thao tác xử lý</translation>
+        <translation>Nút Xác nhận sẽ bị khoá khi máy khách đang thao tác xử lý</translation>
     </message>
     <message>
         <source>Surrender</source>
@@ -2950,7 +2950,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Xác định</translation>
+        <translation>Xác nhận</translation>
     </message>
     <message>
         <source>Please select one general</source>
