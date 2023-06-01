@@ -38,17 +38,8 @@ StartScene::StartScene(QObject *parent)
     : QGraphicsScene(parent)
 {
     // game logo
-    QDate date = QDate::currentDate();
-    if (date.month() == 8 && date.day() >= 19 && date.day() <= 26) {
-        logo = new QSanSelectableItem("image/logo/logo-moxuan.png", true);
-        QString tip = "<img src='image/system/developers/moxuan.jpg' height = 125/><br/>";
-        tip.append(QString("<font color=%1><b>%2</b></font>").arg(Config.SkillDescriptionInToolTipColor.name()).arg(tr("At 10:40 a.m., August 19, 2014, Moxuanyanyun, a developer of QSanguosha, passed away peacefully in Dalian Medical College. He was 18 and had struggled with leukemia for more than 4 years. May there is no pain in Heaven.")));
-        logo->setToolTip(tip);
-        shouldMourn = true;
-    } else {
-        logo = new QSanSelectableItem("image/logo/logo.png", true);
-        shouldMourn = false;
-    }
+    logo = new QSanSelectableItem("image/logo/logo.png", true);
+    shouldMourn = false;
 
     logo->moveBy(-Config.Rect.width() / 4, 0);
     addItem(logo);
