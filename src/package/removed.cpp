@@ -435,6 +435,60 @@ public:
     }
 };
 
+MumengCard::MumengCard()
+{
+    will_throw = false;
+}
+
+bool MumengCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    Card *mutable_card = Sanguosha->cloneCard(Self->tag["mumeng"].toString());
+    if (mutable_card) {
+        mutable_card->addSubcards(subcards);
+        mutable_card->setCanRecast(false);
+        mutable_card->deleteLater();
+    }
+    return mutable_card && mutable_card->targetFilter(targets, to_select, Self) && !Self->isProhibited(to_select, mutable_card, targets);
+}
+
+bool MumengCard::targetFixed() const
+{
+    Card *mutable_card = Sanguosha->cloneCard(getUserString());
+    if (mutable_card) {
+        mutable_card->addSubcards(subcards);
+        mutable_card->setCanRecast(false);
+        mutable_card->deleteLater();
+    }
+    return mutable_card && mutable_card->targetFixed();
+}
+
+bool MumengCard::targetsFeasible(const QList<const Player *> &targets, const Player *Self) const
+{
+    Card *mutable_card = Sanguosha->cloneCard(Self->tag["mumeng"].toString());
+    if (mutable_card) {
+        mutable_card->addSubcards(subcards);
+        mutable_card->setCanRecast(false);
+        mutable_card->deleteLater();
+    }
+    return mutable_card && mutable_card->targetsFeasible(targets, Self);
+}
+
+void MumengCard::onUse(Room *room, const CardUseStruct &card_use) const
+{
+    ServerPlayer *source = card_use.from;
+    QString card_name = toString().split(":").last();
+
+    Card *use_card = Sanguosha->cloneCard(card_name);
+    use_card->setSkillName("mumeng");
+    use_card->addSubcards(subcards);
+    use_card->setCanRecast(false);
+    use_card->setShowSkill("mumeng");
+
+    if (use_card->isAvailable(source)) {
+        room->useCard(CardUseStruct(use_card, source, card_use.to));
+    }
+}
+
 class MumengViewAsSkill : public OneCardViewAsSkill
 {
 public:
@@ -445,29 +499,17 @@ public:
 
     virtual bool viewFilter(const Card *card) const
     {
-        if (card->getSuit() != Card::Heart || card->isEquipped()) return false;
-        QString card_name = Self->tag["mumeng"].toString();
-        if (!card_name.isEmpty()) {
-            Card *mumeng_card = Sanguosha->cloneCard(card_name);
-            mumeng_card->addSubcard(card->getEffectiveId());
-            mumeng_card->setCanRecast(false);
-            mumeng_card->setSkillName(objectName());
-            mumeng_card->deleteLater();
-            return mumeng_card->isAvailable(Self);
-        }
-        return false;
+        return (card->getSuit() == Card::Heart && !card->isEquipped());
     }
 
     virtual const Card *viewAs(const Card *originalCard) const
     {
-        QString card_name = Self->tag["mumeng"].toString();
-        if (card_name != "") {
-            Card *mumeng_card = Sanguosha->cloneCard(card_name);
-            mumeng_card->addSubcard(originalCard->getEffectiveId());
-            mumeng_card->setCanRecast(false);
-            mumeng_card->setSkillName(objectName());
-            mumeng_card->setShowSkill(objectName());
-            return mumeng_card;
+        QString c = Self->tag["mumeng"].toString();
+        if (c != "") {
+            MumengCard *card = new MumengCard;
+            card->addSubcard(originalCard);
+            card->setUserString(c);
+            return card;
         } else
             return NULL;
     }
@@ -476,6 +518,25 @@ public:
     {
         return player->usedTimes("ViewAsSkill_mumengCard") < 1;
     }
+
+    QStringList getViewAsCardNames(const QList<const Card *> &selected) const
+    {
+        if (selected.length() != 1) return QStringList();
+        QStringList card_names;
+        card_names << "befriend_attacking" << "fight_together";
+        return card_names;
+    }
+
+    bool isEnabledtoViewAsCard(const QString &button_name, const QList<const Card *> &selected) const
+    {
+        QStringList card_names;
+        card_names << "befriend_attacking" << "fight_together";
+
+        if (!card_names.contains(button_name))
+            return false;
+
+        return ViewAsSkill::isEnabledtoViewAsCard(button_name, selected);
+    }
 };
 
 class Mumeng : public TriggerSkill
@@ -483,7 +544,6 @@ class Mumeng : public TriggerSkill
 public:
     Mumeng() : TriggerSkill("mumeng")
     {
-        guhuo_type = "t";
         view_as_skill = new MumengViewAsSkill;
     }
 
@@ -491,20 +551,6 @@ public:
     {
         return QStringList();
     }
-
-    bool buttonEnabled(const QString &button_name, const QList<const Card *> &, const QList<const Player *> &) const
-    {
-        if (button_name.isEmpty()) return true;
-
-        QStringList card_names;
-        card_names << "befriend_attacking" << "fight_together";
-
-        if (!card_names.contains(button_name))
-            return false;
-
-        return Skill::buttonEnabled(button_name);
-    }
-
 };
 
 class Naman : public TriggerSkill
@@ -1745,6 +1791,7 @@ RemovedPackage::RemovedPackage()
     addMetaObject<HuxunMoveCard>();
     addMetaObject<ShefuCard>();
     addMetaObject<LifuCard>();
+    addMetaObject<MumengCard>();
 
     skills << new HuxunMove << new YuancongUseCard;
 }
