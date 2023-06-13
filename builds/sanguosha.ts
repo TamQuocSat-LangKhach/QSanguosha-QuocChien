@@ -1190,8 +1190,8 @@
         <translation>Lượt</translation>
     </message>
     <message>
-        <source>Source code: &lt;a href=&apos;%1&apos; style = &quot;color:#0072c1; &quot;&gt;%1&lt;/a&gt; &lt;br/&gt;</source>
-        <translation>Thông tin: Nguyễn Trung (Lãng Khách) fb.com/mrkey94 &lt;br/&gt; Cộng đồng Tam Quốc Sát - Việt Nam - fb.com/groups/tqsvn&lt;br/&gt;Discord - discord.gg/jfm4PKpjmN&lt;br/&gt;</translation>
+        <source>LangKhachMoreInfo</source>
+        <translation>Thông tin: Website: tamquocsat.langkhach.org &lt;br/&gt; Cộng đồng Tam Quốc Sát - Việt Nam - fb.com/groups/tqsvn&lt;br/&gt;Discord - discord.gg/jfm4PKpjmN&lt;br/&gt;</translation>
     </message>
     <message>
         <source>Start game</source>

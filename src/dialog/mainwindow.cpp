@@ -912,12 +912,7 @@ void MainWindow::on_actionAbout_triggered()
         const char *date = __DATE__;
         const char *time = __TIME__;
         content.append(tr("Compilation time: %1 %2 <br/>").arg(date).arg(time));
-
-        QString project_url = "https://github.com/Mogara/QSanguosha-For-Hegemony";
-        content.append(tr("Source code: <a href='%1' style = \"color:#0072c1; \">%1</a> <br/>").arg(project_url));
-
-        QString forum_url = "http://qsanguosha.org";
-        content.append(tr("Forum: <a href='%1' style = \"color:#0072c1; \">%1</a> <br/>").arg(forum_url));
+        content.append(tr("LangKhachMoreInfo"));
 
         about_window = new Window(tr("About QSanguosha"), QSize(420, 465));
         scene->addItem(about_window);
