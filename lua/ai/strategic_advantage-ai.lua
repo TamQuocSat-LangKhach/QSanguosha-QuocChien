@@ -26,12 +26,16 @@ transfer_skill.getTurnUseCard = function(self, inclusive)
 	if self.player:hasShownSkill("hongyuan") and not self.player:hasUsed("HongyuanCard") then
 		return sgs.Card_Parse("@HongyuanCard=.&hongyuan")
 	end
-	local hongyuan_card = nil
-	if self.player:hasShownSkill("hongyuan") and self.hongyuan_card_id then--不太好的处理办法,因为反馈+昭心之后,合纵标识没了
-		hongyuan_card = sgs.Sanguosha:getCard(self.hongyuan_card_id)
+	local hongyuan_ids = sgs.IntList()
+	local view_as_str = self.player:property("view_as_transferable"):toString()
+	if view_as_str and view_as_str ~= "" then
+		local view_as_ids = view_as_str:split("+")
+		for i=1,#view_as_ids do 
+			hongyuan_ids:append(view_as_ids[i])
+		end
 	end
 	for _, c in sgs.qlist(self.player:getCards("h")) do
-		if c:isTransferable() or (hongyuan_card and hongyuan_card:getEffectiveId() == c:getEffectiveId()) then 
+		if c:isTransferable() or hongyuan_ids:contains(c:getEffectiveId()) then 
 			return sgs.Card_Parse("@TransferCard=.")
 		end
 	end
@@ -80,12 +84,17 @@ sgs.ai_skill_use_func.TransferCard = function(transferCard, use, self)
 		end
 		return value
 	end
-	local hongyuan_card = nil
-	if self.player:hasShownSkill("hongyuan") and self.hongyuan_card_id then
-		hongyuan_card = sgs.Sanguosha:getCard(self.hongyuan_card_id)
+	
+	local hongyuan_ids = sgs.IntList()
+	local view_as_str = self.player:property("view_as_transferable"):toString()
+	if view_as_str and view_as_str ~= "" then
+		local view_as_ids = view_as_str:split("+")
+		for i=1,#view_as_ids do 
+			hongyuan_ids:append(view_as_ids[i])
+		end
 	end
 	for _, c in sgs.qlist(self.player:getCards("h")) do
-		if (c:isTransferable() or (hongyuan_card and hongyuan_card:getEffectiveId() == c:getEffectiveId()))
+		if (c:isTransferable() or hongyuan_ids:contains(c:getEffectiveId()))
 			and (not isCard("Peach", c, self.player) or #friends_shown > 0) then
 			if not oneJink and isCard("Jink", c, self.player) then
 				oneJink = true

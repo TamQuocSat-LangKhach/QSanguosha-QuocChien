@@ -567,7 +567,7 @@ sgs.ai_skill_invoke.tunjiang = true
 --士燮
 sgs.ai_skill_invoke.lixia = true
 
-sgs.ai_skill_choice.lixia = function(self, choices, data)
+sgs.ai_skill_choice.lixia_choose = function(self, choices, data)
   local shixie = sgs.findPlayerByShownSkillName("lixia")
   --[[if not shixie then
     return "no"

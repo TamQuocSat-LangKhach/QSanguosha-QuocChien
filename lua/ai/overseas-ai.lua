@@ -468,7 +468,6 @@ sgs.ai_skill_use_func.HongyuanCard = function(hycard, use, self)
 		end
 		local card, friend = self:getCardNeedPlayer(to_hongyuan, friends, "hongyuan")
 		if card and friend then
-            self.hongyuan_card_id = card:getId()
 			use.card = sgs.Card_Parse("@HongyuanCard=" .. card:getId() .. "&hongyuan")
             --if use.to then use.to:append(friend) end
             --Global_room:writeToConsole("弘援合纵目标:"..sgs.Sanguosha:translate(friend:getGeneralName()).."/"..sgs.Sanguosha:translate(friend:getGeneral2Name()))
@@ -797,11 +796,13 @@ kenshang_skill.getTurnUseCard = function(self, inclusive)
 	for _, id in sgs.qlist(self.player:getHandPile()) do
 		hecards:prepend(sgs.Sanguosha:getCard(id))
 	end
+	local hecards = sgs.QList2Table(hecards)
+	self:sortByUseValue(hecards, true)
 	--博弈(2牌打1伤无损摸1；1牌打1伤失去技能)
 	--当此【杀】结算结束后，若（曾）为此【杀】对应的实体牌的牌数：＞X，你摸X张牌；≤X，你失去〖马术〗或此技能。（X为此【杀】造成过的伤害值之和）
 	if damage_num >= 2 then--准备失去技能
 		local cards = {}
-		for _, card in sgs.qlist(hecards) do
+		for _, card in ipairs(hecards) do
 			if ((not isCard("Peach", card, self.player) and not isCard("ExNihilo", card, self.player)) or useAll)
 				and not isCard("BefriendAttacking", card, self.player) and not isCard("AllianceFeast", card, self.player)
 				and (not isCard("Crossbow", card, self.player) or disCrossbow ) then
@@ -831,7 +832,7 @@ kenshang_skill.getTurnUseCard = function(self, inclusive)
 				table.insert(newcards, card)
 			end
 		end
-		if #cards <= self.player:getHp() - 1 and self.player:getHp() <= 4 and not self:hasHeavySlashDamage(self.player)
+		if #newcards <= self.player:getHp() - 1 and self.player:getHp() <= 4 and not self:hasHeavySlashDamage(self.player)
 		and not self.player:hasSkills("kongcheng|paoxiao") then return end
 		if #newcards < 2 then return end
 
@@ -1947,7 +1948,7 @@ sgs.ai_skill_exchange["shefu_remove"] = function(self,pattern,max_num,min_num,ex
     self:sortByUseValue(ambushcards, true)
     for _, c in ipairs(ambushcards) do
         if c:getTypeId() == sgs.Card_TypeEquip and not table.contains(result, c) then
-            table.insert(result, c)
+            table.insert(result, c:getEffectiveId())
         end
         if #result == min_num then
             return result
@@ -1955,7 +1956,7 @@ sgs.ai_skill_exchange["shefu_remove"] = function(self,pattern,max_num,min_num,ex
     end
     for _, c in ipairs(ambushcards) do
         if c:getTypeId() == sgs.Card_TypeTrick and not table.contains(result, c) then
-            table.insert(result, c)
+            table.insert(result, c:getEffectiveId())
         end
         if #result == min_num then
             return result
@@ -1963,7 +1964,7 @@ sgs.ai_skill_exchange["shefu_remove"] = function(self,pattern,max_num,min_num,ex
     end
     for _, c in ipairs(ambushcards) do
         if not table.contains(result, c) then
-			table.insert(result, c)
+			table.insert(result, c:getEffectiveId())
 		end
         if #result == min_num then
             return result
@@ -2160,9 +2161,17 @@ end
 sgs.ai_skill_use_func.LifuCard = function(card, use, self)
 	self:sort(self.enemies, "handcard")
 	for _, enemy in ipairs(self.enemies) do
-		if enemy:getHandcardNum() <= 4 and not enemy:isRemoved() and not (enemy:hasSkill("lirang") and #self.enemies > 1) then
+		if enemy:getHandcardNum() <= 4 and not enemy:isNude() and not enemy:isRemoved() and not (enemy:hasSkill("lirang") and #self.enemies > 1) then
 			use.card = sgs.Card_Parse("@LifuCard=.&lifu")
 			if use.to then use.to:append(enemy) end
+			return
+		end
+	end
+	self:sort(self.friends_noself, "handcard")
+	for _, friend in ipairs(self.friends_noself) do
+		if friend:isNude() then
+			use.card = sgs.Card_Parse("@LifuCard=.&lifu")
+			if use.to then use.to:append(friend) end
 			return
 		end
 	end
@@ -2361,7 +2370,25 @@ sgs.ai_skill_playerchosen["command_jinwu"] = sgs.ai_skill_playerchosen.damage
 sgs.ai_skill_playerchosen["jinwu_slash"] = sgs.ai_skill_playerchosen.zero_card_as_slash
 
 sgs.ai_skill_invoke.zhuke = function(self, data)
+--QStringList list = data.toString().split(":")
+--player->tag["ZhukeCommanddata"] = data
 --缺失执行军令技能和军令几的信息
+	local askSkill = ""
+	local command_index = -1
+	local allcommands = {"command1", "command2", "command3", "command4", "command5", "command6"}
+	local data_str = self.player:getTag("ZhukeCommanddata"):toString()
+	if data_str and data_str ~= "" then
+		--"jinwu:command2:sgs1->sgs1"
+		local data_table = data_str:split("+")
+		local command = data_table[2]
+		if table.contains(allcommands,command) then
+			command_index = table.indexOf(allcommands, command)
+			askSkill = data_table[1]
+		end
+	end
+	if command_index > 0 then
+		Global_room:writeToConsole("筑科考虑军令:("..askSkill..")"..tostring(command_index))
+	end
     if self.player:hasFlag("AI_BadJinwu") then
         self.player:setFlags("-AI_BadJinwu")
         return true

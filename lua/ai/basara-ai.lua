@@ -579,9 +579,12 @@ sgs.ai_skill_invoke.GameRule_AskForArraySummon = function(self, data)
 end
 --]]
 sgs.ai_skill_choice.GameRule_AskForArraySummon = function(self, choices)
-	local canShowHead = string.find(choices, "show_head_general")
-	local canShowDeputy = string.find(choices, "show_deputy_general")
-	local canShowBoth = string.find(choices, "show_both_generals")
+	local show_position = self:getGeneralShowOrHide(self.player,true,true)
+	if not show_position then return "cancel"
+	elseif string.find(show_position, "+") and string.find(choices, "show_both_generals") then return "show_both_generals"
+	elseif string.find(show_position, "head") and string.find(choices, "show_head_general") then return "show_head_general"
+	elseif string.find(show_position, "deputy") and string.find(choices, "show_deputy_general") then return "show_deputy_general" end
+	
 	local choice = sgs.ai_skill_choice.GameRule_AskForGeneralShow(self, choices)
 	if choice ~= "cancel" then return choice end
 	return choices[1]
@@ -697,6 +700,13 @@ function SmartAI:getGeneralShowOrHide(player,optional,isShow,isDisableShow)--isD
 				local firstShowSkills = "luanji|niepan|bazhen|jianglve|diaodu|huoshui|qianhuan|chenglve|jinghe|dangxian|wanglie|sidi|lixia"
 				if self:isWeak() or self:hasKnownSkill(firstShowSkills, player) then
 					value = value + 3
+				end
+			end
+			if self:hasKnownSkill("xiaolian", player) and (self:isWeak() or sgs.ai_skill_invoke.mouduan(sgs.ais[player:objectName()])) then
+				if player:inHeadSkills("xiaolian") then
+					head_value = head_value + 4
+				elseif player:inDeputySkills("xiaolian") then
+					deputy_value = deputy_value + 4
 				end
 			end
 			--local bothShow = ("luanji+shuangxiong|luanji+huoshui|guanxing+yizhi"):split("|")

@@ -3755,8 +3755,8 @@ function SmartAI:askForCardChosen(who, flags, reason, method, disable_list)
 		return -1
 	end
 end
-
-function SmartAI:askForCardsChosen(targets, flags, reason, min_num, max_num, disable_list)
+--ai->askForCardsChosen(who, flags, reason, min_num, max_num, method, disabled_ids)
+function SmartAI:askForCardsChosen(targets, flags, reason, min_num, max_num, disable_list)--method传参没了……
 	disable_list = disable_list or {}
 	local cardchosen = sgs.ai_skill_cardschosen[string.gsub(reason, "%-", "_")]
 	local card
@@ -3784,21 +3784,6 @@ function SmartAI:askForCardsChosen(targets, flags, reason, min_num, max_num, dis
 		--Global_room:writeToConsole("askForCardsChosen:card:"..type(card))
 		if type(card) == "table" then return card
 		elseif type(card) == "number" then 
-			if card ~= -1 and self.player:objectName() ~= targets:first():objectName() then--强行调用AI
-				local promptlist = {}
-				table.insert(promptlist, "cardChosen")
-				table.insert(promptlist, reason)
-				table.insert(promptlist, tostring(card))
-				table.insert(promptlist, self.player:objectName())
-				table.insert(promptlist, targets:first():objectName())
-				local callbacktable = sgs.ai_choicemade_filter[promptlist[1]]
-				if callbacktable and type(callbacktable) == "table" then
-					local callback = callbacktable[promptlist[2]]
-					if type(callback) == "function" then
-						callback(self, self.player, promptlist)
-					end
-				end
-			end
 			if card ~= -1 then return {card} end--鞬出等
 			Global_room:writeToConsole("askForCardsChosen调用askForCardChosen返回-1:"..reason)
 		elseif card then return {card:getEffectiveId()} end
@@ -3813,21 +3798,6 @@ function SmartAI:askForCardsChosen(targets, flags, reason, min_num, max_num, dis
 				method = sgs.Card_MethodDiscard
 			end
 			local card_id = self:askForCardChosen(targets:first(), flags, reason.."_None", method, disable_list)
-			if card_id ~= -1 and self.player:objectName() ~= targets:first():objectName() then--强行调用AI
-				local promptlist = {}
-				table.insert(promptlist, "cardChosen")
-				table.insert(promptlist, reason)
-				table.insert(promptlist, tostring(card_id))
-				table.insert(promptlist, self.player:objectName())
-				table.insert(promptlist, targets:first():objectName())
-				local callbacktable = sgs.ai_choicemade_filter[promptlist[1]]
-				if callbacktable and type(callbacktable) == "table" then
-					local callback = callbacktable[promptlist[2]]
-					if type(callback) == "function" then
-						callback(self, self.player, promptlist)
-					end
-				end
-			end
 			if card_id ~= -1 then return {card_id} end
 		else
 			Global_room:writeToConsole("askForCardsChosen无AI,调用askForCardChosen循环:"..reason)--危盟3,
@@ -4788,7 +4758,6 @@ function SmartAI:needRetrial(judge)
 		if who:hasArmorEffect("SilverLion") and who:getHp() > 1 then return false end
 
 		if who:hasArmorEffect("PeaceSpell") then return false end
-		if who:hasShownSkill("yujia") then return false end
 
 		if self:isFriend(who) then
 			if who:isChained() and self:isGoodChainTarget(who, self.player, sgs.DamageStruct_Thunder, 3) then return false end
@@ -5194,61 +5163,9 @@ function SmartAI:damageIsEffective_(damageStruct)
 		damage = damage - 1
 	end
 	
-	local C_C = sgs.findPlayerByShownSkillName("qiyuan")
-	if C_C and to:hasShownOneGeneral() and to:getKingdom() == C_C:getKingdom() 
-		and C_C:getHp() >= to:getHp() and from and not from:isFriendWith(to) then
-		if damage > 1 then damage = 1 end
-		local Kingdom_nums = {}
-		local kingdoms = sgs.KingdomsTable
-		for _, kingdom in ipairs(kingdoms) do
-			Kingdom_nums[kingdom] = 0
-		end
-		for _, p in sgs.qlist(self.room:getAlivePlayers()) do
-			if not p:hasShownOneGeneral() then continue end
-			if table.contains(kingdoms, p:getKingdom()) then
-				Kingdom_nums[p:getKingdom()] = Kingdom_nums[p:getKingdom()] + 1
-			end
-		end
-		--p:getPlayerNumWithSameKingdom("AI"),to:getPlayerNumWithSameKingdom("AI")--空值函数
-		local qiyuan_show = false
-		for _, kingdom in ipairs(kingdoms) do
-			if to:getKingdom() == kingdom then continue end
-			if Kingdom_nums[kingdom] >= C_C:getPlayerNumWithSameKingdom("AI") then
-				qiyuan_show = true
-				break
-			end
-		end
-		if qiyuan_show then
-			if from:hasShownOneGeneral() and (to:getPlayerNumWithSameKingdom("AI") >= from:getPlayerNumWithSameKingdom("AI") or from:getMark("@bless") == 0) then
-			else damage = damage - 1 end
-		end
-	end
 	if damage < 1 then return false end
 
 	--if self:hasKnownSkill("yuanyu", to) and from and not to:isAdjacentTo(from) then return false end
-
-	if to:hasShownSkill("tianran") and from and damageStruct.card then
-		if self:isFriend(to, from) then return false
-		else
-			local without_type = true
-			if from:objectName() == self.player:objectName() then
-				local type_name = {"BasicCard", "TrickCard", "EquipCard"}
-				local types = type_name[damageStruct.card:getTypeId()]
-				local cards = self.player:getCards("h")
-				for _, c in sgs.qlist(cards) do
-					if c:getEffectiveId() == damageStruct.card:getEffectiveId() then continue end
-					if c:isKindOf(types) then without_type = false break end
-				end
-			else
-				local un_type_name = {"^BasicCard", "^TrickCard", "^EquipCard"}
-				local types = un_type_name[damageStruct.card:getTypeId()]
-				if getKnownCard(from, self.player, types, false) < from:getHandcardNum() then without_type = false end
-			end
-			if without_type then return false end
-        end
-	end
-	
-	if to:hasShownSkill("yujia") and nature ~= sgs.DamageStruct_Normal then return false end
 	
 	if to:hasArmorEffect("PeaceSpell") and nature ~= sgs.DamageStruct_Normal then return false end
 	if to:hasShownSkills("jgyuhuo_pangtong|jgyuhuo_zhuque") and nature == sgs.DamageStruct_Fire then return false end
@@ -6551,7 +6468,7 @@ function SmartAI:hasCrossbowEffect(player)
 			end
 		end
 	end
-	return (player:hasWeapon("Crossbow") or player:hasShownSkills("paoxiao|paoxiao_xh|kuangcai|guiling")
+	return (player:hasWeapon("Crossbow") or player:hasShownSkills("paoxiao|paoxiao_xh|kuangcai")
 		or xuanhuo_paoxiao or (player:hasShownSkill("baolie") and player:getHp() < 3))
 end
 
@@ -6888,7 +6805,6 @@ function SmartAI:useEquipCard(card, use)
 				if not friend:getArmor() then return end
 			end
 		end
-		if self.player:hasSkill("yujia") then use.card = card end
 		if self:evaluateArmor(card) > self:evaluateArmor() or (isenemy_zzzh and self:getOverflow() > 1) then use.card = card end
 		return
 	elseif card:isKindOf("OffensiveHorse") then
@@ -7081,7 +6997,7 @@ function IgnoreArmor(from, to)
 	if not to:hasArmorEffect(to:getArmor():objectName()) or from:hasWeapon("QinggangSword") then
 		return true
 	end
-	if from:hasShownSkill("guiling") then return true end
+
 	if from:hasShownSkills("paoxiao|paoxiao_xh") then
 		local lord_liubei = sgs.findPlayerByShownSkillName("shouyue")
 		if lord_liubei and lord_liubei:isAlive() and from:isFriendWith(lord_liubei) then
@@ -7096,7 +7012,6 @@ function SmartAI:needToThrowArmor(player)
 	if not player:getArmor() or not player:hasArmorEffect(player:getArmor():objectName()) then return false end
 	if player:hasShownSkill("bazhen") and not(player:getArmor():isKindOf("EightDiagram") or player:getArmor():isKindOf("RenwangShield") or player:getArmor():isKindOf("PeaceSpell")) then return true end
 	if self:evaluateArmor(player:getArmor(), player) <= -2 then return true end
-	if self.player:hasShownSkill("yujia") then return true end
 	if player:hasArmorEffect("SilverLion") and player:isWounded() and player:canRecover() 
 		and not self:needToLoseHp(player, nil, nil, true, true) then
 		if self:isFriend(player) then
@@ -7923,24 +7838,6 @@ function SmartAI:cantbeHurt(player, from, damageNum)
 		end
 		if hasUnsafeEnemie and peach_num == 0 and player:getHandcardNum() < 3 then
 			return true
-		end
-	end
-	
-	local C_C = sgs.findPlayerByShownSkillName("qiyuan")
-	if C_C and C_C:isFriendWith(player) and C_C:getHp() >= player:getHp() and not from:isFriendWith(player) then
-		if from:hasShownOneGeneral() then
-			local from_kingdoms = from:getPlayerNumWithSameKingdom("AI")
-			local player_kingdoms = player:getPlayerNumWithSameKingdom("AI")
-			if from_kingdoms > player_kingdoms then 
-				local bless = from:getMark("@bless")
-				if bless == 0 and (from:getHp() < 2 or self:isWeak(from)) then
-					local need_recover = from:getMaxHp() + 1
-					local peach_num = self.player:objectName() == from:objectName() and self:getCardsNum("Peach") or getCardsNum("Peach", from, self.player)
-					if need_recover > peach_num then
-						return true
-					end
-				else return true end
-			end
 		end
 	end
 	

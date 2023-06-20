@@ -377,7 +377,6 @@ function SmartAI:slashIsEffective(slash, to, from, ignore_armor)
 	if not slash or not to then self.room:writeToConsole(debug.traceback()) return end
 	from = from or self.player
 	if to:hasShownSkill("kongcheng") and to:isKongcheng() then return false end
-	if to:hasShownSkill("yujia")then return false end
 	if to:isRemoved() then return false end
 
 	local nature = sgs.Slash_Natures[slash:getClassName()]
