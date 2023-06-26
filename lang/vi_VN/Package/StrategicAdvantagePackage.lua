@@ -27,32 +27,32 @@ return {
 	["is_transferable"] = "Lá này có thể được \"Hợp Tung\"",
 
 	["Blade"] = "Thanh Long Yển Nguyệt Đao",
-	[":Blade"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 3\nKỹ năng: Tỏa định kỹ, Khi sử dụng [Sát], mục tiêu của lá sát không thể lật tướng cho đến khi [Sát] hoàn tất.",
+	[":Blade"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 3\nKỹ năng: Tỏa định kỹ, Khi sử dụng [Sát], mục tiêu của lá [Sát] này không thể lật tướng cho đến khi [Sát] này kết toán xong",
 
 	["Halberd"] = "Phương Thiên Hoạ Kích",
-	[":Halberd"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 4\nKỹ năng: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa lật tướng làm mục tiêu, nhưng nếu có mục tiêu sử dụng [Thiểm] sẽ vô hiệu hoá [Sát] với toàn bộ mục tiêu còn lại.",
+	[":Halberd"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 4\nKỹ năng: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác với mục tiêu, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa lật tướng, lệnh họ trở thành mục tiêu; Nếu làm vậy, sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
 	["halberd"] = "Phương Thiên Họa Kích",
 	["#HalberdNullified"] = "Do hiệu quả của [%arg], %from dùng [%arg2] với %to vô hiệu",
 	["@halberd-use"] = "Sử dụng hiệu ứng của [Phương Thiên Họa Kích]?",
 
 	["Breastplate"] = "Hộ Tâm Kính",
-	[":Breastplate"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng: Khi nhận sát thương, nếu sát thương này không nhỏ hơn số máu hiện tại của bạn, có thể bỏ lá này từ vùng trang bị để vô hiệu hoá sát thương đó.",
-	["#Breastplate"] = "%from đã vô hiệu hoá %arg điểm sát thương [%arg2] từ %to",
+	[":Breastplate"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng: Khi bạn nhận sát thương, nếu số sát thương ≥ số máu hiện tại của bạn, bạn có thể đưa lá này từ vùng trang bị vào chồng bài bỏ để chặn sát thương này.",
+	["#Breastplate"] = "%from đã chặn %arg sát thương [%arg2] từ %to",
 
 	["IronArmor"] = "Minh Quang Khải",
-	[":IronArmor"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng:\n" ..
-	"1. Tỏa định kỹ, khi là mục tiêu của [Hỏa Thiêu Liên Doanh], [Hỏa Công] và [Sát Hỏa], hủy bỏ mục tiêu đối với bạn.\n" ..
-	"2. Tỏa định kỹ, nếu là tiểu thế lực, không thể rơi vào trạng thái bị xích.\n" ,
+	[":IronArmor"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng: Tỏa định kỹ:\n" ..
+	"1. Khi bạn trở thành mục tiêu của [Hỏa Thiêu Liên Doanh], [Hỏa Công] và [Sát Hỏa], hủy bỏ mục tiêu đối với bạn.\n" ..
+	"2. Nếu bạn thuộc tiểu thế lực, bạn không thể nhận trạng thái xích.\n" ,
 	["#IronArmor"] = "%from đã phát động [%arg]",
 
 
 	["WoodenOx"] = "Mộc Ngưu Lưu Mã",
 	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\nKỹ năng\n" ..
-	"1. Một lần Giai đoạn hành động, nếu bạn có ít hơn 5 lá trong [Mộc Ngưu Lưu Mã], có thể đặt 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người chơi khác.\n" ..
-	"2. Có thể sử dụng hoặc đánh ra bài trên [Mộc Ngưu Lưu Mã] như bài trên tay.\n" ..
-	"3. Khi bạn mất [Mộc Ngưu Lưu Mã], nếu thẻ này không chuyển sang vùng trang bị khác, bỏ toàn bộ bài trên[Mộc Ngưu Lưu Mã].\n" ..
-	"* Bản thân luôn có thể xem lại bài trên [Mộc Ngưu Lưu Mã].",
-	["@wooden_ox-move"] = "Bạn có thể chuyển  [Mộc Ngưu Lưu Mã] sang vùng trang bị của một người chơi khác",
+	"1. Một lần trong giai đoạn hành động, số lá trong [Mộc Ngưu Lưu Mã] < 5, bạn có thể đặt úp 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n" ..
+	"2. Bạn có thể sử dụng hoặc đánh ra bài trên [Mộc Ngưu Lưu Mã] như bài trên tay.\n" ..
+	"3. Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, bỏ toàn bộ bài trong [Mộc Ngưu Lưu Mã].\n" ..
+	"* Bạn có thể xem bài trong [Mộc Ngưu Lưu Mã].",
+	["@wooden_ox-move"] = "Bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của một người chơi khác",
 	["wooden_ox"] = "Mộc Ngưu Lưu Mã",
 	["#WoodenOx"] = "%from đánh ra %arg lá %arg2 bài",
 
@@ -74,7 +74,7 @@ return {
 	[":burning_camps"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Người phía sau bạn và tất cả người cùng đội hình với người này.\nHiệu quả: Bạn gây 1 sát thương Hoả đối với mục tiêu. ",
 
 	["lure_tiger"] = "Điệu Hổ Ly Sơn",
-	[":lure_tiger"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nLựa chọn: Từ 1 đến 2 người khác\nMục tiêu: Người đã lựa chọn\nHiệu quả: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến khi hết lượt này.",
+	[":lure_tiger"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nLựa chọn: 1-2 người khác\nMục tiêu: Người đã lựa chọn\nHiệu quả: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",
 	["lure_tiger_effect"] = "Điệu Hổ Ly Sơn",
 	["#lure_tiger-prohibit"] = "Điệu Hổ Ly Sơn",
 
@@ -85,17 +85,17 @@ return {
 	["fight_together:small"] = "Tiểu Thế Lực",
 
 	["alliance_feast"] = "Liên Quân Thịnh Yến",
-	[":alliance_feast"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nMục tiêu: bản thân và một thế lực khác phe có người chơi.\nHiệu quả: Bạn được rút số bài và hồi số máu bằng tổng số người hiện tại của phe đó; những người trong phe đó Rút 1 thẻ bài rồi loại bỏ trạng thái xích.",
+	[":alliance_feast"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nLựa chọn: 1 người có thế lực xác định khác bạn\nMục tiêu: Bạn và tất cả người cùng thế lực với người đã chọn.\nHiệu quả: Mục tiêu là bạn chọn rút số bài và hồi số máu tùy ý với tổng bằng số người của thế lực đã chọn; mục tiêu không phải bạn rút 1 lá và thoát trạng thái xích.",
 	["@alliancefeast-choose"] = "Liên Quân Thịnh Yến: Chọn số máu hồi phục, số lượng còn lại dùng để rút bài.",
 
 	["threaten_emperor"] = "Hiệp Thiên Tử Dĩ Lệnh Chư Hầu",
-	[":threaten_emperor"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nMục tiêu: Bản thân nếu thuộc phe đại thế lực.\nHiệu quả: Kết thúc lượt hành động. Khi kết thúc giai đoạn bỏ bài, có thể bỏ đi 1 thẻ để nhận thêm một lượt sau lượt này.",
-	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt đi tiếp.",
+	[":threaten_emperor"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nMục tiêu: Bạn nếu thuộc đại thế lực.\nHiệu quả: Bạn kết thúc giai đoạn hành động; Sau đó, khi kết thúc giai đoạn bỏ bài, bạn có thể bỏ 1 lá trên tay để nhận thêm một lượt sau lượt này.",
+	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt",
 
 	["imperial_order"] = "Sắc lệnh",
-	[":imperial_order"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nMục tiêu: Tất cả người chơi chưa mở tướng.\nHiệu quả: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n※Nếu lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi chưa có thế lực giải quyết hiệu quả của lá này.",
+	[":imperial_order"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nMục tiêu: Tất cả người không có thế lực.\nHiệu quả: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n※Nếu lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
 
-	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa dùng, sẽ bị loại khỏi trận đấu.",
+	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa sử dụng, sẽ bị loại khỏi trận đấu.",
 	["#ImperialOrderEffect"] = "%from kết thúc lượt, phát động hiệu quả của [%arg] đã bị loại bỏ",
 	
     ["@imperial_order-choose"] = "[Sắc Lệnh]: Lựa chọn 1 mục:\n1. Mở 1 tướng và rút bài;\n2. Bỏ 1 trang bị;\n3. Mất 1 máu.",
