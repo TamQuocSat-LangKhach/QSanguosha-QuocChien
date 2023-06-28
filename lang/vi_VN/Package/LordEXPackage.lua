@@ -650,7 +650,7 @@ return {
     ["jilix:damage"] = "Có thể phát động \"Ký Li\", chặn sát thương và loại bỏ tướng này.",
 
     ["ImperialEdict"] = "Chiếu Thư",
-    [":ImperialEdict"] = "Bài Ký hiệu\n\nSử dụng:\n" ..
+    [":ImperialEdict"] = "Bài Kỹ năng\n\n<b>Kỹ năng</b>:\n" ..
                     "1. Một lần trong giai đoạn hành động của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].\n" ..
                     "2. Một lần trong giai đoạn hành động, nếu có 4 lá [Chiếu] không cùng chất, bạn có thể đưa tất cả [Chiếu] vào chồng bài bỏ, rút ngẫu nhiêu 1 lá công cụ thế lực.\n" ,
 

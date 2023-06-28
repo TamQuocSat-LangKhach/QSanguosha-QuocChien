@@ -25,29 +25,29 @@ local t = {
 
 
 	["slash"] = "Sát",
-	[":slash"] = "Bài cơ bản\n\nThời điểm: Một lần trong giai đoạn hành động.\nLựa chọn: 1 người trong tầm đánh.\nMục tiêu: Người đã chọn\nHiệu quả: Gây 1 sát thương cho mục tiêu.",
+	[":slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương cho mục tiêu.",
 	["slash-jink"] = "%src đã sử dụng [Sát], hãy sử dụng 1 [Thiểm]",
 	["@multi-jink-start"] = "%src đã sử dụng lá [sát], hãy sử dụng %arg lá [Thiểm]",
 	["@multi-jink"] = "%src đã sử dụng [Sát], hãy sử dụng thêm %arg lá [Thiểm]",
 	["@slash_extra_targets"] = "Hãy chọn thêm mục tiêu khác cho lá [Sát]",
 
 	["fire_slash"] = "Sát Hỏa",
-	[":fire_slash"] = "Bài cơ bản\n\nThời điểm: Một lần trong giai đoạn hành động.\nLựa chọn: 1 người trong tầm đánh.\nMục tiêu: Người đã chọn\nHiệu quả: Gây 1 sát thương Hỏa cho mục tiêu.",
+	[":fire_slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Hỏa cho mục tiêu.",
 
 	["thunder_slash"] = "Sát Lôi",
-	[":thunder_slash"] = "Bài cơ bản\n\nThời điểm: Một lần trong giai đoạn hành động.\nLựa chọn: 1 người trong tầm đánh.\nMục tiêu: Người đã chọn\nHiệu quả: Gây 1 sát thương Lôi cho mục tiêu.",
+	[":thunder_slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Lôi cho mục tiêu.",
 
 	["jink"] = "Thiểm",
-	[":jink"] = "Bài cơ bản\n\nThời điểm: Khi lá [Sát] có hiệu quả với bạn\nHiệu quả: Triệt tiêu hiệu quả của lá[Sát] này.",
+	[":jink"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Khi lá [Sát] có hiệu quả với bạn\n<b>Hiệu quả</b>: Triệt tiêu hiệu quả của lá[Sát] này.",
 	["#NoJink"] = "%from Không thể sử dụng[<font color=\"yellow\"><b>Thiểm</b></font>]để vô hiệu hóa[<font color=\"yellow\"><b>Sát</b></font>]",
 
 	["peach"] = "Đào",
-	[":peach"] = "Bài cơ bản\n\nCách thức I: \nThời điểm: Giai đoạn hành động\nMục tiêu: Bạn nếu đang không đầy máu.\nTác dụng: Mục tiêu hồi 1 máu."
-	.."\n\nCách thức II:\nKhi 1 người trong trạng thái hấp hối.\nMục tiêu: Người đang trong trạng thái hấp hối.\nTác dụng: Mục tiêu hồi 1 máu.",
+	[":peach"] = "Bài cơ bản\n\nCách thức I: \n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Mục tiêu</b>: Bạn nếu đang không đầy máu.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu."
+	.."\n\nCách thức II:\nKhi 1 người trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Người đang trong trạng thái hấp hối.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu.",
 
 	["analeptic"] = "Tửu",
-	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \nThời điểm: Giai đoạn hành động, 1 lần trong lượt.\nMục tiêu: Bạn.\nHiệu quả: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương."
-	.."\n\nCách thức II: \nThời điểm: Khi bạn trong trạng thái hấp hối.\nMục tiêu: Bạn.\nHiệu quả: Mục tiêu hồi 1 máu",
+	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \n<b>Thời điểm</b>: Giai đoạn hành động, 1 lần trong lượt.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương."
+	.."\n\nCách thức II: \n<b>Thời điểm</b>: Khi bạn trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu",
 	["#UnsetDrankEndOfTurn"] = "%from kết thúc lượt, lá [<font color=\"yellow\"><b>Tửu</b></font>] mất tác dụng",
 
 
@@ -121,69 +121,69 @@ local t = {
 	["JingFan"] = "Kinh Phàm",
 
 	["amazing_grace"] = "Ngũ Cốc Phong Đăng",
-	[":amazing_grace"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Tất cả.\nHiệu quả: Lật ra từ chồng bài số lá bài bằng với số mục tiêu. Mục tiêu thu lấy 1 lá từ số bài đã lật ra.",
+	[":amazing_grace"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Tất cả.\n<b>Hiệu quả</b>: Lật ra từ chồng bài số lá bài bằng với số mục tiêu. Mục tiêu thu lấy 1 lá từ số bài đã lật ra.",
 
 	["god_salvation"] = "Đào Viên Kết Nghĩa",
-	[":god_salvation"] = "Bài Công cụ\n\nThời điểm: Giai đoạn hành động.\nMục Tiêu: Tất cả.\nHiệu quả: Mục tiêu hồi 1 máu; Không có hiệu quả với mục tiêu đã đầy máu.",
+	[":god_salvation"] = "Bài Công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Tất cả.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu; Không có hiệu quả với mục tiêu đã đầy máu.",
 
 	["savage_assault"] = "Nam Man Nhập Xâm",
-	[":savage_assault"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Tất cả người khác.\nHiệu quả: Mục tiêu cần đánh ra 1 lá [Sát]; nếu không, họ nhận 1 sát thương.",
+	[":savage_assault"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Tất cả người khác.\n<b>Hiệu quả</b>: Mục tiêu cần đánh ra 1 lá [Sát]; nếu không, họ nhận 1 sát thương.",
 	["savage-assault-slash"] = "%src đã sử dụng [Nam Man Nhập Xâm], hãy đánh ra [Sát]",
 
 	["archery_attack"] = "Vạn Tiễn Tề Phát",
-	[":archery_attack"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Tất cả người khác.\nHiệu quả: Mục tiêu cần đánh ra 1 lá [Thiểm]; nếu không, họ nhận 1 sát thương.",
+	[":archery_attack"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Tất cả người khác.\n<b>Hiệu quả</b>: Mục tiêu cần đánh ra 1 lá [Thiểm]; nếu không, họ nhận 1 sát thương.",
 	["archery-attack-jink"] = "%src đã sử dụng [Vạn Tiễn Tề Phát], hãy đánh ra [Thiểm]",
 
 	["collateral"] = "Tá Đao Sát Nhân",
-	[":collateral"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác có vũ khí trong vùng trang bị (gọi là A) và 1 người trong tầm đánh của A (gọi là B)\nMục tiêu: A" ..
-"\nHiệu quả: A cần sử dụng [Sát] với B, nếu không, họ giao vũ khí trong vùng trang bị cho bạn.",
+	[":collateral"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác có vũ khí trong vùng trang bị (gọi là A) và 1 người trong tầm đánh của A (gọi là B)\n<b>Mục tiêu</b>: A" ..
+"\n<b>Hiệu quả</b>: A cần sử dụng [Sát] với B, nếu không, họ giao vũ khí trong vùng trang bị cho bạn.",
 	["collateral-slash"] = "%dest đã sử dụng [Tá Đao Sát Nhân], yêu cầu dùng [Sát] lên %src",
 	["#CollateralSlash"] = "%from đã chọn sử dụng [<font color=\"yellow\"><b>Sát</b></font>] lên %to",
 
 	["duel"] = "Quyết Đấu",
-	[":duel"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác\nMục tiêu: Người đã chọn.\nHiệu quả: Bắt đầu từ mục tiêu và bạn lần lượt đánh ra lá [Sát] đến khi có người  không đánh ra lá[Sát], người đó nhận 1 sát thương từ người còn lại.",
+	[":duel"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác\n<b>Mục tiêu</b>: Người đã chọn.\n<b>Hiệu quả</b>: Bắt đầu từ mục tiêu và bạn lần lượt đánh ra lá [Sát] đến khi có người  không đánh ra lá[Sát], người đó nhận 1 sát thương từ người còn lại.",
 	["duel-slash"] = "%src sử dụng [Quyết Đấu] với bạn, hãy đánh ra 1 [Sát]",
 
 	["ex_nihilo"] = "Vô Trung Sinh Hữu",
-	[":ex_nihilo"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Bạn\nHiệu quả: Mục tiêu rút 2 lá.",
+	[":ex_nihilo"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Mục tiêu rút 2 lá.",
 
 	["snatch"] = "Thuận Thủ Khiên Dương",
-	[":snatch"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác ở tầm 1 của bạn và có bài trong vùng chơi\nMục tiêu: Người đã chọn\nHiệu quả: Bạn thu lấy 1 lá trong vùng chơi của mục tiêu.",
+	[":snatch"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác ở tầm 1 của bạn và có bài trong vùng chơi\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Bạn thu lấy 1 lá trong vùng chơi của mục tiêu.",
 
 	["dismantlement"] = "Quá Hạ Sách Kiều",
-	[":dismantlement"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác có bài trong vùng chơi\nMục tiêu: Người đã chọn.\nHiệu quả: Bạn bỏ 1 lá trong vùng chơi của mục tiêu",
+	[":dismantlement"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác có bài trong vùng chơi\n<b>Mục tiêu</b>: Người đã chọn.\n<b>Hiệu quả</b>: Bạn bỏ 1 lá trong vùng chơi của mục tiêu",
 
 	["nullification"] = "Vô Giải Khả Kích",
-	[":nullification"] = "Bài công cụ\n\nThời điểm: Khi 1 lá công cụ có hiệu quả với 1 người hoặc khi [Vô Giải Khả Kích] có hiệu quả.\nHiệu quả: Triệt tiêu hiệu quả của lá công cụ với người chơi đó; hoặc triệt tiêu hiệu quả của [Vô Giải Khả Kích]. Nếu công cụ bị triệt tiêu là [Thiểm Điện], chuyển lá đó sang người tiếp theo.",
+	[":nullification"] = "Bài công cụ\n\n<b>Thời điểm</b>: Khi 1 lá công cụ có hiệu quả với 1 người hoặc khi [Vô Giải Khả Kích] có hiệu quả.\n<b>Hiệu quả</b>: Triệt tiêu hiệu quả của lá công cụ với người chơi đó; hoặc triệt tiêu hiệu quả của [Vô Giải Khả Kích]. Nếu công cụ bị triệt tiêu là [Thiểm Điện], chuyển lá đó sang người tiếp theo.",
 
 	["heg_nullification"] = "Vô Giải Khả Kích - Quốc",
-	[":heg_nullification"] = "Bài công cụ\n\nThời điểm: Khi 1 lá công cụ có hiệu quả với 1 người hoặc khi [Vô Giải Khả Kích] có hiệu quả.\nHiệu quả: Triệt tiêu hiệu quả của lá công cụ với người chơi đó hoặc tất cả người cùng thế lực với người đó; hoặc triệt tiêu hiệu quả của [Vô Giải Khả Kích]. Nếu công cụ bị triệt tiêu là [Thiểm Điện], chuyển lá đó sang người tiếp theo.",
+	[":heg_nullification"] = "Bài công cụ\n\n<b>Thời điểm</b>: Khi 1 lá công cụ có hiệu quả với 1 người hoặc khi [Vô Giải Khả Kích] có hiệu quả.\n<b>Hiệu quả</b>: Triệt tiêu hiệu quả của lá công cụ với người chơi đó hoặc tất cả người cùng thế lực với người đó; hoặc triệt tiêu hiệu quả của [Vô Giải Khả Kích]. Nếu công cụ bị triệt tiêu là [Thiểm Điện], chuyển lá đó sang người tiếp theo.",
 	["@heg_nullification-choose"] = "[Vô Giải Khả Kích - Quốc]: Chọn hiệu ứng",
 	["heg_nullification:single"] = "Chỉ mục tiêu",
 	["heg_nullification:all"] = "Toàn bộ thế lực" ,
 
 	["indulgence"] = "Lạc Bất Tư Thục",
-	[":indulgence"] = "Bài công cụ thời gian\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác\nMục tiêu: Người đã chọn\nHiệu quả: Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải chất Cơ, bỏ qua giai đoạn hành động lượt này; Sau đó bỏ lá này.",
+	[":indulgence"] = "Bài công cụ thời gian\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải chất Cơ, bỏ qua giai đoạn hành động lượt này; Sau đó bỏ lá này.",
 
 	["lightning"] = "Thiểm Điện",
-	[":lightning"] = "Bài công cụ thời gian\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Bạn\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 Bích, mục tiêu nhận 3 điểm sát thương Lôi, sau đó bỏ lá này. Nếu không, lá [Thiểm Điện] chuyển sang người tiếp theo.",
+	[":lightning"] = "Bài công cụ thời gian\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 Bích, mục tiêu nhận 3 điểm sát thương Lôi, sau đó bỏ lá này. Nếu không, lá [Thiểm Điện] chuyển sang người tiếp theo.",
 
 	["iron_chain"] = "Thiết Tác Liên Hoàn",
-	[":iron_chain"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nLựa chọn: 1-2 người\nMục tiêu: Tối đa 2 người chơi.\nHiệu quả: Mục tiêu thay đổi trạng thái xích.\nTrọng Chú: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":iron_chain"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1-2 người\n<b>Mục tiêu</b>: Tối đa 2 người chơi.\n<b>Hiệu quả</b>: Mục tiêu thay đổi trạng thái xích.\n<b>Trọng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 
 	["fire_attack"] = "Hoả Công",
-	[":fire_attack"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động\nLựa chọn: 1 người có bài trên tay\nMục tiêu: Người đã chọn.\nHiệu quả: Mục tiêu mở 1 lá trên tay, bạn có thể bỏ 1 lá trên tay có cùng chất với lá họ đã mở để gây 1 sát thương Hoả cho mục tiêu.",
+	[":fire_attack"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1 người có bài trên tay\n<b>Mục tiêu</b>: Người đã chọn.\n<b>Hiệu quả</b>: Mục tiêu mở 1 lá trên tay, bạn có thể bỏ 1 lá trên tay có cùng chất với lá họ đã mở để gây 1 sát thương Hoả cho mục tiêu.",
 	["fire-attack-card"] = "Bạn có thể bỏ 1 lá trên tay cùng chất với lá %arg của %dest để %dest nhận 1 điểm sát thương Hoả hệ.",
 	["@fire-attack"] = "%src đưa ra lá có chất %arg，hãy bỏ 1 lá cùng chất trên tay.",
 
 	["supply_shortage"] = "Binh Lương Thốn Đoạn",
-	[":supply_shortage"] = "Bài công cụ thời gian\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác ở tầm 1\nMục tiêu: Người đã chọn\nHiệu quả: Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải chất Tép, bỏ qua giai đoạn rút bài lượt này; Sau đó bỏ lá này.",
+	[":supply_shortage"] = "Bài công cụ thời gian\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác ở tầm 1\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải chất Tép, bỏ qua giai đoạn rút bài lượt này; Sau đó bỏ lá này.",
 
 	["await_exhausted"] = "Dĩ Dật Đãi Lao",
-	[":await_exhausted"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nMục tiêu: Tất cả người chơi cùng thế lực với bạn.\nHiệu quả: Mục tiêu rút 2 lá và bỏ 2 lá.",
+	[":await_exhausted"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Tất cả người chơi cùng thế lực với bạn.\n<b>Hiệu quả</b>: Mục tiêu rút 2 lá và bỏ 2 lá.",
 
 	["known_both"] = "Tri Bỉ Tri Kỉ",
-	[":known_both"] = "Bài công cụ\n\nThời điểm: Giai đoạn hành động.\nLựa chọn: 1 người khác có tướng chưa mở hoặc có bài trên tay\nMục tiêu: Người đã chọn\nHiệu quả: Bạn chọn xem tất cả bài trên tay hoặc 1 tướng úp của mục tiêu.\nTrọng Chú: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":known_both"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người khác có tướng chưa mở hoặc có bài trên tay\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Bạn chọn xem tất cả bài trên tay hoặc 1 tướng úp của mục tiêu.\n<b>Trọng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 	["#KnownBothView"] = "%from đã xem được %arg của %to" ,
 	["$KnownBothViewGeneral"] = "%from đã xem được %arg của %to, chính là %arg2" ,
 	["@known_both-choose"] = "Tri Bỉ Tri Kỉ: Vui lòng chọn hành động lên %dest",
@@ -192,7 +192,7 @@ local t = {
 	["known_both:handcards"] = "Xem bài trên tay",
 
 	["befriend_attacking"] = "Viễn Giao Cận Công",
-	[":befriend_attacking"] = "Bài công cụ\n\nThời điểm: Trong giai đoạn hành động.\nLựa chọn: 1 người có thế lực xác định khác bạn\nMục tiêu: Người đã chọn\nHiệu quả: Mục tiêu rút 1 lá, sau đó bạn rút 3 lá.",
+	[":befriend_attacking"] = "Bài công cụ\n\n<b>Thời điểm</b>: Trong giai đoạn hành động.\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu rút 1 lá, sau đó bạn rút 3 lá.",
 
 }
 
