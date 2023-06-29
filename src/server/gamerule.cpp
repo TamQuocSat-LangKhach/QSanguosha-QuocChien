@@ -844,6 +844,9 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
     }
     case SlashHit: {
         SlashEffectStruct effect = data.value<SlashEffectStruct>();
+        if (effect.from->hasShownSkill("yicheng") && effect.drank > 0) {
+            room->setEmotion(effect.from, "xusheng");
+        }
         int x = effect.slash->tag["addcardinality"].toInt() + effect.drank + 1;
         QStringList AddDamage_List = effect.slash->tag["AddDamage_List"].toStringList();
         foreach (QString name, AddDamage_List) {
