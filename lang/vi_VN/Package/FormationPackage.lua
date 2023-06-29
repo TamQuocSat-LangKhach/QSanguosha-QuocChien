@@ -80,7 +80,7 @@ return {
 	["shangyi:hidden_general"] = "Xem Tướng ẩn",
 	["shangyi:handcards"] = "Xem bài trên tay",
 	["niaoxiang"] = "Điểu Tường",
-	[":niaoxiang"] = "Trận pháp kỹ:\nSau khi bạn sử dụng sát chỉ định mục tiêu là người bên cạnh bạn và họ không nằm trong quan hệ đội hình với người khác, lệnh mục tiêu cần sử dụng 2 [Thiểm] để triệt tiêu lá [Sát] này.\nNếu bạn là người vây công trong quan hệ vây công, sau khi người vây công sử dụng [Sát] chọn mục tiêu là người bị vây công, lệnh mục tiêu cần sử dụng 2 [Thiểm] để triệt tiêu lá [Sát] này.",
+	[":niaoxiang"] = "Trận pháp kỹ:\nSau khi bạn xác định từng mục tiêu của [Sát], nếu mục tiêu đó là người bên cạnh bạn và họ không nằm trong quan hệ đội hình với người khác, lệnh mục tiêu cần sử dụng 2 [Thiểm] để triệt tiêu lá [Sát] này.\nNếu bạn là người vây công trong quan hệ vây công, sau khi người vây công xác định từng mục tiêu của lá [Sát], nếu mục tiêu này là người bị vây công, lệnh họ cần sử dụng 2 [Thiểm] để triệt tiêu lá [Sát] này.",
 	["NiaoxiangSummon"] = "Điểu Tường",
 
 	["#xusheng"] = "Giang Đông Đích Thiết Bích",

@@ -136,7 +136,7 @@ return {
 	["hongyuan"] = "Hoằng Viện",
 	[":hongyuan"] = "Khi bạn rút bài vì hiệu quả của \"Hợp Tung\", bạn có thể lệnh 1 người khác cùng thế lực rút bài thay bạn. Một lần trong giai đoạn hành động, bạn có thể mở 1 lá trên tay, lá đó khi ở trên tay bạn trong giai đoạn này xem như có ký hiệu \"Hợp Tung\".",
 	["mingzhe"] = "Minh Triết",
-	[":mingzhe"] = "Ngoài lượt của bạn:\n1. Khi bạn sử dụng/đánh ra lá Đỏ, bạn có thể rút 1 lá.\n2. Khi bạn mất đi bài Đỏ trong vùng trang bị, bạn có thể rút 1 lá",
+	[":mingzhe"] = "Ngoài lượt của bạn:\n1. Khi bạn sử dụng/đánh ra lá Đỏ, bạn có thể rút 1 lá.\n2. Khi bạn mất đi 1 lá Đỏ trong vùng trang bị, bạn có thể rút 1 lá",
 
 	["@huanshi-card"] = CommonTranslationTable["@askforretrial"],
 	["hongyuan-invoke"] = "Có thể phát động \"Hoằng Viện\", chọn 1 người nhận bài.",
