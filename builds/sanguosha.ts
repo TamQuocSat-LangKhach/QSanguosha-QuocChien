@@ -153,6 +153,10 @@
         <translation>Chế độ Huyết chiến</translation>
     </message>
     <message>
+        <source>Keep card on hidden general</source>
+        <translation>Giữ lại bài trên tướng sau khi bị úp</translation>
+    </message>
+    <message>
         <source>&lt;font color=%1&gt;This option enables the cheat menu&lt;/font&gt;</source>
         <translation>&lt;font color=%1&gt;Tuỳ chọn này sẽ bật danh sách mã cheat&lt;/font&gt;</translation>
     </message>
@@ -1560,6 +1564,14 @@ P = bản thân, R = Phòng hiện tại của bạn</translation>
         <translation>Cho phép 2 tướng</translation>
     </message>
     <message>
+        <source>EnableKeepCard</source>
+        <translation>Giữ bài trên tướng khi úp</translation>
+    </message>
+    <message>
+        <source>EnableCheat</source>
+        <translation>Bật Cheat</translation>
+    </message>
+    <message>
         <source>Fodder</source>
         <translation>Pháo hôi</translation>
     </message>
@@ -2553,7 +2565,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Khoá</translation>
+        <translation>Không</translation>
     </message>
     <message>
         <source>Player count</source>
@@ -2588,6 +2600,10 @@ hãy đợi chủ soái chọn xong tướng</translation>
         <translation>Bất chế độ Huyết Chiến</translation>
     </message>
     <message>
+        <source>Enable Keep Card On Hidden General</source>
+        <translation>Giữ bài sau khi úp tướng</translation>
+    </message>
+    <message>
         <source>Free choose</source>
         <translation>Chọn tự do</translation>
     </message>
@@ -2613,11 +2629,15 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Cho phép</translation>
+        <translation>Có</translation>
     </message>
     <message>
         <source>Enable First Showing Reward</source>
         <translation>Thưởng mở đầu tiên</translation>
+    </message>
+    <message>
+        <source>Enable Keep Card On Hidden General</source>
+        <translation>Giữ bài sau khi úp tướng</translation>
     </message>
 </context>
 <context>
@@ -2982,6 +3002,10 @@ hãy đợi chủ soái chọn xong tướng</translation>
     <message>
         <source>The reward of showing general first is enabled</source>
         <translation>Bật thưởng lật tướng đầu tiên</translation>
+    </message>
+    <message>
+        <source>Keep card on hidden general is enabled</source>
+        <translation>Bật cho phép giữ lại bài trên tướng sau khi đã úp</translation>
     </message>
     <message>
         <source>view next player deputy general is enabled</source>

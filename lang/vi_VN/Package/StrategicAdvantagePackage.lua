@@ -27,27 +27,27 @@ return {
 	["is_transferable"] = "Lá này có thể được \"Hợp Tung\"",
 
 	["Blade"] = "Thanh Long Yển Nguyệt Đao",
-	[":Blade"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 3\nKỹ năng: Tỏa định kỹ, Khi sử dụng [Sát], mục tiêu của lá [Sát] này không thể lật tướng cho đến khi [Sát] này kết toán xong",
+	[":Blade"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Tỏa định kỹ: Khi sử dụng [Sát], mục tiêu của lá [Sát] này không thể lật tướng cho đến khi [Sát] này kết toán xong",
 
 	["Halberd"] = "Phương Thiên Hoạ Kích",
-	[":Halberd"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 4\nKỹ năng: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác với mục tiêu, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa lật tướng, lệnh họ trở thành mục tiêu; Nếu làm vậy, sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
+	[":Halberd"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác với mục tiêu, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa lật tướng, lệnh họ trở thành mục tiêu; Nếu làm vậy, sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
 	["halberd"] = "Phương Thiên Họa Kích",
 	["#HalberdNullified"] = "Do hiệu quả của [%arg], %from dùng [%arg2] với %to vô hiệu",
 	["@halberd-use"] = "Sử dụng hiệu ứng của [Phương Thiên Họa Kích]?",
 
 	["Breastplate"] = "Hộ Tâm Kính",
-	[":Breastplate"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng: Khi bạn nhận sát thương, nếu số sát thương ≥ số máu hiện tại của bạn, bạn có thể đưa lá này từ vùng trang bị vào chồng bài bỏ để chặn sát thương này.",
+	[":Breastplate"] = "Bài Trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Khi bạn nhận sát thương, nếu số sát thương ≥ số máu hiện tại của bạn, bạn có thể đưa lá này từ vùng trang bị vào chồng bài bỏ để chặn sát thương này.",
 	["#Breastplate"] = "%from đã chặn %arg sát thương [%arg2] từ %to",
 
 	["IronArmor"] = "Minh Quang Khải",
-	[":IronArmor"] = "Bài Trang bị - Phòng cụ\n\nKỹ năng: Tỏa định kỹ:\n" ..
+	[":IronArmor"] = "Bài Trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n" ..
 	"1. Khi bạn trở thành mục tiêu của [Hỏa Thiêu Liên Doanh], [Hỏa Công] và [Sát Hỏa], hủy bỏ mục tiêu đối với bạn.\n" ..
 	"2. Nếu bạn thuộc tiểu thế lực, bạn không thể nhận trạng thái xích.\n" ,
 	["#IronArmor"] = "%from đã phát động [%arg]",
 
 
 	["WoodenOx"] = "Mộc Ngưu Lưu Mã",
-	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\nKỹ năng\n" ..
+	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n" ..
 	"1. Một lần trong giai đoạn hành động, số lá trong [Mộc Ngưu Lưu Mã] < 5, bạn có thể đặt úp 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n" ..
 	"2. Bạn có thể sử dụng hoặc đánh ra bài trên [Mộc Ngưu Lưu Mã] như bài trên tay.\n" ..
 	"3. Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, bỏ toàn bộ bài trong [Mộc Ngưu Lưu Mã].\n" ..
@@ -58,7 +58,7 @@ return {
 
 
 	["JadeSeal"] = "Ngọc Tỉ",
-	[":JadeSeal"] = "Bài Trang bị - Bảo vật\n\nKỹ năng: Tỏa định kỹ, Nếu đã lật tướng:\n" ..
+	[":JadeSeal"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>: Tỏa định kỹ: Nếu đã lật tướng:\n" ..
 	"1. Phe của bạn là Đại thế lực duy nhất, tất cả phe khác là Tiểu Thế Lực.\n" ..
 	"2. Giai đoạn rút bài, bạn rút thêm 1 lá\n" ..
 	"3. Đầu giai đoạn hành động, xem như sử dụng 1 lá [Tri Bỉ Tri Kỉ].\n" ,
@@ -93,7 +93,7 @@ return {
 	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt",
 
 	["imperial_order"] = "Sắc lệnh",
-	[":imperial_order"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n※Nếu lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
+	[":imperial_order"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n<b>Hiệu ứng thêm</b>Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
 
 	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa sử dụng, sẽ bị loại khỏi trận đấu.",
 	["#ImperialOrderEffect"] = "%from kết thúc lượt, phát động hiệu quả của [%arg] đã bị loại bỏ",

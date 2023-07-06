@@ -92,6 +92,7 @@ public:
     bool RewardTheFirstShowingPlayer;
     bool BattleRoyalMode;
     bool ViewNextPlayerDeputyGeneral;
+    bool KeepCardOnHiddenGeneral;
 
     // client side
     QString HostAddress;

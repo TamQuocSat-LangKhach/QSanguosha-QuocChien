@@ -52,7 +52,7 @@ time_t ServerInfoStruct::getCommandTimeout(QSanProtocol::CommandType command, QS
 
 bool ServerInfoStruct::parse(const QString &str)
 {
-    QRegExp rx("(.*):(@?\\w+):(\\d+):(\\d+):([\\w-]+(?:\\+[\\w-]+)*)?:([RCFAMSVZ]*)");
+    QRegExp rx("(.*):(@?\\w+):(\\d+):(\\d+):([\\w-]+(?:\\+[\\w-]+)*)?:([RCFAMSVZK]*)");
     if (!rx.exactMatch(str)) {
         // older version, just take the player count
         int count = str.split(":").at(1).toInt();
@@ -93,6 +93,7 @@ bool ServerInfoStruct::parse(const QString &str)
         FirstShowingReward = flags.contains("S");
         ViewDeputyGeneral = flags.contains("V");
         BattleRoyalMode = flags.contains("Z");
+        KeepCardOnHiddenGeneral = flags.contains("K");
     }
 
     return true;
@@ -112,6 +113,7 @@ ServerInfoWidget::ServerInfoWidget(bool show_lack)
     fisrt_showing_reward_label = new QLabel;
     view_deputy_general_label = new QLabel;
     battle_royal_mode_label = new QLabel;
+    keep_card_on_hidden_general_label = new QLabel;
     time_limit_label = new QLabel;
 
     list_widget = new QListWidget;
@@ -131,6 +133,7 @@ ServerInfoWidget::ServerInfoWidget(bool show_lack)
     layout->addRow(tr("Enable First Showing Reward"), fisrt_showing_reward_label);
     layout->addRow(tr("Enable View Deputy General"), view_deputy_general_label);
     layout->addRow(tr("Enable Battle Royal Mode"), battle_royal_mode_label);
+    layout->addRow(tr("Enable Keep Card On Hidden General"), keep_card_on_hidden_general_label);
     layout->addRow(tr("Operation time"), time_limit_label);
     layout->addRow(tr("Extension packages"), list_widget);
 
@@ -159,6 +162,7 @@ void ServerInfoWidget::fill(const ServerInfoStruct &info, const QString &address
     fisrt_showing_reward_label->setText(info.FirstShowingReward ? tr("Enabled") : tr("Disabled"));
     view_deputy_general_label->setText(info.ViewDeputyGeneral ? tr("Enabled") : tr("Disabled"));
     battle_royal_mode_label->setText(info.BattleRoyalMode ? tr("Enabled") : tr("Disabled"));
+    keep_card_on_hidden_general_label->setText(info.KeepCardOnHiddenGeneral ? tr("Enabled") : tr("Disabled"));
 
     if (info.OperationTimeout == 0)
         time_limit_label->setText(tr("No limit"));
@@ -206,6 +210,7 @@ void ServerInfoWidget::clear()
     fisrt_showing_reward_label->clear();
     view_deputy_general_label->clear();
     battle_royal_mode_label->clear();
+    keep_card_on_hidden_general_label->clear();
     time_limit_label->clear();
     list_widget->clear();
 }

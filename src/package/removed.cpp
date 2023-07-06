@@ -1559,7 +1559,7 @@ public:
             if (choice == "draw") {
                 chengyu->fillHandCards(qMin(from->getHandcardNum(),5) , objectName());
             } else if (choice == "discard") {
-                int x = from->getHandcardNum() - chengyu->getHandcardNum();
+                int x = qMin(from->getHandcardNum() - chengyu->getHandcardNum(),5);
                 room->askForDiscard(from, "benyu_discard", x, x);
             }
         }

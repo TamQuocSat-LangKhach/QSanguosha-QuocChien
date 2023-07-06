@@ -134,6 +134,7 @@ private:
     QCheckBox *reward_the_first_showing_player_checkbox;
     QCheckBox *view_next_player_deputy_general_checkbox;
     QCheckBox *battle_royal_mode_checkbox;
+    QCheckBox *keep_card_on_hidden_general;
     QCheckBox *forbid_adding_robot_checkbox;
     QSpinBox *ai_delay_spinbox;
     QCheckBox *ai_delay_altered_checkbox;

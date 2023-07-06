@@ -293,6 +293,9 @@ void StartScene::printServerInfo()
     if (Config.ViewNextPlayerDeputyGeneral)
         serverLog->append(tr("view next player deputy general is enabled"));
 
+    if (Config.KeepCardOnHiddenGeneral)
+        serverLog->append(tr("Keep card on hidden general is enabled"));
+
     if (!Config.ForbidAddingRobot) {
         serverLog->append(tr("This server is AI enabled, AI delay is %1 milliseconds").arg(Config.AIDelay));
     } else {

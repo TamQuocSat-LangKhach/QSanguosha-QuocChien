@@ -871,7 +871,7 @@ struct ServerInfoStruct {
     const bool FirstShowingReward;
     const bool BattleRoyalMode;
     const bool ViewDeputyGeneral;
-
+    const bool KeepCardOnHiddenGeneral;
     const bool DuringGame;
 };
 

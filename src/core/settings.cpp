@@ -111,6 +111,7 @@ void Settings::init()
     RewardTheFirstShowingPlayer = value("RewardTheFirstShowingPlayer", false).toBool();
     BattleRoyalMode = value("BattleRoyalMode", false).toBool();
     ViewNextPlayerDeputyGeneral = value("ViewNextPlayerDeputyGeneral", false).toBool();
+    KeepCardOnHiddenGeneral = value("KeepCardOnHiddenGeneral", false).toBool();
 
 #ifdef Q_OS_WIN32
     UserName = value("UserName", qgetenv("USERNAME")).toString();

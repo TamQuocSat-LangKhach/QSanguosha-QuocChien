@@ -802,6 +802,8 @@ QString Engine::getSetupString() const
         flags.append("V");
     if (Config.BattleRoyalMode)
         flags.append("Z");
+    if (Config.KeepCardOnHiddenGeneral)
+        flags.append("K");
 
     QString server_name = Config.ServerName;
     QStringList setup_items;

@@ -892,7 +892,10 @@ QString DetachEffectSkill::getPileName() const
 QStringList DetachEffectSkill::triggerable(TriggerEvent, Room *, ServerPlayer *target, QVariant &data, ServerPlayer * &) const
 {
     if (target && data.toString().split(":").first() == name)
-        return QStringList(objectName());
+        if (Config.KeepCardOnHiddenGeneral && target != NULL && target->isAlive())
+            return QStringList();
+        else
+            return QStringList(objectName());
     return QStringList();
 }
 

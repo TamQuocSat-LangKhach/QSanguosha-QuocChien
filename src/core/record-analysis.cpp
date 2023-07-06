@@ -76,7 +76,7 @@ void RecAnalysis::initialize(const QString &dir)
             const QVariant &body = packet.getMessageBody();
             if (JsonUtils::isString(body)) {
                 QString l = body.toString();
-                QRegExp rx("(.*):(@?\\w+):(\\d+):(\\d+):([+\\w-]*):([RCFSTBHAMN123a-r]*)(\\s+)?");
+                QRegExp rx("(.*):(@?\\w+):(\\d+):(\\d+):([+\\w-]*):([RCFSTBHAKMN123a-r]*)(\\s+)?");
                 if (!rx.exactMatch(l))
                     continue;
 
@@ -100,6 +100,7 @@ void RecAnalysis::initialize(const QString &dir)
                 if (flags.contains("B")) m_recordServerOptions << tr("EnableBasara");
                 if (flags.contains("H")) m_recordServerOptions << tr("EnableHegemony");
                 if (flags.contains("A")) m_recordServerOptions << tr("EnableAI");
+                if (flags.contains("K")) m_recordServerOptions << tr("EnableKeepCard");
 
                 continue;
             }

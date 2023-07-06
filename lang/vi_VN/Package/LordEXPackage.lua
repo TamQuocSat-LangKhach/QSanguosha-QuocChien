@@ -196,6 +196,9 @@ return {
     ["chendao"] = "Trần Đáo",
     ["wanglie"] = "Vãng Liệt",
     [":wanglie"] = "Lá đầu tiên bạn sử dụng trong giai đoạn hành động không hạn chế khoảng cách. Giai đoạn hành động, khi bạn sử dụng [Sát] hoặc công cụ phổ thông, bạn có thể lệnh cho tất cả người chơi không được hưởng ứng với lá này; nếu làm vậy, bạn không thể sử dụng bài trong giai đoạn này.",
+	["dizai"] = "Địa Tải",
+	[":dizai"] = "Trận pháp kỹ, nếu bạn là người vây công trong quan hệ vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
+	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
     ["#tianyu"] = "Quy Lược Minh Luyện",
     ["tianyu"] = "Điền Dự",
@@ -289,9 +292,9 @@ return {
     ["#chengyu"] = "Thái Sơn Phụng Nhật",
     ["chengyu"] = "Trình Dục",
     ["shefu"] = "Phục Binh",
-    [":shefu"] = "Một lần trong giai đoạn hành động, bạn có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Phục Binh]. Khi 1 người khác sử dụng bài, bạn có thể đưa 1 [Phục Binh] có cùng tên với lá đó vào chồng bài bỏ, hủy bỏ hoàn toàn lá đó. Giai đoạn chuẩn bị, nếu số [Phục Binh] nhiều hơn 2, bạn đưa số [Phục Binh] vào chồng bài đỏ đến khi còn 2.",
+    [":shefu"] = "Một lần trong giai đoạn hành động, bạn có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Phục Binh]. Khi 1 người khác sử dụng bài trên tay, bạn có thể đưa 1 [Phục Binh] có cùng tên với lá đó vào chồng bài bỏ, hủy bỏ hoàn toàn lá đó. Giai đoạn chuẩn bị, nếu số [Phục Binh] nhiều hơn 2, bạn đưa số [Phục Binh] vào chồng bài đỏ đến khi còn 2.",
     ["benyu"] = "Bí Dục",
-    [":benyu"] = "Sau khi bạn nhận sát thương:\n* Nếu bài trên tay bạn ít hơn nguồn sát thương, bạn chọn 1 mục:\n1. Bổ xung bài trên tay đến khi bằng với họ, tối đa 5 lá;\n2. Lệnh họ bỏ đi bài trên tay đến khi bằng bạn.\n* Nếu bài trên tay bạn nhiều hơn nguồn sát thương, bạn có thể bỏ số bài trên tay bằng số bài trên tay họ +1, sau đó gây 1 sát thương cho họ.",
+    [":benyu"] = "Sau khi bạn nhận sát thương:\n* Nếu bài trên tay bạn ít hơn nguồn sát thương, bạn chọn 1 mục:\n1. Bổ xung bài trên tay đến khi bằng với họ, tối đa 5 lá;\n2. Lệnh họ bỏ đi bài trên tay đến khi bằng bạn, tối đa bỏ 5 lá.\n* Nếu bài trên tay bạn nhiều hơn nguồn sát thương, bạn có thể bỏ số bài trên tay bằng số bài trên tay họ +1, sau đó gây 1 sát thương cho họ.",
 
     ["#shefu-compulsory"] = "Phục Binh",
     ["ambush"] = "Phục Binh",
@@ -650,9 +653,10 @@ return {
     ["jilix:damage"] = "Có thể phát động \"Ký Li\", chặn sát thương và loại bỏ tướng này.",
 
     ["ImperialEdict"] = "Chiếu Thư",
-    [":ImperialEdict"] = "Bài Kỹ năng\n\n<b>Kỹ năng</b>:\n" ..
-                    "1. Một lần trong giai đoạn hành động của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].\n" ..
-                    "2. Một lần trong giai đoạn hành động, nếu có 4 lá [Chiếu] không cùng chất, bạn có thể đưa tất cả [Chiếu] vào chồng bài bỏ, rút ngẫu nhiêu 1 lá công cụ thế lực.\n" ,
+    [":ImperialEdict"] = "Bài Trang bị - Bảo vật\n\nKỹ năng:\n" ..
+                    "* Sau khi sử dụng lá này, bạn đặt lá này vào vùng tướng của bạn.\n" ..
+					"* Một lần trong giai đoạn hành động của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].\n" ..
+                    "* Một lần trong giai đoạn hành động, nếu có 4 [Chiếu] không cùng chất, bạn có thể đưa tất cả [Chiếu] vào chồng bài bỏ, rút ngẫu nhiêu 1 lá công cụ thế lực.\n" ,
 
     ["imperialedictattach"] = "Đặt bài trên tay",
     [":imperialedictattach"] = "Một lần trong giai đoạn hành động của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].",

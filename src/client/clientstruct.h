@@ -48,7 +48,7 @@ struct ServerInfoStruct
     bool FirstShowingReward;
     bool BattleRoyalMode;
     bool ViewDeputyGeneral;
-
+    bool KeepCardOnHiddenGeneral;
     bool DuringGame;
 };
 
@@ -80,6 +80,7 @@ private:
     QLabel *fisrt_showing_reward_label;
     QLabel *view_deputy_general_label;
     QLabel *battle_royal_mode_label;
+    QLabel *keep_card_on_hidden_general_label;
     QLabel *time_limit_label;
     QLabel *lack_label;
     QListWidget *list_widget;

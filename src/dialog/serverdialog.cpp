@@ -455,6 +455,9 @@ QWidget *ServerDialog::createMiscTab()
     battle_royal_mode_checkbox = new QCheckBox(tr("Battle royal mode"));
     battle_royal_mode_checkbox->setChecked(Config.BattleRoyalMode);
 
+    keep_card_on_hidden_general = new QCheckBox(tr("Keep card on hidden general"));
+    keep_card_on_hidden_general->setChecked(Config.KeepCardOnHiddenGeneral);
+
 #if !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
     QGroupBox *ai_groupbox = new QGroupBox(tr("Artificial intelligence"));
     ai_groupbox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -504,7 +507,7 @@ QWidget *ServerDialog::createMiscTab()
     tablayout->addLayout(HLay(new QLabel(tr("Nullification count down")), nullification_spinbox));
     tablayout->addLayout(HLay(minimize_dialog_checkbox, surrender_at_death_checkbox));
     tablayout->addLayout(HLay(luck_card_label, luck_card_spinbox));
-    tablayout->addWidget(reward_the_first_showing_player_checkbox);
+    tablayout->addLayout(HLay(reward_the_first_showing_player_checkbox, keep_card_on_hidden_general));
     tablayout->addWidget(view_next_player_deputy_general_checkbox);
     tablayout->addWidget(battle_royal_mode_checkbox);
 #if !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
@@ -725,6 +728,7 @@ bool ServerDialog::config()
     Config.RewardTheFirstShowingPlayer = reward_the_first_showing_player_checkbox->isChecked();
     Config.BattleRoyalMode = battle_royal_mode_checkbox->isChecked();
     Config.ViewNextPlayerDeputyGeneral = view_next_player_deputy_general_checkbox->isChecked();
+    Config.KeepCardOnHiddenGeneral = keep_card_on_hidden_general->isChecked();
     Config.ForbidAddingRobot = forbid_adding_robot_checkbox->isChecked();
     Config.OriginAIDelay = ai_delay_spinbox->value();
     Config.AIDelay = Config.OriginAIDelay;
@@ -762,6 +766,7 @@ bool ServerDialog::config()
     Config.setValue("RewardTheFirstShowingPlayer", Config.RewardTheFirstShowingPlayer);
     Config.setValue("BattleRoyalMode", Config.BattleRoyalMode);
     Config.setValue("ViewNextPlayerDeputyGeneral", Config.ViewNextPlayerDeputyGeneral);
+    Config.setValue("KeepCardOnHiddenGeneral", Config.KeepCardOnHiddenGeneral);
     Config.setValue("ForbidAddingRobot", Config.ForbidAddingRobot);
     Config.setValue("OriginAIDelay", Config.OriginAIDelay);
     Config.setValue("AlterAIDelayAD", ai_delay_altered_checkbox->isChecked());
