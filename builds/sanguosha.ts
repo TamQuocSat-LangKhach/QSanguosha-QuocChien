@@ -2762,7 +2762,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>using</source>
-        <translation>dùng</translation>
+        <translation> được sử dụng</translation>
     </message>
     <message>
         <source>%from %5 [%1] %6 %4 %2 as %3</source>
@@ -2778,7 +2778,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>playing</source>
-        <translation>xuất ra</translation>
+        <translation> được đánh ra</translation>
     </message>
     <message>
         <source>use skill</source>
@@ -2794,7 +2794,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>recasting</source>
-        <translation> đổi lá  khác</translation>
+        <translation> đổi bài</translation>
     </message>
     <message>
         <source>carry out</source>

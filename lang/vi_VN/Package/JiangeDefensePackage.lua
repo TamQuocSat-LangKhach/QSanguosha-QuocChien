@@ -32,7 +32,7 @@ return {
 	[":jglingfeng"] = "Đầu giai đoạn rút bài, bạn có thể không rút bài, mở 2 lá trên đầu chồng bài rồi thu lấy, nếu 2 lá khác màu, lệnh 1 người không cùng thế lực mất 1 máu.",
 	["@jglingfeng"] = "Linh Phong: Chọn 1 người không cùng thế lực, lệnh họ mất 1 máu." ,
     ["jgqinzhen"] = "Thân Trận",
-    [":jgqinzhen"] = "Tỏa định kỹ, khi bạn bắt đầu giai đoạn hành động, bạn lệnh giới hạn sử dụng [Sát] +1 trong giai đoạn này.",
+    [":jgqinzhen"] = "Tỏa định kỹ, khi bạn bắt đầu giai đoạn ra bài, bạn lệnh giới hạn sử dụng [Sát] +1 trong giai đoạn này.",
 
 	["#jg_zhuge"] = "Thục Hán Anh Hồn",
 	["jg_zhuge"] = "Thiên Hầu Khổng Minh",
@@ -72,7 +72,7 @@ return {
 	["jgjiguan_qinglong"] = "Cơ Quan",
 	[":jgjiguan"] = "Tỏa định kỹ, khi bạn trở thành mục tiêu của [Lạc Bất Tư Thục], hủy bỏ mục tiêu đối với bạn.",
 	["jgmojian"] = "Ma Tiễn",
-	[":jgmojian"] = "Tỏa định kỹ, đầu giai đoạn hành động, xem như bạn sử dụng 1 [Vạn Tiễn Tề Phát] với tất cả người không cùng thế lực.",
+	[":jgmojian"] = "Tỏa định kỹ, đầu giai đoạn ra bài, xem như bạn sử dụng 1 [Vạn Tiễn Tề Phát] với tất cả người không cùng thế lực.",
 
 	["#jg_baihu_machine"] = "Thủ Thành Khí Giới",
 	["jg_baihu_machine"] = "Cơ Lôi Bạch Hổ",
@@ -123,7 +123,7 @@ return {
 	["#jg_sima"] = "Ngụy Võ Anh Hồn",
 	["jg_sima"] = "Đoạn Ngục Trọng Đạt",
 	["jgkonghun"] = "Khống Hồn",
-	[":jgkonghun"] = "Đầu giai đoạn hành động, nếu số máu đã mất của bạn không ít hơn của người không cùng thế lực, có thể gây 1 sát thương Lôi cho tất cả người không cùng thế lực, sau đó bạn hồi X máu (X là số người nhận sát thương này).",
+	[":jgkonghun"] = "Đầu giai đoạn ra bài, nếu số máu đã mất của bạn không ít hơn của người không cùng thế lực, có thể gây 1 sát thương Lôi cho tất cả người không cùng thế lực, sau đó bạn hồi X máu (X là số người nhận sát thương này).",
 	["jgfanshi"] = "Phản Phệ",
 	[":jgfanshi"] = "Tỏa định kỹ, giai đoạn kết thúc, bạn mất 1 máu.",
 	["jgxuanlei"] = "Huyền Lôi",
@@ -195,7 +195,7 @@ return {
     ["#jg_zhangliao"] = "Ngụy Võ Anh Hồn",
     ["jg_zhangliao"] = "Bách Kế Văn Viễn",
     ["jgjiaoxie"] = "Chước Giới",
-    [":jgjiaoxie"] = "Một lần trong giai đoạn hành động, bạn có thể chọn 1 đến 2 Khí giới không cùng thế lực có bài, họ giao cho bạn 1 lá.",
+    [":jgjiaoxie"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 đến 2 Khí giới không cùng thế lực có bài, họ giao cho bạn 1 lá.",
     ["jgshuailing"] = "Soái Lệnh",
     [":jgshuailing"] = "Tỏa định kỹ, đầu giai đoạn rút bài của người cùng thế lực, lệnh họ tiến hành phán xét, nếu kết quả có màu đen, họ thu lấy kết quả phán xét.",
     

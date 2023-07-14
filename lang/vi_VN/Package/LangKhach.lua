@@ -4,9 +4,9 @@ return {
 	["langkhach"] = "Lãng Khách",
 
 	["military_order"] = "Quân Lệnh Trạng",
-	[":military_order"] = "Bài công cụ\n\n\nSử dụng: Trong giai đoạn hành động.\nMục tiêu: Bản thân.\nTác dụng:\n* Bạn rút bài bằng số người của thế lực có nhiều người nhất ngoại trừ thế lực của bạn.\n* Bạn chọn 1 lá bài/kỹ năng chủ động bị giới hạn số lần trong giai đoạn hành động, trong giai đoạn này bạn được sử dụng/phát động thêm 1 lần đối với lá bài/kỹ năng đó.\n* Sau khi bạn giết người trong giai đoạn này, bạn kết thúc giai đoạn hành động, giới hạn trữ bài của bạn trở thành giới hạn máu.\n* Khi kết thúc lượt này, nếu bạn không giết người sau khi lá này có hiệu quả, bạn <b>trận vong</b>.\n* [Quân Lệnh Trạng] không có hiệu quả khi không sử dụng trực tiếp lá này.",
+	[":military_order"] = "Bài công cụ\n\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bản thân.\nTác dụng:\n* Bạn rút bài bằng số người của thế lực có nhiều người nhất ngoại trừ thế lực của bạn.\n* Bạn chọn 1 lá bài/kỹ năng chủ động bị giới hạn số lần trong giai đoạn ra bài, trong giai đoạn này bạn được sử dụng/phát động thêm 1 lần đối với lá bài/kỹ năng đó.\n* Sau khi bạn giết người trong giai đoạn này, bạn kết thúc giai đoạn ra bài, giới hạn trữ bài của bạn trở thành giới hạn máu.\n* Khi kết thúc lượt này, nếu bạn không giết người sau khi lá này có hiệu quả, bạn <b>trận vong</b>.\n* [Quân Lệnh Trạng] không có hiệu quả khi không sử dụng trực tiếp lá này.",
 	["military_order_choose"] = "Quân Lệnh Trạng: Chọn lá bài/kỹ năng để thêm lần phát động",
-	["#military_order_successed"] = "%from đã hoàn thành [Quân Lệnh Trạng], kết thúc giai đoạn hành động, giới hạn trữ bài bằng giới hạn máu",
+	["#military_order_successed"] = "%from đã hoàn thành [Quân Lệnh Trạng], kết thúc giai đoạn ra bài, giới hạn trữ bài bằng giới hạn máu",
 	["#military_order_failed"] = "%from đã không hoàn thành [Quân Lệnh Trạng], bị xử theo quân pháp",
 	
 	["#wuding"] = "Kẻ Biến Hình",

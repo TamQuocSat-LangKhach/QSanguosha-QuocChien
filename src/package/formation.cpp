@@ -1207,6 +1207,11 @@ public:
             return 0;
         return -1;
     }
+
+    virtual int getPriority() const
+    {
+        return 1;
+    }
 };
 
 class Qiluan : public TriggerSkill

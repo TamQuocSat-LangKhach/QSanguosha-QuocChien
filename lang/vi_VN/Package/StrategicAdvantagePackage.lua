@@ -48,7 +48,7 @@ return {
 
 	["WoodenOx"] = "Mộc Ngưu Lưu Mã",
 	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n" ..
-	"1. Một lần trong giai đoạn hành động, số lá trong [Mộc Ngưu Lưu Mã] < 5, bạn có thể đặt úp 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n" ..
+	"1. Một lần trong giai đoạn ra bài, số lá trong [Mộc Ngưu Lưu Mã] < 5, bạn có thể đặt úp 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n" ..
 	"2. Bạn có thể sử dụng hoặc đánh ra bài trên [Mộc Ngưu Lưu Mã] như bài trên tay.\n" ..
 	"3. Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, bỏ toàn bộ bài trong [Mộc Ngưu Lưu Mã].\n" ..
 	"* Bạn có thể xem bài trong [Mộc Ngưu Lưu Mã].",
@@ -61,39 +61,39 @@ return {
 	[":JadeSeal"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>: Tỏa định kỹ: Nếu đã lật tướng:\n" ..
 	"1. Phe của bạn là Đại thế lực duy nhất, tất cả phe khác là Tiểu Thế Lực.\n" ..
 	"2. Giai đoạn rút bài, bạn rút thêm 1 lá\n" ..
-	"3. Đầu giai đoạn hành động, xem như sử dụng 1 lá [Tri Bỉ Tri Kỉ].\n" ,
+	"3. Đầu giai đoạn ra bài, xem như sử dụng 1 lá [Tri Bỉ Tri Kỉ].\n" ,
 	["@JadeSeal"] = "Phát động [Ngọc Tỉ], xem như dùng 1 [Tri Kỷ Tri Bỉ]",
 	["~JadeSeal"] = "Chọn mục tiêu [Tri Kỷ Tri Bỉ] rồi bấm \"Xác nhận\"",
 
 	["drowning"] = "Thuỷ Yêm Thất Quân",
-	[":drowning"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1 người khác có bài trong vùng trang bị\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu lựa chọn bỏ tất cả bài trong vùng trang bị hoặc nhận 1 sát thương Lôi.",
+	[":drowning"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người khác có bài trong vùng trang bị\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu lựa chọn bỏ tất cả bài trong vùng trang bị hoặc nhận 1 sát thương Lôi.",
 	["drowning:throw"] = "Bỏ tất cả bài trong vùng trang bị",
 	["drowning:damage"] = "Nhận 1 sát thương Lôi",
 
 	["burning_camps"] = "Hoả Thiêu Liên Doanh",
-	[":burning_camps"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động.\n<b>Mục tiêu</b>: Người phía sau bạn và tất cả người cùng đội hình với người này.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hoả đối với mục tiêu. ",
+	[":burning_camps"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài.\n<b>Mục tiêu</b>: Người phía sau bạn và tất cả người cùng đội hình với người này.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hoả đối với mục tiêu. ",
 
 	["lure_tiger"] = "Điệu Hổ Ly Sơn",
-	[":lure_tiger"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã lựa chọn\n<b>Hiệu quả</b>: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",
+	[":lure_tiger"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã lựa chọn\n<b>Hiệu quả</b>: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",
 	["lure_tiger_effect"] = "Điệu Hổ Ly Sơn",
 	["#lure_tiger-prohibit"] = "Điệu Hổ Ly Sơn",
 
 	["fight_together"] = "Lục Lực Đồng Tâm",
-	[":fight_together"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1 người thuộc đại thế lực hoặc tiểu thế lực\n<b>Mục tiêu</b>: Tất cả người thuộc cùng cấp độ thế lực với người đã chọn.\n<b>Hiệu quả</b>: Nếu mục tiêu đang có trạng thái xích, họ rút 1 lá; nếu không, họ nhận trạng thái xích.\n<b>Trọng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":fight_together"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người thuộc đại thế lực hoặc tiểu thế lực\n<b>Mục tiêu</b>: Tất cả người thuộc cùng cấp độ thế lực với người đã chọn.\n<b>Hiệu quả</b>: Nếu mục tiêu đang có trạng thái xích, họ rút 1 lá; nếu không, họ nhận trạng thái xích.\n<b>Trùng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 	["@fight_together-choice"] = "Lục Lực Đồng Tâm: Chọn thế lực hoặc đổi bài",
 	["fight_together:big"] = "Đại Thế Lực",
 	["fight_together:small"] = "Tiểu Thế Lực",
 
 	["alliance_feast"] = "Liên Quân Thịnh Yến",
-	[":alliance_feast"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Bạn và tất cả người cùng thế lực với người đã chọn.\n<b>Hiệu quả</b>: Mục tiêu là bạn chọn rút số bài và hồi số máu tùy ý với tổng bằng số người của thế lực đã chọn; mục tiêu không phải bạn rút 1 lá và thoát trạng thái xích.",
+	[":alliance_feast"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Bạn và tất cả người cùng thế lực với người đã chọn.\n<b>Hiệu quả</b>: Mục tiêu là bạn chọn rút số bài và hồi số máu tùy ý với tổng bằng số người của thế lực đã chọn; mục tiêu không phải bạn rút 1 lá và thoát trạng thái xích.",
 	["@alliancefeast-choose"] = "Liên Quân Thịnh Yến: Chọn số máu hồi phục, số lượng còn lại dùng để rút bài.",
 
 	["threaten_emperor"] = "Hiệp Thiên Tử Dĩ Lệnh Chư Hầu",
-	[":threaten_emperor"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Mục tiêu</b>: Bạn nếu thuộc đại thế lực.\n<b>Hiệu quả</b>: Bạn kết thúc giai đoạn hành động; Sau đó, khi kết thúc giai đoạn bỏ bài, bạn có thể bỏ 1 lá trên tay để nhận thêm một lượt sau lượt này.",
+	[":threaten_emperor"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Bạn nếu thuộc đại thế lực và đang trong giai đoạn ra bài của bạn.\n<b>Hiệu quả</b>: Bạn kết thúc giai đoạn ra bài của bạn; Sau đó, khi kết thúc giai đoạn bỏ bài, bạn có thể bỏ 1 lá trên tay để nhận thêm một lượt sau lượt này.",
 	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt",
 
 	["imperial_order"] = "Sắc lệnh",
-	[":imperial_order"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn hành động\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n<b>Hiệu ứng thêm</b>Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
+	[":imperial_order"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n<b>Hiệu ứng thêm</b>Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
 
 	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa sử dụng, sẽ bị loại khỏi trận đấu.",
 	["#ImperialOrderEffect"] = "%from kết thúc lượt, phát động hiệu quả của [%arg] đã bị loại bỏ",
