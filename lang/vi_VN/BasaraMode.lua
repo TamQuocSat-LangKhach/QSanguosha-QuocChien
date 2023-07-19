@@ -84,32 +84,32 @@ return
 		"chỉ có thể sử dụng hoặc đánh ra như [<font color=\"yellow\"><b>Sát</b></font>] hoặc [<font color=\"yellow\"><b>Thiểm</b></font>].",
 
 	["aozhan"] = "Huyết Chiến",
-	[":aozhan"] = "1. Bạn không thể sử dụng [Đào] chuyển hóa2. Bạn chỉ có thể sử dụng hoặc đánh ra [Đào] như [Sát] hoặc [Tránh].",
+	[":aozhan"] = "\n• Bạn không thể sử dụng [Đào] phi chuyển hóa\n• [Đào] được chuyển hóa sử dụng/đánh ra thành [Sát]/[Thiểm].",
 
 
 	["companion"] = "Châu Liên Hợp Bích",
-	[":companion"] = "Hạn định kỹ, trong giai đoạn ra bài, rút 2 lá. Có thể sử dụng lá này như [Đào].",
+	[":companion"] = "Hạn định kỹ:\n• Giai đoạn ra bài, bạn có thể rút 2 lá.\n• Khi bạn cần sử dụng [Đào], bạn có thể xem như sử dụng [Đào].",
 	["companion:peach"] = "Sử dụng như [Đào]",
 	["companion:draw"] = "Bốc 2 lá",
 
 	["halfmaxhp"] = "Âm Dương Ngư",
-	[":halfmaxhp"] = "Hạn định kỹ, giai đoạn ra bài，bốc 1 lá。②Giai đoạn bỏ bài, tăng giới hạn trữ bài thêm 2。",
-	["@halfmaxhp-use"] = "Bỏ [Âm Dương Ngư] để tăng giới hạn trữ bài thêm 2?",
+	[":halfmaxhp"] = "Hạn định kỹ:\n• Giai đoạn ra bài, bạn có thể rút 1 lá.\n• Giai đoạn bỏ bài, bạn có thể lệnh giới hạn trữ bài của bạn +2.",
+	["@halfmaxhp-use"] = "Loại bỏ [Âm Dương Ngư] để tăng giới hạn trữ bài thêm 2?",
 
 	["firstshow"] = "Tiên Khu",
-	[":firstshow"] = "Hạn định kỹ, giai đoạn ra bài, bạn có thể bổ sung bài đến khi có 4 lá trên tay, sau đó xem 1 tướng ẩn của 1 người chơi。",
-	["@firstshow-see"] = "Tiên Khu: Hãy chọn 1 người chơi và xem 1 tướng ẩn",
+	[":firstshow"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể bổ sung bài đến khi có 4 lá trên tay, sau đó xem 1 tướng ẩn của 1 người.",
+	["@firstshow-see"] = "Tiên Khu: Hãy chọn 1 người và xem 1 tướng ẩn",
 	["firstshow_see"] = "Tiên Khu",
 	["@firstshow-choose"] = "Tiên Khu: Hãy xem 1 tướng của %dest",
 	
 	["CompanionCard"] = "Châu Liên Hợp Bích",
-	[":CompanionCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, có thể loại bỏ Tiêu ký này, rút 2 lá。\n\nCách dùng 2\nKhi cần sử dụng [Đào], có thể loại bỏ Tiêu ký này, xem như đã sử dụng [Đào].",
+	[":CompanionCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn rút 2 lá.\n\nCách dùng 2\nKhi bạn cần sử dụng [Đào], bạn có thể loại bỏ Tiêu ký này, bạn xem như đã sử dụng [Đào].",
 	
 	["HalfMaxHpCard"] = "Âm Dương Ngư",
-	[":HalfMaxHpCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, có thể loại bỏ Tiêu ký này, rút 1 lá。\n\nCách dùng:\nGiai đoạn bỏ bài, nếu bài trên tay lớn hơn giới hạn trữ bài, có thể loại bỏ Tiêu ký này，tăng giới hạn trữ bài thêm 2.",
+	[":HalfMaxHpCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn rút 1 lá.\n\nCách dùng 2:\nGiai đoạn bỏ bài, nếu bài trên tay lớn hơn giới hạn trữ bài, bài có thể loại bỏ Tiêu ký này, giới hạn trữ bài của bạn +2.",
 	
 	["FirstShowCard"] = "Tiên Khu",
-	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, có thể loại bỏ Tiêu ký này, chọn 1 người chơi có tướng chưa mở, bạn rút bài đến khi tay có 4 lá, sau đó xem 1 tướng ẩn của người đã chọn.",
+	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn chọn 1 người chơi có tướng chưa mở (bỏ qua nếu không có tướng nào chưa mở), bạn bổ xung bài trên tay tới 4 lá, sau đó bạn xem 1 tướng ẩn của người đã chọn.",
 	
 	["careerman"] = "Dã Tâm Gia",
     ["CareermanCard"] = "Dã Tâm Gia",

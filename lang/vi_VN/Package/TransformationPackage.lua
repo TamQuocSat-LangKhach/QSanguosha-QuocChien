@@ -46,7 +46,7 @@ return {
 	["#lijueguosi"] = "Phạm Tộ Khuynh Họa",
 	["&lijueguosi"] = "Lý Giác Quách Tỷ",
 	["xiongsuan"] = "Hung Toán",
-	[":xiongsuan"] = "Hạn định kỹ: giai đoạn ra bài, bạn có thể bỏ 1 lá bài trên tay và chọn 1 người cùng thế lực, bạn gây 1 sát thương cho họ, sau đó bạn rút 3 lá bài và chọn 1 Hạn định kỹ đã phát động của họ; khi kết thúc lượt này, thêm 1 giới hạn phát động Hạn định kỹ đó.",
+	[":xiongsuan"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể bỏ 1 lá bài trên tay và chọn 1 người cùng thế lực, bạn gây 1 sát thương cho họ, sau đó bạn rút 3 lá bài và chọn 1 Hạn định kỹ đã phát động của họ; khi kết thúc lượt này, thêm 1 giới hạn phát động Hạn định kỹ đó.",
 	["@xiongsuan-reset"] = "Hung Toán: Đặt lại 1 Hạn định kỹ của %dest",
 	["#XiongsuanReset"] = "%from đặt lại Kỹ năng \"%arg\"",
 	
@@ -54,8 +54,8 @@ return {
 	["#new_zuoci"] = "Quỷ Ảnh Thần Đạo",
 	["new_zuoci"] = "Tả Từ",
 	["yigui"] = "Dịch Quỷ",
-	[":yigui"] = "* Sau khi bạn mở tướng này lần đầu tiên, bạn nhận 2 lá tướng ngẫu nhiên đặt lên tướng này, gọi là [Hồn].\n"..
-	"* Khi bạn cần sử dụng lá cơ bản hoặc công cụ phổ thông ngoại trừ [Thiểm] và [Vô Giải Khả Kích], nếu bạn chưa sử dụng lá đó bằng kỹ năng này trong lượt này, bạn có thể bỏ 1 [Hồn], xem như sử dụng lá đó; Người thế lực xác định khác với [Hồn] không thể trở thành mục tiêu của lá này.",
+	[":yigui"] = "\n• Sau khi bạn mở tướng này lần đầu tiên, bạn nhận 2 lá tướng ngẫu nhiên đặt lên tướng này, gọi là [Hồn].\n"..
+	"\n• Khi bạn cần sử dụng lá cơ bản hoặc công cụ phổ thông ngoại trừ [Thiểm] và [Vô Giải Khả Kích], nếu bạn chưa sử dụng lá đó bằng kỹ năng này trong lượt này, bạn có thể bỏ 1 [Hồn], xem như sử dụng lá đó; Người thế lực xác định khác với [Hồn] không thể trở thành mục tiêu của lá này.",
 
 	["jihun"] = "Cấp Hồn",
 	[":jihun"] = "Sau khi bạn nhận sát thương hoặc sau khi 1 người thế lực xác định khác với bạn thoát khỏi trạng thái hấp hối, bạn có thể nhận 1 lá tướng ngẫu nhiên đặt lên tướng này, gọi là [Hồn].",
@@ -92,7 +92,7 @@ return {
 	[":xuanlue"] = "Sau khi bạn mất bài trong vùng trang bị, bạn có thể bỏ 1 lá của người khác.",
 	["xuanlue-invoke"] = "Có thể phát động \"Toàn Lược\" để bỏ 1 lá của người khác.",
 	["yongjin"] = "Dũng Tiến",
-	[":yongjin"] = "Hạn định kỹ: giai đoạn ra bài, bạn có thể di chuyển tối đa 3 trang bị trên bàn chơi.",
+	[":yongjin"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể di chuyển tối đa 3 trang bị trên bàn chơi.",
 	["@brave"] = "Dũng Tiến",
 	["@yongjin-next"] = "Dũng Tiến: Di chuyển 1 trang bị trên bàn.",
 	["~yongjin_next"] = "Chọn 1 người chơi có trang bị, sau đó chọn 1 người chơi để nhận trang bị rồi bấm \"Xác nhận\"",
@@ -101,7 +101,7 @@ return {
 	["#lvfan"] = "Trung Đốc Lượng Trực",
 	["diaodu"] = "Điều Độ",
 	["#diaodu-draw"] = "Điều Độ",
-	[":diaodu"] = "* Khi 1 người cùng thế lực với bạn sử dụng trang bị, họ có thể rút 1 lá.\n* Đầu giai đoạn ra bài, bạn có thể thu lấy 1 lá trong vùng trang bị của 1 người cùng thế lực\n - Nếu lá đó là của bạn, bạn giao lá đó cho 1 người khác;\n - Nếu không, bạn có thể giao lá đó cho 1 người khác ngoại trừ họ.",
+	[":diaodu"] = "\n• Khi 1 người cùng thế lực với bạn sử dụng trang bị, họ có thể rút 1 lá.\n• Đầu giai đoạn ra bài, bạn có thể thu lấy 1 lá trong vùng trang bị của 1 người cùng thế lực\n - Nếu lá đó là của bạn, bạn giao lá đó cho 1 người khác;\n - Nếu không, bạn có thể giao lá đó cho 1 người khác ngoại trừ họ.",
 	["@diaodu"] = "Có thể phát động \"Điều Độ\" để thu lấy 1 trang bị của người cùng thế lực.",
 	["@diaodu-give"] = "Điều Độ: Giao [%arg] cho 1 người khác.",
 	["@diaodu-draw"] = "Có thể phát động \"Điều Độ\" của %src, rút 1 lá.",
@@ -117,20 +117,20 @@ return {
 	["lianzi"] = "Liễm Tư",
 	[":lianzi"] = "Một lần trong giai đoạn ra bài, có thể bỏ 1 lá trên tay, sau đó mở X là đầu chồng bài (X là số [Phong Hỏa] cộng với số lá trong vùng trang bị của những người thế lực Ngô), bạn thu lấy những lá cùng loại với lá bạn bỏ, đưa những lá còn lại vào chồng bài bỏ; Nếu trong 1 lần bạn thu lấy hơn 3 lá, bạn mất kỹ năng này và nhận \"Chế Hành\".",
 	["jubao"] = "Tư Bảo",
-	[":jubao"] = "Tỏa định kỹ:\n* người khác không thể thu lấy bảo vật trong khu trang bị của bạn.\n* Giai đoạn kết thúc, nếu trên bàn chơi hoặc chồng bài bỏ có [Định Lan Dạ Minh Châu], bạn rút 1 lá, sau đó thu lấy 1 lá của người đang trang bị [Định Lan Dạ Minh Châu].",
+	[":jubao"] = "Tỏa định kỹ:\n• người khác không thể thu lấy bảo vật trong khu trang bị của bạn.\n• Khi bắt đầu giai đoạn kết thúc, nếu trên bàn chơi hoặc chồng bài bỏ có [Định Lan Dạ Minh Châu], bạn rút 1 lá, sau đó thu lấy 1 lá của người đang trang bị [Định Lan Dạ Minh Châu].",
 	["@lianzi"] = "Chọn và lấy những lá cùng loại với lá bạn bỏ",
 	["lianzi#up"] = "Bài bỏ",
 	["lianzi#down"] = "Thu lấy",
 	["flamemap"] = "Duyên Giang Phong Hỏa Đồ",
 	["flame_map"] = "Phong Hỏa",
-	[":flamemap"] = "* Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên \"Duyên Giang Phong Hỏa Đồ\", gọi là [Phong Hỏa].\n" ..
-					"* Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa].\n" ..
+	[":flamemap"] = "\n• Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên \"Duyên Giang Phong Hỏa Đồ\", gọi là [Phong Hỏa].\n" ..
+					"\n• Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa].\n" ..
 					"  1 trở lên: \"Anh Tư\".\n" ..
 					"  2 trở lên: \"Hảo Thi\".\n" ..
 					"  3 trở lên: \"Thiệp Liệp\".\n" ..
 					"  4 trở lên: \"Độ Thế\".\n" ..
 					"Khi có 5 [Phong Hỏa] trở lên, nhận 2 kỹ năng thay vì 1.\n" ..
-					"* Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
+					"\n• Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
 	
 	["&flamemap"] = "Có thể đặt 1 trang bị lên \"Duyên Giang Phong Hỏa Đồ\", trở thành [Phong Hỏa]",
 	["@flamemap"] = "Duyên Giang Phong Hỏa Đồ: Chọn [Phong Hỏa] để bỏ đi.",

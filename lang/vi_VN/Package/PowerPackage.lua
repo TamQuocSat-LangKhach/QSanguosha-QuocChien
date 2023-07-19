@@ -32,24 +32,24 @@ return {
 	["@zhengbi"] = "Phát động \"Chinh Tịch\"",
 	["@zhengbi-give"] = "Chinh Tịch: Hãy chọn 2 lá cơ bản hoặc 1 lá phi cơ bản để giao cho %src",
 	["fengying"] = "Phụng Nghênh",
-	[":fengying"] = "Hạn định kỹ, bạn có thể chuyển hóa sử dụng tất cả bài trên tay thành [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu] (Bỏ qua yêu cầu Đại thế lực); khi bạn sử dụng [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu] này, lệnh tất cả người cùng thế lực với bổ sung bài trên tay đến giới hạn máu",
+	[":fengying"] = "Hạn định kỹ: Bạn có thể chuyển hóa sử dụng tất cả bài trên tay thành [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu] (Bỏ qua yêu cầu Đại thế lực); khi bạn sử dụng [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu] này, lệnh tất cả người cùng thế lực với bổ sung bài trên tay đến giới hạn máu",
 	["#fengying-after"] = "Phụng Nghênh (Rút bài)",
 	
 	["yujin"] = "Vu Cấm",
 	["#yujin"] = "Thảo Bạo Kiên Lũy",
 	["jieyue"] = "Tiết Viện",
-	[":jieyue"] = "Giai đoạn chuẩn bị, bạn có thể giao 1 lá trên tay cho 1 người không phải thế lực Ngụy, sau đó yêu cầu họ chấp hành 1 [Quân Lệnh];\n- Nếu họ chấp hành, bạn rút 1 lá;\n- Nếu không, giai đoạn rút bài lượt này, bạn rút thêm 3 lá.",
+	[":jieyue"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể giao 1 lá trên tay cho 1 người không phải thế lực Ngụy, sau đó yêu cầu họ chấp hành 1 [Quân Lệnh];\n- Nếu họ chấp hành, bạn rút 1 lá;\n- Nếu không, giai đoạn rút bài lượt này, bạn rút thêm 3 lá.",
 	["@jieyue"] = "Phát động \"Tiết Việt\": Giao 1 lá cho 1 người không phải Ngụy",
 
 	["wangping"] = "Vương Bình",
 	["#wangping"] = "Kiện Bế Kiếm Môn",
 	["jianglve"] = "Tướng Lược",
-	[":jianglve"] = "Hạn định kỹ, Giai đoạn ra bài, bạn có thể chọn 1 [Quân Lệnh], sau đó người khác có cùng thế lực với bạn có thể chấp hành [Quân Lệnh] này; Bạn và những người đã chọn chấp hành [Quân Lệnh] tăng 1 giới hạn máu, hồi 1 máu, sau đó bạn rút X lá bài (X là số người đã hồi máu)",
+	[":jianglve"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chọn 1 [Quân Lệnh], yêu cầu tất cả người khác có cùng thế lực với bạn chấp hành [Quân Lệnh] này;\n- Bạn và những người đã chọn chấp hành [Quân Lệnh] tăng 1 giới hạn máu, hồi 1 máu\n- Bạn rút X lá bài (X là số người đã hồi máu từ kỹ năng này)",
 
 	["fazheng"] = "Pháp Chính",
 	["#fazheng"] = "Thục Hán Đích Phụ Dực",
 	["enyuan"] = "Ân Oán",
-	[":enyuan"] = "Tỏa định kỹ:\n* Sau khi bạn trở thành mục tiêu của [Đào] do người chơi khác sử dụng, họ rút 1 lá.\n* Sau khi bạn nhận sát thương, nguồn gây sát thương chọn giao 1 lá trên tay cho bạn hoặc mất 1 máu.",
+	[":enyuan"] = "Tỏa định kỹ:\n• Sau khi bạn trở thành mục tiêu của [Đào] do người chơi khác sử dụng, họ rút 1 lá.\n• Sau khi bạn nhận sát thương, nguồn gây sát thương chọn giao 1 lá trên tay cho bạn hoặc mất 1 máu.",
 	["@enyuan-give"] = "Ân Oán: Chọn 1 lá trên tay và giao cho %src hoặc bấm Hủy bỏ để mất 1 máu.",
 	["xuanhuo"] = "Huyễn Hoặc",
 	[":xuanhuo"] = "Một lần trong giai đoạn ra bài của người khác có cùng thế lực với bạn, họ có thể giao cho bạn 1 lá trên tay, sau đó họ có thể bỏ 1 lá và lựa chọn nhận 1 trong các kỹ năng sau mà chưa có trên bàn cho đến hết lượt hoặc tướng có kỹ năng tương ứng được mở: \"Võ Thánh\", \"Bào Hao\", \"Long Đảm\", \"Thiết Kỵ\", \"Liệt Cung\", \"Cuồng Cốt\".",
@@ -81,7 +81,7 @@ return {
 	["lukang"] = "Lục Kháng",
 	["#lukang"] = "Cô Trú Phù Hạ",
 	["keshou"] = "Khắc Thủ",
-	[":keshou"] = "Khi bạn nhận sát thương, bạn có thể bỏ 2 lá có cùng màu, lệnh sát thương này -1; sau đó, nếu không có người khác cùng thế lực, bạn tiến hành phán xét, nếu kết quả phán xét có màu Đỏ, rút 1 lá.",
+	[":keshou"] = "Khi bạn tính toán sát thương phải nhận, bạn có thể bỏ 2 lá có cùng màu, lệnh sát thương này -1; sau đó, nếu không có người khác cùng thế lực, bạn tiến hành phán xét, nếu kết quả phán xét có màu Đỏ, rút 1 lá.",
 	["zhuwei"] = "Trác Vi",
 	[":zhuwei"] = "Sau khi phán xét của bạn có hiệu lực, nếu kết quả là 1 lá có khả năng gây sát thương cho mục tiêu, bạn có thể thu lấy lá đó, sau đó có thể lệnh cho người đang có lượt +1 giới hạn sử dụng [Sát] và +1 giới hạn trữ bài.",
 	["@keshou"] = "Có thể phát động \"Khắc Thủ\", chọn 2 lá cùng màu.",
@@ -101,7 +101,7 @@ return {
 	["fudi"] = "Phụ Địch",
 	[":fudi"] = "Sau khi bạn nhận sát thương, bạn có thể giao cho nguồn sát thương 1 lá bài trên tay, sau đó gây 1 sát thương cho 1 người cùng thế lực với nguồn sát thương mà có số máu nhiều nhất và ≥ bạn.",
 	["congjian"] = "Tòng Gián",
-	[":congjian"] = "Tỏa định kỹ: Khi bạn gây sát thương ngoài lượt hoặc khi bạn nhận sát thương trong lượt, sát thương này +1",
+	[":congjian"] = "Tỏa định kỹ: Khi bạn gây sát thương ngoài lượt hoặc khi bạn tính toán sát thương phải nhận trong lượt, sát thương này +1",
 	["@fudi-give"] = "Phát động \"Phụ Địch\", đưa 1 lá cho nguồn sát thương (%src)",
 	["@fudi-damage"] = "Phụ Địch: Chọn người chơi nhận sát thương.",
 
@@ -111,7 +111,7 @@ return {
 	["jianan"] = "Kiến Anh",
 	[":jianan"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có \"Ngũ Tử Lương Tướng Đạo\".",
 	["elitegeneralflag"] = "Ngũ Tử Lương Tướng Đạo",
-	[":elitegeneralflag"] = "Giai đoạn chuẩn bị của người thế lực Ngụy, họ có thể bỏ 1 lá và chọn 1 tướng chưa mở của họ (nếu họ đã mở 2 tướng thì chọn úp 1 tướng), sau đó họ lựa chọn 1 trong các kỹ năng sau mà chưa có trên bàn: \"Đột Kích\", \"Kiêu Quả\", \"Xảo Biến\", \"Tiết Việt\", \"Đoạn Lương\", Họ có kỹ năng đó và không thể mở tướng đã chọn đến đầu lượt sau của họ.",
+	[":elitegeneralflag"] = "Khi bắt đầu giai đoạn chuẩn bị của người thế lực Ngụy, họ có thể bỏ 1 lá và chọn 1 tướng chưa mở của họ (nếu họ đã mở 2 tướng thì chọn úp 1 tướng), sau đó họ lựa chọn 1 trong các kỹ năng sau mà chưa có trên bàn: \"Đột Kích\", \"Kiêu Quả\", \"Xảo Biến\", \"Tiết Việt\", \"Đoạn Lương\", Họ có kỹ năng đó và không thể mở tướng đã chọn đến đầu lượt sau của họ.",
 	["@elitegeneralflag"] = "Có thể phát động \"Ngũ Tử Lương Tướng Đạo\", bỏ 1 lá.",
 	["@jianan-hide"] = "Ngũ Tử Lương Tướng Đạo: Chọn 1 tướng để úp xuống.",
 	["jianan_hide:head"] = "Úp Chủ Tướng",
@@ -125,9 +125,9 @@ return {
 
 	["SixDragons"] = "Lục Long Tham Giá",
 	[":SixDragons"] = "Bài Trang Bị - Ngựa đặc biệt\n\nKỹ năng: Tỏa định kỹ:\n" ..
-					"* Khoảng cách từ bạn đến người chơi khác -1.\n" ..
-					"* Khoảng cách từ người chơi khác đến bạn +1.\n" ..
-					"* Sau khi [Lục Long Tham Giá] tiến vào vùng trang bị của bạn, bạn bỏ đi tất cả Ngựa khác. Lá Ngựa khác không thể tiến vào vùng trang bị của bạn.\n",
+					"\n• Khoảng cách từ bạn đến người chơi khác -1.\n" ..
+					"\n• Khoảng cách từ người chơi khác đến bạn +1.\n" ..
+					"\n• Sau khi [Lục Long Tham Giá] tiến vào vùng trang bị của bạn, bạn bỏ đi tất cả Ngựa khác. Lá Ngựa khác không thể tiến vào vùng trang bị của bạn.\n",
 	["horse"] = "Ngựa đặc biệt",
 
 	["tuxi_egf"] = "Đột Tập",

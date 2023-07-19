@@ -38,7 +38,7 @@ return {
 	["#zangba"] = "Tiết Độ Thanh Từ",
 	["zangba"] = "Tang Bá",
 	["hengjiang"] = "Hoành Giang",
-	[":hengjiang"] = "* Sau khi bạn nhận sát thương, ứng với mỗi sát thương, nếu giới hạn trữ bài của người đang có lượt > 0, bạn có thể lệnh người đang có lượt giảm 1 giới hạn trữ bài.\n* Khi kết thúc lượt, nếu ở giai đoạn bỏ bài, họ không bỏ lá nào, bạn rút X lá bài (X là số lần bạn đã phát động \"Hoành Giang\" trong lượt này).",
+	[":hengjiang"] = "\n• Sau khi bạn nhận sát thương, ứng với mỗi sát thương, nếu giới hạn trữ bài của người đang có lượt > 0, bạn có thể lệnh người đang có lượt giảm 1 giới hạn trữ bài.\n• Khi kết thúc lượt, nếu ở giai đoạn bỏ bài, họ không bỏ lá nào, bạn rút X lá bài (X là số lần bạn đã phát động \"Hoành Giang\" trong lượt này).",
 	["@hengjiang"] = "Hoành Giang",
 	["#HengjiangDraw"] = "%from không bỏ bài, %to phát động hiệu quả [%arg]",
 	["#hengjiang-draw"] = "Hoành Giang (Rút bài)",
@@ -47,7 +47,7 @@ return {
 	["madai"] = "Mã Đại",
 	["mashu_madai"] = "Mã Thuật",
 	["qianxi"] = "Tiềm Tập",
-	[":qianxi"] = "Giai đoạn chuẩn bị, bạn có thể rút 1 lá, sau đó bỏ 1 lá và chọn 1 người khác ở khoảng cách 1, họ không thể sử dụng hoặc đánh ra lá trên tay cùng màu với lá bạn đã bỏ đến sau khi kết thúc lượt này.",
+	[":qianxi"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể rút 1 lá, sau đó bỏ 1 lá và chọn 1 người khác ở khoảng cách 1, họ không thể sử dụng hoặc đánh ra lá trên tay cùng màu với lá bạn đã bỏ đến sau khi kết thúc lượt này.",
 	["@qianxi-discard"] = "Tiềm tập: Chọn 1 lá để bỏ.",
 	["@qianxi-choose"] = "Tiềm tập: Chọn 1 người chơi khác.",
 	["#Qianxi"] = "Phát động hiệu quả <font color=\"yellow\"><b>\"Tiềm Tập\"</b></font>, trong lượt %from không thể sử dụng hoặc đánh ra bài %arg",
@@ -57,11 +57,11 @@ return {
 	["#mifuren"] = "Loạn Thế Trầm Hương",
 	["mifuren"] = "My Phu Nhân",
 	["guixiu"] = "Khuê Tú",
-	[":guixiu"] = "* Sau khi mở tướng này, bạn có thế rút 2 lá.\n* Sau khi tướng này bị loại bỏ, bạn có thể hồi 1 máu.",
+	[":guixiu"] = "\n• Sau khi mở tướng này, bạn có thế rút 2 lá.\n• Sau khi tướng này bị loại bỏ, bạn có thể hồi 1 máu.",
 	["guixiu:draw"] = "Phát động \"Khuê Tú\", bốc 2 lá bài.",
 	["guixiu:recover"] = "Phát động \"Khuê Tú\", hồi 1 máu.",
 	["cunsi"] = "Tồn Tự",
-	[":cunsi"] = "Giai đoạn ra bài, bạn có thể loại bỏ tướng này; Sau đó, bạn chọn 1 người nhận kỹ năng \"Dũng Quyết\"; nếu người đó không phải bạn, họ rút 2 lá bài.",
+	[":cunsi"] = "Giai đoạn ra bài, nếu bạn đã mở tướng này, bạn có thể loại bỏ tướng này; Sau đó, bạn chọn 1 người nhận kỹ năng \"Dũng Quyết\"; nếu người đó không phải bạn, họ rút 2 lá bài.",
 	["yongjue"] = "Dũng Quyết",
 	[":yongjue"] = "Sau khi kết toán xong [Sát] do người cùng thế lực với bạn sử dụng trong giai đoạn ra bài, nếu lá này là lá đầu tiên họ sử dụng trong giai đoạn này, bạn có thể cho người đó thu lấy lá [Sát] này.",
 	["@yongjue-choose"] = "\"Dũng Quyết\": Cho phép %src lấy lại lá [Sát]",
@@ -76,7 +76,7 @@ return {
 	["jian3"] = "-3",
 	["$Yingyang"] = "Số điểm của %from trở thành %arg",
 	["hunshang"] = "Hồn Thương",
-	[":hunshang"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn chuẩn bị, nếu máu của bạn là 1, bạn có kỹ năng \"Anh Tư\" và \"Anh Hồn\" đến sau khi kết thúc lượt",
+	[":hunshang"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Khi bắt đầu giai đoạn chuẩn bị, nếu máu của bạn là 1, bạn có kỹ năng \"Anh Tư\" và \"Anh Hồn\" đến sau khi kết thúc lượt",
 	["yingzi_sunce"] = "Anh Tư",
 	["yinghun_sunce"] = "Anh Hồn",
 	["#yinghun_sunce"] = "Phát động \"Anh Hồn\" lên %to",
@@ -89,16 +89,16 @@ return {
 	["duanxie"] = "Đoạn Tiết",
 	[":duanxie"] = "Một lần trong giai đoạn ra bài, có thể lệnh X người không trong trạng thái xích nhận trạng thái xích (X là số máu đã mất của bạn, tối thiểu 1), sau đó đưa bạn nhận trạng thái xích.",
 	["fenming"] = "Phấn Mệnh",
-	[":fenming"] = "Giai đoạn kết thúc, nếu bạn trong trạng thái xích, bạn có thể bỏ đi 1 lá của những người trong trạng thái xích.",
+	[":fenming"] = "Khi bắt đầu giai đoạn kết thúc, nếu bạn trong trạng thái xích, bạn có thể bỏ đi 1 lá của những người trong trạng thái xích.",
 
 	["#dongzhuo"] = "Ma Vương",
 	["dongzhuo"] = "Đổng Trác",
 	["hengzheng"] = "Hoàng Chinh",
 	[":hengzheng"] = "Khi bắt đầu giai đoạn rút bài, nếu số máu của bạn là 1 hoặc không có bài trên tay, bạn có thể không rút bài, thu lấy từ mỗi người khác 1 lá trong vùng chơi.",
 	["baoling"] = "Bạo Lăng",
-	[":baoling"] = "Chủ tướng kỹ, Hạn định kỹ, Tỏa định kỹ: Khi bạn kết thúc giai đoạn ra bài, nếu bạn đã mở tướng này và có phó tướng, loại bỏ phó tướng, sau đó bạn tăng giới hạn máu thêm 3, hồi 3 máu, nhận kỹ năng \"Băng Hoại\"",
+	[":baoling"] = "Chủ tướng kỹ, Tỏa định kỹ: Khi bạn kết thúc giai đoạn ra bài, nếu bạn đã mở tướng này và có phó tướng, bạn thực hiện lần lượt:\n- Bạn loại bỏ phó tướng;\n- Bạn tăng giới hạn máu thêm 3, hồi 3 máu;\n- Bạn mất kỹ năng này và nhận kỹ năng \"Băng Hoại\"",
 	["benghuai"] = "Băng Hoại",
-	[":benghuai"] = "Tỏa định kỹ: Giai đoạn kết thúc, nếu bạn không phải là người có số máu thấp nhất, bạn chọn mất 1 máu hoặc giảm 1 giới hạn máu.",
+	[":benghuai"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn kết thúc, nếu bạn không phải là người có số máu thấp nhất, bạn chọn mất 1 máu hoặc giảm 1 giới hạn máu.",
 	["benghuai:hp"] = "Mất 1 máu" ,
 	["benghuai:maxhp"] = "Giảm 1 giới hạn máu" ,
 
@@ -124,10 +124,10 @@ return {
 	["heavenly_army"] = "Thiên Binh",
 	
 	["huangjinsymbol"] = "Hoàng Cân Thiên Bình Phủ",
-	[":huangjinsymbol"] = "* Giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần).\n" ..
-					"* Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n" ..
-					"* Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n" ..  
-					"* Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
+	[":huangjinsymbol"] = "\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần).\n" ..
+					"\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n" ..
+					"\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n" ..  
+					"\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
 	
 	["&huangjinsymbol"] = "Có thể chuyển hóa 1 [Thiên Binh] thành [Sát]",
 	["#HongfaTianbing"] = "%from đã phát động \"<font color=\"yellow\"><b>Hoàng Cân Thiên Bình Phủ</b></font>\", số người trong thế lực Quần là %arg.",
@@ -140,9 +140,9 @@ return {
 
 	["PeaceSpell"] = "Thái Bình Yêu Thuật",
 	[":PeaceSpell"] = "Bài trang bị - Phòng cụ\n\nKỹ năng: Tỏa định kỹ:\n" ..
-					"* Khi bạn nhận sát thương có thuộc tính, bạn chặn sát thương này.\n" ..
-					"* Giới hạn trữ bài của bạn +X (X là số người cùng thế lực với bạn).\n" ..
-					"* Khi bạn mất đi [Thái Bình Yêu Thuật] từ vùng trang bị, bạn rút 2 lá, sau đó nếu máu của bạn lớn hơn 1, bạn mất 1 máu.\n" ,
+					"\n• Khi bạn nhận sát thương có thuộc tính, bạn chặn sát thương này.\n" ..
+					"\n• Giới hạn trữ bài của bạn +X (X là số người cùng thế lực với bạn).\n" ..
+					"\n• Khi bạn mất đi [Thái Bình Yêu Thuật] từ vùng trang bị, bạn rút 2 lá, sau đó nếu máu của bạn lớn hơn 1, bạn mất 1 máu.\n" ,
 	["#PeaceSpellNatureDamage"] = "[<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] đã phát động, chặn sát thương từ %from gây cho %to %arg sát thương." ,
 	["#PeaceSpellLost"] = "%from đã mất [<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] khỏi vùng trang bị, rút 2 lá." ,
 

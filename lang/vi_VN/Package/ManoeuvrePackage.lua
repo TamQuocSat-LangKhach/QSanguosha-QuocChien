@@ -8,7 +8,7 @@ return {
 	["wanggui:prompt"] = "Có thể kích \"Vong Quy\", người cùng thế lực rút 1 lá.",
 	["wanggui-invoke"] = "Có thể kích \"Vong Quy\", gây 1 sát thương cho người không cùng thế lực.",
 	["xibing"] = "Tức Binh",
-	[":xibing"] = "Sau khi 1 người khác lần đầu trong giai đoạn ra bài của họ xác định 1 mục tiêu duy nhất của lá [Sát] đen hoặc công cụ phổ thông đen, bạn có thể phát động kỹ năng này và thực hiện lần lượt:\n* Nếu số lá trên tay họ < số máu của họ, bạn lệnh họ bổ sung bài trên tay đến số máu của họ và không thể tiếp tục sử dụng bài trên tay trong lượt này;\n* Nếu bạn và họ đã mở tất cả tướng, bạn có thể úp 1 tướng của bạn và họ, trong lượt này không thể mở lại tướng đó.",
+	[":xibing"] = "Sau khi 1 người khác lần đầu trong giai đoạn ra bài của họ xác định 1 mục tiêu duy nhất của lá [Sát] đen hoặc công cụ phổ thông đen, bạn có thể phát động kỹ năng này và thực hiện lần lượt:\n• Nếu số lá trên tay họ < số máu của họ, bạn lệnh họ bổ sung bài trên tay đến số máu của họ và không thể tiếp tục sử dụng bài trên tay trong lượt này;\n• Nếu bạn và họ đã mở tất cả tướng, bạn có thể úp 1 tướng của bạn và họ, trong lượt này không thể mở lại tướng đó.",
 	["@xibing-hide"] = "Tức Binh: Chọn tướng của %dest để úp.",
 	["xibing:head"] = "Chủ tướng",
 	["xibing:deputy"] = "Phó tướng",
@@ -27,7 +27,7 @@ return {
 
 	
 	["zhiwei"] = "Chi Vi",
-	[":zhiwei"] = "Sau khi bạn mở tướng này, bạn có thể chọn 1 người khác, đến khi tướng này bị úp hoặc loại bỏ:\n* Sau khi họ gây sát thương, bạn rút 1 lá;\n* Sau khi họ nhận sát thương, bạn bỏ 1 lá ngẫu nhiên trên tay;\n* Khi kết thúc giai đoạn bỏ bài, bạn lệnh họ thu lấy tất cả bài bỏ trong giai đoạn này của bạn;\n* Khi họ trận vong, nếu bạn đã mở tất cả tướng, bạn úp tướng này.",
+	[":zhiwei"] = "Sau khi bạn mở tướng này, bạn có thể chọn 1 người khác, đến khi tướng này bị úp hoặc loại bỏ:\n• Sau khi họ gây sát thương, bạn rút 1 lá;\n• Sau khi họ nhận sát thương, bạn bỏ 1 lá ngẫu nhiên trên tay;\n• Khi kết thúc giai đoạn bỏ bài, bạn lệnh họ thu lấy tất cả bài bỏ trong giai đoạn này của bạn;\n• Khi họ trận vong, nếu bạn đã mở tất cả tướng, bạn úp tướng này.",
 	
 	["zhiwei-invoke"] = "Có thể phát động \"Chi Vi\", chọn 1 người khác.",
 	
@@ -52,7 +52,7 @@ return {
     ["#miheng"] = "Cuồng Ngạo Kì Nhân",
     ["miheng"] = "Nễ Hành",
     ["kuangcai"] = "Cuồng Tài",
-    [":kuangcai"] = "Tỏa định kỹ:\n* Bài bạn sử dụng trong lượt không bị giới hạn khoảng cách và số lần sử dụng;\n* Khi bắt đầu giai đoạn bỏ bài, nếu trong lượt này bạn có sử dụng bài và không gây sát thương, giới hạn trữ bài trở về sau -1; nếu bạn không sử dụng bài, giới hạn trữ bài trở về sau +1.",
+    [":kuangcai"] = "Tỏa định kỹ:\n• Bài bạn sử dụng trong lượt không bị giới hạn khoảng cách và số lần sử dụng;\n• Khi bắt đầu giai đoạn bỏ bài, nếu trong lượt này bạn có sử dụng bài và không gây sát thương, giới hạn trữ bài trở về sau -1; nếu bạn không sử dụng bài, giới hạn trữ bài trở về sau +1.",
     ["shejian"] = "Thiệt Kiếm",
     [":shejian"] = "Sau khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu không có ai đang giải quyết hấp hối, bạn có thể bỏ tất cả bài trên tay (tối thiếu 1), sau đó chọn 1 mục:\n1. Bạn bỏ X lá của người sử dụng bài (X là số lá bạn đã bỏ);\n2. Bạn gây 1 sát thương cho người sử dụng bài.",
 	["decrease"] = " -",
@@ -101,7 +101,7 @@ return {
     ["fenglve"] = "Phong Lược",
     [":fenglve"] = "Một lần trong giai đoạn ra bài, bạn có thể đấu điểm với 1 người khác:\n- Nếu bạn thắng, họ giao 2 lá trong vùng chơi của họ cho bạn;\n- Nếu bạn thua, bạn giao 1 lá cho họ;\nTung Hoành: Bạn có thể lệnh họ nhận kỹ năng \"Phong Lược (Tung Hoành)\" (Thay mô tả 2 thành 1 và bỏ qua hiệu ứng Tung Hoành) cho đến sau khi kết thúc lượt tiếp theo của họ.",
     ["anyong"] = "Ám Dũng",
-    [":anyong"] = "Một lần trong lượt của mỗi người, khi 1 người cùng thế lực với bạn gây sát thương cho 1 người khác ngoài họ, có thể lệnh cho sát thương này gấp đôi; sau đó, nếu người nhận sát thương đã mở tất cả tướng, bạn tự mất 1 máu và mất kỹ năng này; nếu chỉ mở 1 tướng, bạn bỏ 2 lá trên tay.",
+    [":anyong"] = "Một lần trong lượt của mỗi người, khi 1 người cùng thế lực với bạn gây sát thương cho 1 người khác ngoài họ, có thể lệnh cho sát thương này gấp đôi; sau đó, nếu người nhận sát thương đã:\n- Mở tất cả tướng: Bạn tự mất 1 máu và mất kỹ năng này;\n- Mở 1 tướng: Bạn bỏ 2 lá trên tay.",
     ["@fenglve-give1"] = "Phong Lược: Chọn 1 lá giao cho %dest",
     ["@anyong-discard"] = "Ám Dũng: Bỏ 2 lá trên tay",
 	
