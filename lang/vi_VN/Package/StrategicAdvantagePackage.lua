@@ -24,13 +24,13 @@ return {
 	["strategic_advantage"] = "Thế Bị Thiên",
 
 	["transfer"] = "Hợp",
-	["is_transferable"] = "Lá này có thể được \"Hợp Tung\"",
+	["is_transferable"] = "Lá này có thể được »Hợp Tung«",
 
 	["Blade"] = "Thanh Long Yển Nguyệt Đao",
 	[":Blade"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Tỏa định kỹ: Khi bạn sử dụng [Sát], mục tiêu của lá [Sát] này không thể mở tướng cho đến khi [Sát] này kết toán xong",
 
 	["Halberd"] = "Phương Thiên Hoạ Kích",
-	[":Halberd"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác với mục tiêu, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa mở tướng, lệnh họ trở thành mục tiêu; Nếu làm vậy, sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
+	[":Halberd"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Sau khi chỉ định mục tiêu cho [Sát], có thể chỉ định ở các thế lực khác với mục tiêu, mỗi thế lực một người chơi, đồng thời có thể chọn những người chơi chưa mở tướng, lệnh họ trở thành mục tiêu;\n‣ Sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
 	["halberd"] = "Phương Thiên Họa Kích",
 	["#HalberdNullified"] = "Do hiệu quả của [%arg], %from dùng [%arg2] với %to vô hiệu",
 	["@halberd-use"] = "Sử dụng hiệu ứng của [Phương Thiên Họa Kích]?",
@@ -41,7 +41,7 @@ return {
 
 	["IronArmor"] = "Minh Quang Khải",
 	[":IronArmor"] = "Bài Trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n" ..
-	"1. Khi bạn trở thành mục tiêu của [Hỏa Thiêu Liên Doanh], [Hỏa Công] và [Sát Hỏa], hủy bỏ mục tiêu đối với bạn.\n" ..
+	"1. Khi bạn trở thành mục tiêu của [Hỏa Thiêu Liên Doanh]/[Hỏa Công]/[Sát Hỏa], hủy bỏ mục tiêu đối với bạn.\n" ..
 	"2. Nếu bạn thuộc tiểu thế lực, bạn không thể nhận trạng thái xích.\n" ,
 	["#IronArmor"] = "%from đã phát động [%arg]",
 
@@ -70,8 +70,8 @@ return {
 	["drowning:throw"] = "Bỏ tất cả bài trong vùng trang bị",
 	["drowning:damage"] = "Nhận 1 sát thương Lôi",
 
-	["burning_camps"] = "Hoả Thiêu Liên Doanh",
-	[":burning_camps"] = "Bài công cụ\n\n<b>Thời điểm</b>: Giai đoạn ra bài.\n<b>Mục tiêu</b>: Người phía sau bạn và tất cả người cùng đội hình với người này.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hoả đối với mục tiêu. ",
+	["burning_camps"] = "Hỏa Thiêu Liên Doanh",
+	[":burning_camps"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người cùng đội hình với người phía sau bạn.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hỏa đối với mục tiêu. ",
 
 	["lure_tiger"] = "Điệu Hổ Ly Sơn",
 	[":lure_tiger"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã lựa chọn\n<b>Hiệu quả</b>: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",

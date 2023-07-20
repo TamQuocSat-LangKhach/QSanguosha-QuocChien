@@ -216,7 +216,7 @@ QString General::getPackage() const
 QString General::getCompanions() const
 {
     if (isLord())
-        return tr("%1 Generals").arg(Sanguosha->translate(getKingdom()));
+        return tr("Tất cả tướng %1").arg(Sanguosha->translate(getKingdom()));
     QStringList name;
     foreach (const QString &general, companions)
         name << QString("%1").arg(Sanguosha->translate(general));
@@ -227,7 +227,7 @@ QString General::getCompanions() const
         if (gnr->companions.contains(objectName()))
             name << QString("%1").arg(Sanguosha->translate(gnr->objectName()));
     }
-    return name.join(" ");
+    return name.join(", ");
 }
 
 QString General::getSkillDescription(bool include_name, bool inToolTip, bool include_related) const
@@ -237,7 +237,6 @@ QString General::getSkillDescription(bool include_name, bool inToolTip, bool inc
     foreach (const Skill *skill, getVisibleSkillList()) {
         QString skill_name = Sanguosha->translate(skill->objectName());
         QString desc = skill->getDescription(inToolTip);
-        desc.replace("\n", "<br/>");
         description.append(QString("<font color=%1><b>%2</b>:</font> %3 <br/> <br/>").arg(inToolTip ? Config.SkillDescriptionInToolTipColor.name() : Config.SkillDescriptionInOverviewColor.name()).arg(skill_name).arg(desc));
     }
 
@@ -248,7 +247,7 @@ QString General::getSkillDescription(bool include_name, bool inToolTip, bool inc
                 QString skill_name = Sanguosha->translate(skill->objectName());
                 QString desc = skill->getDescription(inToolTip);
                 desc.replace("\n", "<br/>");
-                description.append(QString("<font color=%1><b>%2</b>:</font> %3 <br/> <br/>").arg(inToolTip ? Config.SkillDescriptionInToolTipColor.name() : Config.SkillDescriptionInOverviewColor.name()).arg(skill_name).arg(desc));
+                description.append(QString("<font color=%1>»<b>%2</b>«:</font> %3 <br/> <br/>").arg(inToolTip ? Config.SkillDescriptionInToolTipColor.name() : Config.SkillDescriptionInOverviewColor.name()).arg(skill_name).arg(desc));
             }
         }
     }

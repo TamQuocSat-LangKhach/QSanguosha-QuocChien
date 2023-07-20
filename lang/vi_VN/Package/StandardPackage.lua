@@ -25,17 +25,17 @@ local t = {
 
 
 	["slash"] = "Sát",
-	[":slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương cho mục tiêu.",
+	[":slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương cho mục tiêu.",
 	["slash-jink"] = "%src đã sử dụng [Sát], hãy sử dụng 1 [Thiểm]",
 	["@multi-jink-start"] = "%src đã sử dụng lá [sát], hãy sử dụng %arg lá [Thiểm]",
 	["@multi-jink"] = "%src đã sử dụng [Sát], hãy sử dụng thêm %arg lá [Thiểm]",
 	["@slash_extra_targets"] = "Hãy chọn thêm mục tiêu khác cho lá [Sát]",
 
 	["fire_slash"] = "Sát Hỏa",
-	[":fire_slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Hỏa cho mục tiêu.",
+	[":fire_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Hỏa cho mục tiêu.",
 
 	["thunder_slash"] = "Sát Lôi",
-	[":thunder_slash"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Một lần trong Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Lôi cho mục tiêu.",
+	[":thunder_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Lôi cho mục tiêu.",
 
 	["jink"] = "Thiểm",
 	[":jink"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Khi lá [Sát] có hiệu quả với bạn\n<b>Hiệu quả</b>: Triệt tiêu hiệu quả của lá[Sát] này.",
@@ -46,7 +46,7 @@ local t = {
 	.."\n\nCách thức II:\nKhi 1 người trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Người đang trong trạng thái hấp hối.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu.",
 
 	["analeptic"] = "Tửu",
-	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \n<b>Thời điểm</b>: Giai đoạn ra bài, 1 lần trong lượt.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương."
+	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \n<b>Giới hạn</b>: Một lần trong lượt của mỗi người.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương."
 	.."\n\nCách thức II: \n<b>Thời điểm</b>: Khi bạn trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu",
 	["#UnsetDrankEndOfTurn"] = "%from kết thúc lượt, lá [<font color=\"yellow\"><b>Tửu</b></font>] mất tác dụng",
 
@@ -107,7 +107,7 @@ local t = {
 	[":Vine"] ="Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n" ..
 	"1. [Nam Man Nhập Xâm], [Vạn Tiễn Tề Phát] và [Sát] phổ thông không có hiệu quả với bạn.\n "..
 "2. Khi bạn tính toán sát thương phải nhận, nếu sát thương này có thuộc tính Hỏa, sát thương này +1.\n" ,
-	["#VineDamage"] = "Phát động hiệu quả [<font color=\"yellow\"><b>Đằng Giáp</b></font>] của %from, sát thương Hoả tăng từ %arg lên %arg2 điểm.",
+	["#VineDamage"] = "Phát động hiệu quả [<font color=\"yellow\"><b>Đằng Giáp</b></font>] của %from, sát thương Hỏa tăng từ %arg lên %arg2 điểm.",
 
 	["Horse"] = "Ngựa",
 	[":+1 horse"] = "Bài trang bị - Ngựa +1\n\n<b>Kỹ năng</b>: Tỏa định kỹ: khoảng cách từ người khác đến bạn +1.",
@@ -192,7 +192,7 @@ local t = {
 	["known_both:handcards"] = "Xem bài trên tay",
 
 	["befriend_attacking"] = "Viễn Giao Cận Công",
-	[":befriend_attacking"] = "Bài công cụ\n\n<b>Thời điểm</b>: Trong Giai đoạn ra bài\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu rút 1 lá, sau đó bạn rút 3 lá.",
+	[":befriend_attacking"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu rút 1 lá, sau đó bạn rút 3 lá.",
 
 }
 

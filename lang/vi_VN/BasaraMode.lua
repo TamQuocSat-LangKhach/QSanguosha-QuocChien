@@ -77,8 +77,6 @@ return
 	["GameRule_AskForGeneralShowDeputy"] = "Lật phó tướng" ,
 	["armorskill"] = "Chọn kỹ năng để phát động",
 	
-	["$enterBattleRoyalMode"] = "游戏进入 <font color=\"red\"><b>鏖战模式</b></font>，所有的【<font color=\"yellow\"><b>桃</b></font>】"..
-		"只能当普【<font color=\"yellow\"><b>杀</b></font>】或【<font color=\"yellow\"><b>闪</b></font>】使用或打出，不能用于回复体力",
 
 	["$enterBattleRoyalMode"] = "Trò chơi bước vào <font color=\"red\"><b>Chế độ Huyết Chiến</b></font>，tất cả[<font color=\"yellow\"><b>Đào</b></font>]"..
 		"chỉ có thể sử dụng hoặc đánh ra như [<font color=\"yellow\"><b>Sát</b></font>] hoặc [<font color=\"yellow\"><b>Thiểm</b></font>].",
@@ -109,7 +107,7 @@ return
 	[":HalfMaxHpCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn rút 1 lá.\n\nCách dùng 2:\nGiai đoạn bỏ bài, nếu bài trên tay lớn hơn giới hạn trữ bài, bài có thể loại bỏ Tiêu ký này, giới hạn trữ bài của bạn +2.",
 	
 	["FirstShowCard"] = "Tiên Khu",
-	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn chọn 1 người chơi có tướng chưa mở (bỏ qua nếu không có tướng nào chưa mở), bạn bổ xung bài trên tay tới 4 lá, sau đó bạn xem 1 tướng ẩn của người đã chọn.",
+	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn chọn 1 người chơi có tướng chưa mở (bỏ qua nếu không có tướng nào chưa mở), bạn bổ sung bài trên tay tới 4 lá, sau đó bạn xem 1 tướng ẩn của người đã chọn.",
 	
 	["careerman"] = "Dã Tâm Gia",
     ["CareermanCard"] = "Dã Tâm Gia",
@@ -119,7 +117,7 @@ return
     ["careerman:peach"] = "Xem như sử dụng [Đào]",
     ["careerman:firstshow"] = "Rút đến khi 4 lá trên tay và xem 1 tướng ẩn",
     ["@careerman-target"] = "Dã Tâm Gia: Chọn 1 người chơi để xem 1 tướng ẩn",
-    ["@careerman-use"] = "Có thể loại bỏ tiêu ký \"Dã Tâm Gia\" để giới hạn trữ bài +2.",
+    ["@careerman-use"] = "Có thể loại bỏ tiêu ký [Dã Tâm Gia] để giới hạn trữ bài +2.",
     ["@careerman-choose"] = "Chọn 1 hiệu ứng để phát động",
 	
 	["canshowinplay"] = "Có thể mở tướng này trong giai đoạn ra bài",

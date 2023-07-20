@@ -20,5 +20,5 @@ return {
 	[":bianhua"] = "Tỏa định kỹ: Khi bạn mở tướng này lần đầu, bạn chọn 1 tướng đã mở trên bàn của người khác; bạn nhận giới tính, hợp kỹ và kỹ năng ngoại trừ Quân chủ kỹ của tướng đã chọn.",
 	["@bianhua-invoke"] = "Biến Hóa: Lựa chọn 1 người chơi có tướng đã mở mặt",
 	["@bianhua-choose"] = "Biến Hóa: Lựa chọn 1 tướng để nhận Kỹ năng, giới tính và hợp kỹ của tướng đó",
-	["#bianhua-choice"] = "%from đã phát động \"Biến Hóa\", lựa chọn %arg để sao chép"
+	["#bianhua-choice"] = "%from đã phát động »Biến Hóa«, lựa chọn %arg để sao chép"
 }

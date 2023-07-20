@@ -108,8 +108,10 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
                 des_src.replace(to_replace, QString("<font color=#000000><span style=background-color:white>%1</span></font>").arg(Sanguosha->translate(str + "_char")));
         }
     }
-
     desc.append(QString("<font color=%1>%2</font>").arg(inToolTip ? Config.SkillDescriptionInToolTipColor.name() : Config.SkillDescriptionInOverviewColor.name()).arg(des_src));
+    desc.replace(" < ", " &lt; ");
+    desc.replace(" > ", " &gt; ");
+    desc.replace("\n", "<br/>");
     return desc;
 }
 

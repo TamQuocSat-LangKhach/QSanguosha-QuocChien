@@ -155,7 +155,7 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
 //                skill_set.insert("zaoyun");
 //                skill_set.insert("mingfa");
 //            }
-            if (skill->getDescription().contains("lần trong giai đoạn hành động")) {
+            if (skill->getDescription().contains("lần trong giai đoạn ra bài")) {
                 if (skill->inherits("ViewAsSkill") ||
                         (skill->inherits("TriggerSkill") && qobject_cast<const TriggerSkill*>(skill)->getViewAsSkill() != NULL)) {
                     choicelist << skill->objectName();
