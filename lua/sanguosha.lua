@@ -52,7 +52,7 @@ function load_translation(file)
 end
 
 function load_translations()
-	local lang = sgs.GetConfig("Language", "zh_CN")
+	local lang = sgs.GetConfig("Language", "vi_VN")
 	local subdir = { "", "Audio", "Package" }
 	for _, dir in ipairs(subdir) do
 		local lang_dir = "lang/" .. lang .. "/" .. dir

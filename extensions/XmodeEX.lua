@@ -146,6 +146,6 @@ Xmode = {
 	end,
 }
 sgs.LoadTranslationTable{
-	["Xmode_hegemony_EX"] = "一统天下·俯首称臣",
+	["Xmode_hegemony_EX"] = "NTTH - Phủ Thủ Xưng Thần",
 }
 return sgs.CreateLuaScenario(Xmode)
