@@ -149,7 +149,7 @@ return {
 
 	["LuminousPearl"] = "Định Lan Dạ Minh Châu",
 	[":LuminousPearl"] = "Bài Trang bị - Bảo vật\n\nKỹ năng\n" ..
-	                     "Tỏa định kỹ: Nếu bạn không có »Chế Hành«, xem như bạn có »Chế Hành«; nếu bạn đã có »Chế Hành«, không giới hạn số lá bỏ đi trong 1 lần phát động »Chế Hành«",
+	                     "Tỏa định kỹ: Nếu bạn không có kỹ năng »Chế Hành«, xem như bạn có »Chế Hành«; nếu bạn đã có »Chế Hành«, không giới hạn số lá bỏ đi trong 1 lần phát động »Chế Hành«",
 	["zhihenglp"] = "Chế Hành",
 
 	["transform"] = "Đổi Phó tướng",

@@ -425,13 +425,11 @@ public:
 //}
 
 LangKhachPackage::LangKhachPackage()
-    : Package("langkhach")
+    : Package("langkhach", GeneralPack, true)
 {
     General *wuding = new General(this, "wuding", "careerist", 3);
     wuding->setGender(General::Neuter);
     wuding->addSkill(new Bianhua);
-
-    diy = true;
 }
 
 ADD_PACKAGE(LangKhach)

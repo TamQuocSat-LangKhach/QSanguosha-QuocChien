@@ -140,8 +140,12 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             if (Config.value("LuaPackages", QString()).toString().split("+").contains(general->getPackage())) {
                 return QBrush(QColor(0x66, 0xCC, 0xFF));
             } else {
-                break;
+                Package *p = qobject_cast<Package *>(general->parent());
+                if (p && p->isDIY()) {
+                    return QBrush(QColor(0x00, 0xFF, 0xCC));
+                }
             }
+            break;
         }
         default: break;
         }

@@ -91,7 +91,7 @@ local t = {
 	[":RenwangShield"] = "Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ: [Sát] Đen không có hiệu quả với bạn.",
 
 	["IceSword"] = "Hàn Băng Kiếm",
-	[":IceSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Khi bạn gây sát thương cho mục tiêu của [Sát], nếu mục tiêu có bài, bạn có thể chặn sát thương này lại và lần lượt bỏ 2 lá của mục tiêu.",
+	[":IceSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Khi bạn gây sát thương cho mục tiêu của [Sát], nếu mục tiêu có bài, bạn có thể chặn sát thương này và lần lượt bỏ 2 lá của mục tiêu.",
 
 	["Fan"] = "Chu Tước Vũ Phiến",
 	[":Fan"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Khi bạn sử dụng [Sát] phổ thông, bạn có thể biến [Sát] này thành [Sát Hỏa].",

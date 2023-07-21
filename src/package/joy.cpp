@@ -602,7 +602,7 @@ void MudSlide::takeEffect(ServerPlayer *target) const
 //}
 
 DisasterPackage::DisasterPackage()
-    :Package("Disaster")
+    :Package("Disaster", CardPack, true)
 {
     QList<Card *> cards;
 
@@ -614,13 +614,11 @@ DisasterPackage::DisasterPackage()
 
     foreach(Card *card, cards)
         card->setParent(this);
-
-    type = CardPack;
-    diy = true;
 }
+ADD_PACKAGE(Disaster)
 
 JoyPackage::JoyPackage()
-    :Package("joy")
+    :Package("joy", CardPack, true)
 {
     QList<Card *> cards;
 
@@ -632,11 +630,9 @@ JoyPackage::JoyPackage()
     foreach(Card *card, cards)
     card->setParent(this);
 
-    type = CardPack;
-    diy = true;
     skills << new ShitEffect;
 }
-
+ADD_PACKAGE(Joy)
 //class YxSwordSkill : public WeaponSkill
 //{
 //public:
@@ -693,7 +689,4 @@ JoyPackage::JoyPackage()
 //    type = CardPack;
 //    skills << new YxSwordSkill << new GrabPeach;
 //}
-
-ADD_PACKAGE(Joy)
-ADD_PACKAGE(Disaster)
 //ADD_PACKAGE(JoyEquip)
