@@ -13,7 +13,6 @@ return {
 	
 	["lifeng"] = "Lý Phong",
 	["#lifeng"] = "Kế Phụ Tận Sự",
-	["illustrator:lifeng"] = "biou09",
     ["food"] = "Lương",
 	["@tunchu-push"] = "Truẫn Trữ: Chọn từ 1 đến 2 lá để đặt [Lương]",
 	["tunchu"] = "Truân Trữ",
@@ -31,7 +30,6 @@ return {
 		
     ["lingcao"] = "Lăng Tháo",
 	["#lingcao"] = "Kích Lưu Dũng Tiến",
-	["illustrator:lingcao"] = "YanBai",
 	["dujin"] = "Độc Tiến",
 	[":dujin"] = "\n• Sau khi bạn mở tướng này lần đầu, nếu không có người nào khác có cùng thế lực với bạn (bao gồm cả người đã trận vong), bạn nhận 1 tiêu ký [Tiên Khu].\n• Giai đoạn rút bài, bạn có thể rút thêm X lá (X là 1 nửa số lá trong vùng trang bị của bạn, làm tròn lên)." ,
 	

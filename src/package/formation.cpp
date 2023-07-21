@@ -389,21 +389,17 @@ public:
     }
 };
 
-class Feiying : public DistanceSkill
+Feiying::Feiying(const QString &owner) : DistanceSkill("feiying" + owner)
 {
-public:
-    Feiying() : DistanceSkill("feiying")
-    {
-    }
+}
 
-    virtual int getCorrect(const Player *, const Player *to) const
-    {
+int Feiying::getCorrect(const Player *, const Player *to) const
+{
         if (to->hasShownSkill(objectName()))
             return 1;
         else
             return 0;
-    }
-};
+}
 
 TiaoxinCard::TiaoxinCard()
 {

@@ -22,6 +22,7 @@
 #include "standard-basics.h"
 #include "standard-tricks.h"
 #include "standard-shu-generals.h"
+#include "formation.h"
 #include "client.h"
 #include "engine.h"
 #include "structs.h"
@@ -2499,15 +2500,116 @@ public:
     }
 };
 
+class Xiaolian : public TriggerSkill
+{
+public:
+    Xiaolian() : TriggerSkill("xiaolian")
+    {
+        events << GeneralShowed << GeneralRemoved;
+        frequency = Frequent;
+    }
 
+    virtual bool canPreshow() const
+    {
+        return false;
+    }
 
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (triggerEvent == GeneralShowed) {
+            return (player->cheakSkillLocation(objectName(), data)
+                    && player->getMark("xiaolianUsed") == 0)
+                    ? QStringList(objectName()) : QStringList();
+        } else if (triggerEvent == GeneralRemoved && player && player->isAlive()) {
+            if (data.toString().split(":").last().split("+").contains(objectName()))
+                return QStringList(objectName());
+        }
+        return QStringList();
+    }
 
+    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        room->broadcastSkillInvoke(objectName(), player);
+        if (triggerEvent == GeneralShowed) {
+            room->addPlayerMark(player, "xiaolianUsed");
+        }
+        return true;
+    }
 
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        if (triggerEvent == GeneralShowed)
+            for (int i = 0; i < 2; i++) {
+                if (!room->askForQiaobian(player, room->getAlivePlayers(), "xiaolian", "@xiaolian-move", true, false))
+                    break;
+            }
+        else if (triggerEvent == GeneralRemoved) {
+            QList<ServerPlayer *> players;
+            foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                if (player->isFriendWith(p)) {
+                    players << p;
+                }
+            }
+            room->sortByActionOrder(players);
+            room->drawCards(players, 1, objectName());
+        }
+        return false;
+    }
+};
 
+class Kangkai : public TriggerSkill
+{
+public:
+    Kangkai() : TriggerSkill("kangkai")
+    {
+        events << TargetConfirmed;
+        frequency = Compulsory;
+    }
 
+    virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        TriggerList skill_list;
+        CardUseStruct use = data.value<CardUseStruct>();
+        if (use.card->isKindOf("Slash")) {
+            QList<ServerPlayer *> caoangs = room->findPlayersBySkillName(objectName());
+            foreach (ServerPlayer *caoang, caoangs) {
+                if (caoang != NULL && player->isFriendWith(caoang))
+                    skill_list.insert(caoang, QStringList(objectName()));
+            }
+        }
+        return skill_list;
+    }
 
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
+    {
+        if (ask_who->askForSkillInvoke(this, data)) {
+            room->broadcastSkillInvoke(objectName(), ask_who);
+            if (ask_who->inHeadSkills("kangkai"))
+                ask_who->removeGeneral();
+            else if (ask_who->inDeputySkills("kangkai"))
+                ask_who->removeGeneral(false);
+            else if (ask_who->hasShownSkill("huashen") && ask_who->property("Huashens").toString().split("+").contains("caoang"))
+                ask_who->removeGeneral(ask_who->inHeadSkills("huashen"));
+            return true;
+        }
 
+        return false;
+    }
 
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *ask_who) const
+    {
+        ServerPlayer *to = room->askForPlayerChosen(ask_who, room->getAlivePlayers(), objectName(), "@kangkai-target", false, true);
+        room->acquireSkill(to, "feiying_caoang", true, false);
+        if (to != ask_who) {
+            RecoverStruct rec;
+            rec.who = ask_who;
+            room->recover(to, rec);
+            if (to->isChained())
+                room->setPlayerProperty(to, "chained", false);
+        }
+        return false;
+    }
+};
 
 MOLPackage::MOLPackage()
     : Package("MOL")
@@ -2616,10 +2718,16 @@ OverseasPackage::OverseasPackage()
     fuwan->addSkill(new MoukuiEffect);
     related_skills.insertMulti("moukui", "#moukui-effect");
 
+    General *caoang = new General(this, "caoang", "wei");
+    caoang->addCompanion("dianwei");
+    caoang->addSkill(new Xiaolian);
+    caoang->addSkill(new Kangkai);
+    caoang->addRelateSkill("feiying_caoang");
+
     addMetaObject<GuishuCard>();
     addMetaObject<HongyuanCard>();
     addMetaObject<JiansuCard>();
 
-    skills << new ZhenxiTrick;
+    skills << new ZhenxiTrick << new Feiying("_caoang");
 }
 

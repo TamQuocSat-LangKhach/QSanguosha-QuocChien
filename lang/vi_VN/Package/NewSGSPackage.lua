@@ -12,7 +12,6 @@ return {
 	
 	["#yangwan"] = "Dung Mạt Chi Ly",
     ["yangwan"] = "Dương Uyển",
-    --["designer:yangwan"] = "",
     ["youyan"] = "Dụ Ngôn",
     [":youyan"] = "Một lần trong lượt của bạn, sau khi bài của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể lật ra 4 lá trên đầu chồng bài và thu lấy những lá khác chất với những lá bạn đã bỏ trong lần này.",
     ["zhuihuan"] = "Truy Hoàn",

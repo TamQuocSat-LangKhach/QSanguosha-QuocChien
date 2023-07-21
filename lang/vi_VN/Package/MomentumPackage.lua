@@ -58,7 +58,7 @@ return {
 	["mifuren"] = "My Phu Nhân",
 	["guixiu"] = "Khuê Tú",
 	[":guixiu"] = "\n• Sau khi mở tướng này, bạn có thế rút 2 lá.\n• Sau khi tướng này bị loại bỏ, bạn có thể hồi 1 máu.",
-	["guixiu:draw"] = "Phát động »Khuê Tú«, bốc 2 lá bài.",
+	["guixiu:draw"] = "Phát động »Khuê Tú«, rút 2 lá.",
 	["guixiu:recover"] = "Phát động »Khuê Tú«, hồi 1 máu.",
 	["cunsi"] = "Tồn Tự",
 	[":cunsi"] = "Giai đoạn ra bài, nếu bạn đã mở tướng này, bạn có thể chọn 1 người, thực hiện lần lượt:\n- Bạn loại bỏ tướng này;\n- Họ nhận kỹ năng »Dũng Quyết«;\n- Nếu họ không phải bạn, họ rút 2 lá bài.",
