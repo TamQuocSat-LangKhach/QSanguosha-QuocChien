@@ -45,7 +45,7 @@ return {
 	["@huyuan-equip"] = "Có thể phát động »Hộ Viện«, giao 1 lá phi trang bị cho 1 người hoặc đặt trang bị vào vùng trang bị của 1 người",
 	["@huyuan-discard"] = "Hộ Viện: Bỏ 1 lá trên bàn chơi.",
 	["heyi"] = "Hạc Dực",
-	[":heyi"] = "Trận pháp kỹ: Quan hệ đội hình: Người cùng đội hình với bạn nhận kỹ năng »Phi Ảnh«.",
+	[":heyi"] = "Trận pháp kỹ: Quan hệ đội hình: Nếu bạn có nằm trong quan hệ đội hình, người cùng đội hình với bạn nhận kỹ năng »Phi Ảnh«.",
 	["HeyiSummon"] = "Hạc Dực",
 	["#heyi_feiying"] = "Phi Ảnh",
 	["feiying"] = "Phi Ảnh",

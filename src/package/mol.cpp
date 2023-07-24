@@ -2582,14 +2582,9 @@ public:
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
     {
-        if (ask_who->askForSkillInvoke(this, data)) {
+        if (ask_who->ownSkill(objectName()) && ask_who->askForSkillInvoke(this, data)) {
+            ask_who->removeGeneral(ask_who->inHeadSkills(objectName()));
             room->broadcastSkillInvoke(objectName(), ask_who);
-            if (ask_who->inHeadSkills("kangkai"))
-                ask_who->removeGeneral();
-            else if (ask_who->inDeputySkills("kangkai"))
-                ask_who->removeGeneral(false);
-            else if (ask_who->hasShownSkill("huashen") && ask_who->property("Huashens").toString().split("+").contains("caoang"))
-                ask_who->removeGeneral(ask_who->inHeadSkills("huashen"));
             return true;
         }
 
@@ -2606,6 +2601,96 @@ public:
             room->recover(to, rec);
             if (to->isChained())
                 room->setPlayerProperty(to, "chained", false);
+        }
+        return false;
+    }
+};
+
+class Jutian : public TriggerSkill
+{
+public:
+    Jutian() : TriggerSkill("jutian")
+    {
+        events << Damage;
+    }
+
+    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    {
+        if (TriggerSkill::triggerable(player)) {
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.to && damage.to != player &&
+                !(player->hasFlag("jutian1used") && player->hasFlag("jutian2used"))) {
+                return QStringList(objectName());
+            }
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        bool canChooseFriend = !player->hasFlag("jutian1used");
+        bool canChooseEnemy =  !player->hasFlag("jutian2used");
+        DamageStruct damage = data.value<DamageStruct>();
+        QList<ServerPlayer *> targets;
+        foreach (ServerPlayer *p, room->getAlivePlayers()) {
+            if ((canChooseFriend && p->isFriendWith(player)) || (canChooseEnemy && p->isFriendWith(damage.to))) {
+                targets << p;
+            }
+        }
+        if (!targets.empty()) {
+            QString prompt = "@jutian";
+            if (canChooseFriend) {
+                prompt.append("-fillhandcard");
+            }
+            if (canChooseEnemy) {
+                prompt.append("-discard");
+            }
+            ServerPlayer *victim = room->askForPlayerChosen(player, targets, objectName(), prompt, true, true);
+            if (victim != NULL) {
+                room->broadcastSkillInvoke(objectName(), player);
+                QStringList target_list = player->tag["jutian_target"].toStringList();
+                target_list.append(victim->objectName());
+                player->tag["jutian_target"] = target_list;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        QStringList target_list = player->tag["jutian_target"].toStringList();
+        QString target_name = target_list.last();
+        target_list.removeLast();
+        player->tag["jutian_target"] = target_list;
+
+        ServerPlayer *target = room->findPlayerbyobjectName(target_name);
+        if (target != NULL) {
+            bool canChooseFriend = !player->hasFlag("jutian1used");
+            bool canChooseEnemy =  !player->hasFlag("jutian2used");
+            DamageStruct damage = data.value<DamageStruct>();
+            QStringList choicelist;
+            if (target->isFriendWith(player) && canChooseFriend) {
+                choicelist << "fillhandcard";
+            }
+            if (target->isFriendWith(damage.to) && canChooseEnemy) {
+                choicelist << "discard";
+            }
+            QString choice;
+            if (choicelist.size() > 1)
+                choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant(), "@jutian-choice");
+            else
+                choice = choicelist.last();
+            if (choice == "discard") {
+                int x = qMin(target->getHandcardNum() - target->getHp(), 5);
+                if (x > 0) {
+                    room->askForDiscard(player, objectName(), x, x);
+                }
+                player->setFlags("jutian2used");
+            } else if (choice == "fillhandcard") {
+                target->fillHandCards(target->getMaxHp());
+                player->setFlags("jutian1used");
+            }
         }
         return false;
     }
@@ -2723,6 +2808,9 @@ OverseasPackage::OverseasPackage()
     caoang->addSkill(new Xiaolian);
     caoang->addSkill(new Kangkai);
     caoang->addRelateSkill("feiying_caoang");
+
+    General *zhuhuan = new General(this, "zhuhuan", "wu");
+    zhuhuan->addSkill(new Jutian);
 
     addMetaObject<GuishuCard>();
     addMetaObject<HongyuanCard>();

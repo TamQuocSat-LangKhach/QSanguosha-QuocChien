@@ -104,7 +104,7 @@ return {
     ["wanglie"] = "Vãng Liệt",
     [":wanglie"] = "\n• Lá đầu tiên bạn sử dụng trong giai đoạn ra bài không giới hạn khoảng cách.\n• Giai đoạn ra bài, khi bạn sử dụng [Sát] hoặc công cụ phổ thông, bạn có thể lệnh cho tất cả mọi người không được hưởng ứng với lá này; nếu làm vậy, bạn không thể sử dụng bài trong giai đoạn này.",
 	["dizai"] = "Địa Tải",
-	[":dizai"] = "Trận pháp kỹ: Nếu bạn là người vây công trong quan hệ vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
+	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công trong quan hệ vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
 	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
     ["#tianyu"] = "Quy Lược Minh Luyện",
@@ -266,4 +266,16 @@ return {
 	["feiying_caoang"] = "Phi Ảnh",
 	["@kangkai-target"] = "Khảng Khái: Chọn 1 người nhận kỹ năng »Phi Ảnh«",
 	["@xiaolian-move"] = "Hiếu Liêm: Bạn có thể di chuyển 1 trang bị trên bàn",
+	
+    ["#zhuhuan"] = "Khí Cao Hộ Tiền",
+    ["zhuhuan"] = "Chu Hoàn",
+    ["jutian"] = "Cự Thiên",
+    [":jutian"] = "Một lần trong lượt của mỗi người đối với mỗi mục lựa chọn, sau khi bạn gây sát thương cho người khác, bạn có thể chọn 1 mục:\n- Bạn chọn 1 người cùng thế lực với người đã nhận sát thương, lệnh họ bỏ bài trên tay đến khi bằng với số máu của họ, tối đa bỏ 5 lá;\n- Bạn chọn 1 người cùng thế lực với bạn, lệnh họ bổ sung bài trên tay đến giới hạn máu của họ.",
+    ["@jutian-fillhandcard-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài hoặc chọn 1 người cùng thế lực với %dest để bỏ bài",
+    ["@jutian-fillhandcard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài",
+    ["@jutian-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với %dest để bỏ bài",
+    
+    ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
+    ["jutian_choice:fillhandcard"] = "Bổ sung bài trên tay đến giới hạn máu",
+    ["jutian_choice:discard"] = "Bỏ bài trên tay đến khi bằng số máu",
 }

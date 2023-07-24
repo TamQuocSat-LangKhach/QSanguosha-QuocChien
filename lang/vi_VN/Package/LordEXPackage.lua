@@ -72,7 +72,7 @@ return {
 	["#liuqi"] = "Cư Ngoại Nhi An",
 	["liuqi"] = "Lưu Kỳ",
 	["wenji"] = "Vấn Kế",
-	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n- Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng lá này không giới hạn khoảng cách và số lần và không thể hưởng ứng;\n- Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác.",
+	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n- Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng lá này không giới hạn khoảng cách và số lần và không thể hưởng ứng;\n- Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác ngửa mặt.",
 	
 	["tunjiang"] = "Truân Giang",
 	[":tunjiang"] = "Khi bắt đầu giai đoạn kết thúc, nếu bạn trong giai đoạn ra bài đã sử dụng ít nhất 1 lá và không chỉ định người khác làm mục tiêu, bạn có thể rút X lá (X là số thế lực trên bàn chơi).",
@@ -95,7 +95,7 @@ return {
     ["#zhonghui"] = "Kiệt Ngạo Đích Dã Tâm Gia",
     ["zhonghui"] = "Chung Hội",
     ["quanji"] = "Quyền Kế",
-    [":quanji"] = "\n• Một lần trong lượt ứng với mỗi thời điểm, sau khi bạn gây hoặc nhận sát thương, bạn có thể rút 1 lá, sau đó đặt ngửa 1 lá lên tướng này, gọi là [Quyền].\n• Giới hạn trữ bài của bạn +X (X là số [Quyền]).",
+    [":quanji"] = "\n• Một lần trong lượt của mỗi người ứng với mỗi thời điểm, sau khi bạn gây hoặc nhận sát thương, bạn có thể rút 1 lá, sau đó đặt ngửa 1 lá lên tướng này, gọi là [Quyền].\n• Giới hạn trữ bài của bạn +X (X là số [Quyền]).",
     ["paiyi"] = "Bài Dị",
     [":paiyi"] = "Một lần trong giai đoạn ra bài, bạn có thể đưa 1 [Quyền] vào chồng bài bỏ và chọn 1 người, họ rút X lá (X là số [Quyền] bạn có, tối đa 7);\n‣ Nếu số bài trên tay họ > bạn, bạn gây 1 sát thương cho họ.",
 
@@ -123,7 +123,7 @@ return {
     ["diaogui"] = "Điều Quy",
     [":diaogui"] = "Một lần trong giai đoạn ra bài, có thể sử dụng 1 lá trang bị như [Điệu Hổ Ly Sơn];\n‣ Nếu bằng cách này thế lực của bạn có sự thay đổi về đội hình, bạn rút X lá (X là số người của đội hình đông nhất trong những quan hệ đội hình ở thế lực của bạn có sự thay đổi).",
     ["fengyang"] = "Phong Dương",
-    [":fengyang"] = "Trận pháp kỹ: Người thế lực xác định khác bạn không thể thu lấy hoặc bỏ trang bị của người cùng đội hình với bạn.",
+    [":fengyang"] = "Trận pháp kỹ: Quan hệ đội hình: Người thế lực xác định khác bạn không thể thu lấy hoặc bỏ trang bị của người cùng đội hình với bạn.",
 
     ["#yanbaihu"] = "Sài Nha Lạc Giản",
     ["yanbaihu"] = "Nghiêm Bạch Hổ",
