@@ -2600,7 +2600,10 @@ public:
             rec.who = ask_who;
             room->recover(to, rec);
             if (to->isChained())
-                room->setPlayerProperty(to, "chained", false);
+                to->setChained(false);
+                room->setEmotion(to, "chain");
+                room->broadcastProperty(to, "chained");
+                room->getThread()->trigger(ChainStateChanged, room, to);
         }
         return false;
     }
@@ -2612,15 +2615,23 @@ public:
     Jutian() : TriggerSkill("jutian")
     {
         events << Damage;
+        frequency = Frequent;
     }
 
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         if (TriggerSkill::triggerable(player)) {
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.to && damage.to != player &&
-                !(player->hasFlag("jutian1used") && player->hasFlag("jutian2used"))) {
-                return QStringList(objectName());
+            if (damage.to && damage.to != player) {
+                if (!player->hasFlag("jutian1used"))
+                    return QStringList(objectName());
+                if (!player->hasFlag("jutian2used")) {
+                    foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                        if (p->isFriendWith(damage.to)) {
+                            return QStringList(objectName());
+                        }
+                    }
+                }
             }
         }
         return QStringList();
@@ -2645,11 +2656,11 @@ public:
             if (canChooseEnemy) {
                 prompt.append("-discard");
             }
-            ServerPlayer *victim = room->askForPlayerChosen(player, targets, objectName(), prompt, true, true);
-            if (victim != NULL) {
+            ServerPlayer *target = room->askForPlayerChosen(player, targets, objectName(), prompt, true, true);
+            if (target != NULL) {
                 room->broadcastSkillInvoke(objectName(), player);
                 QStringList target_list = player->tag["jutian_target"].toStringList();
-                target_list.append(victim->objectName());
+                target_list.append(target->objectName());
                 player->tag["jutian_target"] = target_list;
                 return true;
             }
@@ -2678,7 +2689,7 @@ public:
             }
             QString choice;
             if (choicelist.size() > 1)
-                choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant(), "@jutian-choice");
+                choice = room->askForChoice(player, objectName(), objectName() + "_" + choicelist.join("+"), QVariant(), "@jutian-choice");
             else
                 choice = choicelist.last();
             if (choice == "discard") {
@@ -2691,6 +2702,265 @@ public:
                 target->fillHandCards(target->getMaxHp());
                 player->setFlags("jutian1used");
             }
+        }
+        return false;
+    }
+};
+
+//class Jiange : public OneCardViewAsSkill
+//{
+//public:
+//    Jiange() : OneCardViewAsSkill("jiange")
+//    {
+//        filter_pattern = "EquipCard,TrickCard|.|.|.";
+//        response_or_use = true;
+//    }
+
+//    virtual bool isEnabledAtPlay(const Player *player) const
+//    {
+//        return Slash::IsAvailable(player);
+//    }
+
+//    virtual bool isEnabledAtResponse(const Player *, const QString &pattern) const
+//    {
+//        return pattern == "slash";
+//    }
+
+//    virtual const Card *viewAs(const Card *originalCard) const
+//    {
+//        Card *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
+//        slash->addSubcard(originalCard->getId());
+//        slash->setSkillName(objectName());
+//        slash->setShowSkill(objectName());
+//        return slash;
+//    }
+//};
+
+//class Qianxue : public TriggerSkill
+//{
+//public:
+//    Qianxue() : TriggerSkill("qianxue")
+//    {
+//        events << EventPhaseChanging;
+//        relate_to_place = "head";
+//    }
+
+//    virtual TriggerList triggerable(TriggerEvent , Room *room, ServerPlayer *, QVariant &data) const
+//    {
+//        TriggerList skill_list;
+//        if (data.value<PhaseChangeStruct>().to == Player::NotActive) {
+//            foreach (ServerPlayer *p, room->findPlayersBySkillName(objectName())) {
+//                skill_list.insert(p, QStringList(objectName()));
+//            }
+//        }
+//        return skill_list;
+//    }
+//    virtual QStringList triggerable(TriggerEvent, Room *room, ServerPlayer *menghuo, QVariant &, ServerPlayer* &) const
+//    {
+//        if (!TriggerSkill::triggerable(menghuo) || menghuo->getPhase() != Player::Discard) return QStringList();
+
+//        QVariantList discardpile = room->getTag("GlobalRoundDisCardPile").toList();
+//        foreach (QVariant card_data, discardpile) {
+//            int card_id = card_data.toInt();
+//            if (Sanguosha->getCard(card_id)->isRed())
+//                return QStringList(objectName());
+//        }
+
+//        return QStringList();
+//    }
+
+//    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+//    {
+//        int x = 0;
+//        QVariantList discardpile = room->getTag("GlobalRoundDisCardPile").toList();
+//        foreach (QVariant card_data, discardpile) {
+//            int card_id = card_data.toInt();
+//            if (Sanguosha->getCard(card_id)->isRed())
+//                x++;
+//        }
+
+//        QList<ServerPlayer *> targets, allplayers = room->getAlivePlayers();
+
+//        foreach (ServerPlayer *p, allplayers) {
+//            if (player->isFriendWith(p))
+//                targets << p;
+//        }
+
+//        if (!targets.isEmpty()) {
+
+//            QList<ServerPlayer *> choosees = room->askForPlayersChosen(player, targets, objectName(),
+//                    0, x, "@zaiqi-target:::" + QString::number(x), true);
+
+//            if (choosees.length() > 0) {
+//                room->broadcastSkillInvoke(objectName(), player);
+//                QStringList target_list = player->tag["zaiqi_target"].toStringList();
+//                QStringList names;
+//                foreach (ServerPlayer *p, choosees) {
+//                    names << p->objectName();
+//                }
+//                target_list << names.join("+");
+//                player->tag["zaiqi_target"] = target_list;
+
+//                return true;
+//            }
+//        }
+
+//        return false;
+//    }
+
+//    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+//    {
+//        QStringList target_list = player->tag["zaiqi_target"].toStringList();
+//        if (target_list.isEmpty()) return false;
+//        QStringList target_names = target_list.takeLast().split("+");
+//        player->tag["zaiqi_target"] = target_list;
+
+//        QList<ServerPlayer *> targets;
+//        foreach (QString name, target_names) {
+//            ServerPlayer *target = room->findPlayerbyobjectName(name);
+//            if (target)
+//                targets << target;
+//        }
+
+//        room->sortByActionOrder(targets);
+
+//        foreach (ServerPlayer *p, targets) {
+//            QStringList choices;
+//            choices << "drawcard";
+//            if (player->isAlive() && player->canRecover())
+//                choices << "recover";
+
+//            QString choice = room->askForChoice(p, "zaiqi", choices.join("+"), QVariant(),
+//                    "@zaiqi-choice:"+player->objectName(), "drawcard+recover");
+
+//            if (choice == "drawcard")
+//                p->drawCards(1, objectName());
+//            else {
+//                RecoverStruct recover;
+//                recover.who = p;
+//                room->recover(player, recover);
+//            }
+//        }
+//        return false;
+//    }
+//};
+
+class Haokui : public TriggerSkill
+{
+public:
+    Haokui() : TriggerSkill("haokui")
+    {
+        events << EventPhaseStart; //<< CardsMoveOneTime << EventPhaseChanging;
+        frequency = Frequent;
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
+    {
+        if (player->getPhase() == Player::NotActive) {
+            room->setPlayeryerMark(player, "haokui", 0);
+            return QStringList();
+        }
+        if (!TriggerSkill::triggerable(player)) return QStringList();
+        if (player->getPhase() == Player::Play) {
+            return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        if (player->askForSkillInvoke(this, data)) {
+            room->broadcastSkillInvoke(objectName(), player);
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        room->drawCards(player, 2, objectName());
+        room->addPlayeryerMark(player, "haokui");
+        return false;
+    }
+};
+
+class HaokuiCompulsory : public TriggerSkill
+{
+public:
+    HaokuiCompulsory() : TriggerSkill("#haokui-compulsory")
+    {
+        events << CardsMoveOneTime << EventPhaseChanging;
+        frequency = Compulsory;
+    }
+
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
+    {
+        if (player->getMark("haokui") < 1) return QStringList();
+        if (triggerEvent == CardsMoveOneTime && player->getPhase() == Player::Discard) {
+            QVariantList move_datas = data.toList();
+            foreach (QVariant move_data, move_datas) {
+                CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+                if (move.to_place == Player::DiscardPile) {
+                    return QStringList(objectName());
+                }
+            }
+        }
+        if (triggerEvent == EventPhaseChanging) {
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to == Player::NotActive) return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        if (triggerEvent == EventPhaseChanging) {
+            if (player->hasShownAllGenerals() && player->hasShownSkill("haokui")) {
+                bool mainGeneral = player->inHeadSkills("haokui");
+                if (room->askForChoice(player, "haokui", "yes+no", data, "@haokui-hide" + mainGeneral ? 1 : 2) == "yes") {
+                    player->hideGeneral(mainGeneral);
+                }
+            }
+        }
+        return false;
+    }
+};
+
+class Xushi : public TriggerSkill
+{
+public:
+    Xushi() : TriggerSkill("xushi")
+    {
+        events << TargetConfirming;
+        frequency = Compulsory;
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (!TriggerSkill::triggerable(player)) return QStringList();
+        CardUseStruct use = data.value<CardUseStruct>();
+        if (!use.card || !use.from || use.from == player || use.to.size() > 1 || player->hasShownSkill(this)) return QStringList();
+        if (use.to.contains(player))
+            return QStringList(objectName());
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        if (player->askForSkillInvoke(this, data)) {
+            room->broadcastSkillInvoke(objectName(), player);
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        CardUseStruct use = data.value<CardUseStruct>();
+        room->cancelTarget(use, player); // Room::cancelTarget(use, player);
+        data = QVariant::fromValue(use);
+        if (!use.from->isNude()) {
+            room->askForDiscard(use.from, objectName(), 1, 1, false, true);
         }
         return false;
     }

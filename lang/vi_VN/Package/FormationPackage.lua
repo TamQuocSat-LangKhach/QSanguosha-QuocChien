@@ -32,7 +32,7 @@ return {
 	["field"] = "Điền",
 	["#tuntian-dist"] = "Đồn Điền" ,
 	["jixi"] = "Cấp Tập",
-	[":jixi"] = "Chủ tướng kỹ, giảm 0.5 máu gốc: Bạn có thể chuyển hóa sử dụng [Điền] thành [Thuận Thủ Khiên Dương].",
+	[":jixi"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Bạn có thể chuyển hóa sử dụng [Điền] thành [Thuận Thủ Khiên Dương].",
 	["ziliang"] = "Tư Lương",
 	[":ziliang"] = "Phó tướng kỹ: Sau khi 1 người cùng thế lực nhận sát thương, bạn có thể giao cho họ 1 [Điền].",
 	["@ziliang-give"] = "Có thể kích »Tư Lương« để giao [Điền] cho người bị thương.",

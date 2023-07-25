@@ -46,7 +46,7 @@ return {
     [":zhuangrong"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá công cụ, bạn nhận kỹ năng »Vô Song« trong giai đoạn này.",
     ["wushuang_lvlingqi"] = "Vô Song",
     ["shenwei"] = "Thần Uy",
-    [":shenwei"] = "Chủ tướng kỹ, Tỏa định kỹ, giảm 0.5 máu gốc:\n• Giới hạn trữ bài trên tay bạn +2;\n• Giai đoạn rút bài, nếu bạn là người có số máu lớn nhất, số lá bạn rút +2.",
+    [":shenwei"] = "Chủ tướng kỹ, Tỏa định kỹ, Giảm 0.5 máu gốc:\n• Giới hạn trữ bài trên tay bạn +2;\n• Giai đoạn rút bài, nếu bạn là người có số máu lớn nhất, số lá bạn rút +2.",
     ["@guowu-add"] = "Có thể phát động »Quắc Vũ«, thêm 2 mục tiêu cho [%arg] đang sử dụng.",
     
     ["$AddCardTarget"] = "%from đã phát động »%arg«, thêm mục tiêu %to cho %card",

@@ -239,7 +239,7 @@ return {
 	["jinwu"] = "Căng Võ",
 	[":jinwu"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể yêu cầu bạn chấp hành 1 quân lệnh:\n- Nếu chấp hành, bạn xem như sử dụng 1 [Sát];\n- Nếu không chấp hành, bạn kết thúc giai đoạn ra bài.",
 	["zhuke"] = "Trúc Khoa",
-	[":zhuke"] = "Chủ tướng kỹ, giảm 0.5 máu gốc:\n• Sau khi bạn chọn chấp hành quân lệnh, bạn có thể chọn lại quân lệnh để chấp hành.\n• Khi bạn nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh 1 người cùng thế lực với bạn hồi 1 máu.",
+	[":zhuke"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc:\n• Sau khi bạn chọn chấp hành quân lệnh, bạn có thể chọn lại quân lệnh để chấp hành.\n• Khi bạn nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh 1 người cùng thế lực với bạn hồi 1 máu.",
 	["quanjia"] = "Khuyến Giá",
 	[":quanjia"] = "Phó tướng kỹ: Sau khi bạn mở tướng này lần đầu tiên, bạn phát động kỹ năng này, thực hiện lần lượt:\n- Triệu hoán thế lực, có thể hưởng ứng triệu hoán này mà không trở thành dã tâm;\n- Người cùng thế lực với bạn rút 1 lá\n- Người có kỹ năng »Nhân Đức« nhận kỹ năng »Chương Vũ« và »Thụ Việt«",
 
@@ -278,4 +278,29 @@ return {
     ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
     ["jutian_choice:fillhandcard"] = "Bổ sung bài trên tay đến giới hạn máu",
     ["jutian_choice:discard"] = "Bỏ bài trên tay đến khi bằng số máu",
+	
+    ["#shitao"] = "Đồng Tiến Cộng Thoái",
+    ["shitao"] = "Thạch Thao",
+    ["jiange"] = "Kiếm Ca",
+    [":jiange"] = "Bạn có thể chuyển hóa sử dụng/đánh ra lá phi cơ bản thành [Sát].",
+    ["qianxue"] = "Tiềm Học",
+    [":qianxue"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Khi kết thúc lượt của 1 người, bạn có thể thu lấy tối đa X lá trong những lá đã tiến vào chồng bài bỏ trong lượt này (X là số vùng của bạn mà đã mất đi lá cuối cùng trong lượt này);\n‣ Bạn cần thu lấy những lá phi cơ bản trước;\n‣ Bạn không thể thu lấy [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu].",
+    ["zhuhu"] = "Trục Cốc",
+    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, nếu vị trí của tướng này là:\n- Chủ tướng và tướng còn lại của bạn là tướng đơn thế lực: Bạn hoán đổi Chủ tướng và Phó tướng\n- Phó tướng: Bạn thoát khỏi trạng thái xích;\n‣ Bạn đổi Phó tướng.",
+    ["qianxue:invoke"] = "Có thể phát động »Tiềm Học«, thu lấy tối đa %arg lá tiến vào chồng bài bỏ lượt này (ưu tiên lá phi cơ bản)",
+    ["@qianxue-select"] = "Tiềm học: Chọn tối đa %arg lá, ưu tiên phi cơ bản.",
+    ["#qianxue"] = "Tiềm Học",
+	
+    ["#chendeng"] = "Hồ Hải Hào Khí",
+    ["chendeng"] = "Trần Đăng",
+    ["haokui"] = "Hào Khôi",
+    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n‣ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực xác định khác bạn, ưu tiên theo thứ tự sau:\n - Người thuộc đại thế lực;\n- Người có số máu lớn nhất;\n‣ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn có thể thực hiện tối đa 2 mục:\n- Nếu bạn đã mở 2 tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
+    ["xushi"] = "Hư Thực",
+    [":xushi"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu tướng này đang úp, bạn có thể hủy bỏ mục tiêu đối với bạn, sau đó bạn bỏ 1 lá của họ.",
+	
+    ["@haokui-give"] = "Hào Khôi: Chọn 1 người nhận bài bỏ từ chồng bài bỏ",
+    ["@haokui-transform"] = "Hào Khôi: Bạn có thể chọn 1 người cùng thế lực và lệnh họ đổi phó tướng",
+    ["@haokui-hide1"] = "Hào Khôi: Bạn có thể úp chủ tướng",
+    ["@haokui-hide2"] = "Hào Khôi: Bạn có thể úp phó tướng",
+    ["@xushi-discard"] = "Xushi: Có thể bỏ 1 lá của %dest",
 }
