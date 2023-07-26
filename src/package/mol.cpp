@@ -2858,6 +2858,7 @@ public:
     {
         if (player->getPhase() == Player::NotActive) {
             room->setPlayerMark(player, "##haokui", 0);
+            room->setPlayerMark(player, "haokui-give", 0);
             return QStringList();
         }
         if (!TriggerSkill::triggerable(player)) return QStringList();
@@ -2896,7 +2897,7 @@ public:
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         if (!player->isAlive() || player->getMark("##haokui") < 1) return QStringList();
-        if (triggerEvent == EventPhaseChanging) {
+        if (triggerEvent == EventPhaseChanging && player->getMark("haokui-give") == 0) {
             PhaseChangeStruct change = data.value<PhaseChangeStruct>();
             if (change.to == Player::NotActive) return QStringList(objectName());
         } else if (triggerEvent == CardsMoveOneTime && player->getPhase() == Player::Discard) {
@@ -2976,6 +2977,7 @@ public:
                     dummy->deleteLater();
                     CardMoveReason reason(CardMoveReason::S_REASON_GIVE, player->objectName(), to->objectName(), "haokui", QString());
                     room->obtainCard(to, dummy, reason);
+                    room->addPlayerMark(player, "haokui-give");
                 }
             }
         }
