@@ -271,12 +271,11 @@ sgs.ai_skill_invoke.tunchu = function(self, data)
 	--if self:needBear() then return true end
 
 	for _,enemy in ipairs(self.enemies) do
-		local def = sgs.getDefenseSlash(enemy, self)
+		local def = sgs.getDefense(enemy)
 		local slash = sgs.Sanguosha:cloneCard("slash", sgs.Card_NoSuit, 0)
 		local eff = self:slashIsEffective(slash, enemy) and sgs.isGoodTarget(enemy, self.enemies, self)
 
-		if not self.player:canSlash(enemy, slash, false) then
-		elseif self:slashProhibit(nil, enemy) then
+		if self:slashProhibit(slash, enemy) then
 		elseif eff and def < 8 and needburst > 0 then return false
 		end
 	end
@@ -298,7 +297,8 @@ end
 
 sgs.ai_skill_exchange.shuliang = function(self, pattern, max_num, min_num, expand_pile)
 	--local target = self.room:getCurrent()
-	return {self.player:getPile("food"):first()}
+	local cards = self.player:getPile("food")
+	return {cards[1]:getEffectiveId()}
 end	
 
 --凌操
