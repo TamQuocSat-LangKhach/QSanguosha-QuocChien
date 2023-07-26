@@ -21,7 +21,6 @@
 return {
 
 	--荀攸
-	["cv:xunyou"] = "烨子",
 	["$qice1"] = "Ta có một kế, nhất định có thể phá được",
 	["$qice2"] = "Khắp thiên hạ đều loạn, kẻ sĩ cũng chao đao thời thế",
 	["$zhiyu1"] = "Tướng quân hà cớ sao đi theo lối cũ?",
@@ -43,13 +42,11 @@ return {
 	["~masu"] = "Thất bại trận này, chết vạn lần cũng không chuộc được...",
 
 	--沙摩柯
-	["cv:shamoke"] = "寂镜Jnrio",
 	["$jili1"] = "Thục vương chớ giận, xem ta mài dao giết chó đây!",
 	["$jili2"] = "Tích thu tất cả, giúp Thục vương đi đánh dã nhân.",
 	["~shamoke"] = "Khinh thường tuổi trẻ, chơi đùa với lửa",
 
 	--凌统
-	["cv:lingtong"] = "寂镜Jnrio",
 	["$xuanlue1"] = "Thân tựa như đá, lấy một đổi một",
 	["$xuanlue2"] = "Dù đi đến đâu, nghe là khiếp đảm!",
 	["$yongjin1"] = "Sinh tử tựa như tia lửa xoẹt qua.",
@@ -71,14 +68,12 @@ return {
 	["~zuoci"] = "Tiên nhân quy thệ, hồn quy Cửu thiên...",
 
 	--李傕郭汜
-	["cv:lijueguosi"] = "寂镜Jnrio",
 	["$xiongsuan1"] = "Nghe nói có kẻ muốn hại ta?",
 	["$xiongsuan2"] = "Không kiếm việc làm lẽ nào còn ngồi chờ chết?!",
 	["$xiongsuan3"] = "Không phải ngươi chết thì là ta vong!",
 	["~lijueguosi"] = "Lũ phản bội.....",
 
 	-- 君孙权
-	["cv:lord_sunquan"] = "寂镜Jnrio",
 	["$jiahe"] = "Gia Hòa sinh, Đại Ngô hưng!",
 	["$lianzi1"] = "Thuế má đầy đủ thì dân không lo đói, quân không lo thiếu",
 	["$lianzi2"] = "Chỉ khi phủ kho chứa đầy của cải, nước nhà mới thịnh vượng!",

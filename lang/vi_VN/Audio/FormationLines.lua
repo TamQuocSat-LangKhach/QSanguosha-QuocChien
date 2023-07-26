@@ -21,7 +21,6 @@
 return {
 
 	-- 邓艾
-	--["cv:dengai"] = "doublebit",
 	["$tuntian1"] = "Quân ta có lương điền, sợ gì không đánh ại nổi địch?",
 	["$tuntian2"] = "Gióng trống phất cờ, vang khắp tứ phương",
 	["$ziliang1"] = "Lính không được để đói.",
@@ -32,7 +31,7 @@ return {
 
 	-- 曹洪
 	["$huyuan1"] = "Có bỏ mạng cũng phải giúp tướng quân cho bằng được!",
-	["$huyuan2"] = "Hiến ngựa liều mạng,bảo vệ Tào công!",
+	["$huyuan2"] = "Hiến ngựa liều mạng, bảo vệ Tào công!",
 	["~caohong"] = "Tào công...xin hãy bình an",
 
 	-- 姜维
@@ -76,7 +75,6 @@ return {
 	["~hetaihou"] = "Nghiệp là do lũ nam nhân các ngươi gây nên, nói gì mà hồng nhan họa thủy chứ...",
 
 	-- 君刘备
-	["cv:lord_liubei"] = "寂镜Jnrio",
 	["$shouyue"] = "Bố đức nhi chiêu nhân, thấy cờ như thấy trẫm!",
 	["$zhangwu1"] = "Thuân kiếm quy nhất, hữu phượng lai nghi",
 	["$zhangwu2"] = "Kiếm khí hoá long, thính trẫm lôi động",

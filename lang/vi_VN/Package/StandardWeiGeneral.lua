@@ -53,7 +53,7 @@ return {
 	["xuchu"] = "Hứa Chử",
 	["luoyi"] = "Lỏa Y",
 	[":luoyi"] = "Khi kết thúc giai đoạn rút bài, bạn có thể bỏ 1 lá;\n‣ Trong lượt này, khi bạn gây sát thương cho mục tiêu của [Sát] hoặc [Quyết Đấu], sát thương này +1.",
-	["#LuoyiBuff"] = "%from đã phát động »<font color=«yellow«><b>Loả Y</b></font>«, sát thương từ %arg tăng thành %arg2",
+	["#LuoyiBuff"] = "%from đã phát động »<font color=\"yellow\"><b>Loả Y</b></font>«, sát thương từ %arg tăng thành %arg2",
 	["@luoyi"] = "Lỏa Y: Bạn có thể bỏ 1 lá.",
 
 	["#guojia"] = "Tảo Chung Tiên Tri",
@@ -117,7 +117,7 @@ return {
 	["jieming"] = "Tiết Mệnh",
 	[":jieming"] = "Sau khi bạn nhận sát thương, bạn chọn 1 người, lệnh họ bổ sung bài trên tay đến giới hạn máu (Tối đa 5).",
 	["jieming-invoke"] = "Bạn có thể phát động »Tiết Mệnh«. <br/>Chọn một người chơi và bấm \"Xác nhận\"<br/>",
-	["#QuhuNoWolf"] = "%from đã phát động »<font color=«yellow«><b>Vờn Hổ</b></font>« đấu điểm thắng, gây sát thương cho 1 người khác trong tầm đánh của %to",
+	["#QuhuNoWolf"] = "%from đã phát động »<font color=\"yellow\"><b>Vờn Hổ</b></font>« đấu điểm thắng, gây sát thương cho 1 người khác trong tầm đánh của %to",
 
 	["#caopi"] = "Kế Thừa Bá Nghiệp",
 	["caopi"] = "Tào Phi",

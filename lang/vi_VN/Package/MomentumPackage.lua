@@ -31,7 +31,7 @@ return {
 	["@xunxun"] = "Đặt 2 lá lên đầu chồng bài, còn lại xếp vào đáy chồng bài.",
 	["xunxun#up"] = "Đáy chồng bài",
 	["xunxun#down"] = "Đầu chồng bài",
-	["#XunxunResult"] = "Kết quả »<font color=«yellow«><b>Tuân Tuân</b></font>« của %from: <font color=«yellow«><b>2</b></font> trên <font color=«yellow«><b>2</b></font> dưới",
+	["#XunxunResult"] = "Kết quả »<font color=\"yellow\"><b>Tuân Tuân</b></font>« của %from: <font color=\"yellow\"><b>2</b></font> trên <font color=\"yellow\"><b>2</b></font> dưới",
 	["wangxi"] = "Vong Khích",
 	[":wangxi"] = "Sau khi bạn gây/nhận sát thương cho/từ người khác, ứng với mỗi sát thương, bạn có thể lệnh bạn và họ rút 1 lá.",
 
@@ -50,7 +50,7 @@ return {
 	[":qianxi"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể rút 1 lá, sau đó bỏ 1 lá và chọn 1 người khác ở khoảng cách 1;\n‣ Trong lượt này, họ không thể sử dụng/đánh ra lá trên tay cùng màu với lá bạn đã bỏ.",
 	["@qianxi-discard"] = "Tiềm tập: Chọn 1 lá để bỏ.",
 	["@qianxi-choose"] = "Tiềm tập: Chọn 1 người chơi khác.",
-	["#Qianxi"] = "Phát động hiệu quả <font color=«yellow«><b>«Tiềm Tập«</b></font>, trong lượt %from không thể sử dụng hoặc đánh ra bài %arg",
+	["#Qianxi"] = "Phát động hiệu quả <font color=\"yellow\"><b>«Tiềm Tập«</b></font>, trong lượt %from không thể sử dụng hoặc đánh ra bài %arg",
 	["@qianxi_red"] = "Tiềm Tập (Đỏ)",
 	["@qianxi_black"] = "Tiềm Tập (Đen)",
 
@@ -130,7 +130,7 @@ return {
 					"\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
 	
 	["&huangjinsymbol"] = "Có thể chuyển hóa 1 [Thiên Binh] thành [Sát]",
-	["#HongfaTianbing"] = "%from đã phát động »<font color=«yellow«><b>Hoàng Cân Thiên Bình Phủ</b></font>«, số người trong thế lực Quần là %arg.",
+	["#HongfaTianbing"] = "%from đã phát động »<font color=\"yellow\"><b>Hoàng Cân Thiên Bình Phủ</b></font>«, số người trong thế lực Quần là %arg.",
 	["wendao"] = "Vấn Đạo",
 	[":wendao"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá Đỏ ngoại trừ [Thái Bình Yêu Thuật] và thu lấy [Thái Bình Yêu Thuật] trong chồng bài bỏ hoặc trên bàn chơi.",
 	["huangjinsymbol:prevent"] = "Có thể phát động »Hoằng Pháp«, bỏ 1 [Thiên Binh] để chặn mất máu.",
@@ -143,8 +143,8 @@ return {
 					"\n• Khi bạn nhận sát thương có thuộc tính, bạn chặn sát thương này.\n" ..
 					"\n• Giới hạn trữ bài của bạn +X (X là số người cùng thế lực với bạn).\n" ..
 					"\n• Khi bạn mất đi [Thái Bình Yêu Thuật] từ vùng trang bị, bạn rút 2 lá, sau đó nếu máu của bạn lớn hơn 1, bạn mất 1 máu.\n" ,
-	["#PeaceSpellNatureDamage"] = "[<font color=«yellow«><b>Thái Bình Yêu Thuật</b></font>] đã phát động, chặn sát thương từ %from gây cho %to %arg sát thương." ,
-	["#PeaceSpellLost"] = "%from đã mất [<font color=«yellow«><b>Thái Bình Yêu Thuật</b></font>] khỏi vùng trang bị, rút 2 lá." ,
+	["#PeaceSpellNatureDamage"] = "[<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] đã phát động, chặn sát thương từ %from gây cho %to %arg sát thương." ,
+	["#PeaceSpellLost"] = "%from đã mất [<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] khỏi vùng trang bị, rút 2 lá." ,
 
 
 }

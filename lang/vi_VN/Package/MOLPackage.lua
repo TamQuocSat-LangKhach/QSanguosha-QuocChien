@@ -21,20 +21,10 @@ return {
 	["@shuliang"] = "Có thể bỏ 1 [Lương] để cho %src rút 2 lá.",
 	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",
 	
-	["$tunchu1"] = "Chỉ có lo tích trữ lương thảo thì mới đủ sức đối đầu",
-	["$tunchu2"] = "Tích cóp nhằm an định xã tắc, cất trữ phòng lúc cần đến",
-	["$shuliang1"] = "Kế thừa ý chí cha ông, trợ Thừa tướng tái phạt Trung Nguyên",
-	["$shuliang2"] = "Binh mã chưa xuất vội, lo chuẩn bị lương thảo trước đã!",
-	["~lifeng"] = "Ngựa đói người mệt, quân ta thế lá xong......",
-	
 		
     ["lingcao"] = "Lăng Tháo",
 	["#lingcao"] = "Kích Lưu Dũng Tiến",
 	["dujin"] = "Độc Tiến",
 	[":dujin"] = "\n• Sau khi bạn mở tướng này lần đầu, nếu không có người nào khác có cùng thế lực với bạn (bao gồm cả người đã trận vong), bạn nhận 1 tiêu ký [Tiên Khu].\n• Giai đoạn rút bài, bạn có thể rút thêm X lá (X là 1 nửa số lá trong vùng trang bị của bạn, làm tròn lên)." ,
-	
-	["$dujin1"] = "Đem quân hơn mười vạn, còn không bằng cho ta thêm một giáp!",
-	["$dujin2"] = "Thuyền nhỏ độc tiến, phá địch tiên phong!",
-	["~lingcao"] = "Aaaa~ Tên ở đâu ra thế này......",
 
 }

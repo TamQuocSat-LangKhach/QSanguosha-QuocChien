@@ -83,7 +83,6 @@ return {
 	["~zhangren"] = "Bổn tướng quân thua Gia Cát, không tiếc nuối.",
 
 	-- 君张角
-	["cv:lord_zhangjiao"] = "寂镜Jnrio",
 	["$wuxin1"] = "Ký ngộ mê hoặc chi tâm",
 	["$wuxin2"] = "Ta đã làm sáng tỏ cách để cứu vãn thời thế này",
 	["$hongfa1"] = "Thương Thiên đã chết, Hoàng Thiên lên ngôi!",

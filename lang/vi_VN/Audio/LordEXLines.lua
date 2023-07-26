@@ -20,7 +20,6 @@
 
 return {
 
-	--["cv:huaxin"] = "",
 	["$wanggui1"] = "Tham vọng viển vông, yên tâm bí ẩn.",
 	["$wanggui2"] = "Lễ nghi phép tắc, lương đức tài lược.",
 	["$xibing1"] = "Vận lương ngàn dặm không phải là cách dùng binh hay.",
@@ -138,7 +137,7 @@ return {
 	["$zhuke1"] = "Tài học của ta, Thục Quốc đố ai sánh được với ta?",
 	["$zhuke2"] = "Chuyện lương thảo rất quan trọng, cho phép tôi thêm thời gian suy nghĩ",
 	["$quanjia1"] = "Quân nhu đi trước, lương thảo theo sau",
-	["$quanjia2"] = "Đánh trận thì cứ nhắm vào hậu cần mà đnáh!",
+	["$quanjia2"] = "Đánh trận thì cứ nhắm vào hậu cần mà đánh!",
 	["~liyan"] = "Lão thần, thật hổ thẹn với thánh ân",
 
 	["$hongyuan1"] = "Chư tướng chớ hoảng, lương thảo đã đến.",
@@ -185,7 +184,7 @@ return {
 	["$yaowu1"] = "Phan Phụng đã bị ta chặt đầu, còn ai muốn được chết nữa?",
 	["$yaowu2"] = "Mười tám lộ chư hầu? Chà! Chỉ là lũ ô hợp.",
 	["$shiyong1"] = "Chớ vội cười",
-	["$shiyong2"] = "Chà, còn chả đủ gãi ngứa",
+	["$shiyong2"] = "Chà! Còn chả đủ gãi ngứa",
 	["~huaxiong"] = "Ta đã xem nhẹ......",
 
 
@@ -269,7 +268,6 @@ return {
 	["~chengpu"] = "Dùng bạo duổi tặc, rốt cuộc cũng sẽ gặp báo ứng.....",
 
 
-	["cv:tangzi"] = "寂镜Jnrio",
 	["$xingzhao1"] = "Lúc cần đánh thì phải đánh!",
 	["$xingzhao2"] = "Chỉ kẻ biết được thời thế, nắm được thời cơ mới xứng danh nhân kiệt.",
 	["$xingzhao3"] = "Đúng vậy, đã làm người thì phải biết lo trước tính sau! ",
@@ -282,7 +280,6 @@ return {
 
 
 
-	["cv:mengda"] = "寂镜Jnrio",
 	["$qiuan1"] = "Thành mới đã chuẩn bị đầy đủ chưa, Trọng Đạt?",
 	["$qiuan2"] = "Hãy cho ta một cơ hội, nhất định ta sẽ trở thành người tốt.",
 	["$liangfan1"] = "Có tín vật của Khổng Minh ở đây, đừng sợ, hãy đi đi.",
@@ -291,7 +288,6 @@ return {
 
 
 
-	["cv:liuqi"] = "寂镜Jnrio",
 	["$wenji1"] = "Tiên sinh đại tài! Kì tất nghe lời ngài.",
 	["$wenji2"] = "Suỵt! Trời không biết đất không hay, chỉ có chúng ta rõ.",
 	["$tunjiang1"] = "Hãy yên lặng quan sát, thời điểm tiến công tốt nhất.",
@@ -299,14 +295,12 @@ return {
 	["~liuqi"] = "Than ôi! Ta không được vận may như Tấn Văn Công...",
 
 
-	["cv:mifangfushiren"] = "寂镜Jnrio",
 	["$fengshix1"] = "Một bên binh sĩ tinh nhuệ, một bên thế không thể lui, xin đừng trách ta!",
 	["$fengshix2"] = "Đừng có lúc thì về phe nọ lúc thì theo phe kia, làm mấy chuyện này còn phải có thiên phú nữa!",
 	["~mifangfushiren"] = "Ưu khuyết gì cứ nói hết ra, ai biết đều là sai lầm!",
 
 
 
-	["cv:shixie"] = "寂镜Jnrio",
 	["$lixia1"] = "Nào, trút bỏ gánh nặng, cùng nhau nói chuyện.",
 	["$lixia2"] = "Ta hoãn công vụ, ngài mở lòng ra, cùng nhau luận đàm, thế nào?",
 	["$lixia3"] = "Điểu tốt nhất giữa cho và nhận là cảm tạ từ những lời chỉ bảo!",
@@ -314,7 +308,6 @@ return {
 
 
 
-	["cv:zhanglu"] = "寂镜Jnrio",
 	["$bushi1"] = "Mạnh Đức từng so lệnh vu như lời tổ tiên ta? Và tặng gạo thịt như lời thăm hỏi.",
 	["$bushi2"] = "Thục nhị Lưu Diệc vẫn nhìn Hán Trung, sao không uống chén nước thánh này để lòng tĩnh tâm lại.",
 	["$bushi3"] = "Huyết mạch ta từ Giang Đông, có duyên đã gặp nay ta sẽ truyền thụ lại!",
@@ -324,7 +317,6 @@ return {
 	["~zhanglu"] = "Thân nhập thổ hoá thần vũ, chẳng thể nói nên lời!",
 
 
-	["cv:zhonghui"] = "寂镜Jnrio",
 	["$quanji1"] = "Kịch hay mới chỉ bắt đầu.",
 	["$quanji2"] = "Ta không mưu sự một mình, mi cũng không run sợ một mình.",
 	["$quanji3"] = "Bị một châu làm tổn thương, có khả năng xưng vương.",
@@ -333,7 +325,6 @@ return {
 	["$paiyi2"] = "Công quyền chia sẻ với tri kỷ.",
 	["~zhonghui"] = "Ự...tầm nhìn ngày càng mờ...Bá...Ước đó hả?",
 
-	["cv:simazhao"] = "寂镜Jnrio",
 	["$suzhi1"] = "Muốn phong hầu? Cho mi một thanh kiếm phong hầu này!",
 	["$suzhi2"] = "Kẻ yếu chỉ biết trách người khác mạnh, tự ngẫm lại đi.",
 	["$suzhi3"] = "Giới hạn mà họ Tôn không thể vượt qua và ngọn núi Khổng Minh không thể leo tới không nằm trong mắt ta.",
@@ -346,7 +337,6 @@ return {
 	["$fankui_simazhao2"] = "Chỉ quá 3 việc thôi, ngươi hiểu rồi đấy.",
 	["~simazhao"] = "Lưu Công Tự, ngươi rất có thể sẽ đầu hàng. Đổi tên thành Lưu Nại đi hahaha...hự!",
 
-	["cv:sunchen"] = "鹿土",
 	["$shilu1"] = "Kẻ thù chết chung, ta thật tuyệt vời.",
 	["$shilu2"] = "Dăm ba thứ này chính là chiến lợi phẩm của ta.",
 	["$shilu3"] = "Bí mật lên kế hoạch, chờ thời đoạt quyền.",
@@ -362,7 +352,6 @@ return {
 
 
 
-	["cv:xushu"] = "一木",
 	["$zhuhai1"] = "Trượng kiếm hàng thiên hạ, trừ ác ngay bây giờ.",
 	["$zhuhai2"] = "Quảng Nguyên, mau giết tên giặc này cho ta.",
 	["$pozhen1"] = "Tử Long tướng quân đã vào cửa, trận này ắt bị phá.",
@@ -408,7 +397,6 @@ return {
 	["~zhugeke"] = "Trùng quyền trấn chủ, ta đã sơ suất.",
 
 
-	["cv:gongsunyuan"] = "寂镜Jnrio",
 	["$huaiyi1"] = "Ta đã nêu ra các điều kiện. Đòi tiền? Đòi mạng? Tuỳ ngươi.",
 	["$huaiyi2"] = "Nguỵ ngăn núi, Ngô chặn biển.Muốn sống hãy làm theo ý ta.",
 	["$zisui1"] = "Gió bắc đánh thức bầy sói, trượng phu phục hưng Liêu Đông.",
@@ -416,7 +404,6 @@ return {
 	["~gongsunyuan"] = "Gia tộc Công Tôn của ta là đám phản loạn? Thế họ Tư Mã có kẻ nào trung thành không? Khụ khụ...",
 
 
-	["cv:huangzu"] = "寂镜Jnrio",
 	["$xishe1"] = "Hổ ở quá gần không thể giết, kéo cung không nên quá nhẹ. Bắn!",
 	["$xishe2"] = "Xạ nhân, có biết tại sao ta lại đặt tên cho mi như vậy không? Haha~",
 	["~huangzu"] = "Liêm Pha đã già, không bắn được nữa.",
@@ -435,32 +422,24 @@ return {
 
 
 
-	["cv:zhuling"] = "小鱼干",
 	["$juejue1"] = "Nếu tướng giả lâm trận quyết tử, thuộc hạ cũng sẽ liều mạng.",
 	["$juejue2"] = "Nếu cắt đứt một gia đình nhỏ có thể cứu được một nước lớn, vậy nếu mất tất cả sẽ ra sao!",
 	["$fangyuan1"] = "Hợp trận vuông đánh chém một thốn cũng không loạn, biến trận đầu đuôi hoá tròn.",
 	["$fangyuan2"] = "Hai quân đối luỹ, sao dám lỏng lẻo? Xem ta đây!",
 	["~zhuling"] = "Con đường trở thành tướng giỏi...còn dài.",
 
-	["cv:liuba"] = "寂镜Jnrio",
 	["$tongdu1"] = "Làm chính giả, cần học cách biến đồ hỏng thành bảo vật.",
 	["$tongdu2"] = "Ký liên hữu lương nhân vị xuất, tựu hữu lương xuất vị nhân.",
 	["$qingyin1"] = "Quân tử hoà nhi bất đồng, mọi người ở lại vui vẻ.",
 	["$qingyin2"] = "Ta ngủ một mình, các người hãy qua chơi với Trương tướng quân.",
 	["~liuba"] = "Vũ đài của ta, đầu đuôi quá nhỏ.",
 
-	["cv:pengyang"] = "寂镜Jnrio",
-	["$daming1"] = "Tướng quân theo hắn là chờ chết, cùng ta vui vẻ chết đi.",
-	["$daming2"] = "Gì? Đây là hiểm kế sao? Chỉ có kẻ tầm thường mới chơi đến chết hiểu chưa?",
-	["$xiaoni1"] = "Sự việc đã vậy. Ta hoặc ngươi sẽ phải chết. Tất nhiên ngươi chết sẽ tốt hơn.",
-	["$xiaoni2"] = "Thường ngày có hơi kiêu ngạo nhưng ta sao dám làm phản. Nghe này, một động tĩnh cũng không.",
 	["$tongling1"] = "Nhờ Hiếu Trực quá lời khen ngợi, tranh thủ lúc này có chút quà báo đáp, xin hãy nhận cho。",
     ["$tongling2"] = "Vùng lên đi, hay lý nào ngươi cam tâm làm hạ khách của chúng。",
     ["$jinxian1"] = "Để một kẻ vô lý như vậy làm chủ thì được lợi gì chứ。",
     ["$jinxian2"] = "Chủ công đã thấy vậy, thứ lỗi tại hạ khó lòng ở lại！",
 	["~pengyang"] = "Ta thực sự không có mục đích đó, không chết....",
 
-	["cv:sufei"] = "小鱼干",
 	["$lianpian1"] = "Năng dự tử đồng bào, xuất sinh nhân tử, giai sinh thần bách bội.",
 	["$lianpian2"] = "Đừng lo, quân sĩ yêu thích giết địch là việc tốt. Ta sẽ đi xuống tự bảo vệ mình.",
 	["~sufei"] = "Hầy, đầu ta cứ như bị nhét vào trong hộp vậy.",

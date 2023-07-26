@@ -74,7 +74,7 @@ return {
     [":danlao"] = "Sau khi bạn trở thành mục tiêu của lá công cụ, nếu số mục tiêu của lá này > 1, bạn có thể rút 1 lá, sau đó lệnh lá này không có hiệu quả với bạn.",
     ["jilei"] = "Kê Lặc",
     [":jilei"] = "Sau khi bạn nhận sát thương, nếu sát thương này có nguồn, bạn có thể chọn 1 loại bài, lệnh nguồn sát thương trong lượt này không thể sử dụng, đánh ra hoặc bỏ lá trên tay thuộc loại bài này.",
-    ["#Jilei"] = "«<font color=«yellow«><b>Kê Lặc</b></font>« có hiệu lực, %from không thể sử dụng, đánh ra hoặc bỏ %arg trên tay.",
+    ["#Jilei"] = "»<font color=\"yellow\"><b>Kê Lặc</b></font>« có hiệu lực, %from không thể sử dụng, đánh ra hoặc bỏ %arg trên tay.",
     ["@jilei-choose"] = "Kê lặc: Chọn loại bài để %dest không thể sử dụng, đánh ra hoặc bỏ.",
 
     ["#zumao"] = "Bích Huyết Nhiễm Xích Trách",
@@ -294,7 +294,7 @@ return {
     ["#chendeng"] = "Hồ Hải Hào Khí",
     ["chendeng"] = "Trần Đăng",
     ["haokui"] = "Hào Khôi",
-    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n‣ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực xác định khác bạn, ưu tiên theo thứ tự sau:\n - Người thuộc đại thế lực;\n- Người có số máu lớn nhất;\n‣ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn có thể thực hiện tối đa 2 mục:\n- Nếu bạn đã mở 2 tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
+    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n‣ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực xác định khác bạn, ưu tiên theo thứ tự sau:\n - Người thuộc đại thế lực;\n- Người có số máu lớn nhất trong số những người thế lực xác định khác bạn;\n‣ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn có thể thực hiện tối đa 2 mục:\n- Nếu bạn đã mở 2 tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
     ["xushi"] = "Hư Thực",
     [":xushi"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu tướng này đang úp, bạn có thể hủy bỏ mục tiêu đối với bạn, sau đó bạn bỏ 1 lá của họ.",
 	

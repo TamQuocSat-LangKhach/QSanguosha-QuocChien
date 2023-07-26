@@ -2618,7 +2618,7 @@ public:
         frequency = Frequent;
     }
 
-    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    virtual QStringList triggerable(TriggerEvent , Room *room, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         if (TriggerSkill::triggerable(player)) {
             DamageStruct damage = data.value<DamageStruct>();
@@ -2854,10 +2854,10 @@ public:
         frequency = Frequent;
     }
 
-    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
         if (player->getPhase() == Player::NotActive) {
-            room->setPlayeryerMark(player, "haokui", 0);
+            room->setPlayerMark(player, "##haokui", 0);
             return QStringList();
         }
         if (!TriggerSkill::triggerable(player)) return QStringList();
@@ -2876,10 +2876,10 @@ public:
         return false;
     }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
         room->drawCards(player, 2, objectName());
-        room->addPlayeryerMark(player, "haokui");
+        room->addPlayerMark(player, "##haokui");
         return false;
     }
 };
@@ -2893,10 +2893,13 @@ public:
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (player->getMark("haokui") < 1) return QStringList();
-        if (triggerEvent == CardsMoveOneTime && player->getPhase() == Player::Discard) {
+        if (!player->isAlive() || player->getMark("##haokui") < 1) return QStringList();
+        if (triggerEvent == EventPhaseChanging) {
+            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
+            if (change.to == Player::NotActive) return QStringList(objectName());
+        } else if (triggerEvent == CardsMoveOneTime && player->getPhase() == Player::Discard) {
             QVariantList move_datas = data.toList();
             foreach (QVariant move_data, move_datas) {
                 CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
@@ -2904,10 +2907,6 @@ public:
                     return QStringList(objectName());
                 }
             }
-        }
-        if (triggerEvent == EventPhaseChanging) {
-            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
-            if (change.to == Player::NotActive) return QStringList(objectName());
         }
         return QStringList();
     }
@@ -2917,8 +2916,66 @@ public:
         if (triggerEvent == EventPhaseChanging) {
             if (player->hasShownAllGenerals() && player->hasShownSkill("haokui")) {
                 bool mainGeneral = player->inHeadSkills("haokui");
-                if (room->askForChoice(player, "haokui", "yes+no", data, "@haokui-hide" + mainGeneral ? 1 : 2) == "yes") {
+                if (room->askForChoice(player, "haokui", "yes+no", data, "@haokui-hide" + mainGeneral ? "1" : "2") == "yes") {
                     player->hideGeneral(mainGeneral);
+                }
+            }
+            if (player->getMark("haokuitransformUsed") == 0) {
+                QList<ServerPlayer *> targets;
+                foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                    if (p->isFriendWith(player) && p->canTransform()) {
+                        targets << p;
+                    }
+                }
+                ServerPlayer *to = room->askForPlayerChosen(player, targets, "haokui", "@haokui-transform", true, true);
+                if (to != NULL && room->askForChoice(to, "transform_haokui", "yes+no", QVariant(), "@transform-ask:::haokui") == "yes") {
+                    room->addPlayerMark(player, "haokuitransformUsed");
+                    room->broadcastSkillInvoke("transform", to->isMale());
+                    room->transformDeputyGeneral(to);
+                }
+            }
+        } else if (triggerEvent == CardsMoveOneTime) {
+            QList<ServerPlayer *> targets, priority1, priority2;
+            int maxHp = 0;
+            foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                if (p->hasShownOneGeneral() && !p->isFriendWith(player)) {
+                    if (maxHp < p->getHp()) maxHp = p->getHp();
+                }
+            }
+            foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                if (p->hasShownOneGeneral() && !p->isFriendWith(player)) {
+                    if (p->isBigKingdomPlayer()) {
+                        priority1 << p;
+                    } else if (p->getHp() == maxHp) {
+                        priority2 << p;
+                    }
+                }
+            }
+            if (!priority1.isEmpty()) {
+                targets = priority1;
+            } else if (!priority2.isEmpty()) {
+                targets = priority2;
+            }
+            if (!targets.isEmpty()) {
+                ServerPlayer *to = room->askForPlayerChosen(player, targets, "haokui", "@haokui-transform", false, true);
+                QList<int> cards;
+                QVariantList move_datas = data.toList();
+                foreach (QVariant move_data, move_datas) {
+                    CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+                    if (move.to_place == Player::DiscardPile) {
+                        for (int i = 0; i < move.card_ids.length(); ++i) {
+                            int id = move.card_ids.at(i);
+                            if (room->getCardPlace(id) == Player::DiscardPile)
+                                cards << id;
+                        }
+                    }
+                }
+
+                if (!cards.isEmpty()) {
+                    DummyCard *dummy = new DummyCard(cards);
+                    dummy->deleteLater();
+                    CardMoveReason reason(CardMoveReason::S_REASON_GIVE, player->objectName(), to->objectName(), "haokui", QString());
+                    room->obtainCard(to, dummy, reason);
                 }
             }
         }
@@ -3081,6 +3138,12 @@ OverseasPackage::OverseasPackage()
 
     General *zhuhuan = new General(this, "zhuhuan", "wu");
     zhuhuan->addSkill(new Jutian);
+
+    General *chendeng = new General(this, "chendeng", "qun", 3);
+    chendeng->addSkill(new Haokui);
+    chendeng->addSkill(new HaokuiCompulsory);
+    chendeng->addSkill(new Xushi);
+    insertRelatedSkills("haokui", "#haokui-compulsory");
 
     addMetaObject<GuishuCard>();
     addMetaObject<HongyuanCard>();

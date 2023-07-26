@@ -20,7 +20,6 @@
 
 return {
 	--崔琰毛玠
-	["cv:cuiyanmaojie"] = "寂镜Jnrio",
 	["$zhengbi1"] = "Khi chủ công của ta nắm quyền, nhân tài luôn được trọng dụng",
 	["$zhengbi2"] = "Đất nước cần hiền tài, lúc này nên góp sức!",
 	["$fengying1"] = "Phụng thiên tử dĩ lệnh bất thần, canh tác trồng trọt lấy thực nuôi quân",
@@ -28,13 +27,11 @@ return {
 	["~cuiyanmaojie"] = "Những kẻ nắm quyền thì thường có thời của chúng...",
 
 	--于禁
-	["cv:yujin"] = "寂镜Jnrio",
 	["$jieyue1"] = "Chấp hành quân lệnh, cùng nhau đi lên, kẻ nào chùn bước, phạt!",
 	["$jieyue2"] = "Ta nhận lệnh Tào công, nâng cao sức mạnh của binh lính!",
 	["~yujin"] = "Trời mưa mãi không dứt, ba mươi năm công danh nay mất hết rồi...",
 
 	--法正
-	["cv:fazheng"] = "寂镜Jnrio",
 	["$enyuan1"] = "Ta làm kẻ tiểu nhân trước, quân tử để sau.",
 	["$enyuan2"] = "Chính, đôi khi cũng phải nhớ ai là vua.",
 	["$enyuan3"] = "Ngươi bất nghĩa thì đừng trách ta vô tính.",
@@ -56,7 +53,6 @@ return {
 	["~fazheng"] = "Chính ta chết, nhưng vẫn mở mắt để nhìn Hán thất tái sinh một lần nữa....",
 
 	--王平
-	["cv:wangping"] = "寂镜Jnrio",
 	["$jianglve1"] = "Quân lệnh như sơn, mau chóng thực hiện.",
 	["$jianglve2"] = "Lệnh này chỉ có chết mà thôi!",
 	["~wangping"] = "Vương mỗ bái lạy tiên chủ, đây là mệnh lệnh cuối cùng...",
@@ -69,7 +65,6 @@ return {
 	["~wuguotai"] = "Chư vị khanh gia, xin hãy tận lực giúp Trọng Mưu...",
 
 	--陆抗
-	["cv:lukang"] = "寂镜Jnrio",
 	["$keshou1"] = "Lật ngược tính thế, chống đỡ thành nghiêng.",
 	["$keshou2"] = "Ta còn ở đây, đất nước còn đó!",
 	["$zhuwei1"] = "Đắp đất ngăn sông, cắt đứt phản loạn!",
@@ -77,7 +72,6 @@ return {
 	["~lukang"] = "Đại Ngô đã mất rồi sao...",
 
 	--袁术
-	["cv:yuanshu"] = "寂镜Jnrio",
 	["$weidi1"] = "Là tối hay sáng, ngươi tự mình chọn.",
 	["$weidi2"] = "Không nghe lời Trẫm, chỉ có đường chết!",
 	["$yongsi1"] = "Hãy xem Hoài Nam của ta binh lực hùng mạnh",
@@ -85,7 +79,6 @@ return {
 	["~yuanshu"] = "Mật... Nước mật còn...",
 
 	--张绣
-	["cv:zhangxiu"] = "寂镜Jnrio",
 	["$fudi1"] = "Đối đãi ta như này thì đừng trách ta vô tính vô nghĩa!",
 	["$fudi2"] = "Lão tặc dám làm nhục thẩm ta, thật không thể nhịn được!",
 	["$congjian1"] = "Không nghe lời lão nhân, mất mát ở ngay trước mắt.",
@@ -95,7 +88,6 @@ return {
 	["~zhangxiu"] = "Thật không dám vác mặt ra gặp người...",
 
 	--君曹操
-	["cv:lord_caocao"] = "寂镜Jnrio",
 	["$jianan"] = "Giả sử thiên hạ không có cô, không biết có tới bao kẻ xưng vương, bao kẻ xưng đế",
 	["$huibian1"] = "Ta kệ thiên hạ có bao kẻ hiền tài, chỉ cần lấy đạo thu nạp người khác, không có gì là không thể",
 	["$huibian2"] = "Thanh thanh tử khâm, du du ngã tâm. Đãn vy quân cố, trầm ngâm chí kim",

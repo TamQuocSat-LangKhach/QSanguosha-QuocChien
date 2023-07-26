@@ -109,7 +109,7 @@ return {
 	["buqu"] = "Bất Khuất",
 	[":buqu"] = "Tỏa định kỹ: khi bạn trong trạng thái hấp hối, bạn mở 1 lá trên đầu chồng bài rút và đặt lên tướng này, gọi là [Sang], nếu [Sang] mới đặt so với những [Sang] khác:\n- Khác điểm: Bạn hồi máu đến 1;\n- Cùng điểm: Bạn đưa [Sang] này vào chồng bài bỏ.",
 	["scars"] = "Sang",
-	["#BuquDuplicate"] = "%from thất bại khi dùng »<font color=«yellow«><b>Bất Khuất</b></font>«. Có lá [Sang] trùng trong %arg",
+	["#BuquDuplicate"] = "%from thất bại khi dùng »<font color=\"yellow\"><b>Bất Khuất</b></font>«. Có lá [Sang] trùng trong %arg",
 	["#BuquDuplicateGroup"] = "Số trùng của %arg là %arg2",
 	["$BuquDuplicateItem"] = "Lá [Sang] bị trùng: %card",
 	["$BuquRemove"] = "%from loại bỏ lá [Sang]: %card",

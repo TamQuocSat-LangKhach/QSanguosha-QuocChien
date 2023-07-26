@@ -115,7 +115,7 @@ return {
 	[":lirang"] = "Khi bài của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể giao tùy ý cho người khác.",
 	["@lirang-give"] = "Lễ Nhượng: Bạn có thể giao bài bỏ cho người khác.",
 	["#lirang"] = "Lễ nhượng",
-	["#Mingshi"] = "%from đã phát động »<font color=«yellow«><b>Danh Sĩ</b></font>«, sát thương từ %arg đến %arg2 -1.",
+	["#Mingshi"] = "%from đã phát động »<font color=\"yellow\"><b>Danh Sĩ</b></font>«, sát thương từ %arg đến %arg2 -1.",
 
 	["#jiling"] = "Trọng Gia Đích Chủ Tướng",
 	["jiling"] = "Kỷ Linh",
