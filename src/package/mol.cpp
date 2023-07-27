@@ -2917,7 +2917,7 @@ public:
         if (triggerEvent == EventPhaseChanging) {
             if (player->hasShownAllGenerals() && player->hasShownSkill("haokui")) {
                 bool mainGeneral = player->inHeadSkills("haokui");
-                if (room->askForChoice(player, "haokui", "yes+no", data, "@haokui-hide" + mainGeneral ? "1" : "2") == "yes") {
+                if (room->askForChoice(player, "haokui", "yes+no", data, QString("@haokui-hide") + (mainGeneral ? "1" : "2")) == "yes") {
                     player->hideGeneral(mainGeneral);
                 }
             }

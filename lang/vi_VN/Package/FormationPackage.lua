@@ -113,13 +113,13 @@ return {
 	["#zhangwu-draw"] = "Chương Vũ (Rút bài)",
 	[":zhangwu"] = "Tỏa định kỹ:\n• Khi [Phi Long Đoạt Phượng] tiến vào chồng bài bỏ hoặc vùng trang bị của người khác, bạn thu lấy nó.\n• Khi bạn mất đi [Phi Long Đoạt Phượng] không vì sử dụng, bạn mở nó ra, đặt vào đáy chồng bài rút và bạn rút 2 lá.",
 	["shouyue"] = "Thụ Việt",
-	[":shouyue"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Hổ Tướng Đại Kỳ«.\n\n»<b>Ngũ Hổ Tướng Đại Kỳ</b>«:\n" ..
-					"Người thuộc thế lực Thục thay đổi các kỹ năng sau:\n" ..
-					"- »Võ Thánh«: Bạn có thể chuyển hóa sử dụng/đánh ra 1 lá của bạn thành [Sát].\n" ..
-					"- »Bào Hao«: Bổ sung mô tả: Sau khi bạn xác định mục tiêu của [Sát], vô hiệu phòng cụ của mục tiêu.\n" ..  --remove the detail of Qinggang-like effect
-					"- »Long Đảm«: Bổ sung mô tả: Sau khi sử dụng hoặc đánh ra [Sát] hoặc [Thiểm] bởi phát động »Long Đảm«, bạn rút 1 lá.\n" ..
-					"- »Liệt Cung«: Bổ sung mô tả: Tầm đánh của bạn +1.\n" ..
-					"- »Thiết Kỵ«: Thay \"1 tướng đã mở\" thành \"tất cả tướng đã mở\".",
+	[":shouyue"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Hổ Tướng Đại Kỳ«.\n\n»<b>Ngũ Hổ Tướng Đại Kỳ</b>«:" ..
+					"\nNgười thuộc thế lực Thục thay đổi các kỹ năng sau:" ..
+					"\n- »Võ Thánh«: Thay đổi kỹ năng thành: Bạn có thể chuyển hóa sử dụng/đánh ra 1 lá của bạn thành [Sát]." ..
+					"\n- »Bào Hao«: Bổ sung mô tả: Sau khi bạn xác định mục tiêu của [Sát], vô hiệu phòng cụ của mục tiêu." .. 
+					"\n- »Long Đảm«: Bổ sung mô tả: Sau khi sử dụng hoặc đánh ra [Sát] hoặc [Thiểm] bởi phát động »Long Đảm«, bạn rút 1 lá." ..
+					"\n- »Liệt Cung«: Bổ sung mô tả: Tầm đánh của bạn +1." ..
+					"\n- »Thiết Kỵ«: Thay đổi mô tả: \"1 tướng đã mở\" sửa thành \"tất cả tướng đã mở\".",
 	["jizhao"] = "Kích Chiếu",
 	[":jizhao"] = "Hạn định kỹ: Khi ban trong trạng thái hấp hối, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn bổ sung bài trên tay đến giới hạn máu;\n- Bạn hồi máu đến 2;\n- Bạn mất kỹ năng »Thụ Việt« và nhận kỹ năng »Nhân Đức«.",
 	["@jizhao"] = "Kích Chiếu",

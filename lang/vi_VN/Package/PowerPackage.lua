@@ -109,7 +109,7 @@ return {
 	["lord_caocao"] = "Tào Tháo - Quân",
 	["&lord_caocao"] = "Tào Tháo" ,
 	["jianan"] = "Kiến Anh",
-	[":jianan"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Tử Lương Tướng Đạo«.",
+	[":jianan"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Tử Lương Tướng Đạo«.\n\n»<b>Ngũ Tử Lương Tướng Đạo</b>«: Khi bắt đầu giai đoạn chuẩn bị của người thế lực Ngụy, họ có thể bỏ 1 lá, thực hiện lần lượt:\n- Nếu họ đã mở 2 tướng, chọn úp 1 tướng;\n- Họ chọn 1 tướng chưa mở của họ, họ không thể mở tướng đã chọn đến khi bắt đầu lượt tiếp theo của họ;\n- Họ lựa chọn 1 trong các kỹ năng sau mà chưa có trên bàn: »Đột Kích«, »Kiêu Quả«, »Xảo Biến«, »Tiết Việt«, »Đoạn Lương«, họ nhận kỹ năng đó đến khi bắt đầu lượt tiếp theo của họ.",
 	["elitegeneralflag"] = "Ngũ Tử Lương Tướng Đạo",
 	[":elitegeneralflag"] = "Khi bắt đầu giai đoạn chuẩn bị của người thế lực Ngụy, họ có thể bỏ 1 lá và chọn 1 tướng chưa mở của họ (nếu họ đã mở 2 tướng thì chọn úp 1 tướng), sau đó họ lựa chọn 1 trong các kỹ năng sau mà chưa có trên bàn: »Đột Kích«, »Kiêu Quả«, »Xảo Biến«, »Tiết Việt«, »Đoạn Lương«, họ nhận kỹ năng đó và không thể mở tướng đã chọn đến khi bắt đầu lượt tiếp theo của họ.",
 	["@elitegeneralflag"] = "Có thể phát động »Ngũ Tử Lương Tướng Đạo«, bỏ 1 lá.",

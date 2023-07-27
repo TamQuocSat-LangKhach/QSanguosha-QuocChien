@@ -74,7 +74,7 @@ return {
 	[":burning_camps"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người cùng đội hình với người phía sau bạn.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hỏa đối với mục tiêu. ",
 
 	["lure_tiger"] = "Điệu Hổ Ly Sơn",
-	[":lure_tiger"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã lựa chọn\n<b>Hiệu quả</b>: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",
+	[":lure_tiger"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu không được tính khoảng cách, vị trí, không được sử dụng bài hay được chọn làm mục tiêu của bài, không thể thay đổi số máu cho đến sau khi kết thúc lượt này.",
 	["lure_tiger_effect"] = "Điệu Hổ Ly Sơn",
 	["#lure_tiger-prohibit"] = "Điệu Hổ Ly Sơn",
 
@@ -85,15 +85,15 @@ return {
 	["fight_together:small"] = "Tiểu Thế Lực",
 
 	["alliance_feast"] = "Liên Quân Thịnh Yến",
-	[":alliance_feast"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Bạn và tất cả người cùng thế lực với người đã chọn.\n<b>Hiệu quả</b>: Mục tiêu là bạn chọn rút số bài và hồi số máu tùy ý với tổng bằng số người của thế lực đã chọn; mục tiêu không phải bạn rút 1 lá và thoát trạng thái xích.",
+	[":alliance_feast"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người có thế lực xác định khác bạn\n<b>Mục tiêu</b>: Bạn và tất cả người cùng thế lực với người đã chọn.\n<b>Hiệu quả</b>: Nếu mục tiêu là:\n-Bạn: Chọn rút số bài và hồi số máu tùy ý với tổng bằng số người của thế lực đã chọn.\n• Không phải bạn: Họ rút 1 lá và thoát trạng thái xích.",
 	["@alliancefeast-choose"] = "Liên Quân Thịnh Yến: Chọn số máu hồi phục, số lượng còn lại dùng để rút bài.",
 
 	["threaten_emperor"] = "Hiệp Thiên Tử Dĩ Lệnh Chư Hầu",
-	[":threaten_emperor"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Bạn nếu thuộc đại thế lực và đang trong giai đoạn ra bài của bạn.\n<b>Hiệu quả</b>: Bạn kết thúc giai đoạn ra bài của bạn; Sau đó, khi kết thúc giai đoạn bỏ bài, bạn có thể bỏ 1 lá trên tay để nhận thêm một lượt sau lượt này.",
+	[":threaten_emperor"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Bạn\n<b>Điều kiện</b>: Bạn thuộc đại thế lực và đang trong giai đoạn ra bài của bạn\n<b>Hiệu quả</b>: Bạn kết thúc giai đoạn ra bài;\n‣ Khi kết thúc giai đoạn bỏ bài, bạn có thể bỏ 1 lá trên tay để nhận thêm một lượt sau lượt này.",
 	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt",
 
 	["imperial_order"] = "Sắc lệnh",
-	[":imperial_order"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục: 1. Mở 1 tướng và rút 1 lá; 2.Bỏ 1 trang bị; 3. Mất 1 máu.\n\n<b>Hiệu ứng thêm</b>Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút. Trước khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
+	[":imperial_order"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục:\n1. Mở 1 tướng và rút 1 lá;\n2.Bỏ 1 trang bị;\n3. Mất 1 máu.\n<b>Hiệu ứng thêm</b>Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút;\n‣ Khi kết thúc lượt này, tất cả người chơi không có thế lực có thế lực giải quyết hiệu quả của lá này.",
 
 	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa sử dụng, sẽ bị loại khỏi trận đấu.",
 	["#ImperialOrderEffect"] = "%from kết thúc lượt, phát động hiệu quả của [%arg] đã bị loại bỏ",
