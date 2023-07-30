@@ -2654,7 +2654,7 @@ public:
                 prompt.append("-fillhandcard");
             }
             if (canChooseEnemy) {
-                prompt.append("-discard");
+                prompt.append("-discard:").append(damage.to->objectName());
             }
             ServerPlayer *target = room->askForPlayerChosen(player, targets, objectName(), prompt, true, true);
             if (target != NULL) {

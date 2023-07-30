@@ -40,6 +40,17 @@ public:
     virtual bool isAvailable(const Player *player) const;
 };
 
+class PowangCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE PowangCard();
+
+    virtual bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &target) const;
+};
+
 //class BrokenHalberd :public Weapon
 //{
 //    Q_OBJECT

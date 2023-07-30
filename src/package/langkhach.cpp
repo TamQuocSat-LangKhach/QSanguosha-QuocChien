@@ -3,6 +3,9 @@
 #include "engine.h"
 #include "general.h"
 #include "package.h"
+#include "standard.h"
+#include "standard-tricks.h"
+#include "standard-shu-generals.h"
 
 class Bianhua : public TriggerSkill
 {
@@ -424,12 +427,219 @@ public:
 //    return targets.isEmpty();
 //}
 
+
+class BaixiangRange : public AttackRangeSkill
+{
+public:
+    BaixiangRange() : AttackRangeSkill("#baixiang-range")
+    {
+    }
+
+    virtual int getExtra(const Player *target, bool) const
+    {
+        if (target->hasShownSkill("baixiang") && !target->getOffensiveHorse() && !target->getDefensiveHorse() && !target->getSpecialHorse()) {
+            return 1;
+        }
+        return 0;
+    }
+};
+
+class Baixiang : public DistanceSkill
+{
+public:
+    Baixiang() : DistanceSkill("baixiang")
+    {
+    }
+
+    virtual int getCorrect(const Player *, const Player *to) const
+    {
+        if (to->hasShownSkill(objectName()) && !to->getOffensiveHorse() && !to->getDefensiveHorse() && !to->getSpecialHorse())
+            return 1;
+        else
+            return 0;
+    }
+};
+
+
+class Siweishen : public TriggerSkill
+{
+public:
+    Siweishen() : TriggerSkill("siweishen")
+    {
+        events << Death;
+        frequency = Compulsory;
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (player == NULL || !player->hasSkill(objectName())) return QStringList();
+        DeathStruct death = data.value<DeathStruct>();
+        if (death.who != player)
+            return QStringList();
+
+        if (death.damage && death.damage->from && !death.damage->from->isFriendWith(player)) {
+            ServerPlayer *target = death.damage->from;
+            if (target->isAlive() && !target->isFriendWith(player))
+                return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        room->broadcastSkillInvoke(objectName(), player);
+        return true;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        room->sendCompulsoryTriggerLog(player, objectName());
+
+        DeathStruct death = data.value<DeathStruct>();
+
+        foreach(ServerPlayer *p, room->getOtherPlayers(player)) {
+            if (p->isFriendWith(player)) {
+                room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), p->objectName());
+                p->fillHandCards(p->getMaxHp());
+            }
+        }
+        ServerPlayer *current = room->getCurrent();
+        if (current && current->isAlive() && current->getPhase() == Player::Play) {
+            room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), current->objectName());
+            room->setPlayerFlag(current, "Global_PlayPhaseTerminated");
+        }
+        ServerPlayer *killer = death.damage->from;
+        if (killer) {
+            if (killer != current) {
+                room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), killer->objectName());
+            }
+            room->addPlayerMark(killer, "Global_NoReward");
+        }
+        return false;
+    }
+};
+
+PowangCard::PowangCard()
+{
+    handling_method = MethodNone;
+}
+
+bool PowangCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *self) const
+{
+    return targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral();
+}
+
+void PowangCard::use(Room *room, ServerPlayer *from, QList<ServerPlayer *> &chosen) const
+{
+    const Card *card = Sanguosha->getCard(subcards.last());
+    if (!card) return;
+    if (chosen.isEmpty()) return;
+    QList<ServerPlayer *> targets;
+    foreach (ServerPlayer *p, room->getOtherPlayers(from)) {
+        if (p->isFriendWith(chosen.first())) {
+            targets << p;
+        }
+    }
+    SavageAssault *sa = new SavageAssault(card->getSuit(), card->getNumber());
+    sa->setSkillName("_powang");
+    sa->addSubcard(card);
+    room->setTag("powang_user", from->objectName());
+    room->useCard(CardUseStruct(sa, from, targets));
+    room->removeTag("powang_user");
+}
+
+class Powang : public OneCardViewAsSkill
+{
+public:
+    Powang() : OneCardViewAsSkill("powang")
+    {
+        relate_to_place = "head";
+        filter_pattern = ".|.|1,12,13|.";
+        response_or_use = true;
+    }
+
+    virtual bool isEnabledAtPlay(const Player *player) const
+    {
+        SavageAssault *sa = new SavageAssault(Card::NoSuit, 0);
+        sa->setSkillName("_powang");
+        sa->deleteLater();
+        return !player->hasUsed("PowangCard") && sa->isAvailable(player);
+    }
+
+    virtual const Card *viewAs(const Card *originalCard) const
+    {
+        PowangCard *powang = new PowangCard();
+        powang->setSkillName(objectName());
+        powang->setShowSkill(objectName());
+        powang->addSubcard(originalCard);
+        return powang;
+    }
+
+    virtual int getEffectIndex(const ServerPlayer *, const Card *card) const
+    {
+        return (card->getTypeId() == Card::TypeSkill) ? -1 : 0;
+    }
+};
+
+class PowangDiscard : public TriggerSkill
+{
+public:
+    PowangDiscard() : TriggerSkill("#powang-discard")
+    {
+        events << DamageCaused;
+        frequency = Compulsory;
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    {
+        if (player != NULL && player->isAlive()) {
+            DamageStruct damage = data.value<DamageStruct>();
+            if (damage.card && damage.card->getSkillName() == "powang" && damage.to->hasEquip()) {
+                if (player->objectName() == room->getTag("powang_user").toString())
+                    return QStringList(objectName());
+            }
+        }
+        return QStringList();
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        DamageStruct damage = data.value<DamageStruct>();
+        if (room->askForChoice(player, "powang", "yes+no", data, "@powang-discard:" + damage.to->objectName()) == "yes") {
+            QList<int> to_throw;
+            foreach (const Card *c, damage.to->getEquips()) {
+                to_throw << c->getEffectiveId();
+            }
+
+            if (!to_throw.isEmpty()) {
+                CardMoveReason reason(CardMoveReason::S_REASON_DISMANTLE, player->objectName(), damage.to->objectName(), QString(), QString());
+                room->moveCardsAtomic(CardsMoveStruct(to_throw, NULL, Player::DiscardPile, reason), true);
+            }
+            return true;
+        }
+        return false;
+    }
+};
+
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach", GeneralPack, true)
 {
     General *wuding = new General(this, "wuding", "careerist", 3);
     wuding->setGender(General::Neuter);
     wuding->addSkill(new Bianhua);
+
+    General *zhaoshizhen = new General(this, "zhaoshizhen", "qun");
+    zhaoshizhen->addSkill(new SavageAssaultAvoid("baixiang"));
+    zhaoshizhen->addSkill(new Baixiang);
+    zhaoshizhen->addSkill(new BaixiangRange);
+    zhaoshizhen->addSkill(new Powang);
+    zhaoshizhen->addSkill(new PowangDiscard);
+    zhaoshizhen->addSkill(new Siweishen);
+    zhaoshizhen->setHeadMaxHpAdjustedValue();
+    insertRelatedSkills("baixiang", 2, "#baixiang-range", "#sa_avoid_baixiang");
+    insertRelatedSkills("powang", "#powang-discard");
+
+    addMetaObject<PowangCard>();
 }
 
 ADD_PACKAGE(LangKhach)

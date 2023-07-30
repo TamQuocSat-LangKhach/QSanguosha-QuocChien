@@ -888,8 +888,14 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
                 room->setEmotion(killer, QString("multi_kill%1").arg(QString::number(kill_count)), false, 4000);
             else if (kill_count > 7)
                 room->setEmotion(killer, "zylove", false, 4000);
-
-            if (!killer->hasShownSkill("juejue") || !killer->isFriendWith(player))
+            bool reward = true;
+            if (killer->getMark("Global_NoReward") > 0) {
+                reward = false;
+                room->setPlayerMark(killer, "Global_NoReward", 0);
+            }
+            if (killer->hasShownSkill("juejue") && killer->isFriendWith(player))
+                reward = false;
+            if (reward)
                 rewardAndPunish(killer, player);
         }
 

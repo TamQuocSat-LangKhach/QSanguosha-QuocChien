@@ -62,6 +62,8 @@ return {
 	[":tiandu"] = "Sau khi phán xét của bạn có hiệu lực, bạn có thể thu lấy kết quả phán xét.",
 	["yiji"] = "Di Kế",
 	[":yiji"] = "Sau khi bạn nhận sát thương, bạn có thể xem 2 lá bài trên đầu chồng bài rút và giao cho tùy ý người.",
+	["#yiji"] = "Di Kế",
+	["@yiji-give"] = "Di Kế: Giao những lá này cho người khác hoặc bấm Hủy bỏ để giữ lại.",
 
 	["#zhenji"] = "Bạc Hạnh Đích Mỹ Nhân",
 	["zhenji"] = "Chân Cơ",

@@ -20,14 +20,16 @@ return {
 	[":bianhua"] = "Tỏa định kỹ: Khi bạn mở tướng này lần đầu, bạn chọn 1 tướng đã mở trên bàn của người khác; bạn nhận giới tính, hợp kỹ và kỹ năng ngoại trừ Quân chủ kỹ của tướng đã chọn.",
 	["@bianhua-invoke"] = "Biến Hóa: Lựa chọn 1 người chơi có tướng đã mở mặt",
 	["@bianhua-choose"] = "Biến Hóa: Lựa chọn 1 tướng để nhận Kỹ năng, giới tính và hợp kỹ của tướng đó",
-	["#bianhua-choice"] = "%from đã phát động »Biến Hóa«, lựa chọn %arg để sao chép"
+	["#bianhua-choice"] = "%from đã phát động »Biến Hóa«, lựa chọn %arg để sao chép",
 	
-	["#wuding"] = "Kẻ Biến Hình",
-	
-	["#zhaoshizhen"] = "Nhụy Kiều Tướng Quân"
+	["#zhaoshizhen"] = "Nhụy Kiều Tướng Quân",
 	["zhaoshizhen"] = "Triệu Thị Trinh",
-	["xunjie"] = "Tuẫn Tiết",
-	[":xunjie"] = "Tỏa định kỹ: Khi bạn trận vong, thực hiện lần lượt:\n- Lệnh người khác có cùng thế lực với bạn bổ xung bài tới giới hạn máu;\n- Lệnh người đang có lượt kết thúc giai đoạn ra bài;\n- Lệnh người giết bạn chấp hành thưởng phạt thực hiện bỏ tất cả bài thay gì rút bài.",
-	["xiangbing"] = "Tượng Binh",
-	[":xiangbing"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Nếu bạn không có Ngựa trong vùng trang bị, khoảng cách từ người khác đến bạn +2, tầm đánh của bạn +1.",
+	["siweishen"] = "Tử Vi Thần",
+	[":siweishen"] = "Tỏa định kỹ: Khi bạn trận vong, nếu người giết bạn là người thế lực xác định khác bạn, thực hiện lần lượt:\n- Lệnh người khác có cùng thế lực với bạn rút 1 lá và thoát trạng thái xích;\n- Lệnh người đang trong giai đoạn ra bài kết thúc giai đoạn này;\n- Lệnh người giết bạn không chấp hành thưởng phạt.",
+	["baixiang"] = "Bạch Tượng",
+	[":baixiang"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Nếu bạn không có Ngựa trong vùng trang bị, khoảng cách từ người khác đến bạn +1, tầm đánh của bạn +1.",
+	["#sa_avoid_baixiang"] = "Bạch Tượng (vô hiệu Nam Man Nhập Xâm)" ,
+	["powang"] = "Bà Vương",
+	[":powang"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Một lần trong giai đoạn hành động, bạn có thể chuyển hóa sử dụng 1 lá có điểm A/Q/K thành [Nam Man Nhập Xâm] với tất cả người khác thuộc 1 thế lực;\n‣ Khi bạn gây sát thương bởi [Nam Man Nhập Xâm] này, nếu mục tiêu có lá trong vùng trang bị, bạn có thể chặn sát thương này, sau đó bạn bỏ tất cả lá trong vùng trang bị của mục tiêu.",
+	["@powang-discard"] = "Bà Vương: Có thể chặn sát thương cho %dest và bỏ tất cả trang bị của họ.",
 }

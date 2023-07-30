@@ -664,6 +664,12 @@ void PlayerCardContainer::showPile()
         const ClientPlayer *player = getPlayer();
         if (!player) return;
         QList<int> card_ids = player->getPile(button->objectName());
+        if (button->objectName() == "money" && !player->property("jiansu_record").isNull()) {
+            QStringList jiansu_ids = player->property("jiansu_record").toString().split("+");
+            foreach (QString card_data, jiansu_ids) {
+                card_ids << card_data.toInt();
+            }
+        }
         if (card_ids.isEmpty() || card_ids.contains(-1)) return;
         RoomSceneInstance->showPile(card_ids, button->objectName());
     }

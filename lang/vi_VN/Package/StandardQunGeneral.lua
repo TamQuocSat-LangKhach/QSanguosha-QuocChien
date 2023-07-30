@@ -48,7 +48,7 @@ return {
 	["#yuanshao"] = "Cao Quý Đính Danh Môn",
 	["yuanshao"] = "Viên Thiệu",
 	["luanji"] = "Loạn Kích",
-	[":luanji"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 2 lá trên tay thành [Vạn Tiễn Tề Phát];\n‣ Bạn không thể sử dụng [Vạn Tiễn Tề Phát] bằng cách này với lá thành phần cùng chất với những lá bạn đã sử dụng theo cách này trong lượt này;\n‣ Khi người cùng thế lực với bạn đánh ra [Thiểm] để hưởng ứng, họ có thể rút 1 lá.",
+	[":luanji"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 2 lá trên tay thành [Vạn Tiễn Tề Phát];\n‣ Bạn không thể sử dụng [Vạn Tiễn Tề Phát] bằng cách này với lá thành phần cùng chất với những lá bạn đã sử dụng theo cách này trong lượt này;\n‣ Sau khi người cùng thế lực với bạn đánh ra [Thiểm] để hưởng ứng, họ có thể rút 1 lá.",
 	["#luanji-draw"] = "Loạn Kích (Rút bài)",
 	["@luanji-draw"] = "Loạn Kích: Rút 1 lá?",
 	["#LuanjiDraw"] = "%from hưởng ứng »%arg« và có thể rút 1 lá.",
