@@ -196,8 +196,8 @@ CommonTranslationTable = {
 	["thunder_nature"] = "Lôi hệ",
 	["#Contingency"] = "%to[%arg] trận vong, không có nguồn sát thương",
 	["#DelayedTrick"] = "%from bắt đầu lật phán xét công cụ duy trì [%arg]",
-	["#SkillNullify"] = "[%arg] của %from bị kích phát, [%arg2] vô hiệu",
-	["#ArmorNullify"] = "Hiệu quả của phòng cụ [%arg] của %from bị kích phát, [%arg2] vô hiệu",
+	["#SkillNullify"] = "[%arg] của %from đã phát động, [%arg2] vô hiệu",
+	["#ArmorNullify"] = "Hiệu quả của phòng cụ [%arg] của %from đã phát động, [%arg2] vô hiệu",
 	["#DrawNCards"] = "%from đã rút %arg thẻ bài",
 	["$DrawCards"] = "%from đã rút %arg thẻ %card",
 	["#MoveNCards"] = "%to nhận được %arg thẻ bài từ %from",
@@ -230,7 +230,7 @@ CommonTranslationTable = {
 	["@askforslash"] = "Bạn có thể sử dụng [Sát] với 1 người khác trong tầm đánh",
 	["@askforretrial"] = "Có thể phát động »%dest« để đổi kết quả phán xét %arg của %src",
 	["$CheatCard"] = "%from gian lận, nhận được %card",
-	["#FilterJudge"] = "Hiệu quả %arg của %from bị kích phát, thẻ phán xét bị thay đổi",
+	["#FilterJudge"] = "Hiệu quả %arg của %from đã phát động, kết quả phán xét bị thay đổi",
 	["$CancelTarget"] = "%from dùng [%arg] khiến mục tiêu %to bị loại bỏ",
 	["$CancelTargetNoUser"] = "[%arg] làm mục tiêu %to bị loại bỏ",
 	["$ViewRole"] = "%from đã tra xét thân phận %arg của %to",
@@ -273,7 +273,7 @@ CommonTranslationTable = {
 
 	["HorseCorrect"] = "Chiến mã",
 
-	["#DanlaoAvoid"] = "Hiệu quả [%arg2] bị kích phát, [%arg] đối với %from vô hiệu",
+	["#DanlaoAvoid"] = "Hiệu quả [%arg2] đã phát động, [%arg] đối với %from vô hiệu",
 
 	["custom_scenario"] = "Bối cảnh tự chọn",
 

@@ -15,7 +15,7 @@ return {
     ["youyan"] = "Dụ Ngôn",
     [":youyan"] = "Một lần trong lượt của bạn, sau khi bài của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể lật ra 4 lá trên đầu chồng bài và thu lấy những lá khác chất với những lá bạn đã bỏ trong lần này.",
     ["zhuihuan"] = "Truy Hoàn",
-    [":zhuihuan"] = "Khi kết thúc lượt, bạn có thể chọn tối đa 2 người, lệnh mỗi người nhận 1 [Truy Hoàn] khác nhau đến khi bắt đầu lượt tiếp theo của bạn (Không ai được biết loại [Truy Hoàn] đã nhận);\n‣ Sau khi họ nhận sát thương, họ bỏ đi [Truy Hoàn], nếu [Truy Hoàn] đã bỏ là:\n- [Sát thương]: Họ gây 1 sát thương cho nguồn sát thương;\n- [Bỏ bài]: Nguồn sát thương bỏ 2 lá trên tay.",
+    [":zhuihuan"] = "Khi bạn kết thúc lượt, bạn có thể chọn tối đa 2 người, lệnh mỗi người nhận 1 [Truy Hoàn] khác nhau đến khi bắt đầu lượt tiếp theo của bạn (Không ai được biết loại [Truy Hoàn] đã nhận);\n‣ Sau khi họ nhận sát thương, họ bỏ đi [Truy Hoàn], nếu [Truy Hoàn] đã bỏ là:\n- [Sát thương]: Họ gây 1 sát thương cho nguồn sát thương;\n- [Bỏ bài]: Nguồn sát thương bỏ 2 lá trên tay.",
 
     ["@zhuihuan-invoke"] = "Có thể phát động »Truy Hoàn«, chọn tối đa 2 người",
     ["@zhuihuan-choose"] = "Truy Hoàn: Chọn loại [Truy Hoàn] cho %dest",

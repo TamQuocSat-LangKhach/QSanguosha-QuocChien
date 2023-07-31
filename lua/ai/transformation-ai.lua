@@ -1533,7 +1533,49 @@ sgs.ai_skill_use_func.YongjinCard = function(card, use, self)
 end
 
 sgs.ai_use_priority.YongjinCard = 10--优先度多少合适？
+sgs.ai_skill_playerchosen.yongjin = function(self, _targets, max_num, min_num)
 
+	self:sort(self.enemies, "defense")
+		for _, friend in ipairs(self.friends_noself) do
+			if friend:hasEquip() and friend:hasShownSkills(sgs.lose_equip_skill) and self:getMoveCardorTarget(friend, ".", "e") then
+				return {friend, self:getMoveCardorTarget(friend, "target", "e")}
+			end
+		end
+
+		local targets = {}
+		for _, enemy in sgs.qlist(self.room:getAlivePlayers()) do
+			if not self.player:isFriendWith(enemy) and self:getMoveCardorTarget(enemy, "." ,"e") then
+				table.insert(targets, enemy)
+			end
+		end
+
+		if #targets > 0 then
+			self:sort(targets, "defense")
+			return {targets[#targets], self:getMoveCardorTarget(targets[#targets], "target", "e")}
+		end
+
+		if self.player:hasEquip() and self.player:hasShownSkills(sgs.lose_equip_skill) and self:getMoveCardorTarget(self.player, ".", "e") then
+			return {self.player, self:getMoveCardorTarget(self.player, "target" ,"e")}
+		end
+
+		local friends = {}--没有敌人则简单转移队友装备
+		for _, friend in ipairs(self.friends) do
+			if self:getMoveCardorTarget(friend, "." ,"e") then
+				table.insert(friends, friend)
+			end
+		end
+
+		if #friends > 0 then
+			self:sort(friends, "hp", true)
+			return {friends[#friends], self:getMoveCardorTarget(friends[#friends], "target", "e")}
+		end
+
+	return {}
+end
+
+sgs.ai_skill_transfercardchosen.yongjin = function(self, targets, equipArea, judgingArea)
+	return self:getMoveCardorTarget(targets:first(), "card", "e")
+end
 sgs.ai_skill_use["@@yongjin_move"] = function(self, prompt, method)
 	if prompt ~= "@yongjin-next" then
 		return "."

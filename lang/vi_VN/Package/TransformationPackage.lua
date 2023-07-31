@@ -81,7 +81,7 @@ return {
 	[":sanyao"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá và chọn 1 người nhiều máu nhất, bạn gây 1 sát thương cho họ.",
 	["zhiman"] = "Chế Man",
 	[":zhiman"] = "Khi bạn gây sát thương cho người khác, bạn có thể chặn sát thương này lại, nếu làm vậy:\n‣ Bạn thu lấy 1 lá trong vùng trang bị hoặc phán xét của họ;\n‣ Nếu họ cùng thế lực với bạn, bạn có thể lệnh họ đổi Phó tướng.",
-	["#Zhiman"] = "%from đã chặn sát thương tới %to",
+	["#Zhiman"] = "%from đã phát động »%arg«, chặn sát thương tới %to",
 	["@zhiman-ask"] = "Có lệnh mục tiêu đổi Phó tướng?",
 	["zhiman-second"] = "Chế Man",
 

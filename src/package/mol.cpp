@@ -2563,7 +2563,7 @@ public:
     Kangkai() : TriggerSkill("kangkai")
     {
         events << TargetConfirmed;
-        frequency = Compulsory;
+        frequency = Frequent;
     }
 
     virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
@@ -2958,7 +2958,7 @@ public:
                 targets = priority2;
             }
             if (!targets.isEmpty()) {
-                ServerPlayer *to = room->askForPlayerChosen(player, targets, "haokui", "@haokui-transform", false, true);
+                ServerPlayer *to = room->askForPlayerChosen(player, targets, "haokui", "@haokui-give", false, true);
                 QList<int> cards;
                 QVariantList move_datas = data.toList();
                 foreach (QVariant move_data, move_datas) {
@@ -2991,14 +2991,14 @@ public:
     Xushi() : TriggerSkill("xushi")
     {
         events << TargetConfirming;
-        frequency = Compulsory;
+        frequency = Frequent;
     }
 
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         if (!TriggerSkill::triggerable(player)) return QStringList();
         CardUseStruct use = data.value<CardUseStruct>();
-        if (!use.card || !use.from || use.from == player || use.to.size() > 1 || player->hasShownSkill(this)) return QStringList();
+        if (!use.card || use.card->getTypeId() == Card::TypeSkill || !use.from || use.from == player || use.to.size() > 1 || player->hasShownSkill(this)) return QStringList();
         if (use.to.contains(player))
             return QStringList(objectName());
         return QStringList();

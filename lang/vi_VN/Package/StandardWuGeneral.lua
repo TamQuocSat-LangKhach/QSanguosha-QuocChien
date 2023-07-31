@@ -50,7 +50,7 @@ return {
 	["yingzi_zhouyu"] = "Anh Tư",
 	[":yingzi"] = "Tỏa định kỹ:\n• Giai đoạn rút bài, bạn rút thêm 1 lá.\n• Giới hạn trữ bài của bạn bằng với giới hạn máu.",
 	["fanjian"] = "Phản Gián",
-	[":fanjian"] = "Một lần trong giai đoạn ra bài, bạn có thể mở ra 1 lá bài trên tay và giao cho 1 người khác, bạn lệnh cho họ lựa chọn 1 mục:\n1. Họ mở ra tất cả bài trên tay và bỏ đi tất cả lá của họ có cùng chất với lá bạn đã mở ra (Ít nhất 1 lá);\n2. Họ mất 1 máu.",
+	[":fanjian"] = "Một lần trong giai đoạn ra bài, bạn có thể mở ra 1 lá bài trên tay và giao cho 1 người khác, bạn lệnh cho họ lựa chọn 1 mục:\n1. Nếu họ có bài trên tay hoặc có lá cùng chất với lá bạn đã mở trong vùng trang bị, họ mở ra tất cả bài trên tay và bỏ đi tất cả lá của họ có cùng chất với lá bạn đã mở ra (Ít nhất 1 lá);\n2. Họ mất 1 máu.",
 	["fanjian_show:prompt"] = "Phản Gián: Bấm \"Xác nhận\" để mở bài trên tay và bỏ toàn bộ lá %arg; Bấm »Hủy bỏ« để mất 1 máu.",
 	
 	["#daqiao"] = "Căng Trì Chi Hoa",

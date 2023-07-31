@@ -24,12 +24,19 @@ return {
 	
 	["#zhaoshizhen"] = "Nhụy Kiều Tướng Quân",
 	["zhaoshizhen"] = "Triệu Thị Trinh",
+	["designer:zhaoshizhen"] = "Lãng Khách",
+	["illustrator:zhaoshizhen"] = "Momo Art & Sử Hộ Vương",
 	["siweishen"] = "Tử Vi Thần",
-	[":siweishen"] = "Tỏa định kỹ: Khi bạn trận vong, nếu người giết bạn là người thế lực xác định khác bạn, thực hiện lần lượt:\n- Lệnh người khác có cùng thế lực với bạn rút 1 lá và thoát trạng thái xích;\n- Lệnh người đang trong giai đoạn ra bài kết thúc giai đoạn này;\n- Lệnh người giết bạn không chấp hành thưởng phạt.",
+	[":siweishen"] = "Hạn định kỹ: Sau khi bạn giải quyết hấp hối, nếu số máu của bạn ≤0, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn hồi máu đến tối đa;\n- Lệnh người cùng thế lực với bạn nhận kỹ năng »Sanh Vi Tướng«;\n‣ Khi bạn kết thúc lượt, bạn trận vong.",
 	["baixiang"] = "Bạch Tượng",
 	[":baixiang"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Nếu bạn không có Ngựa trong vùng trang bị, khoảng cách từ người khác đến bạn +1, tầm đánh của bạn +1.",
 	["#sa_avoid_baixiang"] = "Bạch Tượng (vô hiệu Nam Man Nhập Xâm)" ,
 	["powang"] = "Bà Vương",
 	[":powang"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Một lần trong giai đoạn hành động, bạn có thể chuyển hóa sử dụng 1 lá có điểm A/Q/K thành [Nam Man Nhập Xâm] với tất cả người khác thuộc 1 thế lực;\n‣ Khi bạn gây sát thương bởi [Nam Man Nhập Xâm] này, nếu mục tiêu có lá trong vùng trang bị, bạn có thể chặn sát thương này, sau đó bạn bỏ tất cả lá trong vùng trang bị của mục tiêu.",
 	["@powang-discard"] = "Bà Vương: Có thể chặn sát thương cho %dest và bỏ tất cả trang bị của họ.",
+	["#powang-discard"] = "%from đã phát động »Bà Vương«, chặn sát thương tới %to",
+	["shengweijiang"] = "Sinh Vi Tướng",
+	[":shengweijiang"] = "Tỏa định kỹ:\n• Khi bạn gây sát thương lần đầu trong lượt của bạn, lệnh sát thương này +1.\n• Khi bạn kết thúc lượt, bạn mất kỹ năng này.",
+	["#siweishen-death"] = "Sinh Vi Tướng, Tử Vi Thần, %from đã tuẫn tiết",
+	["@weishen"] = "Tử Vi Thần"
 }

@@ -1575,3 +1575,7 @@ end
 
 --矜武造成伤害
 sgs.ai_skill_playerchosen["command_jinwu"] = sgs.ai_skill_playerchosen.damage
+
+sgs.ai_skill_playerchosen.xiaolian = sgs.ai_skill_playerchosen.yongjin
+
+sgs.ai_skill_transfercardchosen.xiaolian = sgs.ai_skill_transfercardchosen.yongjin
