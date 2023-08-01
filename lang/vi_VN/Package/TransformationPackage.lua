@@ -55,7 +55,7 @@ return {
 	["new_zuoci"] = "Tả Từ",
 	["yigui"] = "Dịch Quỷ",
 	[":yigui"] = "\n• Sau khi bạn mở tướng này lần đầu tiên, bạn nhận 2 lá từ chồng bài tướng đặt lên tướng này, gọi là [Hồn].\n"..
-	"• Khi bạn cần sử dụng lá cơ bản hoặc công cụ phổ thông ngoại trừ [Thiểm]/[Vô Giải Khả Kích], nếu bạn chưa sử dụng lá đó bằng kỹ năng này trong lượt này, bạn có thể bỏ 1 [Hồn], xem như sử dụng lá đó;\n‣ Người thế lực gốc khác với [Hồn] không thể trở thành mục tiêu của lá này.",
+	"• Khi bạn cần sử dụng lá cơ bản hoặc công cụ phổ thông có mục tiêu, nếu bạn chưa sử dụng lá đó bằng kỹ năng này trong lượt này, bạn có thể bỏ 1 [Hồn], xem như bạn sử dụng lá đó;\n‣ Người thế lực gốc khác với [Hồn] không thể trở thành mục tiêu của lá này.",
 
 	["jihun"] = "Cấp Hồn",
 	[":jihun"] = "Sau khi bạn nhận sát thương hoặc sau khi 1 người thế lực xác định khác với bạn thoát khỏi trạng thái hấp hối, bạn có thể nhận 1 lá từ chồng bài tướng đặt lên tướng này, gọi là [Hồn].",

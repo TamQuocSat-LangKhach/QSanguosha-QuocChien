@@ -209,9 +209,9 @@ return {
     ["#zhugeke"] = "Hưng Gia Xích Tộc",
     ["zhugeke"] = "Gia Cát Khác",
     ["aocai"] = "Ngạo Tài",
-    [":aocai"] = "Ngoài lượt của bạn, khi bạn cần sử dụng hoặc đánh ra bài cơ bản, bạn có thể xem hai lá trên đầu chồng bài, bạn có thể sử dụng hoặc đánh ra lá cơ bản có tên tương ứng trong đó.",
+    [":aocai"] = "Ngoài lượt của bạn, khi bạn cần sử dụng/đánh ra bài cơ bản, bạn có thể xem hai lá trên đầu chồng bài, bạn có thể sử dụng/đánh ra lá cơ bản có tên tương ứng trong đó.",
     ["duwu"] = "Độc Võ",
-    [":duwu"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chọn 1 [Quân Lệnh], yêu cầu tất cả người thế lực khác bạn chấp hành [Quân Lệnh] này; nếu họ không chấp hành, bạn gây 1 sát thương cho họ và rút một lá;\n- Nếu có người thoát khỏi trạng thái hấp hối do nhận sát thương từ kỹ năng này, bạn mất 1 máu.",
+    [":duwu"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chọn 1 [Quân Lệnh], yêu cầu tất cả người thế lực khác bạn chấp hành [Quân Lệnh] này; nếu họ không chấp hành, bạn gây 1 sát thương cho họ và rút một lá;\n- Nếu trong những người còn sống có người đã tiến vào trạng thái hấp hối trong quá trình trên, bạn mất 1 máu.",
     
     ["#aocai"] = "Ngạo Tài",
     ["@aocai-view"] = "Ngạo Tài: Chọn 1 lá phù hợp để sử dụng/đánh ra",
@@ -298,7 +298,7 @@ return {
     ["tongling"] = "Thông Linh",
     [":tongling"] = "Một lần trong giai đoạn ra bài, sau khi bạn gây sát thương cho 1 người thế lực xác định khác bạn (A), bạn có thể chọn 1 người cùng thế lực với bạn (B), B có thể sử dụng 1 lá với A; sau đó:\n- Nếu lá này gấy sát thương, bạn và B rút 2 lá;\n- Nếu lá này không gây sát thương, bạn lệnh A thu lấy lá bạn đã sử dụng để gây sát thương cho A.",
     ["jinxian"] = "Cận Hãm",
-    [":jinxian"] = "Sau khi bạn mở tướng này, bạn lệnh tất cả người trong khoảng cách 1 thực hiện:\n- Nếu họ đã mở tất cả tướng, họ úp 1 tướng\n- Nếu họ có tướng đang úp, họ bỏ 2 lá.",
+    [":jinxian"] = "Sau khi bạn mở tướng này, bạn lệnh tất cả người ở khoảng cách ≤1 thực hiện: Nếu số tướng đang úp của họ là:\n- 0: Họ úp 1 tướng\n- 1+: Họ bỏ 2 lá.",
     
     
     ["@tongling-invoke"] = "Có thể phát động »Thông Linh«, chọn 1 người sử dụng bài lên %dest",

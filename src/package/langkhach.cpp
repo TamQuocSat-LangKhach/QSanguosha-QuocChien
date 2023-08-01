@@ -479,14 +479,14 @@ void PowangCard::use(Room *room, ServerPlayer *from, QList<ServerPlayer *> &chos
     if (!card) return;
     if (chosen.isEmpty()) return;
     QList<ServerPlayer *> targets;
-    foreach (ServerPlayer *p, room->getOtherPlayers(from)) {
-        if (p->isFriendWith(chosen.first())) {
-            targets << p;
-        }
-    }
     SavageAssault *sa = new SavageAssault(card->getSuit(), card->getNumber());
     sa->setSkillName("_powang");
     sa->addSubcard(card);
+    foreach (ServerPlayer *p, room->getOtherPlayers(from)) {
+        if (p->isFriendWith(chosen.first()) &&  !from->isProhibited(p, sa)) {
+            targets << p;
+        }
+    }
     room->setTag("powang_user", from->objectName());
     room->useCard(CardUseStruct(sa, from, targets));
     room->removeTag("powang_user");

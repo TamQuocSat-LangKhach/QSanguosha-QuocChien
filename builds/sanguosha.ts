@@ -301,7 +301,7 @@
     </message>
     <message>
         <source>Sanguosha OL</source>
-        <translation>Tam Quốc Sát Online</translation>
+        <translation>Yoka Games</translation>
     </message>
     <message>
         <source>No generals are found</source>
@@ -345,7 +345,7 @@
     </message>
     <message>
         <source>Official</source>
-        <translation>Chính thức</translation>
+        <translation>Yoka Games</translation>
     </message>
     <message>
         <source>Victory</source>

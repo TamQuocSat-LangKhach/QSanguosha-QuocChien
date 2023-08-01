@@ -27,9 +27,9 @@ return {
 	["~cuiyanmaojie"] = "Những kẻ nắm quyền thì thường có thời của chúng...",
 
 	--于禁
-	["$jieyue1"] = "Chấp hành quân lệnh, cùng nhau đi lên, kẻ nào chùn bước, phạt!",
-	["$jieyue2"] = "Ta nhận lệnh Tào công, nâng cao sức mạnh của binh lính!",
-	["~yujin"] = "Trời mưa mãi không dứt, ba mươi năm công danh nay mất hết rồi...",
+	["$jieyue1"] = "Tuân theo Thừa tướng, binh lệnh này do ta nắm giữ!",
+	["$jieyue2"] = "Theo lệnh mà làm, há nào lại lại có sự khoan thứ!",
+	["~yujin"] = "Nay ta ở đây gặp nạn, há rằng phụ lòng thừa tướng ba mươi năm qua, hầy...",
 
 	--法正
 	["$enyuan1"] = "Ta làm kẻ tiểu nhân trước, quân tử để sau.",
@@ -61,7 +61,7 @@ return {
 	["$ganlu1"] = "Huyền Đức thật là con rể tốt!",
 	["$ganlu2"] = "Trai tài gái sắc, trời sinh một cặp!",
 	["$buyi1"] = "Có ta ở đây, nhất định bảo vệ con rể!",
-	["$buyi2"] = "Đông Ngô đâu để ngươi làm dâu!",
+	["$buyi2"] = "Đông Ngô đâu để ngươi đùa cợt!",
 	["~wuguotai"] = "Chư vị khanh gia, xin hãy tận lực giúp Trọng Mưu...",
 
 	--陆抗

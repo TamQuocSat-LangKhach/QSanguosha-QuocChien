@@ -26,6 +26,7 @@ return {
 	["zhaoshizhen"] = "Triệu Thị Trinh",
 	["designer:zhaoshizhen"] = "Lãng Khách",
 	["illustrator:zhaoshizhen"] = "Momo Art & Sử Hộ Vương",
+	["cv:zhaoshizhen"] = "",
 	["siweishen"] = "Tử Vi Thần",
 	[":siweishen"] = "Hạn định kỹ: Sau khi bạn giải quyết hấp hối, nếu số máu của bạn ≤0, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn hồi máu đến tối đa;\n- Lệnh người cùng thế lực với bạn nhận kỹ năng »Sanh Vi Tướng«;\n‣ Khi bạn kết thúc lượt, bạn trận vong.",
 	["baixiang"] = "Bạch Tượng",
