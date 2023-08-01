@@ -468,7 +468,9 @@ PowangCard::PowangCard()
 
 bool PowangCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *self) const
 {
-    return targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral();
+    SavageAssault *sa = new SavageAssault(Card::NoSuit, 0);
+    sa->deleteLater();
+    return targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral() && !self->isProhibited(to_select, sa);
 }
 
 void PowangCard::use(Room *room, ServerPlayer *from, QList<ServerPlayer *> &chosen) const
