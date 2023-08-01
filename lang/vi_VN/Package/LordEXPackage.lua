@@ -267,7 +267,7 @@ return {
     ["#huangzu"] = "Giang Hạ Phúc Tâm",
     ["huangzu"] = "Hoàng Tổ",
     ["xishe"] = "Vãn Cung",
-    [":xishe"] = "\n• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ không giới hạn khoảng cách, nếu số máu của họ nhỏ hơn của bạn, tất cả người chơi không thể hưởng ứng [Sát] này; bạn có thể lặp lại quá trình này.\n• Khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
+    [":xishe"] = "\n• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ, nếu số máu của họ nhỏ hơn của bạn, tất cả người chơi không thể hưởng ứng [Sát] này; bạn có thể lặp lại quá trình này.\n• Khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
     ["@xishe-slash"] = "Có thể phát động »Văn Cung«, bỏ 1 lá trong vùng trang bị, xem như sử dụng [Sát] với %src",
     
     ["#xishe-transform"] = "Vãn Cung",
