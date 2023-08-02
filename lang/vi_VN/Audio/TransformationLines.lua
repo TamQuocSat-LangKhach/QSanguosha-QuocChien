@@ -21,11 +21,11 @@
 return {
 
 	--荀攸
-	["$qice1"] = "Ta có một kế, nhất định có thể phá được",
-	["$qice2"] = "Khắp thiên hạ đều loạn, kẻ sĩ cũng chao đao thời thế",
-	["$zhiyu1"] = "Tướng quân hà cớ sao đi theo lối cũ?",
-	["$zhiyu2"] = "Khôn thì có ngưỡng, ngu thì không.",
-	["~xunyou"] = "Rồi chủ công sẽ không còn phải lo lắng nữa",
+	["$qice2"] = "Kỳ sách ở đây, ai dám bàn cãi?",
+	["$qice1"] = "Tận lực giúp nước, tính toán không sai,",
+	["$zhiyu2"] = "Người ngu xuất thế, người khôn chốn nào?",
+	["$zhiyu1"] = "Kẻ mạnh cũng có lúc yếu, trí giả nhiều khi cũng ngu ngơ.",
+	["~xunyou"] = "Chúa công... Hạ thần... Xin được lui trước...",
 
 	--卞夫人
 	["$wanwei1"] = "Tốt xấu chưa rõ, sao mà đã loạn?",
@@ -47,11 +47,11 @@ return {
 	["~shamoke"] = "Khinh thường tuổi trẻ, chơi đùa với lửa",
 
 	--凌统
-	["$xuanlue1"] = "Thân tựa như đá, lấy một đổi một",
-	["$xuanlue2"] = "Dù đi đến đâu, nghe là khiếp đảm!",
-	["$yongjin1"] = "Sinh tử tựa như tia lửa xoẹt qua.",
-	["$yongjin2"] = "Đại quân công thành, ta đánh trận đầu.",
-	["~lingtong"] = "Chí Tôn, bảo trọng ...",
+	["$xuanlue1"] = "Khinh trang cấp tập, phá địch khắp ngàn dặm,",
+	["$xuanlue2"] = "Cường binh phá trận, giết tướng địch trong chớp mắt!",
+	["$yongjin1"] = "Xông lên! Cho ta thấy sức mạnh Đông Ngô!",
+	["$yongjin2"] = "Đông Ngô hổ uy há nào để ngươi xúc phạm?",
+	["~lingtong"] = "Đại trượng phu lẽ nào lại sợ cái chết.....",
 
 	--吕范
 	["$diaodu1"] = "Chiến cụ binh khí, đều do ta điều phối!",
@@ -68,10 +68,9 @@ return {
 	["~zuoci"] = "Tiên nhân quy thệ, hồn quy Cửu thiên...",
 
 	--李傕郭汜
-	["$xiongsuan1"] = "Nghe nói có kẻ muốn hại ta?",
-	["$xiongsuan2"] = "Không kiếm việc làm lẽ nào còn ngồi chờ chết?!",
-	["$xiongsuan3"] = "Không phải ngươi chết thì là ta vong!",
-	["~lijueguosi"] = "Lũ phản bội.....",
+	["$xiongsuan1"] = "Trong triều lấy ai nam nhi cản lại hai bọn ta?",
+	["$xiongsuan2"] = "Bắt giữ Thiên tử, nắm giữ trọng binh, mưu đồ Thiên hạ!",
+	["~lijueguosi"] = "Vấn hoạ tại ngôn, đừng lừa dối ta....",
 
 	-- 君孙权
 	["$jiahe"] = "Gia Hòa sinh, Đại Ngô hưng!",

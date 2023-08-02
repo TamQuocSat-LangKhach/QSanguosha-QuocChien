@@ -3163,14 +3163,17 @@ public:
         return true;
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         if (TriggerSkill::triggerable(player)) {
             if (triggerEvent == DeathFinished) {
                 DeathStruct death = data.value<DeathStruct>();
-                if (!death.who->getGeneral()->objectName().contains("sujiang") || (death.who->getGeneral2() &&
-                        !death.who->getGeneral2()->objectName().contains("sujiang")))
-                return QStringList(objectName());
+                if ((!death.who->getGeneral()->objectName().contains("sujiang")
+                        && !room->getUsedGeneral().contains(death.who->getGeneral()->objectName()))
+                        || (death.who->getGeneral2()
+                            && !death.who->getGeneral2()->objectName().contains("sujiang")
+                            && !room->getUsedGeneral().contains(death.who->getGeneral2()->objectName())))
+                    return QStringList(objectName());
             } else if (triggerEvent == EventPhaseStart && player->getPhase() == Player::Start) {
                 if (!player->isNude() && !player->getGeneralPile("massacre").isEmpty())
                     return QStringList(objectName());
@@ -3217,12 +3220,14 @@ public:
             int x = (death.damage && death.damage->from == player) ? 2:0;
 
             QStringList generals;
-            if (!target->getGeneral()->objectName().contains("sujiang")) {
+            if (!target->getGeneral()->objectName().contains("sujiang")
+                    && !room->getUsedGeneral().contains(target->getGeneral()->objectName())) {
                 QString name = target->getGeneral()->objectName();
                 generals << name;
             }
 
-            if (target->getGeneral2() && !target->getGeneral2()->objectName().contains("sujiang")) {
+            if (target->getGeneral2() && !target->getGeneral2()->objectName().contains("sujiang")
+                    && !room->getUsedGeneral().contains(target->getGeneral2()->objectName())) {
                 QString name = target->getGeneral2()->objectName();
                 generals << name;
             }

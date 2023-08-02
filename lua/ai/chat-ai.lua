@@ -68,10 +68,10 @@ sgs.ai_chat_func[sgs.SlashEffected].blindness = function(self, player, data)
 	local effect = data:toSlashEffect()
 	if not effect.from then return end
 
-	local chat = {"Ê, đừng đánh người mình thế chứ :(",
-				"Sao lại đánh ta?",
-				"Đừng đánh nữa, tôi sắp tuyệt vọng rồi đấy.",
-				"Không giết ta nhanh, đến lượt ta sẽ không tha cho ngươi."
+	local chat = {":(",
+				"Sao lại đánh tui?",
+				"Đừng đánh nữa :(",
+				"Bạn đánh như hoa hậu vậy"
 				}
 	if player:screenName() == "Tài Tống" then
 		table.insert(chat, "Mày có bị điên không?")
@@ -88,21 +88,19 @@ sgs.ai_chat_func[sgs.SlashEffected].blindness = function(self, player, data)
 		table.insert(chat, "Mới tập chơi hả?")
 	end
 	if self:hasCrossbowEffect(effect.from) then
-		table.insert(chat, "Chào anh em, tôi chuẩn bị chết đây.")
-		table.insert(chat, "Người sắp lủng 1 đống lỗ rồi.")
+		table.insert(chat, "Chào anh em, tôi đi trước.")
+		table.insert(chat, "Game nhạt toẹt.")
 		table.insert(chat, "Giết tôi không có lợi gì đâu.")
 	end
 
 	if effect.from:getMark("drank") > 0 then
-		table.insert(chat, "Cái tên uống rượu làm càn này.")
+		table.insert(chat, "Đập rượu linh ta linh tinh.")
 	end
 
 	if sgs.isAnjiang(effect.to) then
-		table.insert(chat, "Đánh úp mặt thế, tôi cùng phe mà.")
+		table.insert(chat, "Cùng phe mà, đánh gì thế.")
 		table.insert(chat, "Đừng đánh nữa, lát tôi lên tướng cho xem.")
 		table.insert(chat, "Thích mất hết bài không?")
-		table.insert(chat, "Cười ỉa =))")
-		table.insert(chat, "Nhìn tướng người ta đã rồi hẵng đánh.")
 		if not sgs.isAnjiang(effect.from) and effect.from:getRole() ~= "careerist" then
 			table.insert(chat, "Tôi " .. sgs.Sanguosha:translate(effect.from:getKingdom()) .. " đây")
 		end
@@ -121,7 +119,7 @@ sgs.ai_chat_func[sgs.Death].stupid_friend = function(self, player, data)
 	local chat = {"Tại sao ta lại phải cùng phe với ngươi nhỉ.",
 				"Ông diễn hơi sâu rồi đấy.",
 				"Tôi đi ăn đây.",
-				"Phe ta diệt vong rồi.",
+				"Phe ta toang rồi.",
 				"Không còn gì để nói",
 				}
 	if player:screenName() == "Tài Tống" then
@@ -158,8 +156,8 @@ sgs.ai_chat_func[sgs.EventPhaseStart].ally = function(self, player, data)
 			if player:getKingdom() == kingdom then return end
 			kingdom = sgs.Sanguosha:translate(kingdom)
 			local chat = {
-				"Quân " .. kingdom .. " đang mạnh, chúng ta liên minh đi.",
-				"Anh em cùng nhau diệt " .. kingdom .. " nào."
+				"Bọn " .. kingdom .. " đông quá.",
+				"Hợp lực đấm chết bọn " .. kingdom .. " nào."
 			}
 			if os.time() % 10 < 1 then
 				player:speak(chat[math.random(1, #chat)])
@@ -185,8 +183,8 @@ end
 sgs.ai_chat_func[sgs.EventPhaseStart].beset = function(self, player, data)
 	if player:getState() ~= "robot" then return end
 	local chat = {
-		"Xem nào :))",
-		"Cứ để đó, chúng ta dần dần tra tấn.",
+		":))",
+		"Băm băm nhuyễn nhừ.",
 		"Giết nó nhanh thôi.",
 		"Người anh em ngồi giữa đầu hàng đi, khỏi phải chịu cảm giác đau khổ.",
 	}
@@ -202,7 +200,7 @@ sgs.ai_chat_func[sgs.CardUsed].qinshouzhang = function(self, player, data)
 	local use = data:toCardUse()
 	if use.card:isKindOf("Blade") and use.from and use.from:objectName() == player:objectName() then
 		if player:screenName() == "Quan Vũ" then
-			player:speak("Đây vốn là vũ khí của ta mà.")
+			player:speak("Vũ khí của ta đây rồi.")
 		else
 			for _, p in ipairs(sgs.robot) do
 				if p:screenName() == "Quan Vũ" then
@@ -219,7 +217,7 @@ sgs.ai_chat_func[sgs.CardFinished].yaoseng = function(self, player, data)
 	if use.card:isKindOf("OffensiveHorse") and use.from:objectName() == player:objectName() then
 		for _, p in sgs.qlist(self.room:getOtherPlayers(player)) do
 			if self:isEnemy(player, p) and player:distanceTo(p) == 1 and player:distanceTo(p, 1) == 2 and math.random() < 0.2 then
-				player:speak("Này " .. p:screenName() .. ", ngươi định chạy đâu!")
+				--player:speak("Này " .. p:screenName() .. ", ngươi định chạy đâu!")
 				return
 			end
 		end
@@ -233,8 +231,8 @@ sgs.ai_chat_func[sgs.TargetConfirmed].gounannv = function(self, player, data)
 		local to = use.to:first()
 		if to:objectName() ~= use.from:objectName() and use.from:isFemale() and to:isMale() and math.random() < 0.1
 			and to:getState() == "robot" and use.from:getState() == "robot" then
-			use.from:speak("Hồi sinh nào, tướng quân của ta.")
-			to:speak("Nữ hoàng của ta, ta nguyện chiến đấu vì nàng!")
+			use.from:speak("Từ từ, ai cho chết.")
+			--to:speak("Nữ hoàng của ta, ta nguyện chiến đấu vì nàng!")
 		end
 	end
 end
@@ -247,12 +245,8 @@ sgs.ai_chat_func[sgs.CardFinished].analeptic = function(self, player, data)
 		local suit = { "heart", "diamond" }
 		suit = suit[math.random(1, #suit)]
 		local chat = {
-			"=)))",
-			"Cười ỉa =))",
-			"Sẵn bỏng nước đây rồi, ta ngồi hóng.",
-			"Đừng đánh tôi, tôi có " .. "<b><font color = 'yellow'>" .. sgs.Sanguosha:translate("jink")
-				.. string.format("[<img src='image/system/log/%s.png' height = 12/>", suit) .. math.random(1, 10) .. "] </font></b>",
-			"Nhìn bạn ngầu quá."
+			"Có thiểm rồi, không sợ",
+			"Uống rượu cái ngầu quá."
 		}
 		for _, p in ipairs(sgs.robot) do
 			if p:objectName() ~= to:objectName() and not p:isFriendWith(to) and math.random() < 0.2 then
@@ -321,7 +315,7 @@ sgs.ai_chat_func[sgs.TargetConfirmed].imperial_order = function(self, player, da
 				table.insert(chat, "Ơ kìa, ghê đấy")
 			end
 			if player:getKingdom() == "wei" then
-				table.insert(chat, "Chà chà, lại con hàng Ngụy")
+				--table.insert(chat, "Chà chà, lại con hàng Ngụy")
 			end
 			player:speak(chat[math.random(1, #chat)])
 	end
@@ -347,9 +341,9 @@ sgs.ai_chat_func[sgs.CardFinished].duoshi = function(self, player, data)
 	local use = data:toCardUse()
 	if use.card and use.card:isKindOf("AwaitExhausted") and use.card:getSkillName() == "duoshi" and use.from:usedTimes("ViewAsSkill_duoshiCard") >= 2 then
 		local chat = {
-			"Lại đổi bài nữa",
-			"Chắc tôi đi ngủ đây.",
-			"Lục Tốn, nhanh lên, tốn thời gian quá."
+			"Lại nữa rồi",
+			"Tôi đi ngủ đây.",
+			"Lục Tốn nhanh lên, tốn thời gian quá."
 		}
 		for _, p in ipairs(sgs.robot) do
 			if p:objectName() ~= use.from:objectName() and math.random() < 0.8 then
@@ -373,9 +367,8 @@ sgs.ai_chat_func[sgs.GeneralShown].show = function(self, player, data)
 		"Thế thôi à?"
 	}
 	local chat1 = {
-		"Hừm",
 		"Tướng không có gì đặc biệt đâu :))",
-		"Lên tướng cho mọi người vui",
+		"Lên tướng cái nào",
 		}
 	if self.player:screenName() == "Ong Thành Đạt" then
 		table.insert(chat1, "Để em, để em")
@@ -403,33 +396,33 @@ sgs.ai_chat_func[sgs.GeneralShown].show = function(self, player, data)
 		end
 	end
 	if shown == 1 then
-		table.insert(chat,"Lên đầu cho mọi người dễ đánh à :v")
+		table.insert(chat,"Lên đầu dễ ăn đòn đó :v")
 		if sgs.GetConfig("RewardTheFirstShowingPlayer", true) then
 			table.insert(chat1,"Tiên Phong là của ta")
 		end
 		if not self.player:hasShownSkill("luanji") then
-			table.insert(chat1,"Ta chỉ sợ mỗi Viên Thiệu lên đầu.")
+			table.insert(chat1,":))")
 		else table.insert(chat,"Thôi xong")
 		end
 	end
 	if shown < 3 then
 		table.insert(chat,"Lên sớm cẩn thận bị giết đó.")
-		table.insert(chat,"Lên sớm làm gì :))")
+		--table.insert(chat,"Lên sớm làm gì :))")
 	end
 	if notshown < 3 then
-		table.insert(chat,"Mãi cũng chịu lên")
+		table.insert(chat,"Mãi cũng chịu lên tướng kìa")
 		table.insert(chat,"Úp hơi lâu rồi đấy.")
 	end
 	if self.player:getRole() == "careerist" then
 		table.insert(chat,"Dã tâm kìa")
 		table.insert(chat,"Chơi một mình đi :))")
-		table.insert(chat1,"Làm dã tâm khổ vãi")
+		--table.insert(chat1,"Làm dã tâm khổ vãi")
 	end
 	if not self.player:hasShownAllGenerals() then
 		table.insert(chat,self.player:screenName() .." hóa ra là "..kingdom)
 		table.insert(chat,""..kingdom.." có vẻ đông đây.")
 	elseif self.player:hasShownAllGenerals() then
-		table.insert(chat, "Thì ra ".. self.player:screenName() .." chơi "..name1..", "..name2..".")
+		--table.insert(chat, "Thì ra ".. self.player:screenName() .." chơi "..name1..", "..name2..".")
 		table.insert(chat,"Cặp "..name1..", "..name2.." ngon đấy!")
 	end
 	for _, p in ipairs(sgs.robot) do
@@ -450,11 +443,11 @@ sgs.ai_chat_func[sgs.DamageCaused].attackAnjiang = function(self, player, data)
 			}
 	local chat1= {
 			"Lên tướng đi nào.",
-			"Nào tên Ngụy này, còn không mau lên tướng."
+			"Nào con ngụy hay con ngô thì lên tướng xem thử nào"
 			}
 	local chat2= {
-			"Có phải Ngụy đâu mà lên tướng.",
-			"Đừng đánh tôi",
+			"Có phải tướng chơi ngoài lượt đâu :(",
+			"Tha, đừng đánh nữa",
 			"Ơ kìa",
 			}
 	if damage and not damage.to:hasShownOneGeneral() then
@@ -480,14 +473,13 @@ end
 sgs.ai_chat_func[sgs.EventPhaseStart].luanwu = function(self, player, data)
 	if player:getPhase() == sgs.Player_Play then
 		local chat = {
-			"Đại loạn rồi",
-			"Chém ai bây giờ",
-			"Ta không có sát"
+			"Sắp loạn vũ rồi",
+			"Đừng có loại vũ, không có sát đâu",
+			"Loạn vũ thì chém ai giờ nhỉ"
 		}
 		local chat1 = {
-			"Đừng lo lắng",
-			"Ngươi sẵn sàng chưa",
-			"Sao ta phải nghe ngươi"
+			"Từ từ, loạn vũ vội làm gì",
+			"Sẵn sàng chém nhau chưa"
 		}
 		if self.player:hasShownSkill("luanwu") and self.player:getMark("@chaos") > 0 then
 			for _, p in ipairs(sgs.robot) do
@@ -500,7 +492,7 @@ sgs.ai_chat_func[sgs.EventPhaseStart].luanwu = function(self, player, data)
 		end
 	end
 end
-
+--[[
 sgs.ai_chat_func[sgs.GeneralShown].show_jiange = function(self, player, data)
 	if self.room:getMode() ~= "jiange_defense" then return end
 	local kingdom = self.player:getKingdom()
@@ -542,10 +534,11 @@ sgs.ai_chat_func[sgs.GeneralShown].show_jiange = function(self, player, data)
 		end
 	end
 end
+]]
 
 sgs.ai_chat.yiji = {
 "Đánh nữa đi",
-"Ta sắp chết rồi."
+"Ta sắp chết rồi nè."
 }
 
 sgs.ai_chat.Snatch_female = {
@@ -564,10 +557,12 @@ sgs.ai_chat.Dismantlement_female = sgs.ai_chat.Snatch_female
 
 sgs.ai_chat.Dismantlement = sgs.ai_chat.Snatch
 
+--[[
 sgs.ai_chat.respond_hostile = {
 "擦，小心菊花不保",
 "内牛满面了", "Thôi đi đây"
 }
+]]
 
 sgs.ai_chat.friendly = {
 ":\">"
@@ -578,12 +573,12 @@ sgs.ai_chat.respond_friendly = {
  }
 
 sgs.ai_chat.Duel_female = {
-"Hừm, sợ hãi ư?"
+"Sợ chưa?"
 }
 
 sgs.ai_chat.Duel = {
 "Nào, hãy chiến đầu như 1 người đàn ông!",
-"1 lá bài cũng đủ để giết người"
+"Đi chết đi"
 }
 
 sgs.ai_chat.ExNihilo = {
@@ -592,13 +587,13 @@ sgs.ai_chat.ExNihilo = {
 }
 
 sgs.ai_chat.Collateral_female = {
-"Ngươi không thể thằng bằng cách này được đâu."
+"Cáu quá"
 }
 
 sgs.ai_chat.Collateral = {
 "Vũ khí của ta!"
 }
-
+--[[
 sgs.ai_chat.jijiang_female = {
 "Đừng hy vọng sau này ta sẽ giúp ngươi"
 }
@@ -606,7 +601,7 @@ sgs.ai_chat.jijiang_female = {
 sgs.ai_chat.jijiang = {
 "Ta tới đây!"
 }
-
+]]
 --huanggai
 sgs.ai_chat.KurouCard = {
 "Có ai có đào không!",
@@ -619,14 +614,15 @@ sgs.ai_chat.KurouCard = {
 sgs.ai_chat.indulgence = {
 "Lạc cái gì mà lạc",
 "Thôi lại ngồi chơi",
-"Ế!"
+"Vừa phải thôi chứ!"
 }
 
 --leiji
 sgs.ai_chat.leiji_jink = {
 "Game này là Tam quốc Thiểm nhé",
 "Ngươi nghĩ ta không có thiểm sao",
-"Ha, ta có thiểm"
+"Ha, thiểm nè",
+"Tưởng thế nào"
 }
 
 --quhu
@@ -638,26 +634,24 @@ sgs.ai_chat.quhu = {
 
 --salvageassault
 sgs.ai_chat.daxiang = {
-"Lại con voi nữa.",
-"Mạnh Hoạch đâu, về dạy lại phu nhân đi kìa.",
-"Thân ta voi dày ngựa xéo."
+"Lại sắp có voi nữa.",
+"Mạnh Hoạch đâu, về dạy lại vợ đi kìa."
 }
 
 --xiahoudun
 sgs.ai_chat.ganglie_death = {
-"Đáng đời nhà ngươi."
+"Láo toét, chết đi"
 }
 
 sgs.ai_chat.guojia_weak = {
-"Bán hết cả máu rồi.",
-"Không dám bán máu nữa."
+"Bán hết máu rồi đấy."
 }
 
 sgs.ai_chat.yuanshao_fire = {
 "Ai đó gọi 115 giúp tôi.",
 "Đừng bắn nữa, chết người đấy.",
 "Viên Minh chủ tha mạng cho tiểu nhân.",
-"Cơ thể này sắp mang ngàn lỗ thủng."
+--"Cơ thể này sắp mang ngàn lỗ thủng."
 }
 
 --xuchu
@@ -666,7 +660,7 @@ sgs.ai_chat.luoyi = {
 }
 
 sgs.ai_chat.usepeach = {
-"Quả đào chết tiệt."
+"Lắm đào thế"
 }
 
 sgs.ai_chat.LureTiger = function(self)
@@ -681,7 +675,7 @@ end
 sgs.ai_chat.BurningCamps = function(self)
 	local x = math.random()
 	if x < 0.033 then
-		self.player:speak("Ngọn lựa hãy thanh tẩy mọi thử!")
+		self.player:speak("Hãy để ngọn lựa thanh tẩy mọi thứ!")
 	elseif x < 0.067 then
 		local t = sgs.GetConfig("OriginAIDelay", 0)
 		self.player:speak("Hỡi hỏa thần")

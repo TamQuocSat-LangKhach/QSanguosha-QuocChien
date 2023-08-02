@@ -65,11 +65,11 @@ return {
 	["~wuguotai"] = "Chư vị khanh gia, xin hãy tận lực giúp Trọng Mưu...",
 
 	--陆抗
-	["$keshou1"] = "Lật ngược tính thế, chống đỡ thành nghiêng.",
-	["$keshou2"] = "Ta còn ở đây, đất nước còn đó!",
-	["$zhuwei1"] = "Đắp đất ngăn sông, cắt đứt phản loạn!",
-	["$zhuwei2"] = "Phá đập bỏ đê, nước trào ngăn địch!",
-	["~lukang"] = "Đại Ngô đã mất rồi sao...",
+	["$keshou1"] = "Lấy nhân nghĩa tiếp dân, tự vào thế bất bại.",
+	["$keshou2"] = "Giúp đỡ bách tính, cũng như là dưỡng binh trước trận chiến.",
+	["$zhuwei1"] = "Bối thuỷ chiến chỉ nên phá địch.",
+	["$zhuwei2"] = "Toàn quân đồng tiến, liên chiến khắc Tấn!",
+	["~lukang"] = "Kháng chỉ định kết bằng hữu với Thúc Tử thôi chứ chưa từng có ý phản quốc mà....",
 
 	--袁术
 	["$weidi1"] = "Là tối hay sáng, ngươi tự mình chọn.",

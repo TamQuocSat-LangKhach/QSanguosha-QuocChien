@@ -643,13 +643,13 @@ class Shengweijiang : public TriggerSkill
 public:
     Shengweijiang() : TriggerSkill("shengweijiang")
     {
-        events << DamageCaused << EventPhaseChanging;
+        events << DamageCaused << EventPhaseStart;
         frequency = Compulsory;
     }
 
-    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseChanging && data.value<PhaseChangeStruct>().to == Player::NotActive && player->isAlive() && player->hasShownSkill(this)) {
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
             room->setPlayerMark(player, "##shengweijiang", 0);
             room->detachSkillFromPlayer(player, "shengweijiang", false, false, player->inHeadSkills(this));
         }

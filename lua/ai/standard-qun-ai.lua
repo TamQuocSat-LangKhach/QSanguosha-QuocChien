@@ -1147,7 +1147,33 @@ sgs.ai_skill_use["@@liranggive"] = function(self, prompt)
 	end
 	return "."
 end
+sgs.ai_skill_askforyiji.lirang = function(self, card_ids)
+	local cards = {}
+	for _, card_id in ipairs(card_ids) do
+		table.insert(cards, sgs.Sanguosha:getCard(card_id))
+	end
 
+	local new_friends = {}
+	for _, friend in ipairs(self.friends_noself) do
+		if not self:needKongcheng(friend, true) then table.insert(new_friends, friend) end
+	end
+
+	if #new_friends > 0 then
+		local card, target = self:getCardNeedPlayer(cards, new_friends)
+		if card and target then
+			local flag = string.format("%s_%s_%s", "visible", self.player:objectName(), target:objectName())
+			if not card:hasFlag("visible") then card:setFlags(flag) end--记录方便盗书，是否增加主动盗书配合？
+			return target, card:getEffectiveId()
+		end
+		self:sort(new_friends, "defense")
+		self:sortByKeepValue(cards, true)
+		local flag = string.format("%s_%s_%s", "visible", self.player:objectName(), new_friends[1]:objectName())
+		if not cards[1]:hasFlag("visible") then cards[1]:setFlags(flag) end
+		return new_friends[1], cards[1]:getEffectiveId()
+	else
+		return nil, -1
+	end
+end
 --纪灵
 sgs.ai_skill_playerchosen.shuangren = function(self, targets)--考虑不对其他目标使用牌？
 	if self.player:isKongcheng() then return nil end

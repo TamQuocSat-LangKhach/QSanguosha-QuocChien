@@ -28,7 +28,7 @@ return {
 	["illustrator:zhaoshizhen"] = "Momo Art & Sử Hộ Vương",
 	["cv:zhaoshizhen"] = "",
 	["siweishen"] = "Tử Vi Thần",
-	[":siweishen"] = "Hạn định kỹ: Sau khi bạn giải quyết hấp hối, nếu số máu của bạn ≤0, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn hồi máu đến tối đa;\n- Lệnh người cùng thế lực với bạn nhận kỹ năng »Sanh Vi Tướng«;\n‣ Khi bạn kết thúc lượt, bạn trận vong.",
+	[":siweishen"] = "Hạn định kỹ: Sau khi bạn giải quyết hấp hối, nếu số máu của bạn ≤0, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn hồi máu đến tối đa;\n- Lệnh người cùng thế lực với bạn nhận kỹ năng »Sanh Vi Tướng« cho đến sau khi kết thúc lượt của họ;\n‣ Khi bạn kết thúc lượt, bạn trận vong.",
 	["baixiang"] = "Bạch Tượng",
 	[":baixiang"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Nếu bạn không có Ngựa trong vùng trang bị, khoảng cách từ người khác đến bạn +1, tầm đánh của bạn +1.",
 	["#sa_avoid_baixiang"] = "Bạch Tượng (vô hiệu Nam Man Nhập Xâm)" ,
@@ -37,7 +37,7 @@ return {
 	["@powang-discard"] = "Bà Vương: Có thể chặn sát thương cho %dest và bỏ tất cả trang bị của họ.",
 	["#powang-discard"] = "%from đã phát động »Bà Vương«, chặn sát thương tới %to",
 	["shengweijiang"] = "Sinh Vi Tướng",
-	[":shengweijiang"] = "Tỏa định kỹ:\n• Khi bạn gây sát thương lần đầu trong lượt của bạn, lệnh sát thương này +1.\n• Khi bạn kết thúc lượt, bạn mất kỹ năng này.",
+	[":shengweijiang"] = "Tỏa định kỹ: Khi bạn gây sát thương lần đầu trong lượt của bạn, lệnh sát thương này +1.",
 	["#siweishen-death"] = "Sinh Vi Tướng, Tử Vi Thần, %from đã tuẫn tiết",
 	["@weishen"] = "Tử Vi Thần"
 }

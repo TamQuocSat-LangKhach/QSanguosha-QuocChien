@@ -450,4 +450,14 @@ return {
     ["$zhuihuan2"] = "Có đuổi theo đánh trả, cũng là nhân quả mà thôi。",
  	["~yangwan"] = "Ngộ nhân……bất thục……",
     
+	
+	["$tunchu1"] = "Tuân trữ lương thực là việc lớn, tạm thời không cho ngươi nhiều được.",
+	["$tunchu2"] = "Tuân trữ lương thực phục vụ chiến tranh, chớ có động đao thương.",
+	["$shuliang1"] = "Tướng quân vất vả, rượu thịt có đây rồi!",
+	["$shuliang2"] = "Tướng quân, thẻ đến đây!",
+	["~lifeng"] = "Ta... đã phụ giao phó của thừa tướng.",
+	
+	["$dujin1"] = "Đới binh thập phương, chẳng nhiều bằng kiện giáp của lão phu.",
+	["$dujin2"] = "Thuyền nhẹ độc tiến, tiên phong giết địch,",
+	["~lingcao"] = "Aaaa! Tên từ đâu bay tới?",
 }

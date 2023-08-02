@@ -609,6 +609,8 @@ public:
                     room->cancelTarget(use, to);
                 else {
                     use.to.append(to);
+                    if (use.card->isKindOf("Slash") && use.card->hasFlag("BladeEffect"))
+                        room->setPlayerDisableShow(to, "hd", "Blade");
                     room->sortByActionOrder(use.to);
                 }
 

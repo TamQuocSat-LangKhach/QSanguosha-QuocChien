@@ -68,7 +68,7 @@ local t = {
 	["~Triblade"] = "Chọn 1 lá bài trên tay, chọn mục tiêu kế tiếp rồi bấm \"Xác nhận\"",
 
 	["QinggangSword"] = "Thanh Công Kiếm",
-	[":QinggangSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Sau khi xác định mục tiêu của lá [Sát], vô hiệu hoá phòng cụ của mục tiêu.",
+	[":QinggangSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Sau khi bạn xác định mục tiêu của lá [Sát], ứng với mỗi mục tiêu, bạn lệnh vô hiệu hoá phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
 
 	["Spear"] = "Trượng Bát Xà Mâu",
 	[":Spear"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Bạn có thể chuyển hóa sử dụng/đánh ra 2 lá trên tay thành [Sát].",
@@ -94,19 +94,19 @@ local t = {
 	[":IceSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Khi bạn gây sát thương cho mục tiêu của [Sát], nếu mục tiêu có bài, bạn có thể chặn sát thương này và lần lượt bỏ 2 lá của mục tiêu.",
 
 	["Fan"] = "Chu Tước Vũ Phiến",
-	[":Fan"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Khi bạn sử dụng [Sát] phổ thông, bạn có thể biến [Sát] này thành [Sát Hỏa].",
+	[":Fan"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Khi bạn sử dụng [Sát] phổ thông, bạn có thể chuyển hóa [Sát] này thành [Sát Hỏa].",
 	["fan"] = "Chu Tước Vũ Phiến",
 
 	["SilverLion"] = "Bạch Ngân Sư Tử",
-	[":SilverLion"] = "Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n" ..
-	"1. Khi bạn nhận sát thương, nếu sát thương này > 1, sát thương này trở thành 1.\n" ..
-"2. Sau khi bạn mất [Bạch Ngân Sư Tử] từ vùng trang bị của bạn, bạn hồi 1 máu.\n" ,
+	[":SilverLion"] = "Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:" ..
+	"\n• Khi bạn nhận sát thương, nếu sát thương này > 1, sát thương này trở thành 1." ..
+"\n• Sau khi bạn mất [Bạch Ngân Sư Tử] từ vùng trang bị của bạn, bạn hồi 1 máu.\n" ,
 	["#SilverLion"] = "[<font color=\"yellow\"><b>Bạch Ngân Sư Tử</b></font>] của %from giảm %arg sát thương còn <font color=\"yellow\"><b>1</b></font> điểm.",
 
 	["Vine"] = "Đằng Giáp",
-	[":Vine"] ="Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n" ..
-	"1. [Nam Man Nhập Xâm], [Vạn Tiễn Tề Phát] và [Sát] phổ thông không có hiệu quả với bạn.\n "..
-"2. Khi bạn tính toán sát thương phải nhận, nếu sát thương này có thuộc tính Hỏa, sát thương này +1.\n" ,
+	[":Vine"] ="Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:" ..
+	"\n• [Nam Man Nhập Xâm], [Vạn Tiễn Tề Phát] và [Sát] phổ thông không có hiệu quả với bạn."..
+"\n• Khi bạn tính toán sát thương phải nhận, nếu sát thương này có thuộc tính Hỏa, sát thương này +1." ,
 	["#VineDamage"] = "Phát động hiệu quả [<font color=\"yellow\"><b>Đằng Giáp</b></font>] của %from, sát thương Hỏa tăng từ %arg lên %arg2 điểm.",
 
 	["Horse"] = "Ngựa",
@@ -121,13 +121,13 @@ local t = {
 	["JingFan"] = "Kinh Phàm",
 
 	["amazing_grace"] = "Ngũ Cốc Phong Đăng",
-	[":amazing_grace"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả.\n<b>Hiệu quả</b>: Lật ra từ chồng bài số lá bài bằng với số mục tiêu. Mục tiêu thu lấy 1 lá từ số bài đã lật ra.",
+	[":amazing_grace"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả\n<b>Hiệu quả</b>: Lật ra từ chồng bài số lá bài bằng với số mục tiêu; mục tiêu thu lấy 1 lá từ số bài đã lật ra.",
 
 	["god_salvation"] = "Đào Viên Kết Nghĩa",
-	[":god_salvation"] = "Bài Công cụ\n\n<b>Mục tiêu</b>: Tất cả.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu; Không có hiệu quả với mục tiêu không bị thương.",
+	[":god_salvation"] = "Bài Công cụ\n\n<b>Mục tiêu</b>: Tất cả\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu; Không có hiệu quả với mục tiêu không bị thương.",
 
 	["savage_assault"] = "Nam Man Nhập Xâm",
-	[":savage_assault"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người khác.\n<b>Hiệu quả</b>: Mục tiêu cần đánh ra 1 lá [Sát]; nếu không, họ nhận 1 sát thương.",
+	[":savage_assault"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người khác\n<b>Hiệu quả</b>: Mục tiêu cần đánh ra 1 lá [Sát]; nếu không, họ nhận 1 sát thương.",
 	["savage-assault-slash"] = "%src đã sử dụng [Nam Man Nhập Xâm], hãy đánh ra [Sát]",
 
 	["archery_attack"] = "Vạn Tiễn Tề Phát",
