@@ -283,15 +283,15 @@ int Player::getAttackRange(bool include_weapon) const
     if (fixeddis > 0)
         return fixeddis;
 
-    int original_range = 1, weapon_range = 0;
+    int real_range = 1;
 
     if (include_weapon) {
         const Weapon *card = qobject_cast<const Weapon *>(weapon->getRealCard());
         Q_ASSERT(card);
-        weapon_range = card->getRange();
+        real_range = card->getRange();
     }
 
-    int real_range = qMax(original_range, weapon_range) + Sanguosha->correctAttackRange(this, include_weapon, false);
+    real_range = real_range + Sanguosha->correctAttackRange(this, include_weapon, false);
 
     if (real_range < 0)
         real_range = 0;
