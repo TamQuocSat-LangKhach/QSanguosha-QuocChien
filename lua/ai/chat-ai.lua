@@ -676,6 +676,7 @@ sgs.ai_chat.BurningCamps = function(self)
 	local x = math.random()
 	if x < 0.033 then
 		self.player:speak("Hãy để ngọn lựa thanh tẩy mọi thứ!")
+		--[[
 	elseif x < 0.067 then
 		local t = sgs.GetConfig("OriginAIDelay", 0)
 		self.player:speak("Hỡi hỏa thần")
@@ -694,5 +695,6 @@ sgs.ai_chat.BurningCamps = function(self)
 		self.player:speak("Ta đang kêu gọi người đến đây")
 		self.room:getThread():delay(t)
 		self.player:speak("Hãy thiêu rụi tất cả mọi thứ.")
+		]]
 	end
 end
