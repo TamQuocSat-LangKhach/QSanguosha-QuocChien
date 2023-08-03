@@ -84,7 +84,7 @@ config = {
 
 	easy_text = {
 		"Chậm quá, ngồi chờ nãy giờ !",
-		"Nhanh lên đi, ta cảm ơn !",
+		"Nhanh lên dùm đi, ta đội ơn !",
 		"Hay, đánh rất hay !",
 		"Hảo thủ đoạn, thật không thể xem thường nha~",
 		"Hả, đồ cải trắng. Làm lục bình còn muốn vươn cao ?",
