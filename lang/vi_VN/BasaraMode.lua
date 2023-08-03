@@ -45,13 +45,13 @@ return
 	["#HalfMaxHpLeft"] = "%from có 2 tướng lẻ máu, có thể rút 1 lá bài",
 	["GameRule_AskForArraySummon"] = "Phát động trận pháp",
 	["#SummonType"] = "Phát động trận pháp bày bố %arg",
-	["summon_type_siege"] = "Bao vây",
+	["summon_type_siege"] = "Vây công",
 	["summon_type_formation"] = "Đội hình",
 	["#SummonResult"] = "%from đã chọn %arg",
 	["summon_success"] = "Hưởng ứng",
 	["summon_failed"] = "Không hưởng ứng",
-	["SiegeSummon"] = "Hưởng ứng bao vây",
-	["SiegeSummon!"] = "Hưởng ứng bao vây!",
+	["SiegeSummon"] = "Hưởng ứng vây công",
+	["SiegeSummon!"] = "Hưởng ứng vây công!",
 	["FormationSummon"] = "Hưởng ứng đội hình",
 	["FormationSummon!"] = "Hưởng ứng đội hình!",
 	["GameRule:TriggerOrder"] = "Hãy chọn kỹ năng phát động",
@@ -134,7 +134,7 @@ return
     
     ["#GameRule_CareeristShow"] = "%from đã bộc lộ Dã Tâm.",
 
-    ["@careerist-add"] = "Có thể gia nhập thế lực dã tâm của %src",
+    ["@careerist-add"] = "Có thể gia nhập thế lực dã tâm của %src, bổ xung bài tới 4 lá và hồi 1 máu",
     ["GameRule:CareeristAdd:yes"] = "Tham gia",
     ["GameRule:CareeristAdd:no"] = "Không tham gia",
 

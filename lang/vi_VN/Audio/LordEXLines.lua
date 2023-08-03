@@ -116,9 +116,11 @@ return {
 	["~beimihu"] = "Rồi ta cũng theo hoàng tuyền đi đến Hirasaka... ...",
 
 
-	["$sidi1"] = "Nắm được hành động của địch, lên trước áp chế",
-	["$sidi2"] = "Đoán trước hành động của địch, phục binh diệt hết",
-	["~caozhen"] = "Ung Lương rơi vào loạn lạc, đều là tại ta...",
+	["$sidi1"] = "Địch chia binh đi đường khe núi, tự ta dẫn binh đánh chặn chúng,",
+	["$sidi2"] = "Ta đoán địch tất đánh Trần Thương, tăng cường trọng binh ở đó,",
+	["$sidi3"] = "Đúng như tính toán, chiến sự vô lo,",
+	["$sidi4"] = "Ta đã chuẩn bị từ sớm, kêu ngươi không cần tốn công trở lại,",
+	["~caozhen"] = "Đến khi nào thì cơn mưa rào này mới dứt.",
 
 	--顾雍
 	["$lifu2"] = "Phải biết thẩm thời đạc thế, thì mới lường được mọi đổi thay",
@@ -202,6 +204,8 @@ return {
 
 	["$wanglie1"] = "Mãnh tướng chi liệt, thống suất chi sở vãng.",
 	["$wanglie2"] = "Trung thành dũng cảm với Tử Long, mãnh liệt tướng hợp.",
+	["$dizai1"] = "Binh pháp rằng, đánh lâu bất lợi, chớ có tham công.",
+	["$dizai2"] = "Sư đoàn tinh nhuệ, ai có thể chống lại?",
 	["~chendao"] = "Bạch nhị binh của ta...không thể tiếp tục cống hiến cho tiên đế được nữa.",
 
 	["$yinbingx2"] = "Tướng quân hãy đi lối nhỏ, truy binh để ta ứng phó!",
@@ -308,13 +312,11 @@ return {
 
 
 
-	["$bushi1"] = "Mạnh Đức từng so lệnh vu như lời tổ tiên ta? Và tặng gạo thịt như lời thăm hỏi.",
-	["$bushi2"] = "Thục nhị Lưu Diệc vẫn nhìn Hán Trung, sao không uống chén nước thánh này để lòng tĩnh tâm lại.",
-	["$bushi3"] = "Huyết mạch ta từ Giang Đông, có duyên đã gặp nay ta sẽ truyền thụ lại!",
-	["$bushi4"] = "Những người theo đạo ta, tinh khí tốt đẹp đều sẽ được độ kiếp, tu thành chính quả!",
-	["$midao1"] = "Ngươi thành tâm tu đạo, Thiên sư gia đã giúp, mau đi làm việc thiện.",
-	["$midao2"] = "Cơm thịt đầy đủ, chúng sinh hạnh phúc, ta sẽ chỉ cho ngươi cách xoay chuyển càn khôn.",
-	["~zhanglu"] = "Thân nhập thổ hoá thần vũ, chẳng thể nói nên lời!",
+	["$bushi1"] = "Tranh đấu mãi vẫn chẳng có được chiến thắng",
+	["$bushi2"] = "Hoà bình vĩnh viễn không bao giờ mất.",
+	["$midao1"] = "Ân kết Thiên Địa, pháp hội bát hoang",
+	["$midao2"] = "Hàng ngũ Đấu Mễ đạo, ăn no mặc ấm.",
+	["~zhanglu"] = "Ai dà... Nghĩa bất địch võ đạo nan ngự binh...",
 
 
 	["$quanji1"] = "Kịch hay mới chỉ bắt đầu.",
@@ -352,13 +354,11 @@ return {
 
 
 
-	["$zhuhai1"] = "Trượng kiếm hàng thiên hạ, trừ ác ngay bây giờ.",
-	["$zhuhai2"] = "Quảng Nguyên, mau giết tên giặc này cho ta.",
-	["$pozhen1"] = "Tử Long tướng quân đã vào cửa, trận này ắt bị phá.",
-	["$pozhen2"] = "Trận mi tuy đẹp nhưng ta sẽ phá được.",
-	["$jiancai1"] = "Nét chữ của mẹ già đang gọi, Thứ không thể không đi.",
-	["$jiancai2"] = "Ngoạ Long là thiên tài vô song, sứ quân sao không đến cầu tài?",
-	["~xushu"] = "Mong mọi người làm việc tốt cho vua, đừng bắt đầu rồi kết thúc như ta.",
+	["$qiance1"] = "Bỏ kiếm luyện chữ, chuyên tâm thao lược",
+	["$qiance2"] = "Bỏ võ học văn, chuyên tâm trù hoạ.",
+	["$jujian1"] = "Tài năng của người này tốt hơn tôi mười lần.",
+	["$jujian2"] = "Tiên sinh đại tài, xin hãy nhận chút quà này.",
+	["~xushu"] = "Trung hiếu không thể vẹn toàn đôi bên...",
 
 
 	["$quanjin1"] = "Giờ xưng Nguỵ Công, sau này có thể dùng danh vị đánh Thục diệt Ngô.",
@@ -428,11 +428,11 @@ return {
 	["$fangyuan2"] = "Hai quân đối luỹ, sao dám lỏng lẻo? Xem ta đây!",
 	["~zhuling"] = "Con đường trở thành tướng giỏi...còn dài.",
 
-	["$tongdu1"] = "Làm chính giả, cần học cách biến đồ hỏng thành bảo vật.",
-	["$tongdu2"] = "Ký liên hữu lương nhân vị xuất, tựu hữu lương xuất vị nhân.",
-	["$qingyin1"] = "Quân tử hoà nhi bất đồng, mọi người ở lại vui vẻ.",
-	["$qingyin2"] = "Ta ngủ một mình, các người hãy qua chơi với Trương tướng quân.",
-	["~liuba"] = "Vũ đài của ta, đầu đuôi quá nhỏ.",
+	["$tongdu1"] = "Thống Kinh, Ích nhị châu chư vật chi giá, dĩ vy dân sinh quốc tộ chi đại kế",
+	["$tongdu2"] = "Đúc nên đồng trực bách, vừa giúp bình ổn vật giá, vừa khiến dân quân yên lòng",
+	["$qingyin1"] = "Công đã thành thì nên rút lui, đừng màng về thế sự nữa",
+	["$qingyin2"] = "Thiên hạ ký định, ta cũng nên ở ẩn, di dưỡng thiên niên thôi",
+	["~liuba"] = "Gia quốc rồi sẽ có sự thay đổi lớn, chỉ không ngờ tấm thân này lại phải đi trước....",
 
 	["$tongling1"] = "Nhờ Hiếu Trực quá lời khen ngợi, tranh thủ lúc này có chút quà báo đáp, xin hãy nhận cho。",
     ["$tongling2"] = "Vùng lên đi, hay lý nào ngươi cam tâm làm hạ khách của chúng。",
@@ -450,7 +450,26 @@ return {
     ["$zhuihuan2"] = "Có đuổi theo đánh trả, cũng là nhân quả mà thôi。",
  	["~yangwan"] = "Ngộ nhân……bất thục……",
     
+	["$kenshang1"] = "Chọn binh tuyển tướng thế nào, đánh phát biết liền",
+	["$kenshang2"] = "Tung hoành Tam Phụ, khẩn thương dong phú",
+	["~maxiumatie"] = "Anh em ta, nguyện chết theo phụ soái.....",
 	
+	["$jutian2"] = "Cho đi khoản nhỏ, thu về khoản lớn!",
+	["$jutian1"] = "Tên vô danh tiểu tốt nào dám tiến lên một bước?",
+	["~zhuhuan"] = "Thành này cao sừng sững, ta chẳng thể công được...",
+	
+	["$haokui1"] = "Trù hoạch thủy lợi nông vụ, đều vì bách tính Từ Châu.",
+	["$haokui2"] = "Dưỡng kỳ dục cô, thị dân như thương, dĩ phong định Từ Châu",
+	["$xushi1"] = "Ai là hổ, ai là ưng, với ta đều chỉ như quân cờ trên bàn cả",
+	["$xushi2"] = "Liệu đoạn khấu đồ, thi sách dĩ trở",
+	["~chendeng"] = "Không còn nguyên hóa, mệnh ta chỉ đến thế là cùng....",
+
+	["$xiaolian1"] = "Điển tướng quân, hãy xem ai giết địch nhiều hơn nào!",
+	["$xiaolian2"] = "Tên phản tặc ngươi, đến một ta giết một!",
+	["$kangkai1"] = "Phụ thân lên ngựa, hài nhi sẽ đi theo sau.",
+	["$kangkai2"] = "Phụ thân chạy mau, con sẽ đoạn hậu!",
+	["~caoang"] = "Phụ thân đã an toàn rồi....",
+
 	["$tunchu1"] = "Tuân trữ lương thực là việc lớn, tạm thời không cho ngươi nhiều được.",
 	["$tunchu2"] = "Tuân trữ lương thực phục vụ chiến tranh, chớ có động đao thương.",
 	["$shuliang1"] = "Tướng quân vất vả, rượu thịt có đây rồi!",

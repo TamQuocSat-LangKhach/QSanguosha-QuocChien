@@ -33,7 +33,7 @@ return {
 	["#lvbu"] = "Kích Chỉ Trung Nguyên",
 	["lvbu"] = "Lữ Bố",
 	["wushuang"] = "Vô Song",
-	[":wushuang"] = "Tỏa định kỹ:\n• Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn lệnh họ cần sử dụng 2 [Thiểm] để triệt tiêu [Sát] này.\n• Sau khi bạn xác định mục tiêu của [Quyết Đấu] ứng với mỗi mục tiêu hoặc sau khi bạn trở thành mục tiêu của [Quyết Đấu], bạn lệnh người cùng bạn [Quyết Đấu] cần đánh ra 2 [Sát] mỗi lần để hưởng ứng.\n• Sau khi bạn lựa chọn mục tiêu cho [Quyết Đấu] không chuyển hóa, bạn có thể lựa chọn thêm tối đa 2 người để trở thành mục tiêu.",
+	[":wushuang"] = "Tỏa định kỹ:\n• Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn lệnh họ cần sử dụng 2 [Thiểm] để triệt tiêu [Sát] này.\n• Sau khi bạn xác định mục tiêu của [Quyết Đấu] ứng với mỗi mục tiêu hoặc sau khi bạn trở thành mục tiêu của [Quyết Đấu], bạn lệnh người cùng bạn [Quyết Đấu] cần đánh ra 2 [Sát] mỗi lần để hưởng ứng.\n• Sau khi bạn lựa chọn mục tiêu cho [Quyết Đấu] phi chuyển hóa, bạn có thể lựa chọn thêm tối đa 2 người để trở thành mục tiêu.",
 	["@wushuang-slash-1"] = "%src [Quyết Đấu] với bạn, bạn phải đánh ra 2 [Sát] liên tiếp.",
 	["@wushuang-slash-2"] = "%src [Quyết Đấu] với bạn, bạn phải đánh ra thêm 1 [Sát] khác.",
 	["@wushuang-add"] = "Vô Song: Có thể chọn thêm 2 mục tiêu cho [Quyết Đấu]",

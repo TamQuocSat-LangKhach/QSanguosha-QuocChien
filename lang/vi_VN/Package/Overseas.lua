@@ -104,7 +104,7 @@ return {
     ["wanglie"] = "Vãng Liệt",
     [":wanglie"] = "\n• Lá đầu tiên bạn sử dụng trong giai đoạn ra bài không giới hạn khoảng cách.\n• Giai đoạn ra bài, khi bạn sử dụng [Sát] hoặc công cụ phổ thông, bạn có thể lệnh cho tất cả mọi người không được hưởng ứng với lá này; nếu làm vậy, bạn không thể sử dụng bài trong giai đoạn này.",
 	["dizai"] = "Địa Tải",
-	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công trong quan hệ vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
+	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
 	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
     ["#tianyu"] = "Quy Lược Minh Luyện",

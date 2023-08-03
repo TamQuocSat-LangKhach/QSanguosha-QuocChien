@@ -763,6 +763,21 @@ sgs.ai_skill_invoke.wanglie = function(self, data)
     return false
 end
 
+sgs.ai_skill_discard.dizai_invoke = function(self, discard_num, min_num, optional, include_equip)
+	
+	local damage = self.room:getTag("CurrentDamageStruct"):toDamage()--造成伤害时DamageCaused,没有当前伤害信息CurrentDamageStruct
+	if damage.to and self:damageIsEffective_(damage) and not self.player:isNude() then
+		if not self:hasHeavySlashDamage(damage.from, damage.card, damage.to) then
+			if self:cantbeHurt(damage.to, damage.from, damage.damage + 1)
+				or (damage.to:isChained() and not self:isGoodChainTarget_(damage))
+				or damage.to:hasArmorEffect("SilverLion") then return {} end
+		end
+		return self:askForDiscard("dummy_reason", 1, 1, false, true)
+	end
+	return {}
+	
+	--return self:askForDiscard("dummy_reason", 1, 1, false, true)
+end
 --田豫
 sgs.ai_skill_invoke.zhenxi = function(self, data)
 	local target = data:toPlayer()

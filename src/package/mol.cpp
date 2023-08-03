@@ -1056,6 +1056,70 @@ public:
     }
 };
 
+class Dizai : public BattleArraySkill
+{
+public:
+    Dizai() : BattleArraySkill("dizai", HegemonyMode::Siege)
+    {
+        events << DamageCaused;
+    }
+
+    virtual bool canPreshow() const
+    {
+        return false;
+    }
+
+    virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        TriggerList skill_list;
+        DamageStruct damage = data.value<DamageStruct>();
+        if (!damage.card || !damage.card->isKindOf("Slash") || damage.transfer || damage.chain) return skill_list;
+        ServerPlayer *target = damage.to;
+        QList<ServerPlayer *> skill_owners = room->findPlayersBySkillName(objectName());
+        foreach (ServerPlayer *skill_owner, skill_owners) {
+            if (BattleArraySkill::triggerable(skill_owner) && skill_owner->hasShownSkill(this) && player->inSiegeRelation(skill_owner, target)) {
+                if (player != skill_owner) {
+                    skill_list.insert(skill_owner, QStringList(objectName()));
+                } else if (player->getNextAlive() == target) {
+                    Player *ask_who = target->getNextAlive();
+                    if (ask_who && ask_who != player && ask_who->isFriendWith(player)) {
+                        ServerPlayer *p = room->findPlayerbyobjectName(ask_who->objectName());
+                        skill_list.insert(p, QStringList(objectName()));
+                    }
+                } else if (player->getLastAlive() == target) {
+                    Player *ask_who = target->getLastAlive();
+                    if (ask_who && ask_who != player && ask_who->isFriendWith(player)) {
+                        ServerPlayer *p = room->findPlayerbyobjectName(ask_who->objectName());
+                        skill_list.insert(p, QStringList(objectName()));
+                    }
+                }
+            }
+        }
+        return skill_list;
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
+    {
+        DamageStruct damage = data.value<DamageStruct>();
+        QString prompt = QString("@dizai-discard:%1:%2").arg(damage.from->objectName()).arg(damage.to->objectName());
+        if (ask_who && ask_who->hasShownSkill(this) &&
+                room->askForDiscard(ask_who, objectName(), 1, 1, true, true, prompt, true)) {
+            room->doBattleArrayAnimate(ask_who, damage.to);
+            room->broadcastSkillInvoke(objectName(), ask_who);
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *, ServerPlayer *, QVariant &data, ServerPlayer *) const
+    {
+        DamageStruct damage = data.value<DamageStruct>();
+        damage.damage++;
+        data = QVariant::fromValue(damage);
+        return false;
+    }
+};
+
 class YinbingX : public PhaseChangeSkill
 {
 public:
@@ -3117,6 +3181,7 @@ OverseasPackage::OverseasPackage()
     chendao->addCompanion("zhaoyun");
     chendao->addSkill(new Wanglie);
     chendao->addSkill(new WanglieTarget);
+    chendao->addSkill(new Dizai);
     related_skills.insertMulti("wanglie", "#wanglie-target");
 
     General *zumao = new General(this, "zumao", "wu");

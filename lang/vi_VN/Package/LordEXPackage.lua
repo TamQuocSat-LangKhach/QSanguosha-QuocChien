@@ -160,7 +160,7 @@ return {
     ["@rule_the_world-slash"] = "Hiệu Lệnh Thiên Hạ: Bỏ 1 lá trên tay, xem như sử dụng [Sát] với %dest.",
 
     ["conquering"] = "Khắc Phục Trung Nguyên",
-    [":conquering"] = "Bài công cụ - Thục\n\nMục tiêu: Tùy ý\nHiệu quả: Mục tiêu lựa chọn 1 mục:\n1. Xem như sử dụng [Sát] (Khi người thế lực Thục gây sát thương do sử dụng [Sát] này, sát thương +1);\nRút 1 lá (Người thế lực Thục đổi thành rút 2 lá).",
+    [":conquering"] = "Bài công cụ - Thục\n\nMục tiêu: Tùy ý\nHiệu quả: Mục tiêu lựa chọn 1 mục:\n1. Xem như sử dụng [Sát] (Sát thương từ [Sát] này +1 nếu do người thế lực Thục sử dụng);\nRút 1 lá (Người thế lực Thục đổi thành rút 2 lá).",
     ["@conquering-slash"] = "Khắc Phục Trung Nguyên: Chọn mục tiêu, xem như sử dụng [Sát], hoặc bấm »Hủy bỏ« để rút bài. ",
 
     ["consolidate_country"] = "Cố Quốc An Bang",
@@ -334,9 +334,9 @@ return {
 	[":juejue"] = "\n• Khi bắt đầu giai đoạn bỏ bài, bạn có thể mất 1 máu; Nếu làm vậy, khi kết thúc giai đoạn này, nếu trong giai đoạn này bạn có bỏ bài, bạn lệnh tất cả người khác chọn 1 mục:\n1. Họ đưa X lá trên tay vào chồng bài bỏ (X là số lá bạn đã bỏ trong giai đoạn này);\n2. Bạn gây 1 sát thương cho họ.\n• Khi bạn giết người cùng thế lực với bạn, bạn bỏ qua chấp hành thưởng phạt.",
 	["fangyuan"] = "Ngư Lân",
 	[":fangyuan"] = "Trận pháp kỹ: Quan hệ vây công:\n• Nếu bạn là người vây công, giới hạn trữ bài của người vây công +1, giới hạn trữ bài của người bị vây công -1.\n• Khi bắt đầu giai đoạn kết thúc, nếu bạn là người bị vây công trong quan hệ vây công, bạn xem như sử dụng [Sát] với 1 người vây công",
-	["@fangyuan-slash"] = "Ngư Lân: chọn 1 người đang vây công bạn, xem như sử dụng [Sát] với họ",
+	["@fangyuan-slash"] = "Ngư Lân: Chọn 1 người đang vây công bạn, xem như sử dụng [Sát] với họ",
 	
-	["@juejue-discard"] = "Trấn Vệ: Bỏ %arg lá trên tay, hoặc %src gây 1 sát thương với bạn.",
+	["@juejue-discard"] = "Trấn Vệ: Đưa %arg lá trên tay vào chồng bài bỏ, hoặc %src gây 1 sát thương với bạn.",
 	
 	["#fangyuan-maxcards"] = "Ngư Lân",
 
