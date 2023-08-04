@@ -59,7 +59,7 @@ return {
 
 	["$shuangxiong1"] = "Ta chính là thượng tướng Hà Bắc Nhan Lương (Văn Xú)!",
 	["$shuangxiong2"] = "Mau tới đấu với ta một trận sống còn đi!",
-	["~yanliangwenchou"] = "Vị đại tướng mặt đỏ râu dài này là....",
+	["~yanliangwenchou"] = "Vị đại tướng mặt Đỏ râu dài này là....",
 
 	["$wansha1"] = "Thần tiên khó cứu, thần tiên khó cứu à",
 	["$wansha2"] = "Ta muốn ngươi chết canh ba, ai dám giữ lại canh năm chứ!",

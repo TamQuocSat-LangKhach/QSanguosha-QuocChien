@@ -16,7 +16,7 @@ return {
     ["food"] = "Lương",
 	["@tunchu-push"] = "Truẫn Trữ: Chọn từ 1 đến 2 lá để đặt [Lương]",
 	["tunchu"] = "Truân Trữ",
-	[":tunchu"] = "Giai đoạn rút bài, bạn có thể rút thêm 2 lá;\n‣ Bạn không thể sử dụng [Sát] trong lượt này;\n‣ Khi kết thúc giai đoạn rút bài, bạn đặt từ 1 đến 2 lá trên tay lên tướng này, gọi là [Lương]." ,
+	[":tunchu"] = "Giai đoạn rút bài, bạn có thể rút thêm 2 lá;\n▷ Bạn không thể sử dụng [Sát] trong lượt này;\n▶ Khi kết thúc giai đoạn rút bài, bạn đặt từ 1 đến 2 lá trên tay lên tướng này, gọi là [Lương]." ,
 	["shuliang"] = "Thâu Lương",
 	["@shuliang"] = "Có thể bỏ 1 [Lương] để cho %src rút 2 lá.",
 	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",

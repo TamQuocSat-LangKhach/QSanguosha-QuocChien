@@ -107,7 +107,7 @@ return
 	[":HalfMaxHpCard"] = "Tiêu Ký\n\nCách dùng 1:\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn rút 1 lá.\n\nCách dùng 2:\nGiai đoạn bỏ bài, nếu bài trên tay lớn hơn giới hạn trữ bài, bài có thể loại bỏ Tiêu ký này, giới hạn trữ bài của bạn +2.",
 	
 	["FirstShowCard"] = "Tiên Khu",
-	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn chọn 1 người chơi có tướng chưa mở (bỏ qua nếu không có tướng nào chưa mở), bạn bổ sung bài trên tay tới 4 lá, sau đó bạn xem 1 tướng ẩn của người đã chọn.",
+	[":FirstShowCard"] = "Tiêu Ký\n\nGiai đoạn ra bài, bạn có thể loại bỏ Tiêu ký này, bạn chọn 1 người có tướng chưa mở (bỏ qua nếu không có tướng nào chưa mở), bạn bổ sung bài trên tay tới 4 lá, sau đó bạn xem 1 tướng ẩn của người đã chọn.",
 	
 	["careerman"] = "Dã Tâm Gia",
     ["CareermanCard"] = "Dã Tâm Gia",
@@ -116,7 +116,7 @@ return
     ["careerman:draw2cards"] = "Rút 2 lá",
     ["careerman:peach"] = "Xem như sử dụng [Đào]",
     ["careerman:firstshow"] = "Rút đến khi 4 lá trên tay và xem 1 tướng ẩn",
-    ["@careerman-target"] = "Dã Tâm Gia: Chọn 1 người chơi để xem 1 tướng ẩn",
+    ["@careerman-target"] = "Dã Tâm Gia: Chọn 1 người để xem 1 tướng ẩn",
     ["@careerman-use"] = "Có thể loại bỏ tiêu ký [Dã Tâm Gia] để giới hạn trữ bài +2.",
     ["@careerman-choose"] = "Chọn 1 hiệu ứng để phát động",
 	
@@ -128,7 +128,7 @@ return
 	["showdeputy"] = "Lật tướng",
 	[":showdeputy"] = "Lật Phó tướng",
 	
-	["@careerist-show"] = "Bộc lộ dã tâm: Có thể lật Chủ tướng để tiếp tục trò chơi hoặc đầu hàng.",
+	["@careerist-show"] = "Bộc lộ dã tâm: Có thể lật Chủ tướng để tiếp tục ván đấu hoặc đầu hàng.",
     ["GameRule:CareeristShow:yes"] = "Lật tướng Dã Tâm",
     ["GameRule:CareeristShow:no"] = "Chấp nhận đầu hàng để sống",
     

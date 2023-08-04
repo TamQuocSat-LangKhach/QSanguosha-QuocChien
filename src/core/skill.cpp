@@ -115,6 +115,7 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
     desc.replace(" < ", " &lt; ");
     desc.replace(" > ", " &gt; ");
     desc.replace("\n", "<br/>");
+    desc.replace("kỹ năng này", "»" + Sanguosha->translate(skill_name) + "«");
     return desc;
 }
 

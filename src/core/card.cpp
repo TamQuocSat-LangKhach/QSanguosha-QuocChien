@@ -410,6 +410,8 @@ QString Card::getDescription(bool yellow) const
         }
     }
 
+    desc.replace(" < ", " &lt; ");
+    desc.replace(" > ", " &gt; ");
     desc.replace("\n", "<br/>");
     if (isTransferable()) {
         desc += "<br/><br/>";

@@ -1223,22 +1223,24 @@ public:
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer * &ask_who) const
+    virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (player == NULL) return QStringList();
+        TriggerList skill_list;
+        if (player == NULL) return skill_list;
         if (triggerEvent == TargetChosen) {
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.card->isKindOf("SavageAssault") && use.index == 0) {
-                ServerPlayer *menghuo = room->findPlayerBySkillName(objectName());
-                if (TriggerSkill::triggerable(menghuo) && use.from != menghuo) {
-                    ask_who = menghuo;
-                    return QStringList(objectName());
+                QList<ServerPlayer *> menghuos = room->findPlayersBySkillName(objectName());
+                foreach (ServerPlayer *menghuo, menghuos) {
+                    if (TriggerSkill::triggerable(menghuo) && use.from != menghuo) {
+                        skill_list.insert(menghuo, QStringList(objectName()));
+                    }
                 }
             }
         } else if (triggerEvent == ConfirmDamage && !room->getTag("HuoshouSource").isNull()) {
             DamageStruct damage = data.value<DamageStruct>();
             if (!damage.card || !damage.card->isKindOf("SavageAssault"))
-                return QStringList();
+                return skill_list;
 
             ServerPlayer *menghuo = room->getTag("HuoshouSource").value<ServerPlayer *>();
             damage.from = menghuo->isAlive() ? menghuo : NULL;
@@ -1249,7 +1251,7 @@ public:
             if (use.card->isKindOf("SavageAssault"))
                 room->removeTag("HuoshouSource");
         }
-        return QStringList();
+        return skill_list;
     }
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *ask_who) const

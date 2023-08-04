@@ -59,6 +59,7 @@ CommonTranslationTable = {
 	["handcards"] = "trên tay",
 
 	["compulsory"] = "Tỏa định kỹ",
+	["once_per_whole_game"] = "Một lần trong ván đấu",
 	["once_per_turn"] = "Một lần trong giai đoạn ra bài",
 	["once_per_whole_turn"] = "Một lần trong lượt của mỗi người",
 	["once_per_your_whole_turn"] = "Một lần trong lượt của bạn",
@@ -160,8 +161,8 @@ CommonTranslationTable = {
 	["#HegNullificationDetails"] = "Phát động [<font color=\"yellow\"><b>Vô Giải Khả Kích - Quốc</b></font>] là %from với %to chặn tác dụng [%arg]",
 	["#HegNullificationEffect"] = "Đã phát động [<font color=\"yellow\"><b>Vô Giải Khả Kích - Quốc</b></font>] là %from với %to chặn tác dụng [%arg]",
 	["#HegNullificationSelection"] = "%from phát động [<font color=\"yellow\"><b>Vô Giải Khả Kích - Quốc</b></font>] chặn %arg" ,
-	["hegnul_single"] = "Hiệu quả với một người chơi" ,
-	["hegnul_all"] = "hiệu quả với tất cả người chơi cùng phe" ,
+	["hegnul_single"] = "Hiệu quả với 1 người" ,
+	["hegnul_all"] = "Hiệu quả với toàn bộ thế lực" ,
 	["#SkillAvoid"] = "Nhận hiệu quả [%arg], %from không thể thành mục tiêu của [%arg2]",
 	["#CardNullified"] = "[%arg] đối với %from vô hiệu",
 	["#Transfigure"] = "%from chuyển thành %arg",
@@ -277,8 +278,8 @@ CommonTranslationTable = {
 
 	["custom_scenario"] = "Bối cảnh tự chọn",
 
-	["Player"] = "Người chơi",
-	["AI"] = "Máy AI",
+	["Player"] = "Người",
+	["AI"] = "BOT",
 
 	--for GuhuoBox:
 	["SingleTargetTrick"] = "Công cụ đơn mục tiêu",

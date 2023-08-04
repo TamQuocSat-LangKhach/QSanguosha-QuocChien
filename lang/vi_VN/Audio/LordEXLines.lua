@@ -62,7 +62,7 @@ return {
 
 	["$fenglve2"] = "Ký Châu bảo địa, hiền nhân nên sống ở đó.",
 	["$fenglve1"] = "Dòng dõi được gọi là hiền nhân trong thiên hạ ngày nay, chỉ có họ Viên.",
-	["$anyong2"] = "Thuỷ triều đen ở Ký Châu dâng cao, quần sĩ sống trong nguy hiểm tai biến.",
+	["$anyong2"] = "Thuỷ triều Đen ở Ký Châu dâng cao, quần sĩ sống trong nguy hiểm tai biến.",
 	["$anyong1"] = "Điện hạ thái thú cùng nhìn xem, còn bao người ủng hộ nhà Hán?",
 	["~xunchen"] = "Vi thần đương bất nhị, nhị thần đương vi.",
 
