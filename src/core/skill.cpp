@@ -84,6 +84,9 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
     if (des_src == ":" + skill_name)
         return desc;
 
+    if (!in_game && des_src.startsWith("•") && desc.isEmpty()) {
+        desc.prepend("<br/>");
+    }
     foreach (const QString &skill_type, Sanguosha->getSkillColorMap().keys()) {
         QString to_replace = Sanguosha->translate(skill_type);
         if (to_replace == skill_type) continue;

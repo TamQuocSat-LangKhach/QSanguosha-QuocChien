@@ -54,7 +54,7 @@ return {
 	["#new_zuoci"] = "Quỷ Ảnh Thần Đạo",
 	["new_zuoci"] = "Tả Từ",
 	["yigui"] = "Dịch Quỷ",
-	[":yigui"] = "\n• Sau khi bạn mở tướng này lần đầu tiên, bạn nhận 2 lá từ chồng bài tướng đặt lên tướng này, gọi là [Hồn].\n"..
+	[":yigui"] = "• Sau khi bạn mở tướng này lần đầu tiên, bạn nhận 2 lá từ chồng bài tướng đặt lên tướng này, gọi là [Hồn].\n"..
 	"• Khi bạn cần sử dụng lá cơ bản hoặc công cụ phổ thông có mục tiêu, nếu bạn chưa sử dụng lá đó bằng kỹ năng này trong lượt này, bạn có thể bỏ 1 [Hồn], xem như bạn sử dụng lá đó;\n‣ Người thế lực gốc khác với [Hồn] không thể trở thành mục tiêu của lá này.",
 
 	["jihun"] = "Cấp Hồn",
@@ -101,7 +101,7 @@ return {
 	["#lvfan"] = "Trung Đốc Lượng Trực",
 	["diaodu"] = "Điều Độ",
 	["#diaodu-draw"] = "Điều Độ",
-	[":diaodu"] = "\n• Khi 1 người cùng thế lực với bạn sử dụng trang bị, họ có thể rút 1 lá.\n• Đầu giai đoạn ra bài, bạn có thể thu lấy 1 lá trong vùng trang bị của 1 người cùng thế lực, sau đó, nếu người bị thu lấy là:\n - Bạn: Bạn giao lá đó cho 1 người khác;\n - Không phải bạn: Bạn có thể giao lá đó cho 1 người khác ngoại trừ họ.",
+	[":diaodu"] = "• Khi 1 người cùng thế lực với bạn sử dụng trang bị, họ có thể rút 1 lá.\n• Đầu giai đoạn ra bài, bạn có thể thu lấy 1 lá trong vùng trang bị của 1 người cùng thế lực, sau đó, nếu người bị thu lấy là:\n - Bạn: Bạn giao lá đó cho 1 người khác;\n - Không phải bạn: Bạn có thể giao lá đó cho 1 người khác ngoại trừ họ.",
 	["@diaodu"] = "Có thể phát động »Điều Độ« để thu lấy 1 trang bị của người cùng thế lực.",
 	["@diaodu-give"] = "Điều Độ: Giao [%arg] cho 1 người khác.",
 	["@diaodu-draw"] = "Có thể phát động »Điều Độ« của %src, rút 1 lá.",
@@ -112,15 +112,7 @@ return {
 	["lord_sunquan"] = "Tôn Quyền - Quân",
 	["&lord_sunquan"] = "Tôn Quyền",
 	["jiahe"] = "Gia Hỏa",
-	[":jiahe"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Duyên Giang Phong Hỏa Đồ«.\n\n»<b>Duyên Giang Phong Hỏa Đồ</b>«:"..	
-					"\n• Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên »Duyên Giang Phong Hỏa Đồ«, gọi là [Phong Hỏa]." ..
-					"\n• Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa]:" ..
-					"\n- 1+: »Anh Tư«;" ..
-					"\n- 2+: »Hảo Thi«;" ..
-					"\n- 3+: »Thiệp Liệp«;" ..
-					"\n- 4+: »Độ Thế«;" ..
-					"\n‣ Nếu có 5 [Phong Hỏa] trở lên, họ có thể nhận thêm 1 kỹ năng khác." ..
-					"\n• Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
+	[":jiahe"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Duyên Giang Phong Hỏa Đồ«.\n\n»<b>Duyên Giang Phong Hỏa Đồ</b>«:\n• Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên »Duyên Giang Phong Hỏa Đồ«, gọi là [Phong Hỏa].\n• Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa]:\n- 1+: »Anh Tư«;\n- 2+: »Hảo Thi«;\n- 3+: »Thiệp Liệp«;\n- 4+: »Độ Thế«;\n‣ Nếu có 5 [Phong Hỏa] trở lên, họ có thể nhận thêm 1 kỹ năng khác.\n• Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
 	["lianzi"] = "Liễm Tư",
 	[":lianzi"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá trên tay, sau đó lật ra X lá trên đầu chồng bài rút (X là số [Phong Hỏa] cộng với số lá trong vùng trang bị của những người thế lực Ngô), bạn thu lấy những lá cùng loại với lá bạn bỏ;\n‣ Nếu trong 1 lần bạn thu lấy > 3 lá, bạn mất kỹ năng này và nhận kỹ năng »Chế Hành«.",
 	["jubao"] = "Tư Bảo",
@@ -130,14 +122,7 @@ return {
 	["lianzi#down"] = "Thu lấy",
 	["flamemap"] = "Duyên Giang Phong Hỏa Đồ",
 	["flame_map"] = "Phong Hỏa",
-	[":flamemap"] = "\n• Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên »Duyên Giang Phong Hỏa Đồ«, gọi là [Phong Hỏa].\n" ..
-					"• Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa]:\n" ..
-					"- 1+: »Anh Tư«;\n" ..
-					"- 2+: »Hảo Thi«;\n" ..
-					"- 3+: »Thiệp Liệp«;\n" ..
-					"- 4+: »Độ Thế«;\n" ..
-					"Nếu có 5 [Phong Hỏa] trở lên, bạn nhận 2 kỹ năng thay vì 1.\n" ..
-					"• Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
+	[":flamemap"] = "• Một lần trong giai đoạn ra bài của mỗi người thế lực Ngô, họ có thể đặt 1 trang bị lên »Duyên Giang Phong Hỏa Đồ«, gọi là [Phong Hỏa].\n• Đầu giai đoạn chuẩn bị của người thế lực Ngô, họ có thể nhận 1 kỹ năng tùy theo số [Phong Hỏa]:\n- 1+: »Anh Tư«;\n- 2+: »Hảo Thi«;\n- 3+: »Thiệp Liệp«;\n- 4+: »Độ Thế«;\nNếu có 5 [Phong Hỏa] trở lên, bạn nhận 2 kỹ năng thay vì 1.\n• Tỏa định kỹ: sau khi bạn nhận sát thương từ [Sát] hoặc công cụ, đưa 1 [Phong Hỏa] vào chồng bài bỏ.",	
 	
 	["&flamemap"] = "Có thể đặt 1 trang bị lên »Duyên Giang Phong Hỏa Đồ«, trở thành [Phong Hỏa]",
 	["@flamemap"] = "Duyên Giang Phong Hỏa Đồ: Chọn [Phong Hỏa] để bỏ đi.",
@@ -155,8 +140,7 @@ return {
 	["shelie#down"] = "Thu lấy",
 
 	["LuminousPearl"] = "Định Lan Dạ Minh Châu",
-	[":LuminousPearl"] = "Bài Trang bị - Bảo vật\n\nKỹ năng\n" ..
-	                     "Tỏa định kỹ: Nếu bạn không có kỹ năng »Chế Hành«, xem như bạn có »Chế Hành«; nếu bạn đã có »Chế Hành«, không giới hạn số lá bỏ đi trong 1 lần phát động »Chế Hành«",
+	[":LuminousPearl"] = "Bài Trang bị - Bảo vật\n\nKỹ năng: Tỏa định kỹ: Nếu bạn không có kỹ năng »Chế Hành«, xem như bạn có »Chế Hành«; nếu bạn đã có »Chế Hành«, không giới hạn số lá bỏ đi trong 1 lần phát động »Chế Hành«",
 	["zhihenglp"] = "Chế Hành",
 
 	["transform"] = "Đổi Phó tướng",

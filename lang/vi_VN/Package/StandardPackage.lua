@@ -42,12 +42,10 @@ local t = {
 	["#NoJink"] = "%from Không thể sử dụng[<font color=\"yellow\"><b>Thiểm</b></font>]để vô hiệu hóa[<font color=\"yellow\"><b>Sát</b></font>]",
 
 	["peach"] = "Đào",
-	[":peach"] = "Bài cơ bản\n\nCách thức I: \n<b>Mục tiêu</b>: Bạn nếu đang bị thương.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu."
-	.."\n\nCách thức II:\nKhi 1 người trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Người đang trong trạng thái hấp hối.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu.",
+	[":peach"] = "Bài cơ bản\n\nCách thức I: \n<b>Mục tiêu</b>: Bạn nếu đang bị thương.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu.\n\nCách thức II:\nKhi 1 người trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Người đang trong trạng thái hấp hối.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu.",
 
 	["analeptic"] = "Tửu",
-	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \n<b>Giới hạn</b>: Một lần trong lượt của mỗi người.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương."
-	.."\n\nCách thức II: \n<b>Thời điểm</b>: Khi bạn trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu",
+	[":analeptic"] = "Bài cơ bản\n\nCách thức I: \n<b>Giới hạn</b>: Một lần trong lượt của mỗi người.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Lá [Sát] tiếp theo mục tiêu sử dụng trong lượt này +1 sát thương.\n\nCách thức II: \n<b>Thời điểm</b>: Khi bạn trong trạng thái hấp hối.\n<b>Mục tiêu</b>: Bạn.\n<b>Hiệu quả</b>: Mục tiêu hồi 1 máu",
 	["#UnsetDrankEndOfTurn"] = "%from kết thúc lượt, lá [<font color=\"yellow\"><b>Tửu</b></font>] mất tác dụng",
 
 
@@ -98,15 +96,11 @@ local t = {
 	["fan"] = "Chu Tước Vũ Phiến",
 
 	["SilverLion"] = "Bạch Ngân Sư Tử",
-	[":SilverLion"] = "Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:" ..
-	"\n• Khi bạn nhận sát thương, nếu sát thương này > 1, sát thương này trở thành 1." ..
-"\n• Sau khi bạn mất [Bạch Ngân Sư Tử] từ vùng trang bị của bạn, bạn hồi 1 máu.\n" ,
+	[":SilverLion"] = "Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n• Khi bạn nhận sát thương, nếu sát thương này > 1, sát thương này trở thành 1.\n• Sau khi bạn mất [Bạch Ngân Sư Tử] từ vùng trang bị của bạn, bạn hồi 1 máu." ,
 	["#SilverLion"] = "[<font color=\"yellow\"><b>Bạch Ngân Sư Tử</b></font>] của %from giảm %arg sát thương còn <font color=\"yellow\"><b>1</b></font> điểm.",
 
 	["Vine"] = "Đằng Giáp",
-	[":Vine"] ="Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:" ..
-	"\n• [Nam Man Nhập Xâm], [Vạn Tiễn Tề Phát] và [Sát] phổ thông không có hiệu quả với bạn."..
-"\n• Khi bạn tính toán sát thương phải nhận, nếu sát thương này có thuộc tính Hỏa, sát thương này +1." ,
+	[":Vine"] ="Bài trang bị - Phòng cụ\n\n<b>Kỹ năng</b>: Tỏa định kỹ:\n• [Nam Man Nhập Xâm], [Vạn Tiễn Tề Phát] và [Sát] phổ thông không có hiệu quả với bạn.\n• Khi bạn tính toán sát thương phải nhận, nếu sát thương này có thuộc tính Hỏa, sát thương này +1." ,
 	["#VineDamage"] = "Phát động hiệu quả [<font color=\"yellow\"><b>Đằng Giáp</b></font>] của %from, sát thương Hỏa tăng từ %arg lên %arg2 điểm.",
 
 	["Horse"] = "Ngựa",
@@ -135,8 +129,7 @@ local t = {
 	["archery-attack-jink"] = "%src đã sử dụng [Vạn Tiễn Tề Phát], hãy đánh ra [Thiểm]",
 
 	["collateral"] = "Tá Đao Sát Nhân",
-	[":collateral"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người khác có vũ khí trong vùng trang bị (gọi là A) và 1 người trong tầm đánh của A (gọi là B)\n<b>Mục tiêu</b>: A" ..
-"\n<b>Hiệu quả</b>: A cần sử dụng [Sát] với B, nếu không, họ giao vũ khí trong vùng trang bị cho bạn.",
+	[":collateral"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người khác có vũ khí trong vùng trang bị (gọi là A) và 1 người trong tầm đánh của A (gọi là B)\n<b>Mục tiêu</b>: A\n<b>Hiệu quả</b>: A cần sử dụng [Sát] với B, nếu không, họ giao vũ khí trong vùng trang bị cho bạn.",
 	["collateral-slash"] = "%dest đã sử dụng [Tá Đao Sát Nhân], yêu cầu dùng [Sát] lên %src",
 	["#CollateralSlash"] = "%from đã chọn sử dụng [<font color=\"yellow\"><b>Sát</b></font>] lên %to",
 

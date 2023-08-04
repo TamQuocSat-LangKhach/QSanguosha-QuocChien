@@ -57,7 +57,7 @@ return {
 	["#mifuren"] = "Loạn Thế Trầm Hương",
 	["mifuren"] = "My Phu Nhân",
 	["guixiu"] = "Khuê Tú",
-	[":guixiu"] = "\n• Sau khi mở tướng này, bạn có thế rút 2 lá.\n• Sau khi tướng này bị loại bỏ, bạn có thể hồi 1 máu.",
+	[":guixiu"] = "• Sau khi mở tướng này, bạn có thế rút 2 lá.\n• Sau khi tướng này bị loại bỏ, bạn có thể hồi 1 máu.",
 	["guixiu:draw"] = "Phát động »Khuê Tú«, rút 2 lá.",
 	["guixiu:recover"] = "Phát động »Khuê Tú«, hồi 1 máu.",
 	["cunsi"] = "Tồn Tự",
@@ -120,18 +120,11 @@ return {
 	["wuxin"] = "Ngộ Tâm",
 	[":wuxin"] = "Đầu giai đoạn rút bài, có thể xem X lá đầu chồng bài rút và sắp xếp tùy ý những lá này lên đầu chồng bài rút (X là số người cùng thế lực với bạn).",
 	["hongfa"] = "Hoằng Pháp",
-	[":hongfa"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Hoàng Cân Thiên Bình Phủ«.\n\n»<b>Hoàng Cân Thiên Bình Phủ</b>«:"..
-					"\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần)." ..
-					"\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh]." ..
-					"\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu." ..
-					"\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
+	[":hongfa"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Hoàng Cân Thiên Bình Phủ«.\n\n»<b>Hoàng Cân Thiên Bình Phủ</b>«:\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
 	["heavenly_army"] = "Thiên Binh",
 	
 	["huangjinsymbol"] = "Hoàng Cân Thiên Bình Phủ",
-	[":huangjinsymbol"] = "\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần)." ..
-					"\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh]." ..
-					"\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu." ..  
-					"\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
+	[":huangjinsymbol"] = "• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người có thế lực Quần).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
 	
 	["&huangjinsymbol"] = "Có thể chuyển hóa 1 [Thiên Binh] thành [Sát]",
 	["#HongfaTianbing"] = "%from đã phát động »<font color=\"yellow\"><b>Hoàng Cân Thiên Bình Phủ</b></font>«, số người trong thế lực Quần là %arg.",
@@ -143,10 +136,7 @@ return {
 	["~hongfa2"] = "Lựa chọn X lá [Thiên Binh], bấm \"Xác nhận\"",
 
 	["PeaceSpell"] = "Thái Bình Yêu Thuật",
-	[":PeaceSpell"] = "Bài trang bị - Phòng cụ\n\nKỹ năng: Tỏa định kỹ:\n" ..
-					"\n• Khi bạn nhận sát thương có thuộc tính, bạn chặn sát thương này.\n" ..
-					"\n• Giới hạn trữ bài của bạn +X (X là số người cùng thế lực với bạn).\n" ..
-					"\n• Khi bạn mất đi [Thái Bình Yêu Thuật] từ vùng trang bị, bạn rút 2 lá, sau đó nếu máu của bạn lớn hơn 1, bạn mất 1 máu.\n" ,
+	[":PeaceSpell"] = "Bài trang bị - Phòng cụ\n\nKỹ năng: Tỏa định kỹ:\n\n• Khi bạn nhận sát thương có thuộc tính, bạn chặn sát thương này.\n\n• Giới hạn trữ bài của bạn +X (X là số người cùng thế lực với bạn).\n\n• Khi bạn mất đi [Thái Bình Yêu Thuật] từ vùng trang bị, bạn rút 2 lá, sau đó nếu máu của bạn lớn hơn 1, bạn mất 1 máu.\n" ,
 	["#PeaceSpellNatureDamage"] = "[<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] đã phát động, chặn sát thương từ %from gây cho %to %arg sát thương." ,
 	["#PeaceSpellLost"] = "%from đã mất [<font color=\"yellow\"><b>Thái Bình Yêu Thuật</b></font>] khỏi vùng trang bị, rút 2 lá." ,
 

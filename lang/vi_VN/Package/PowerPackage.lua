@@ -120,14 +120,11 @@ return {
 	["huibian"] = "Huy Tiên",
 	[":huibian"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người thế lực Ngụy và 1 người thế lực Ngụy khác đang bị thương, thực hiện lần lượt:\n- Bạn gây 1 sát thương cho người đầu tiên và họ rút 2 lá;\n- Lệnh người còn lại hồi 1 máu.",
 	["zongyu"] = "Tổng Ngự",
-	[":zongyu"] = "\n• Khi [Lục Long Tham Giá] tiến vào vùng trang bị của người khác, nếu có Ngựa trong vùng trang bị của bạn, bạn có thể hoán đổi tất cả Ngựa trong vùng trang bị của bạn với [Lục Long Tham Giá].\n• Khi bạn sử dụng 1 lá Ngựa, nếu trên bàn hoặc chồng bài bỏ có [Lục Long Tham Giá], bạn có thể đem [Lục Long Tham Giá] đặt vào vùng trang bị của bạn.",
+	[":zongyu"] = "• Khi [Lục Long Tham Giá] tiến vào vùng trang bị của người khác, nếu có Ngựa trong vùng trang bị của bạn, bạn có thể hoán đổi tất cả Ngựa trong vùng trang bị của bạn với [Lục Long Tham Giá].\n• Khi bạn sử dụng 1 lá Ngựa, nếu trên bàn hoặc chồng bài bỏ có [Lục Long Tham Giá], bạn có thể đem [Lục Long Tham Giá] đặt vào vùng trang bị của bạn.",
 	["#ZongyuSwap"] = "%from và %to đã hoán đổi Ngựa trong vùng trang bị.",
 
 	["SixDragons"] = "Lục Long Tham Giá",
-	[":SixDragons"] = "Bài Trang Bị - Ngựa đặc biệt\n\nKỹ năng: Tỏa định kỹ:\n" ..
-					"\n• Khoảng cách từ bạn đến người chơi khác -1.\n" ..
-					"\n• Khoảng cách từ người chơi khác đến bạn +1.\n" ..
-					"\n• Sau khi [Lục Long Tham Giá] tiến vào vùng trang bị của bạn, bạn bỏ đi tất cả Ngựa khác. Lá Ngựa khác không thể tiến vào vùng trang bị của bạn.\n",
+	[":SixDragons"] = "Bài Trang Bị - Ngựa đặc biệt\n\nKỹ năng: Tỏa định kỹ:\n\n• Khoảng cách từ bạn đến người chơi khác -1.\n\n• Khoảng cách từ người chơi khác đến bạn +1.\n\n• Sau khi [Lục Long Tham Giá] tiến vào vùng trang bị của bạn, bạn bỏ đi tất cả Ngựa khác. Lá Ngựa khác không thể tiến vào vùng trang bị của bạn.\n",
 	["horse"] = "Ngựa đặc biệt",
 
 	["tuxi_egf"] = "Đột Tập",

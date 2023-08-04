@@ -76,7 +76,7 @@ return {
 	["#xiahouyuan"] = "Tật Hành Đích Liệp Báo",
 	["xiahouyuan"] = "Hạ Hầu Uyên",
 	["shensu"] = "Thần Tốc",
-	[":shensu"] = "\n• Khi tiến vào giai đoạn phán xét, bạn có thể bỏ qua giai đoạn phán xét và giai đoạn rút bài.\n• Khi tiến vào giai đoạn ra bài, bạn có thể bỏ qua giai đoạn ra bài và bỏ 1 lá trang bị.\n• Khi tiến vào giai đoạn bỏ bài, bạn có thể bỏ qua giai đoạn bỏ bài và mất 1 máu.\n• Sau khi bạn phát động mỗi mục trên, xem như bạn sử dụng [Sát] không giới hạn khoảng cách.",
+	[":shensu"] = "• Khi tiến vào giai đoạn phán xét, bạn có thể bỏ qua giai đoạn phán xét và giai đoạn rút bài.\n• Khi tiến vào giai đoạn ra bài, bạn có thể bỏ qua giai đoạn ra bài và bỏ 1 lá trang bị.\n• Khi tiến vào giai đoạn bỏ bài, bạn có thể bỏ qua giai đoạn bỏ bài và mất 1 máu.\n• Sau khi bạn phát động mỗi mục trên, xem như bạn sử dụng [Sát] không giới hạn khoảng cách.",
 	["@shensu1"] = "Bạn có thể bỏ qua giai đoạn phán xét và rút bài để phát động »Thần Tốc«",
 	["@shensu2"] = "Bạn có thể bỏ qua giai đoạn ra bài và bỏ 1 trang bị để phát động »Thần Tốc«",
 	["@shensu3"] = "Bạn có thể bỏ qua giai đoạn bỏ bài và mất 1 máu để phát động »Thần Tốc«",

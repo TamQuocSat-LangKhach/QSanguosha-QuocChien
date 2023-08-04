@@ -48,9 +48,9 @@ return {
 	["#zhanglu"] = "Chính Khoan Giáo Huệ",
 	["zhanglu"] = "Trương Lỗ",
 	["bushi"] = "Bố Thí",
-	[":bushi"] = "\n• Khi kết thúc lượt, bạn nhận X [Nghĩa Xá] (X là số máu của bạn).\n• Khi bắt đầu giai đoạn chuẩn bị của người khác, nếu bạn có [Nghĩa Xá], bạn có thể giao 1 lá cho họ, sau đó bạn bỏ 1 [Nghĩa Xá] và rút 2 lá.\n• Khi bắt đầu giai đoạn chuẩn bị, bạn bỏ X lá (X là số người còn sống trừ số máu của bạn và trừ 2), sau đó bỏ tất cả [Nghĩa Xá].",
+	[":bushi"] = "• Khi kết thúc lượt, bạn nhận X [Nghĩa Xá] (X là số máu của bạn).\n• Khi bắt đầu giai đoạn chuẩn bị của người khác, nếu bạn có [Nghĩa Xá], bạn có thể giao 1 lá cho họ, sau đó bạn bỏ 1 [Nghĩa Xá] và rút 2 lá.\n• Khi bắt đầu giai đoạn chuẩn bị, bạn bỏ X lá (X là số người còn sống trừ số máu của bạn và trừ 2), sau đó bỏ tất cả [Nghĩa Xá].",
 	["midao"] = "Mễ Đạo",
-	[":midao"] = "\n• Khi bắt đầu giai đoạn kết thúc, nếu không có [Mễ], bạn có thể rút 2 lá, sau đó bạn đặt 2 lá lên tướng này, gọi là [Mễ].\n• Khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Mễ] để thay đổi kết quả phán xét, sau đó thu lấy lá phán xét ban đầu.",
+	[":midao"] = "• Khi bắt đầu giai đoạn kết thúc, nếu không có [Mễ], bạn có thể rút 2 lá, sau đó bạn đặt 2 lá lên tướng này, gọi là [Mễ].\n• Khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Mễ] để thay đổi kết quả phán xét, sau đó thu lấy lá phán xét ban đầu.",
     ["bushi:discard"] = "Có thể phát động »Bố Thí« để bỏ %arg lá",
     ["bushi:mark"] = "Có thể phát động »Bố Thí« để nhận [Nghĩa Xá]",
     ["yishe"] = "Nghĩa Xá",
@@ -64,7 +64,7 @@ return {
 	["&mifangfushiren"] = "Mi Phương Phó Sĩ Nhân",
 	["fengshix"] = "Phong Thế",
 
-	[":fengshix"] = "\n• Sau khi bài bạn sử dụng xác định 1 mục tiêu duy nhất, nếu số bài trên tay họ < bạn, bạn có thể bỏ 1 lá của bạn và họ, lệnh sát thương từ lá này +1.\n• Sau khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu số lá trên tay bạn nhỏ hơn họ, họ có thể lệnh bạn bỏ 1 lá của bạn và họ, lệnh sát thương từ lá này +1.",
+	[":fengshix"] = "• Sau khi bài bạn sử dụng xác định 1 mục tiêu duy nhất, nếu số bài trên tay họ < bạn, bạn có thể bỏ 1 lá của bạn và họ, lệnh sát thương từ lá này +1.\n• Sau khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu số lá trên tay bạn nhỏ hơn họ, họ có thể lệnh bạn bỏ 1 lá của bạn và họ, lệnh sát thương từ lá này +1.",
 	
 	["@fengshix"] = "Có thể phát động »Phong Thế« của %src",
 	
@@ -95,7 +95,7 @@ return {
     ["#zhonghui"] = "Kiệt Ngạo Đích Dã Tâm Gia",
     ["zhonghui"] = "Chung Hội",
     ["quanji"] = "Quyền Kế",
-    [":quanji"] = "\n• Một lần trong lượt của mỗi người ứng với mỗi thời điểm, sau khi bạn gây hoặc nhận sát thương, bạn có thể rút 1 lá, sau đó đặt ngửa 1 lá lên tướng này, gọi là [Quyền].\n• Giới hạn trữ bài của bạn +X (X là số [Quyền]).",
+    [":quanji"] = "• Một lần trong lượt của mỗi người ứng với mỗi thời điểm, sau khi bạn gây hoặc nhận sát thương, bạn có thể rút 1 lá, sau đó đặt ngửa 1 lá lên tướng này, gọi là [Quyền].\n• Giới hạn trữ bài của bạn +X (X là số [Quyền]).",
     ["paiyi"] = "Bài Dị",
     [":paiyi"] = "Một lần trong giai đoạn ra bài, bạn có thể đưa 1 [Quyền] vào chồng bài bỏ và chọn 1 người, họ rút X lá (X là số [Quyền] bạn có, tối đa 7);\n‣ Nếu số bài trên tay họ > bạn, bạn gây 1 sát thương cho họ.",
 
@@ -140,10 +140,7 @@ return {
     ["jilix:damage"] = "Có thể phát động »Ký Li«, chặn sát thương và loại bỏ tướng này.",
 
     ["ImperialEdict"] = "Chiếu Thư",
-    [":ImperialEdict"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n" ..
-                    "\n• Sau khi sử dụng lá này, bạn đặt lá này vào vùng tướng của bạn.\n" ..
-					"\n• Một lần trong giai đoạn ra bài của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].\n" ..
-                    "\n• Một lần trong giai đoạn ra bài, nếu có 4 [Chiếu] không cùng chất, bạn có thể đưa tất cả [Chiếu] vào chồng bài bỏ, rút ngẫu nhiêu 1 lá công cụ thế lực.\n" ,
+    [":ImperialEdict"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n• Sau khi sử dụng lá này, bạn đặt lá này vào vùng tướng của bạn.\n\n• Một lần trong giai đoạn ra bài của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].\n• Một lần trong giai đoạn ra bài, nếu có 4 [Chiếu] không cùng chất, bạn có thể đưa tất cả [Chiếu] vào chồng bài bỏ, rút ngẫu nhiêu 1 lá công cụ thế lực.\n" ,
 
     ["imperialedictattach"] = "Đặt bài trên tay",
     [":imperialedictattach"] = "Một lần trong giai đoạn ra bài của người có cùng thế lực với bạn, nếu họ thuộc tiểu thế lực, có thể đặt tối đa 2 lá trên tay lên tướng của bạn; nếu không thuộc tiểu thế lực, họ có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Chiếu].",
@@ -219,9 +216,9 @@ return {
     ["#sunchen"] = "Thực Tủy Đích Triêu Đường Khách",
     ["sunchen"] = "Tôn Lâm",
     ["shilu"] = "Thị Lực",
-    [":shilu"] = "\n• Sau khi có người trận vong, nếu họ có tướng, bạn có thể đặt tất cả tướng của họ lên tướng này, gọi là [Lục];\n‣ Nếu họ bị bạn giết, bạn nhận 2 lá từ chồng bài tướng đặt lên tướng này, gọi là [Lục].\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Lục], bạn có thể bỏ tối đa X lá (X là số [Lục]), sau đó rút số lá tương ứng.",
+    [":shilu"] = "• Sau khi có người trận vong, nếu họ có tướng, bạn có thể đặt tất cả tướng của họ lên tướng này, gọi là [Lục];\n‣ Nếu họ bị bạn giết, bạn nhận 2 lá từ chồng bài tướng đặt lên tướng này, gọi là [Lục].\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Lục], bạn có thể bỏ tối đa X lá (X là số [Lục]), sau đó rút số lá tương ứng.",
     ["xiongnve"] = "Hung Ngược",
-    [":xiongnve"] = "\n• Khi bắt đầu giai đoạn ra bài, bạn có thể bỏ 1 [Lục], chọn 1 mục có hiệu quả trong lượt này:\n1. Khi bạn gây sát thương cho người cùng thế lực với [Lục] đã bỏ, sát thương này +1;\n2. Khi bạn gây sát thương cho người cùng thế lực với [Lục] đã bỏ, thu lấy 1 lá của họ;\n3. Bạn sử dụng bài với mục tiêu cùng thế lực với [Lục] đã bỏ không giới hạn số lần.\n• Khi kết thúc giai đoạn ra bài, bạn có thể bỏ 2 [Lục], đến khi bắt đầu lượt tiếp theo của bạn, khi bạn tính toán sát thương phải nhận từ người khác, sát thương này -1. ",
+    [":xiongnve"] = "• Khi bắt đầu giai đoạn ra bài, bạn có thể bỏ 1 [Lục], chọn 1 mục có hiệu quả trong lượt này:\n1. Khi bạn gây sát thương cho người cùng thế lực với [Lục] đã bỏ, sát thương này +1;\n2. Khi bạn gây sát thương cho người cùng thế lực với [Lục] đã bỏ, thu lấy 1 lá của họ;\n3. Bạn sử dụng bài với mục tiêu cùng thế lực với [Lục] đã bỏ không giới hạn số lần.\n• Khi kết thúc giai đoạn ra bài, bạn có thể bỏ 2 [Lục], đến khi bắt đầu lượt tiếp theo của bạn, khi bạn tính toán sát thương phải nhận từ người khác, sát thương này -1. ",
 
     ["#xiongnve-effect"] = "Hung Ngược",
 
@@ -249,7 +246,7 @@ return {
     ["#panjun"] = "Quan Nhân Vu Vy",
     ["panjun"] = "Phan Tuấn",
     ["congcha"] = "Quan Vy",
-    [":congcha"] = "\n• Khi bắt đầu giai đoạn chuẩn bị, bạn có thể chọn 1 người không có thế lực;\n‣ Cho đến khi bắt đầu lượt tiếp theo của bạn, khi họ mở tướng và trở thành có thế lực, nếu của họ và bạn:\n- Cùng thế lực: Bạn và họ rút 2 lá;\n- Khác thế lực: Họ mất 1 máu.\n• Giai đoạn rút bài, nếu không có người không có thế lực, bạn có thể lệnh số lá rút +2.",
+    [":congcha"] = "• Khi bắt đầu giai đoạn chuẩn bị, bạn có thể chọn 1 người không có thế lực;\n‣ Cho đến khi bắt đầu lượt tiếp theo của bạn, khi họ mở tướng và trở thành có thế lực, nếu của họ và bạn:\n- Cùng thế lực: Bạn và họ rút 2 lá;\n- Khác thế lực: Họ mất 1 máu.\n• Giai đoạn rút bài, nếu không có người không có thế lực, bạn có thể lệnh số lá rút +2.",
     ["gongqing"] = "Công Thanh",
     [":gongqing"] = "Tỏa định kỹ:\n• Khi bạn tính toán sát thương phải nhận, nếu tầm đánh của nguồn sát thương lớn hơn 3, sát thương này +1;\n• Khi bạn nhận sát thương, nếu tầm đánh của nguồn sát thương nhỏ hơn 3 và sát thương lớn hơn 1, sát thương này trở thành 1.",
     ["@congcha-target"] = "Có thể phát động »Quan Vy«, chọn 1 người không có thế lực.",
@@ -267,7 +264,7 @@ return {
     ["#huangzu"] = "Giang Hạ Phúc Tâm",
     ["huangzu"] = "Hoàng Tổ",
     ["xishe"] = "Vãn Cung",
-    [":xishe"] = "\n• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ, nếu số máu của họ nhỏ hơn của bạn, tất cả người chơi không thể hưởng ứng [Sát] này; bạn có thể lặp lại quá trình này.\n• Khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
+    [":xishe"] = "• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ, nếu số máu của họ nhỏ hơn của bạn, tất cả người chơi không thể hưởng ứng [Sát] này; bạn có thể lặp lại quá trình này.\n• Khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
     ["@xishe-slash"] = "Có thể phát động »Văn Cung«, bỏ 1 lá trong vùng trang bị, xem như sử dụng [Sát] với %src",
     
     ["#xishe-transform"] = "Vãn Cung",
@@ -277,7 +274,7 @@ return {
     ["#gongsunyuan"] = "Giáo Đồ Huyền Hải",
     ["gongsunyuan"] = "Công Tôn Uyên",
     ["huaiyi"] = "Hoài Dị",
-    [":huaiyi"] = "\n• Một lần trong giai đoạn ra bài, bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Bạn có thể sử dụng hoặc đánh ra [Dị] như bài trên tay.",
+    [":huaiyi"] = "• Một lần trong giai đoạn ra bài, bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Bạn có thể sử dụng hoặc đánh ra [Dị] như bài trên tay.",
     ["zisui"] = "Tứ Tuy",
     [":zisui"] = "Tỏa định kỹ:\n• Giai đoạn rút bài, nếu có [Dị], bạn rút thêm X lá (X là số [Dị]).\n• Khi bắt đầu giai đoạn kết thúc, nếu số [Dị] > giới hạn máu của bạn, bạn trận vong.",
     
@@ -296,7 +293,7 @@ return {
 	
 
     ["tongling"] = "Thông Linh",
-    [":tongling"] = "Một lần trong giai đoạn ra bài, sau khi bạn gây sát thương cho 1 người thế lực xác định khác bạn (A), bạn có thể chọn 1 người cùng thế lực với bạn (B), B có thể sử dụng 1 lá với A; sau đó:\n- Nếu lá này gấy sát thương, bạn và B rút 2 lá;\n- Nếu lá này không gây sát thương, bạn lệnh A thu lấy lá bạn đã sử dụng để gây sát thương cho A.",
+    [":tongling"] = "Một lần trong giai đoạn ra bài, sau khi bạn gây sát thương cho 1 người thế lực xác định khác bạn (A), bạn có thể chọn 1 người cùng thế lực với bạn (B), B có thể sử dụng 1 lá có bao gồm A là mục tiêu; sau đó:\n- Nếu lá này gấy sát thương, bạn và B rút 2 lá;\n- Nếu lá này không gây sát thương, bạn lệnh A thu lấy lá bạn đã sử dụng để gây sát thương cho A.",
     ["jinxian"] = "Cận Hãm",
     [":jinxian"] = "Sau khi bạn mở tướng này, bạn lệnh tất cả người ở khoảng cách ≤1 thực hiện: Nếu số tướng đang úp của họ là:\n- 0: Họ úp 1 tướng\n- 1+: Họ bỏ 2 lá.",
     
@@ -331,7 +328,7 @@ return {
 	["#zhuling"] = "Kiên Thành Túc Tướng",
 	["zhuling"] = "Chu Linh",
 	["juejue"] = "Trấn Vệ",
-	[":juejue"] = "\n• Khi bắt đầu giai đoạn bỏ bài, bạn có thể mất 1 máu; Nếu làm vậy, khi kết thúc giai đoạn này, nếu trong giai đoạn này bạn có bỏ bài, bạn lệnh tất cả người khác chọn 1 mục:\n1. Họ đưa X lá trên tay vào chồng bài bỏ (X là số lá bạn đã bỏ trong giai đoạn này);\n2. Bạn gây 1 sát thương cho họ.\n• Khi bạn giết người cùng thế lực với bạn, bạn bỏ qua chấp hành thưởng phạt.",
+	[":juejue"] = "• Khi bắt đầu giai đoạn bỏ bài, bạn có thể mất 1 máu; Nếu làm vậy, khi kết thúc giai đoạn này, nếu trong giai đoạn này bạn có bỏ bài, bạn lệnh tất cả người khác chọn 1 mục:\n1. Họ đưa X lá trên tay vào chồng bài bỏ (X là số lá bạn đã bỏ trong giai đoạn này);\n2. Bạn gây 1 sát thương cho họ.\n• Khi bạn giết người cùng thế lực với bạn, bạn bỏ qua chấp hành thưởng phạt.",
 	["fangyuan"] = "Ngư Lân",
 	[":fangyuan"] = "Trận pháp kỹ: Quan hệ vây công:\n• Nếu bạn là người vây công, giới hạn trữ bài của người vây công +1, giới hạn trữ bài của người bị vây công -1.\n• Khi bắt đầu giai đoạn kết thúc, nếu bạn là người bị vây công trong quan hệ vây công, bạn xem như sử dụng [Sát] với 1 người vây công",
 	["@fangyuan-slash"] = "Ngư Lân: Chọn 1 người đang vây công bạn, xem như sử dụng [Sát] với họ",

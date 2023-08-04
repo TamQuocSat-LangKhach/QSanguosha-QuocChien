@@ -27,7 +27,7 @@ return {
 	["#dengai"] = "Kiểu Nhiên Đích Tráng Sĩ",
 	["dengai"] = "Đặng Ngải",
 	["tuntian"] = "Đồn Điền",
-	[":tuntian"] = "\n• Sau khi bạn mất đi bài ngoài lượt, bạn có thể tiến hành phán xét; nếu kết quả phán xét không phải là chất CƠ, bạn có thể đặt kết quả phán xét này từ chồng bài bỏ lên tướng này, gọi là [Điền].\n• Khoảng cách từ bạn tới người khác -X (X là số [Điền] bạn có).",
+	[":tuntian"] = "• Sau khi bạn mất đi bài ngoài lượt, bạn có thể tiến hành phán xét; nếu kết quả phán xét không phải là chất CƠ, bạn có thể đặt kết quả phán xét này từ chồng bài bỏ lên tướng này, gọi là [Điền].\n• Khoảng cách từ bạn tới người khác -X (X là số [Điền] bạn có).",
 	["@tuntian-gotofield"] = "Đồn Điền: Đặt lá phán xét [%arg] lên tướng thành [Điền]" ,
 	["field"] = "Điền",
 	["#tuntian-dist"] = "Đồn Điền" ,
@@ -93,7 +93,7 @@ return {
 	["#yuji"] = "Hồn Nhiễu Tả Hữu",
 	["yuji"] = "Vu Cát",
 	["qianhuan"] = "Thiên Huyễn",
-	[":qianhuan"] = "\n• Sau khi 1 người cùng thế lực nhận sát thương, có thể đem 1 lá bài của bạn đặt lên tướng này, gọi là [Huyễn] (Không thể đặt lá trùng chất với những [Huyễn] đã có).\n• Khi 1 người chơi cùng thế lực trở thành mục tiêu duy nhất của lá cơ bản hoặc công cụ, bạn có thể đưa 1 [Huyễn] vào chồng bài bỏ, hủy bỏ mục tiêu này.",
+	[":qianhuan"] = "• Sau khi 1 người cùng thế lực nhận sát thương, có thể đem 1 lá bài của bạn đặt lên tướng này, gọi là [Huyễn] (Không thể đặt lá trùng chất với những [Huyễn] đã có).\n• Khi 1 người chơi cùng thế lực trở thành mục tiêu duy nhất của lá cơ bản hoặc công cụ, bạn có thể đưa 1 [Huyễn] vào chồng bài bỏ, hủy bỏ mục tiêu này.",
 	["@qianhuan-put"] = "Có thể phát động »Thiên Huyễn«, đặt 1 lá khác chất với các lá [Huyễn] khác." ,
 	["sorcery"] = "Huyễn",
 	["@qianhuan-cancel"] = "Có thể phát động »Thiên Huyễn«, hủy bỏ mục tiêu %dest của lá [%arg]",
@@ -113,21 +113,13 @@ return {
 	["#zhangwu-draw"] = "Chương Vũ (Rút bài)",
 	[":zhangwu"] = "Tỏa định kỹ:\n• Khi [Phi Long Đoạt Phượng] tiến vào chồng bài bỏ hoặc vùng trang bị của người khác, bạn thu lấy nó.\n• Khi bạn mất đi [Phi Long Đoạt Phượng] không vì sử dụng, bạn mở nó ra, đặt vào đáy chồng bài rút và bạn rút 2 lá.",
 	["shouyue"] = "Thụ Việt",
-	[":shouyue"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Hổ Tướng Đại Kỳ«.\n\n»<b>Ngũ Hổ Tướng Đại Kỳ</b>«:" ..
-					"\nNgười thuộc thế lực Thục thay đổi các kỹ năng sau:" ..
-					"\n- »Võ Thánh«: Thay đổi kỹ năng thành: Bạn có thể chuyển hóa sử dụng/đánh ra 1 lá của bạn thành [Sát]." ..
-					"\n- »Bào Hao«: Bổ sung mô tả: Sau khi bạn xác định mục tiêu của [Sát], vô hiệu phòng cụ của mục tiêu." .. 
-					"\n- »Long Đảm«: Bổ sung mô tả: Sau khi sử dụng hoặc đánh ra [Sát] hoặc [Thiểm] bởi phát động »Long Đảm«, bạn rút 1 lá." ..
-					"\n- »Liệt Cung«: Bổ sung mô tả: Tầm đánh của bạn +1." ..
-					"\n- »Thiết Kỵ«: Thay đổi mô tả: \"1 tướng đã mở\" sửa thành \"tất cả tướng đã mở\".",
+	[":shouyue"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Ngũ Hổ Tướng Đại Kỳ«.\n\n»<b>Ngũ Hổ Tướng Đại Kỳ</b>«:\nNgười thuộc thế lực Thục thay đổi các kỹ năng sau:\n- »Võ Thánh«: Thay đổi kỹ năng thành: Bạn có thể chuyển hóa sử dụng/đánh ra 1 lá của bạn thành [Sát].\n- »Bào Hao«: Bổ sung mô tả: Sau khi bạn xác định mục tiêu của [Sát], vô hiệu phòng cụ của mục tiêu.\n- »Long Đảm«: Bổ sung mô tả: Sau khi sử dụng hoặc đánh ra [Sát] hoặc [Thiểm] bởi phát động »Long Đảm«, bạn rút 1 lá.\n- »Liệt Cung«: Bổ sung mô tả: Tầm đánh của bạn +1.\n- »Thiết Kỵ«: Thay đổi mô tả: \"1 tướng đã mở\" sửa thành \"tất cả tướng đã mở\".",
 	["jizhao"] = "Kích Chiếu",
 	[":jizhao"] = "Hạn định kỹ: Khi ban trong trạng thái hấp hối, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn bổ sung bài trên tay đến giới hạn máu;\n- Bạn hồi máu đến 2;\n- Bạn mất kỹ năng »Thụ Việt« và nhận kỹ năng »Nhân Đức«.",
 	["@jizhao"] = "Kích Chiếu",
 
 	["DragonPhoenix"] = "Phi Long Đoạt Phượng",
-	[":DragonPhoenix"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 2\nKỹ năng:\n" ..
-					"1. Sau khi xác định từng mục tiêu của [Sát], có thể lệnh mục tiêu bỏ đi 1 lá của họ.\n" ..
-					"2. Khi mục tiêu của [Sát] từ bạn vào trạng thái hấp hối, có thể thu lấy 1 lá trên tay họ.\n" ,
+	[":DragonPhoenix"] = "Bài Trang bị - Vũ khí\n\nTầm đánh: 2\nKỹ năng:\n1. Sau khi xác định từng mục tiêu của [Sát], có thể lệnh mục tiêu bỏ đi 1 lá của họ.\n2. Khi mục tiêu của [Sát] từ bạn vào trạng thái hấp hối, có thể thu lấy 1 lá trên tay họ.\n" ,
 	["@dragonphoenix-discard"] = "Đã phát động [Phi Long Đoạt Phượng], hãy bỏ 1 lá.",
 
 	["DragonPhoenix:revive"] = "Có thể bấm \"Xác nhận\" để chọn 1 tướng cùng thế lực với bạn và lệnh cho họ quay lại trò chơi.",

@@ -202,7 +202,7 @@ class MilitaryOrderSkill : public TriggerSkill
 public:
     MilitaryOrderSkill() : TriggerSkill("military_order")
     {
-        events << EventPhaseChanging << Death;
+        events << EventPhaseStart << Death;
         global = true;
     }
 
@@ -230,9 +230,8 @@ public:
                     room->setPlayerMark(player, "MilitaryOrderComplete", 1);
                 }
             }
-        } else if (triggerEvent == EventPhaseChanging) {
-            PhaseChangeStruct change = data.value<PhaseChangeStruct>();
-            if (change.to != Player::NotActive) return;
+        } else if (triggerEvent == EventPhaseStart) {
+            if (player->getPhase() != Player::NotActive) return;
             if (player->getMark("MilitaryOrderComplete") > 0) {
                 room->setPlayerMark(player, "MilitaryOrderComplete", 0);
             } else if (player->getMark("MilitaryOrder") > 0) {
@@ -569,19 +568,18 @@ public:
     }
 };
 
-class Siweishen : public TriggerSkill
+class Shengweijiang : public TriggerSkill
 {
 public:
-    Siweishen() : TriggerSkill("siweishen")
+    Shengweijiang() : TriggerSkill("shengweijiang")
     {
         events << AskForPeachesDone;
-        frequency = Limited;
-        limit_mark = "@weishen";
+        frequency = Frequent;
     }
 
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
-        if (TriggerSkill::triggerable(player) && player->getMark("@weishen") > 0 && player->getHp() <= 0) {
+        if (TriggerSkill::triggerable(player) && player->getHp() <= 0) {
             return QStringList(objectName());
         }
         return QStringList();
@@ -591,8 +589,7 @@ public:
     {
         if (player->askForSkillInvoke(this, data)) {
             room->broadcastSkillInvoke(objectName(), player);
-            room->doSuperLightbox("zhaoshizhen", objectName());
-            room->setPlayerMark(player, "@weishen", 0);
+            room->doSuperLightbox("shengweijiang", objectName());
             return true;
         }
         return false;
@@ -604,70 +601,66 @@ public:
         recover.recover = player->getMaxHp() - player->getHp();
         recover.who = player;
         room->recover(player, recover);
-        foreach(ServerPlayer *p, room->getAlivePlayers()) {
-            if (p->isFriendWith(player)) {
-                room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), p->objectName());
-                room->acquireSkill(p, "shengweijiang", true, false);
-                room->addPlayerMark(p, "##shengweijiang");
-            }
+        player->fillHandCards(player->getMaxHp(), objectName());
+        ServerPlayer *current = room->getCurrent();
+        if (current && current->isAlive() && current->getPhase() == Player::Play) {
+            room->doAnimate(QSanProtocol::S_ANIMATE_INDICATE, player->objectName(), current->objectName());
+            room->setPlayerFlag(current, "Global_PlayPhaseTerminated");
+            LogMessage log;
+            log.type = "#shengweijiang-end";
+            log.from = player;
+            log.to << current;
+            room->sendLog(log);
         }
+        room->addPlayerMark(player, "##shengweijiang");
         room->addPlayerMark(player, "##siweishen");
+        room->handleAcquireDetachSkills(player, "-shengweijiang|siweishen!");
         return false;
     }
 };
 
-class SiweishenCompulsory : public TriggerSkill
+class Siweishen : public TriggerSkill
 {
 public:
-    SiweishenCompulsory() : TriggerSkill("#siweishen-compulsory")
+    Siweishen() : TriggerSkill("siweishen")
     {
-        events << EventPhaseChanging;
-        frequency = Compulsory;
-    }
-
-    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-    {
-        if (triggerEvent == EventPhaseChanging && data.value<PhaseChangeStruct>().to == Player::NotActive && player->isAlive() && player->getMark("##siweishen") > 0) {
-            LogMessage log;
-            log.type = "#siweishen-death";
-            log.from = player;
-            room->sendLog(log);
-            room->setPlayerMark(player, "##siweishen", 0);
-            room->killPlayer(player);
-        }
-    }
-};
-
-class Shengweijiang : public TriggerSkill
-{
-public:
-    Shengweijiang() : TriggerSkill("shengweijiang")
-    {
-        events << DamageCaused << EventPhaseStart;
-        frequency = Compulsory;
+        events << EventPhaseStart << DamageCaused;
+        frequency = Frequent;
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
-            room->setPlayerMark(player, "##shengweijiang", 0);
-            room->detachSkillFromPlayer(player, "shengweijiang", false, false, player->inHeadSkills(this));
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive && player->isAlive() && player->getMark("##siweishen") > 0) {
+            LogMessage log;
+            log.type = "#siweishen-death";
+            log.from = player;
+            room->sendLog(log);
+            room->killPlayer(player);
         }
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer * &) const
+    virtual TriggerList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == DamageCaused && TriggerSkill::triggerable(player) && player->getPhase() != Player::NotActive && player->getMark("Global_DamagePiont_Round") == 0) {
-            return QStringList(objectName());
+        TriggerList skill_list;
+        if (triggerEvent == DamageCaused) {
+            QList<ServerPlayer *> zhaoshizhens = room->findPlayersBySkillName(objectName());
+            foreach (ServerPlayer *zhaoshizhen, zhaoshizhens) {
+                if (zhaoshizhen && TriggerSkill::triggerable(zhaoshizhen) && zhaoshizhen->isFriendWith(player) && zhaoshizhen->getMark("##shengweijiang") > 0) {
+                    skill_list.insert(zhaoshizhen, QStringList(objectName()));
+                }
+            }
         }
-        return QStringList();
+        return skill_list;
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
     {
-        room->sendCompulsoryTriggerLog(player, objectName());
-        room->broadcastSkillInvoke(objectName(), player);
-        return true;
+        if (ask_who->askForSkillInvoke(this, data)) {
+            room->broadcastSkillInvoke(objectName(), ask_who);
+            room->setPlayerMark(ask_who, "##shengweijiang", 0);
+            return true;
+        }
+        return false;
     }
 
     virtual bool effect(TriggerEvent, Room *, ServerPlayer *, QVariant &data, ServerPlayer *) const
@@ -692,16 +685,14 @@ LangKhachPackage::LangKhachPackage()
     zhaoshizhen->addSkill(new BaixiangRange);
     zhaoshizhen->addSkill(new Powang);
     zhaoshizhen->addSkill(new PowangDiscard);
-    zhaoshizhen->addSkill(new Siweishen);
-    zhaoshizhen->addSkill(new SiweishenCompulsory);
-    zhaoshizhen->addRelateSkill("shengweijiang");
+    zhaoshizhen->addSkill(new Shengweijiang);
+    zhaoshizhen->addRelateSkill("siweishen");
     zhaoshizhen->setHeadMaxHpAdjustedValue();
     insertRelatedSkills("baixiang", 2, "#baixiang-range", "#sa_avoid_baixiang");
     insertRelatedSkills("powang", "#powang-discard");
-    insertRelatedSkills("siweishen", "#siweishen-compulsory");
 
     addMetaObject<PowangCard>();
-    skills << new Shengweijiang;
+    skills << new Siweishen;
 }
 
 ADD_PACKAGE(LangKhach)

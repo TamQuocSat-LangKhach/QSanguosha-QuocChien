@@ -1080,17 +1080,12 @@ public:
             if (BattleArraySkill::triggerable(skill_owner) && skill_owner->hasShownSkill(this) && player->inSiegeRelation(skill_owner, target)) {
                 if (player != skill_owner) {
                     skill_list.insert(skill_owner, QStringList(objectName()));
-                } else if (player->getNextAlive() == target) {
-                    Player *ask_who = target->getNextAlive();
-                    if (ask_who && ask_who != player && ask_who->isFriendWith(player)) {
-                        ServerPlayer *p = room->findPlayerbyobjectName(ask_who->objectName());
-                        skill_list.insert(p, QStringList(objectName()));
-                    }
-                } else if (player->getLastAlive() == target) {
-                    Player *ask_who = target->getLastAlive();
-                    if (ask_who && ask_who != player && ask_who->isFriendWith(player)) {
-                        ServerPlayer *p = room->findPlayerbyobjectName(ask_who->objectName());
-                        skill_list.insert(p, QStringList(objectName()));
+                } else {
+                    foreach (ServerPlayer *other, room->getOtherPlayers(skill_owner)) {
+                        if (other->inSiegeRelation(skill_owner, target)) {
+                            skill_list.insert(other, QStringList(objectName()));
+                            break;
+                        }
                     }
                 }
             }
@@ -1101,9 +1096,8 @@ public:
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        QString prompt = QString("@dizai-discard:%1:%2").arg(damage.from->objectName()).arg(damage.to->objectName());
-        if (ask_who && ask_who->hasShownSkill(this) &&
-                room->askForDiscard(ask_who, objectName(), 1, 1, true, true, prompt, true)) {
+        QString prompt = QString("@dizai_discard:%1:%2").arg(damage.from->objectName()).arg(damage.to->objectName());
+        if (ask_who && room->askForDiscard(ask_who, objectName(), 1, 1, true, true, prompt, true)) {
             room->doBattleArrayAnimate(ask_who, damage.to);
             room->broadcastSkillInvoke(objectName(), ask_who);
             return true;
