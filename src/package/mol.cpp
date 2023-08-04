@@ -2753,7 +2753,7 @@ public:
             if (choice == "discard") {
                 int x = qMin(target->getHandcardNum() - target->getHp(), 5);
                 if (x > 0) {
-                    room->askForDiscard(player, objectName(), x, x);
+                    room->askForDiscard(target, objectName(), x, x);
                 }
                 player->setFlags("jutian2used");
             } else if (choice == "fillhandcard") {
