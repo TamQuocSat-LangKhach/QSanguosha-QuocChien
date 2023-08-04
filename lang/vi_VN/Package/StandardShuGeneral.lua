@@ -133,9 +133,9 @@ return {
 
 	["#menghuo"] = "Nam Man Vương",
 	["menghuo"] = "Mạnh Hoạch",
-	["huoshou"] = "Chủ Mưu",
+	["huoshou"] = "Họa Thủ",
 	[":huoshou"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Sau khi 1 người khác xác định mục tiêu của [Nam Man Nhập Xâm], bạn trở thành nguồn sát thương của [Nam Man Nhập Xâm] này.",
-	["#sa_avoid_huoshou"] = "Chủ Mưu (vô hiệu Nam Man Nhập Xâm)" ,
+	["#sa_avoid_huoshou"] = "Họa Thủ (vô hiệu Nam Man Nhập Xâm)" ,
 	["zaiqi"] = "Tái Khởi",
     [":zaiqi"] = "Khi kết thúc giai đoạn bỏ bài, bạn có thể chọn tối đa X người cùng thế lực (X là số lá Đỏ đã đi vào chồng bài bỏ trong lượt này), họ lựa chọn 1 mục:\n1. Họ rút 1 lá;\n2. Lệnh bạn hồi 1 máu.",
 	["#HuoshouTransfer"] = "%from đã phát động »%arg2«, [<font color=\"yellow\"><b>Nam Man Nhập Xâm</b></font>] chuyển nguồn sát thương thành %from",
