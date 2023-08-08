@@ -66,7 +66,7 @@ return {
 	["luxun"] = "Lục Tốn",
 	["qianxun"] = "Khiêm Tốn",
 	["qianxun-cancel"] = "Khiêm Tốn",
-	[":qianxun"] = "Tỏa định kỹ: Khi bạn trở thành mục tiêu của [Thuận Thủ Khiên Dương]/[Lạc Bất Tư Thục], hủy bỏ mục tiêu đối với bạn.",
+	[":qianxun"] = "Tỏa định kỹ:\n• Khi bạn trở thành mục tiêu của [Thuận Thủ Khiên Dương], hủy bỏ mục tiêu đối với bạn.\n• Khi [Lạc Bất Tư Thục] tiến vào vùng phán xét của bạn, đưa lá đó vào chồng bài bỏ.",
 	["duoshi"] = "Độ Thế",
 	[":duoshi"] = "Bốn lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng bài Đỏ trên tay thành [Dĩ Dật Đãi Lao].",
 
@@ -92,7 +92,7 @@ return {
 	["hongyan"] = "Hồng Nhan",
 	[":hongyan"] = "Toả định kỹ:\n• Lá BÍCH của bạn và kết quả phán xét BÍCH của bạn xem như CƠ;\n• Nếu bạn có lá CƠ trong vùng trang bị, giới hạn trữ bài của bạn +1",
 	["tianxiang"] = "Thiên Hương",
-	[":tianxiang"] = "Hai lần trong lượt của mỗi người, khi bạn nhận sát thương, bạn có thể bỏ 1 lá CƠ trên tay và lựa chọn 1 người khác, bạn chặn sát thương này, sau đó bạn chọn 1 mục mà chưa chọn trong lượt này:\n1. Lệnh họ nhận 1 sát thương từ nguồn, sau đó rút X lá (X là số máu họ đã mất, tối đa 5);\n2. Lệnh họ mất 1 máu, sau đó thu lấy lá bạn vừa bỏ.",
+	[":tianxiang"] = "Hai lần trong lượt của mỗi người, khi bạn nhận sát thương, bạn có thể bỏ 1 lá CƠ trên tay và lựa chọn 1 người khác, bạn chặn sát thương này, sau đó bạn chọn 1 mục mà chưa chọn trong lượt này:\n1. Nếu sát thương này có nguồn, bạn lệnh nguồn sát thương gây 1 sát thương cho họ, sau đó họ rút X lá (X là số máu họ đã mất, tối đa 5);\n2. Lệnh họ mất 1 máu, sau đó họ thu lấy lá bạn vừa bỏ.",
 	
 	["@tianxiang-card"] = "Có thể bỏ 1 lá CƠ để phát động »Thiên Hương »",
 	["@tianxiang-choose"] = "Thiên Hương: Chọn cho %dest nhận 1 sát thương và rút bài hoặc cho %dest mất 1 máu và thu lấy [%arg]",

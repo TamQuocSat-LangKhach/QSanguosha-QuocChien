@@ -65,7 +65,7 @@ return {
 	["wansha"] = "Hoàn Sát",
 	[":wansha"] = "Tỏa định kỹ: Trong lượt của bạn, khi có người vào trạng thái hấp hối, bạn lệnh người khác không trong trạng thái hấp hối không thể sử dụng [Đào].",
 	["weimu"] = "Duy Mạc",
-	[":weimu"] = "Tỏa định kỹ: Khi bạn trở thành mục tiêu của công cụ Đen, hủy bỏ mục tiêu đối với bạn.",
+	[":weimu"] = "Tỏa định kỹ:\n• Khi bạn trở thành mục tiêu của công cụ phổ thông Đen, hủy bỏ mục tiêu đối với bạn.\n• Khi có lá Đen tiến vào vùng phán xét của bạn, đưa lá đó vào chồng bài bỏ.",
 	["luanwu"] = "Loạn Vũ",
 	[":luanwu"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, lệnh tất cả người khác chọn 1 mục:\n1. Họ sử dụng [Sát] với người có khoảng cách nhỏ nhất;\n2. Họ mất 1 máu.",
 	["@chaos"] = "Loạn Vũ",
@@ -143,7 +143,7 @@ return {
 	["huoshui"] = "Họa Thủy",
 	[":huoshui"] = "Tỏa định kỹ: Trong lượt của bạn:\n• Người khác không thể mở tướng.\n• Khi bạn sử dụng [Sát] hoặc [Vạn Tiễn Tề Phát], mục tiêu của lá này không thể sử dụng hoặc đánh ra [Thiểm] để hưởng ứng.",
 	["qingcheng"] = "Khuynh Thành",
-	[":qingcheng"] = "Giai đoạn ra bài, bạn có thể bỏ 1 lá Đen và chọn 1 người khác đã mở tất cả tướng, úp 1 tướng của họ;\n▷ Nếu lá bạn bỏ là trang bị, bạn có thể chọn 1 người khác đã mở tất cả tướng, úp 1 tướng của họ.",
+	[":qingcheng"] = "Giai đoạn ra bài, bạn có thể bỏ 1 lá Đen và chọn 1 người khác đã mở tất cả tướng, bạn úp 1 tướng của họ;\n▷ Nếu lá bạn bỏ là trang bị, bạn có thể chọn 1 người khác đã mở tất cả tướng, bạn úp 1 tướng của họ.",
 	["qingcheng-second"] = "Khuynh thành: Bạn có thể úp tướng của 1 người khác.",
 	["#QingchengSecond"] = "%from đã phát động »%arg« lên %to",
 	

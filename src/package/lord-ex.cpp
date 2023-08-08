@@ -3236,7 +3236,7 @@ public:
                 QStringList available, all = Sanguosha->getLimitedGeneralNames();
 
                 foreach (QString name, all) {
-                    if (!name.startsWith("lord_") && !room->getUsedGeneral().contains(name)) {
+                    if (!name.startsWith("lord_") && !room->getUsedGeneral().contains(name) && !generals.contains(name)) {
                         const General *general = Sanguosha->getGeneral(name);
                         if (general && !general->isDoubleKingdoms() && general->getKingdom() != "careerist")
                         available << name;

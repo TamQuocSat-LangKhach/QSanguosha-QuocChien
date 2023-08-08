@@ -46,7 +46,7 @@ return {
 	["guanxing"] = "Quan Tinh",
 	[":guanxing"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể xem X lá bài trên đầu chồng bài rút (X là số người còn sống, tối đa 5), sau đó sắp xếp tùy ý những lá này lên đầu hoặc đáy chồng bài rút.",
 	["kongcheng"] = "Không Thành",
-	[":kongcheng"] = "Tỏa định kỹ:\n• Khi bạn là mục tiêu của lá [Sát] hoặc [Quyết Đấu], nếu bạn không có bài trên tay, hủy bỏ mục tiêu đối với bạn.\n• Ngoài lượt của bạn, khi bạn nhận được bài do người khác giao cho, nếu bạn không có bài trên tay, đặt những lá bài này lên trên Tướng này, gọi là [Cầm];\n• Khi bắt đầu giai đoạn rút bài, bạn thu lấy tất cả lá [Cầm].",
+	[":kongcheng"] = "Tỏa định kỹ:\n• Khi bạn trở thành mục tiêu của [Sát]/[Quyết Đấu], nếu bạn không có bài trên tay, hủy bỏ mục tiêu đối với bạn.\n• Ngoài lượt của bạn, khi bạn nhận được bài do người khác giao cho, nếu bạn không có bài trên tay, đặt những lá bài này lên trên Tướng này, gọi là [Cầm];\n• Khi bắt đầu giai đoạn rút bài, bạn thu lấy tất cả lá [Cầm].",
 	["#GuanxingResult"] = "%from đã phát động »<font color=\"yellow\"><b>Quan Tinh</b></font>«: %arg lên trên, %arg2 xuống dưới",
 	["$GuanxingTop"] = "Đặt lên đầu chồng bài: %card",
 	["$GuanxingBottom"] = "Đặt dưới đáy chồng bài: %card",
@@ -97,7 +97,7 @@ return {
 	["#weiyan"] = "Thị Huyết Độc Lang",
 	["weiyan"] = "Ngụy Diên",
 	["kuanggu"] = "Cuồng Cốt",
-	[":kuanggu"] = "Sau khi bạn gây sát thương cho 1 người, nếu họ ở khoảng cách ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn có thể chọn 1 mục:\n1. Hồi 1 máu;\n2. Rút 1 lá.",
+	[":kuanggu"] = "Sau khi bạn gây sát thương cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn có thể chọn 1 mục:\n1. Hồi 1 máu;\n2. Rút 1 lá.",
 	["kuanggu:draw"] = "Rút 1 lá",
 	["kuanggu:recover"] = "Hồi 1 máu",
 	

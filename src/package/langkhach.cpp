@@ -463,6 +463,7 @@ public:
 PowangCard::PowangCard()
 {
     will_throw = false;
+    handling_method = Card::MethodNone;
 }
 
 bool PowangCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *self) const

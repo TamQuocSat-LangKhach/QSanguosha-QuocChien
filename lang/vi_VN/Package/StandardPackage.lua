@@ -66,7 +66,7 @@ local t = {
 	["~Triblade"] = "Chọn 1 lá bài trên tay, chọn mục tiêu kế tiếp rồi bấm \"Xác nhận\"",
 
 	["QinggangSword"] = "Thanh Công Kiếm",
-	[":QinggangSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Sau khi bạn xác định mục tiêu của lá [Sát], ứng với mỗi mục tiêu, bạn lệnh vô hiệu hoá phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
+	[":QinggangSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Sau khi bạn xác định mục tiêu của lá [Sát], ứng với mỗi mục tiêu, bạn lệnh [Sát] này Bỏ qua phòng cụ của họ.\n<b>Bỏ qua phòng cụ</b>: Vô hiệu hoá phòng cụ người bị bỏ qua phòng cụ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
 
 	["Spear"] = "Trượng Bát Xà Mâu",
 	[":Spear"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Bạn có thể chuyển hóa sử dụng/đánh ra 2 lá trên tay thành [Sát].",
