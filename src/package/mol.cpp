@@ -2712,7 +2712,7 @@ public:
                 prompt.append("-fillhandcard");
             }
             if (canChooseEnemy) {
-                prompt.append("-discard:").append(damage.to->objectName());
+                prompt.append("-discard::").append(damage.to->objectName());
             }
             ServerPlayer *target = room->askForPlayerChosen(player, targets, objectName(), prompt, true, true);
             if (target != NULL) {
@@ -2740,23 +2740,23 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             QStringList choicelist;
             if (target->isFriendWith(player) && canChooseFriend) {
-                choicelist << "fillhandcard";
+                choicelist << "jutian_choice:fillhandcard";
             }
             if (target->isFriendWith(damage.to) && canChooseEnemy) {
-                choicelist << "discard";
+                choicelist << "jutian_choice:discard";
             }
             QString choice;
             if (choicelist.size() > 1)
-                choice = room->askForChoice(player, objectName(), objectName() + "_" + choicelist.join("+"), QVariant(), "@jutian-choice");
+                choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant(), "@jutian-choice");
             else
                 choice = choicelist.last();
-            if (choice == "discard") {
+            if (choice == "jutian_choice:discard") {
                 int x = qMin(target->getHandcardNum() - target->getHp(), 5);
                 if (x > 0) {
                     room->askForDiscard(target, objectName(), x, x);
                 }
                 player->setFlags("jutian2used");
-            } else if (choice == "fillhandcard") {
+            } else if (choice == "jutian_choice:fillhandcard") {
                 target->fillHandCards(target->getMaxHp());
                 player->setFlags("jutian1used");
             }

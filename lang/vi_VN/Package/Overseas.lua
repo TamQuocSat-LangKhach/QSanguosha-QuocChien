@@ -276,8 +276,8 @@ return {
     ["@jutian-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với %dest để bỏ bài",
     
     ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
-    ["jutian_choice:fillhandcard"] = "Bổ sung bài trên tay đến giới hạn máu",
-    ["jutian_choice:discard"] = "Bỏ bài trên tay đến khi bằng số máu",
+    ["jutian_choice:fillhandcard"] = "Bổ sung bài",
+    ["jutian_choice:discard"] = "Bỏ bài",
 	
     ["#shitao"] = "Đồng Tiến Cộng Thoái",
     ["shitao"] = "Thạch Thao",
