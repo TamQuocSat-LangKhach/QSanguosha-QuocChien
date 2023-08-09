@@ -2762,7 +2762,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>using</source>
-        <translation> được sử dụng</translation>
+        <translation> đã sử dụng</translation>
     </message>
     <message>
         <source>%from %5 [%1] %6 %4 %2 as %3</source>

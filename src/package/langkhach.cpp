@@ -12,7 +12,7 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown << GeneralShowed;
+        events << GeneralShown << GeneralShowed << DFDebut;
         frequency = Compulsory;
     }
 
@@ -27,26 +27,22 @@ public:
         }
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (triggerEvent == GeneralShown && TriggerSkill::triggerable(player)) {
-            if (data.toBool() && player->getMark("HaventShowGeneral") > 0)
+        if (!TriggerSkill::triggerable(player) || triggerEvent == GeneralShowed || !player->hasShownSkill(this))
+            return QStringList();
+        if (triggerEvent == DFDebut && room->getTag("GlobalCareeristShow").toBool())
             return QStringList(objectName());
-        }
-
+        if (triggerEvent == GeneralShown && data.toBool() && player->getMark("HaventShowGeneral") > 0 && player->getMark("bianhuaUsed") == 0)
+            return QStringList(objectName());
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *ask_who) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
-        if (!ask_who->hasShownSkill(this)){
-            return false;
-        }
-        if (!player->cheakSkillLocation(objectName(), true)) {
-            return false;
-        }
-        room->sendCompulsoryTriggerLog(player, "bianhua");
-        room->broadcastSkillInvoke("bianhua");
+        room->sendCompulsoryTriggerLog(player, objectName());
+        room->broadcastSkillInvoke(objectName());
+        room->addPlayerMark(player, "bianhuaUsed");
         return true;
     }
 
@@ -86,7 +82,7 @@ public:
             QList<const Skill *> skills = general->getVisibleSkillList();
             foreach (const Skill *skill, skills) {
                 if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
-                if (skill->relateToPlace(false)) continue;
+                if (skill->relateToPlace(player->inDeputySkills(objectName()))) continue;
                 room->acquireSkill(player, skill, true, true);
                 if (!skill->getLimitMark().isEmpty()) {
                     room->setPlayerMark(player, skill->getLimitMark(), 1);

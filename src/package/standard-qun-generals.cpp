@@ -1787,7 +1787,7 @@ class Huoshui : public TriggerSkill
 public:
     Huoshui() : TriggerSkill("huoshui")
     {
-        events << GeneralShown << GeneralHidden << GeneralRemoved << EventPhaseStart << Death << EventAcquireSkill << EventLoseSkill << CardUsed;
+        events << GeneralShown << DFDebut << GeneralHidden << GeneralRemoved << EventPhaseStart << Death << EventAcquireSkill << EventLoseSkill << CardUsed;
         frequency = Compulsory;
     }
 
@@ -1814,9 +1814,9 @@ public:
         if (c == NULL || (triggerEvent != EventPhaseStart && c->getPhase() == Player::NotActive) || c != player)
             return;
 
-        if ((triggerEvent == GeneralShown || triggerEvent == EventPhaseStart || triggerEvent == EventAcquireSkill) && !player->hasShownSkill(this))
+        if ((triggerEvent == GeneralShown || triggerEvent == DFDebut || triggerEvent == EventPhaseStart || triggerEvent == EventAcquireSkill) && !player->hasShownSkill(this))
             return;
-        if ((triggerEvent == GeneralShown || triggerEvent == GeneralHidden) && (!player->ownSkill(this) || player->inHeadSkills(this) != data.toBool()))
+        if ((triggerEvent == GeneralShown || triggerEvent == DFDebut || triggerEvent == GeneralHidden) && (!player->ownSkill(this) || player->inHeadSkills(this) != data.toBool()))
             return;
         if (triggerEvent == GeneralRemoved && data.toString().split(":").first() != "zoushi")
             return;
@@ -1828,7 +1828,7 @@ public:
             return;
 
         bool set = false;
-        if (triggerEvent == GeneralShown || triggerEvent == EventAcquireSkill || (triggerEvent == EventPhaseStart && player->getPhase() == Player::RoundStart))
+        if (triggerEvent == DFDebut || triggerEvent == GeneralShown || triggerEvent == EventAcquireSkill || (triggerEvent == EventPhaseStart && player->getPhase() == Player::RoundStart))
             set = true;
 
         doHuoshui(room, player, set);

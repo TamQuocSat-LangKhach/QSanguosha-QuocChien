@@ -136,7 +136,7 @@ return {
     ["yaowu"] = "Diệu Võ",
     [":yaowu"] = "Hạn định kỹ: Sau khi bạn gây sát thương, nếu tướng này đang úp mặt, bạn có thể phát động kỹ năng này: Bạn tăng 2 giới hạn máu, hồi 2 máu;\n▶ Sau khi bạn trận vong, tất cả người cùng thế lực với bạn mất 1 máu.",
     ["shiyong"] = "Thị Dũng",
-    [":shiyong"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận, nếu sát thương này đến từ lá bài:\n* Nếu bạn chưa phát động »Diệu Võ« và lá gây ra sát thương không phải màu Đỏ, bạn rút 1 lá;\n* Nếu bạn đã phát động »Diệu Võ« và lá gây sát thương không phải màu Đen, nguồn sát thương rút 1 lá.",
+    [":shiyong"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận từ lá bài:\n* Nếu bạn chưa phát động »Diệu Võ« và lá gây ra sát thương không phải màu Đỏ, bạn rút 1 lá;\n* Nếu bạn đã phát động »Diệu Võ« và lá gây sát thương không phải màu Đen, nguồn sát thương rút 1 lá.",
 
     ["#zhangchunhua"] = "Lãnh Huyết Hoàng Hậu",
     ["zhangchunhua"] = "Trương Xuân Hoa",
