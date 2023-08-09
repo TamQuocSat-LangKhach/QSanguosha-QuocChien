@@ -470,20 +470,20 @@ bool PowangCard::targetFilter(const QList<const Player *> &targets, const Player
 {
     SavageAssault *sa = new SavageAssault(Card::NoSuit, 0);
     sa->deleteLater();
-    return targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral() && !self->isProhibited(to_select, sa);
+    return sa->isAvailable(self) && targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral() && !self->isProhibited(to_select, sa);
 }
 
-void PowangCard::use(Room *room, ServerPlayer *from, QList<ServerPlayer *> &chosen) const
+void PowangCard::onUse(Room *room, const CardUseStruct &card_use) const
 {
-    const Card *card = Sanguosha->getCard(subcards.last());
-    if (!card) return;
-    if (chosen.isEmpty()) return;
+    ServerPlayer *from = card_use.from;
     QList<ServerPlayer *> targets;
-    SavageAssault *sa = new SavageAssault(card->getSuit(), card->getNumber());
+    SavageAssault *sa = new SavageAssault(card_use.card->getSuit(), card_use.card->getNumber());
     sa->setSkillName("_powang");
-    sa->addSubcard(card);
+    sa->addSubcards(subcards);
+    sa->setShowSkill("powang");
+    sa->setCanRecast(false);
     foreach (ServerPlayer *p, room->getOtherPlayers(from)) {
-        if (p->isFriendWith(chosen.first()) &&  !from->isProhibited(p, sa)) {
+        if (p->isFriendWith(card_use.to.first()) &&  !from->isProhibited(p, sa)) {
             targets << p;
         }
     }
@@ -514,7 +514,6 @@ public:
     {
         PowangCard *powang = new PowangCard();
         powang->setSkillName(objectName());
-        powang->setShowSkill(objectName());
         powang->addSubcard(originalCard);
         return powang;
     }
