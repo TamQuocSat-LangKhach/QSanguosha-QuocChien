@@ -7,6 +7,19 @@
 #include "standard-tricks.h"
 #include "standard-shu-generals.h"
 
+class BianhuaViewAsSkill : public ZeroCardViewAsSkill
+{
+public:
+    BianhuaViewAsSkill() : ZeroCardViewAsSkill("bianhua")
+    {
+    }
+
+    virtual const Card *viewAs() const
+    {
+        return NULL;
+    }
+};
+
 class Bianhua : public TriggerSkill
 {
 public:
@@ -14,6 +27,7 @@ public:
     {
         events << GeneralShown << GeneralShowed << DFDebut;
         frequency = Compulsory;
+        view_as_skill = new BianhuaViewAsSkill;
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
@@ -62,7 +76,7 @@ public:
             }
         }
         if (targets.isEmpty()) return false;
-        ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", false, true);
+        ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", true, true);
         if (to != NULL) {
             QStringList choicelist;
             if (to->hasShownGeneral1() && !to->getActualGeneral1Name().contains("sujiang")) {
@@ -79,11 +93,12 @@ public:
             log.arg = choice;
             room->sendLog(log);
             room->addPlayerMark(player, "##" + choice);
+            room->setPlayerProperty(player, "bianhua-choice", choice);
             QList<const Skill *> skills = general->getVisibleSkillList();
             foreach (const Skill *skill, skills) {
-                if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
-                if (skill->relateToPlace(player->inDeputySkills(objectName()))) continue;
-                room->acquireSkill(player, skill, true, true);
+//                if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
+//                if (skill->relateToPlace(player->inDeputySkills(objectName()))) continue;
+//                room->acquireSkill(player, skill, true, true);
                 if (!skill->getLimitMark().isEmpty()) {
                     room->setPlayerMark(player, skill->getLimitMark(), 1);
                 }
@@ -91,9 +106,43 @@ public:
             player->setGender(general->getGender());
             if (player->getActualGeneral2()->isCompanionWith(choice))
                 room->addPlayerMark(player, "FakeCompanion");
+        } else {
+            room->setPlayerProperty(player, "maxhp", player->getMaxHp() + 1);
+
+            LogMessage log;
+            log.type = "#GainMaxHp";
+            log.from = player;
+            log.arg = QString::number(1);
+            room->sendLog(log);
+
+            if (player->canRecover()) {
+                RecoverStruct recover;
+                recover.who = player;
+                room->recover(player, recover);
+            }
         }
 
         return false;
+    }
+};
+
+class BianhuaVH : public ViewHasSkill
+{
+public:
+    BianhuaVH() : ViewHasSkill("bianhua-viewhas")
+    {
+        global = true;
+    }
+
+    virtual bool ViewHas(const Player *wuding, const QString &skill_name, const QString &flag) const
+    {
+        if (flag != "skill" || !wuding->ownSkill("bianhua")) return false;
+        QString generalName = wuding->property("bianhua-choice").toString();
+        if(generalName.isNull() || generalName.isEmpty()) return false;
+        const Skill *skill = Sanguosha->getSkill(skill_name);
+        if (!skill || skill->relateToPlace(wuding->inDeputySkills(objectName()))) return false;
+        const General *general = Sanguosha->getGeneral(generalName);
+        return general && general->hasSkill(skill_name);
     }
 };
 
@@ -146,17 +195,10 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         if (num > 0) effect.to->drawCards(num);
         QStringList choicelist;
         choicelist << "slash";
-//        choicelist << "analeptic";
         foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
-//            static QSet<QString> skill_set;
-//            if (skill_set.isEmpty()) {
-//                skill_set.insert("qice");
-//                skill_set.insert("zaoyun");
-//                skill_set.insert("mingfa");
-//            }
-            if (skill->getDescription().contains("lần trong giai đoạn ra bài")) {
-                if (skill->inherits("ViewAsSkill") ||
-                        (skill->inherits("TriggerSkill") && qobject_cast<const TriggerSkill*>(skill)->getViewAsSkill() != NULL)) {
+            if (skill && skill->getDescription().contains("lần trong giai đoạn ra bài")) {
+                const ViewAsSkill *vsSkill = Sanguosha->getViewAsSkill(skill->objectName());
+                if (vsSkill) {
                     choicelist << skill->objectName();
                 }
             }
@@ -688,7 +730,7 @@ LangKhachPackage::LangKhachPackage()
     insertRelatedSkills("powang", "#powang-discard");
 
     addMetaObject<PowangCard>();
-    skills << new Siweishen;
+    skills << new Siweishen << new BianhuaVH;
 }
 
 ADD_PACKAGE(LangKhach)

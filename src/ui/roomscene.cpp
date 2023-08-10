@@ -2334,7 +2334,7 @@ void RoomScene::addSkillButton(const Skill *skill, const bool &head)
 
     if (btn->getSkill() && btn->getViewAsSkill() != NULL  && !m_replayControl) {
         connect(btn, (void (QSanSkillButton::*)())(&QSanSkillButton::skill_activated), dashboard, &Dashboard::skillButtonActivated);
-        if (btn->getSkill()->objectName() == "huashen")
+        if (btn->getSkill()->objectName() == "huashen" || btn->getSkill()->objectName() == "bianhua")
             connect(btn, (void (QSanSkillButton::*)())(&QSanSkillButton::skill_activated), this, &RoomScene::onHuashenActivated);
         else
             connect(btn, (void (QSanSkillButton::*)())(&QSanSkillButton::skill_activated), this, &RoomScene::onSkillActivated);
@@ -2754,7 +2754,42 @@ void RoomScene::updateStatus(Client::Status oldStatus, Client::Status newStatus)
             }
             continue;
         }
+        if (button->getSkill()->objectName() == "bianhua") {
+            button->setEnabled(false);
+            QString generalName = Self->property("bianhua").toString();
+            if (!generalName.isNull() && !generalName.isEmpty()) {
+                const General *general = Sanguosha->getGeneral(generalName);
+                if (general) {
+                    foreach (const Skill *skill, general->getVisibleSkillList()) {
+                        if (skill) {
+                            const ViewAsSkill *vsSkill = Sanguosha->getViewAsSkill(skill->objectName());
+                            if (vsSkill != NULL) {
+                                QString pattern = Sanguosha->currentRoomState()->getCurrentCardUsePattern();
+                                if (pattern.startsWith("@")) continue;
 
+                                QRegExp rx("@@?([_A-Za-z]+)(\\d+)?!?");
+                                CardUseStruct::CardUseReason reason = CardUseStruct::CARD_USE_REASON_UNKNOWN;
+                                if ((newStatus & Client::ClientStatusBasicMask) == Client::Responding) {
+                                    if (newStatus == Client::RespondingUse) {
+                                        reason = CardUseStruct::CARD_USE_REASON_RESPONSE_USE;
+                                    } else if (newStatus == Client::Responding || rx.exactMatch(pattern))
+                                        reason = CardUseStruct::CARD_USE_REASON_RESPONSE;
+                                } else if (newStatus == Client::Playing) {
+                                    reason = CardUseStruct::CARD_USE_REASON_PLAY;
+                                }
+                                Self->setFlags("HuanshenSkillChecking");
+                                bool available = vsSkill->isAvailable(Self, reason, pattern);
+                                Self->setFlags("-HuanshenSkillChecking");
+                                if (available) {
+                                    button->setEnabled(true);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         const ViewAsSkill *vsSkill = button->getViewAsSkill();
         if (vsSkill != NULL) {
             QString pattern = Sanguosha->currentRoomState()->getCurrentCardUsePattern();

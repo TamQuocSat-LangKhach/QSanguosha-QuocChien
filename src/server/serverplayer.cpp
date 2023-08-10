@@ -655,6 +655,24 @@ bool ServerPlayer::hasNullification()
         }
         room->setPlayerFlag(this, "-HuanshenSkillChecking");
     }
+    if (hasSkill("bianhua")) {
+        room->setPlayerFlag(this, "HuanshenSkillChecking");
+        QString name = property("bianhua").toString();
+        if (!name.isNull() && !name.isEmpty()) {
+            const General *general = Sanguosha->getGeneral(name);
+            if (general) {
+                foreach (const Skill *skill, general->getVisibleSkillList()) {
+                    if (skill) {
+                        const ViewAsSkill *vsSkill = Sanguosha->getViewAsSkill(skill->objectName());
+                        if (vsSkill) {
+                            if (vsSkill && vsSkill->isEnabledAtNullification(this)) return true;
+                        }
+                    }
+                }
+            }
+        }
+        room->setPlayerFlag(this, "-HuanshenSkillChecking");
+    }
     return false;
 }
 

@@ -17,7 +17,7 @@ return {
 	["#wuding"] = "Kẻ Biến Hình",
 	["#wuding"] = "Kẻ Biến Hình",
 	["bianhua"] = "Biến Hóa",
-	[":bianhua"] = "Tỏa định kỹ: Khi tướng này được mở lần đầu bởi bạn hoặc do Bộc lộ dã tâm, bạn chọn 1 tướng đã mở trên bàn của người khác; bạn nhận giới tính, hợp kỹ và kỹ năng ngoại trừ Quân chủ kỹ của tướng đã chọn.",
+	[":bianhua"] = "Tỏa định kỹ:\n• Khi tướng này được mở lần đầu bởi bạn hoặc do Bộc lộ dã tâm, bạn chọn 1 mục:\n1. Bạn chọn 1 tướng đã mở trên bàn của người khác: Tướng này nhận giới tính, châu liên bích hợp và kỹ năng gốc ngoại trừ Quân chủ kỹ của tướng đã chọn;\n2. Giới tính của tướng này là song tính, bạn tăng 1 giới hạn máu, hồi 1 máu, nhận 1 tiêu ký [Dã tâm gia].\n• Sau khi bắt đầu lượt, nếu tướng này không có kỹ năng khác, bạn đổi phó tướng (Bỏ qua giới hạn đổi phó tướng).",
 	["@bianhua-invoke"] = "Biến Hóa: Lựa chọn 1 người có tướng đã mở mặt",
 	["@bianhua-choose"] = "Biến Hóa: Lựa chọn 1 tướng để nhận Kỹ năng, giới tính và hợp kỹ của tướng đó",
 	["#bianhua-choice"] = "%from đã phát động »Biến Hóa«, lựa chọn %arg để sao chép",
