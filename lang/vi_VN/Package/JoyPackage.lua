@@ -4,7 +4,7 @@ return {
 	["joy"] = "Hoan Lạc",
 
 	["shit"] = "Thỉ",
-	[":shit"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Không có\n\n<b>Hiệu ứng thêm</b>: Trong lượt của bạn, khi lá này từ tay của bạn tiến vào chồng bài bỏ hoặc bàn chơi, nếu chất của lá này là:\n* BÍCH: Mất 1 máu;\n* TÉP: Bạn gây 1 sát thương Lôi cho bạn;\n* RÔ: Bạn gây 1 sát thương cho bạn;\n* CƠ: Bạn gây 1 sát thương Hỏa cho bạn.",
+	[":shit"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Không có\n\n<b>Hiệu ứng thêm</b>: Trong lượt của bạn, khi lá này từ tay của bạn tiến vào chồng bài bỏ hoặc bàn chơi, nếu chất của lá này là:\n* BÍCH: Mất 1 máu;\n* TÉP: Bạn nhận 1 sát thương Lôi;\n* RÔ: Bạn nhận 1 sát thương;\n* CƠ: Bạn nhận 1 sát thương Hỏa.",
 	["disgusting_card"] = "Lá bốc mùi",
 	["$ShitLostHp"] = "%from đã ăn %card, mất 1 máu",
 	["$ShitDamage"] = "%from đã ăn %card, nhận 1 sát thương.",

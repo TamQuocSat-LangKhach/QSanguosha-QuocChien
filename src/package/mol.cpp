@@ -2631,8 +2631,14 @@ public:
         if (use.card->isKindOf("Slash")) {
             QList<ServerPlayer *> caoangs = room->findPlayersBySkillName(objectName());
             foreach (ServerPlayer *caoang, caoangs) {
-                if (caoang != NULL && player->isFriendWith(caoang))
-                    skill_list.insert(caoang, QStringList(objectName()));
+                if (caoang != NULL && player->isFriendWith(caoang)) {
+                    if (caoang->ownSkill(objectName())) {
+                        if (caoang->inHeadSkills(objectName()) && !caoang->isLord() && !caoang->getActualGeneral1Name().contains("sujiang"))
+                            skill_list.insert(caoang, QStringList(objectName()));
+                        if (caoang->inDeputySkills(objectName()) && caoang->getGeneral2() && !caoang->getActualGeneral1Name().contains("sujiang"))
+                            skill_list.insert(caoang, QStringList(objectName()));
+                    }
+                }
             }
         }
         return skill_list;
@@ -2640,7 +2646,7 @@ public:
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *ask_who) const
     {
-        if (ask_who->ownSkill(objectName()) && ask_who->askForSkillInvoke(this, data)) {
+        if (ask_who->askForSkillInvoke(this, data)) {
             ask_who->removeGeneral(ask_who->inHeadSkills(objectName()));
             room->broadcastSkillInvoke(objectName(), ask_who);
             return true;

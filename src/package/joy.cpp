@@ -85,19 +85,19 @@ public:
                 case Card::Heart:
                     log.type = "$ShitDamage";
                     room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player, 1, DamageStruct::Fire));
+                    room->damage(DamageStruct(shit, NULL, player, 1, DamageStruct::Fire));
                     break;
 
                 case Card::Club:
                     log.type = "$ShitDamage";
                     room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player, 1, DamageStruct::Thunder));
+                    room->damage(DamageStruct(shit, NULL, player, 1, DamageStruct::Thunder));
                     break;
 
                 case Card::Diamond:
                     log.type = "$ShitDamage";
                     room->sendLog(log);
-                    room->damage(DamageStruct(shit, player, player));
+                    room->damage(DamageStruct(shit, NULL, player));
                     break;
 
                 default:

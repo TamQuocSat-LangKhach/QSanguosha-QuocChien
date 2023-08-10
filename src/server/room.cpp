@@ -3126,7 +3126,12 @@ void Room::freeChain()
                 addPlayerMark(p, "Global_hasShownAllGenerals");
                 if (p->getGeneral2() && !p->getGeneral()->objectName().contains("sujiang") &&
                         !p->getGeneral2()->objectName().contains("sujiang")) {
+
                     if (p->getGeneral()->isCompanionWith(p->getGeneral2()->objectName()))
+                        addPlayerMark(p, "@companion");
+
+                    QString generalName = p->property("bianhua-choice").toString();
+                    if(!generalName.isNull() && !generalName.isEmpty() && p->getGeneral2()->isCompanionWith(generalName))
                         addPlayerMark(p, "@companion");
 
                     int max_hp = p->getGeneral()->getMaxHpHead() + p->getGeneral2()->getMaxHpDeputy();
@@ -5872,9 +5877,22 @@ void Room::changePlayerGeneral(ServerPlayer *player, const QString &new_general)
         notifyProperty(p, player, "general");
 
     Q_ASSERT(player->getGeneral() != NULL);
-    if (new_general != "anjiang")
-        player->setGender(player->getGeneral()->getGender());
-    else {
+    if (new_general != "anjiang") {
+        bool hasChangeGender = false;
+        if (player->getGeneral()->hasSkill("bianhua")) {
+            QString generalName = player->property("bianhua-choice").toString();
+            if(!generalName.isNull() && !generalName.isEmpty()) {
+                const General *general = Sanguosha->getGeneral(generalName);
+                if (general) {
+                    player->setGender(general->getGender());
+                    hasChangeGender = true;
+                }
+            }
+        }
+        if (!hasChangeGender) {
+            player->setGender(player->getGeneral()->getGender());
+        }
+    } else {
         if (player->hasShownGeneral2())
             player->setGender(player->getGeneral2()->getGender());
         else
