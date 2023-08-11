@@ -5878,18 +5878,10 @@ void Room::changePlayerGeneral(ServerPlayer *player, const QString &new_general)
 
     Q_ASSERT(player->getGeneral() != NULL);
     if (new_general != "anjiang") {
-        bool hasChangeGender = false;
-        if (player->getGeneral()->hasSkill("bianhua")) {
-            QString generalName = player->property("bianhua-choice").toString();
-            if(!generalName.isNull() && !generalName.isEmpty()) {
-                const General *general = Sanguosha->getGeneral(generalName);
-                if (general) {
-                    player->setGender(general->getGender());
-                    hasChangeGender = true;
-                }
-            }
-        }
-        if (!hasChangeGender) {
+        const General *bianhua = player->getBianhuaGeneral();
+        if (bianhua && player->getGeneral()->ownSkill("bianhua")) {
+            player->setGender(bianhua->getGender());
+        } else {
             player->setGender(player->getGeneral()->getGender());
         }
     } else {

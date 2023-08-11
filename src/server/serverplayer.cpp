@@ -1745,6 +1745,12 @@ bool ServerPlayer::showSkill(const QString &skill_name, const QString &skill_pos
             showGeneral(name == "GameRule_AskForGeneralShowHead" ? true : false, true, true, false);
             result = true;
         }
+    } else if (ownSkill("bianhua")) {
+        const General *bianhua = this->getBianhuaGeneral();
+        if (bianhua && bianhua->ownSkill(skill_name)) {
+            showGeneral(inHeadSkills("bianhua"));
+            result = true;
+        }
     }
     return result;
 }

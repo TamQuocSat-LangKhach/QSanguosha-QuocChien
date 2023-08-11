@@ -490,6 +490,10 @@ bool Player::isLord() const
 
 bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 {
+    const General *bianhua = getBianhuaGeneral();
+    if (skill_name != "bianhua" && bianhua && bianhua->ownSkill(skill_name) && !hasSkill("bianhua", include_lose)) {
+        return false;
+    }
     const TriggerSkill *trigger = Sanguosha->getTriggerSkill(skill_name);
     if (trigger && trigger->isGlobal()) return true;
 
@@ -1928,9 +1932,10 @@ bool Player::cheakSkillLocation(const QString &skill_name, const QVariant &data)
     if (show_list.contains("head")) {
         if (general1_showed && general->ownSkill(skill_name))
             return true;
-        if (general->ownSkill("bianhua")) {
 
-        }
+        const General *bianhua = getBianhuaGeneral();
+        if (bianhua && bianhua->ownSkill(skill_name))
+            return true;
     }
 
     if (show_list.contains("deputy") && general2_showed && general2 && general2->ownSkill(skill_name))
@@ -2253,4 +2258,15 @@ void Player::setDeputySkinId(int id)
 int Player::getDeputySkinId() const
 {
     return deputySkinId;
+}
+
+General Player::getBianhuaGeneral() const
+{
+    if (this->ownSkill("bianhua")) {
+        QString generalName = this->property("bianhua-choice").toString();
+        if(!generalName.isNull() && !generalName.isEmpty()) {
+            return Sanguosha->getGeneral(generalName);
+        }
+    }
+    return NULL;
 }

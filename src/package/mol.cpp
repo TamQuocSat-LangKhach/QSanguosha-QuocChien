@@ -2746,23 +2746,23 @@ public:
             DamageStruct damage = data.value<DamageStruct>();
             QStringList choicelist;
             if (target->isFriendWith(player) && canChooseFriend) {
-                choicelist << "jutian_choice:fillhandcard";
+                choicelist << "fillhandcard";
             }
             if (target->isFriendWith(damage.to) && canChooseEnemy) {
-                choicelist << "jutian_choice:discard";
+                choicelist << "discard";
             }
             QString choice;
             if (choicelist.size() > 1)
-                choice = room->askForChoice(player, objectName(), choicelist.join("+"), QVariant(), "@jutian-choice");
+                choice = room->askForChoice(player, "jutian_choice", choicelist.join("+"), QVariant(), "@jutian-choice::" + target->objectName(), choicelist.join("+") );
             else
                 choice = choicelist.last();
-            if (choice == "jutian_choice:discard") {
+            if (choice == "discard") {
                 int x = qMin(target->getHandcardNum() - target->getHp(), 5);
                 if (x > 0) {
                     room->askForDiscard(target, objectName(), x, x);
                 }
                 player->setFlags("jutian2used");
-            } else if (choice == "jutian_choice:fillhandcard") {
+            } else if (choice == "fillhandcard") {
                 target->fillHandCards(target->getMaxHp());
                 player->setFlags("jutian1used");
             }

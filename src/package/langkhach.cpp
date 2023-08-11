@@ -35,12 +35,8 @@ public:
             return QStringList(objectName());
         if (triggerEvent == GeneralShown && data.toBool() && player->getMark("HaventShowGeneral") > 0 && player->getMark("bianhuaUsed") == 0)
             return QStringList(objectName());
-        if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart) {
-            QString choice = player->property("bianhua-choice").toString();
-            if (choice.isNull() || choice.isEmpty()) {
-                return QStringList(objectName());
-            }
-            return QStringList();
+        if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart && !player->getBianhuaGeneral()) {
+            return QStringList(objectName());
         }
 
         return QStringList();
