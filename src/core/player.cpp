@@ -1441,9 +1441,9 @@ getHeadSkillList(bool visible_only, bool include_acquired, bool include_equip) c
         skills = head_skills.keys();
         const General *bianhua = getBianhuaGeneral();
         if (bianhua) {
-            foreach (const Skill *skill, head_acquired_skills) {
-                if (bianhua->hasSkill(skill->objectName())) {
-                    skills << skill->objectName();
+            foreach (QString &skillName, head_acquired_skills.toList()) {
+                if (bianhua->hasSkill(skillName)) {
+                    skills << skillName;
                 }
             }
         }
