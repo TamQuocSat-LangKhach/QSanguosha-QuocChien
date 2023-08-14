@@ -1747,7 +1747,7 @@ bool ServerPlayer::showSkill(const QString &skill_name, const QString &skill_pos
         }
     } else if (ownSkill("bianhua")) {
         const General *bianhua = this->getBianhuaGeneral();
-        if (bianhua && bianhua->ownSkill(skill_name)) {
+        if (bianhua && bianhua->hasSkill(skill_name)) {
             showGeneral(inHeadSkills("bianhua"));
             result = true;
         }

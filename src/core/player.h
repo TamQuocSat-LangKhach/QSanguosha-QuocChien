@@ -398,7 +398,7 @@ public:
 
     virtual void setDeputySkinId(int id);
     int getDeputySkinId() const;
-    General getBianhuaGeneral() const;
+    const General *getBianhuaGeneral() const;
 
     virtual QStringList getBigKingdoms(const QString &reason, MaxCardsType::MaxCardsCount type = MaxCardsType::Min) const = 0;
 

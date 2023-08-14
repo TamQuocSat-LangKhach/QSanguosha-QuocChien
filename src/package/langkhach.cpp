@@ -12,40 +12,28 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown << DFDebut << EventPhaseEnd;
+        events << GeneralShowed << EventPhaseEnd;
         frequency = Compulsory;
     }
 
-//    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
-//    {
-//        if (triggerEvent == GeneralShowed && player->hasShownAllGenerals()) {
-//            if (player->getMark("FakeCompanion") > 0 && !player->getMark("BianhuaCompanionChecked") > 0) {
-//                room->addPlayerMark(player, "@companion");
-//            }
-//            room->addPlayerMark(player, "BianhuaCompanionChecked");
-//            room->removePlayerMark(player, "FakeCompanion");
-//        }
-//    }
-
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (!TriggerSkill::triggerable(player) || triggerEvent == GeneralShowed || !player->hasShownSkill(this))
+        if (!TriggerSkill::triggerable(player) || !player->hasShownSkill(this))
             return QStringList();
-        if (triggerEvent == DFDebut && room->getTag("GlobalCareeristShow").toBool())
+        if (triggerEvent == GeneralShowed && player->cheakSkillLocation(objectName(), data) && player->getMark("bianhuaUsed") == 0)
             return QStringList(objectName());
-        if (triggerEvent == GeneralShown && data.toBool() && player->getMark("HaventShowGeneral") > 0 && player->getMark("bianhuaUsed") == 0)
+        if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart && !player->getBianhuaGeneral())
             return QStringList(objectName());
-        if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart && !player->getBianhuaGeneral()) {
-            return QStringList(objectName());
-        }
-
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
         room->sendCompulsoryTriggerLog(player, objectName());
         room->broadcastSkillInvoke(objectName());
+        if (triggerEvent == GeneralShowed) {
+            room->addPlayerMark(player, "bianhuaUsed");
+        }
         return true;
     }
 

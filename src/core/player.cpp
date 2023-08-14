@@ -491,7 +491,7 @@ bool Player::isLord() const
 bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 {
     const General *bianhua = getBianhuaGeneral();
-    if (skill_name != "bianhua" && bianhua && bianhua->ownSkill(skill_name) && !hasSkill("bianhua", include_lose)) {
+    if (skill_name != "bianhua" && bianhua && bianhua->hasSkill(skill_name) && !hasSkill("bianhua", include_lose)) {
         return false;
     }
     const TriggerSkill *trigger = Sanguosha->getTriggerSkill(skill_name);
@@ -1430,14 +1430,24 @@ QList<const Skill *> Player::getSkillList(bool include_equip, bool visible_only)
     return skillList;
 }
 
-QList<const Skill *> Player::getHeadSkillList(bool visible_only, bool include_acquired, bool include_equip) const
+QList<const Skill *> Player::
+getHeadSkillList(bool visible_only, bool include_acquired, bool include_equip) const
 {
     QList<const Skill *> skillList;
     QList<QString> skills;
     if (include_acquired)
         skills = head_skills.keys() + head_acquired_skills.toList();
-    else
+    else {
         skills = head_skills.keys();
+        const General *bianhua = getBianhuaGeneral();
+        if (bianhua) {
+            foreach (const Skill *skill, head_acquired_skills) {
+                if (bianhua->hasSkill(skill->objectName())) {
+                    skills << skill->objectName();
+                }
+            }
+        }
+    }
     foreach (const QString &skill_name, skills) {
         const Skill *skill = Sanguosha->getSkill(skill_name);
         if (skill != NULL) {
@@ -2260,7 +2270,7 @@ int Player::getDeputySkinId() const
     return deputySkinId;
 }
 
-General Player::getBianhuaGeneral() const
+const General *Player::getBianhuaGeneral() const
 {
     if (this->ownSkill("bianhua")) {
         QString generalName = this->property("bianhua-choice").toString();
