@@ -12,21 +12,17 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShown << DFDebut << EventPhaseEnd << GeneralTransforming;
+        events << GeneralShowed << EventPhaseEnd;
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         if (!TriggerSkill::triggerable(player) || !player->hasShownSkill(this))
             return QStringList();
-        if (triggerEvent == GeneralShown && player->cheakSkillLocation(objectName(), data.toBool()) && player->getMark("bianhuaUsed") == 0)
-            return QStringList(objectName());
-        if (triggerEvent == DFDebut && room->getTag("GlobalCareeristShow").toBool())
+        if (triggerEvent == GeneralShowed && player->cheakSkillLocation(objectName(), data) && player->getMark("bianhuaUsed") == 0)
             return QStringList(objectName());
         if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart && !player->getBianhuaGeneral())
-            return QStringList(objectName());
-        if (triggerEvent == GeneralTransforming)
             return QStringList(objectName());
         return QStringList();
     }
@@ -35,23 +31,17 @@ public:
     {
         room->sendCompulsoryTriggerLog(player, objectName());
         room->broadcastSkillInvoke(objectName());
-        if (triggerEvent == GeneralShown || triggerEvent == DFDebut) {
+        if (triggerEvent == GeneralShown) {
             room->addPlayerMark(player, "bianhuaUsed");
         }
         return true;
     }
 
-    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
         if (triggerEvent == EventPhaseEnd) {
-            room->broadcastSkillInvoke("transform", player->isMale());
+            room->broadcastSkillInvoke("transform", player->getActualGeneral2()->isMale());
             room->transformDeputyGeneral(player);
-            return false;
-        }
-        if (triggerEvent == GeneralTransforming) {
-            int num = data.toInt();
-            num += 2;
-            data = QVariant(num);
             return false;
         }
         QList<ServerPlayer *> targets;
@@ -67,7 +57,6 @@ public:
                 continue;
             }
         }
-        if (targets.isEmpty()) return false;
         ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", true, true);
         if (to != NULL) {
             QStringList choicelist;
@@ -96,8 +85,6 @@ public:
                 }
             }
             player->setGender(general->getGender());
-//            if (player->getActualGeneral2()->isCompanionWith(choice))
-//                room->addPlayerMark(player, "FakeCompanion");
         } else {
             room->setPlayerProperty(player, "maxhp", player->getMaxHp() + 1);
 
@@ -119,25 +106,6 @@ public:
     }
 };
 
-//class BianhuaVH : public ViewHasSkill
-//{
-//public:
-//    BianhuaVH() : ViewHasSkill("bianhua-viewhas")
-//    {
-//        global = true;
-//    }
-
-//    virtual bool ViewHas(const Player *wuding, const QString &skill_name, const QString &flag) const
-//    {
-//        if (flag != "skill" || !wuding->ownSkill("bianhua")) return false;
-//        QString generalName = wuding->property("bianhua-choice").toString();
-//        if(generalName.isNull() || generalName.isEmpty()) return false;
-//        const Skill *skill = Sanguosha->getSkill(skill_name);
-//        if (!skill || skill->relateToPlace(wuding->inDeputySkills(objectName()))) return false;
-//        const General *general = Sanguosha->getGeneral(generalName);
-//        return general && general->hasSkill(skill_name);
-//    }
-//};
 
 MilitaryOrder::MilitaryOrder(Suit suit, int number)
     : SingleTargetTrick(suit, number)
@@ -497,11 +465,11 @@ PowangCard::PowangCard()
     handling_method = Card::MethodNone;
 }
 
-bool PowangCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *self) const
+bool PowangCard::targetRated(const Player *to_select, const Player *self) const
 {
     SavageAssault *sa = new SavageAssault(Card::NoSuit, 0);
     sa->deleteLater();
-    return sa->isAvailable(self) && targets.isEmpty() && to_select != self && to_select->hasShownOneGeneral() && !self->isProhibited(to_select, sa);
+    return sa->isAvailable(self) && to_select != self && to_select->hasShownOneGeneral() && !self->isProhibited(to_select, sa);
 }
 
 void PowangCard::onUse(Room *room, const CardUseStruct &card_use) const
@@ -518,9 +486,9 @@ void PowangCard::onUse(Room *room, const CardUseStruct &card_use) const
             targets << p;
         }
     }
-    room->setTag("powang_user", from->objectName());
+    room->addPlayerMark(from, "powangUse");
     room->useCard(CardUseStruct(sa, from, targets));
-    room->removeTag("powang_user");
+    room->setPlayerMark(from, "powangUse", 0);
 }
 
 class Powang : public OneCardViewAsSkill
@@ -564,13 +532,12 @@ public:
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         if (player != NULL && player->isAlive()) {
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.card && damage.card->getSkillName() == "powang" && damage.to->hasEquip()) {
-                if (player->objectName() == room->getTag("powang_user").toString())
-                    return QStringList(objectName());
+            if (damage.card && damage.card->getSkillName() == "powang" && player->getMark("powangUse") > 0 && damage.to->hasEquip()) {
+                return QStringList(objectName());
             }
         }
         return QStringList();

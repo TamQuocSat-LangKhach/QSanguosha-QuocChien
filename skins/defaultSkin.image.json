@@ -349,7 +349,7 @@
 "generalCard-default-0": "image/generals/card/%1.jpg",
 "generalCard-default-default": "hero-skin/%1/%2/card.jpg",
 
-"generalCardBg": "image/system/generalcard/bg.png",
+"generalCardBg-default": "image/system/generalcard/background/%1.png",
 "generalCardKingdom-default": "image/system/generalcard/kingdom/%1.png",
 "generalCardMagatamas-default-default": "image/system/generalcard/magatamas/%1-magatama-%2.png",
 

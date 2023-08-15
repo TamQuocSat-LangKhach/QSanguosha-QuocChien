@@ -636,6 +636,14 @@ void Room::attachSkillToPlayer(ServerPlayer *player, const QString &skill_name)
 
 void Room::detachSkillFromPlayer(ServerPlayer *player, const QString &skill_name, bool is_equip, bool acquire_only, bool head)
 {
+    if (skill_name == "bianhua") {
+        const General *bianhua = player->getBianhuaGeneral();
+        if (bianhua) {
+            foreach (const Skill *skill, bianhua->getVisibleSkillList()) {
+                detachSkillFromPlayer(player, skill->objectName(), is_equip, acquire_only, head);
+            }
+        }
+    }
     const Skill *skill = Sanguosha->getSkill(skill_name);
     if (head && !player->getHeadSkillList(false, true, is_equip).contains(skill)) return;
     if (!head && !player->getDeputySkillList(false, true, is_equip).contains(skill)) return;

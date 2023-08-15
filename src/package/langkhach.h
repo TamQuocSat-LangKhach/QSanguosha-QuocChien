@@ -47,7 +47,7 @@ class PowangCard : public SkillCard
 public:
     Q_INVOKABLE PowangCard();
 
-    virtual bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    virtual bool targetRated(const Player *to_select, const Player *self) const;
     virtual void onUse(Room *room, const CardUseStruct &card_use) const;
 };
 

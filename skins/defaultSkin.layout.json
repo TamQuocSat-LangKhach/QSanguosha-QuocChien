@@ -52,12 +52,12 @@
     // to specify a solid border of width 5.
     // @todo: adjust these colors!
     "magatamaFont": [
-        ["Arial", [15, 15, -2], 80, [233, 0, 0, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
-        ["Arial", [15, 15, -2], 80, [233, 34, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
-        ["Arial", [15, 15, -2], 80, [233, 116, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
-        ["Arial", [15, 15, -2], 80, [195, 195, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
-        ["Arial", [15, 15, -2], 80, [141, 195, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
-        ["Arial", [15, 15, -2], 80, [66, 174, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]]
+        ["RobotoCondensed", [15, 15, -2], 80, [233, 0, 0, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
+        ["RobotoCondensed", [15, 15, -2], 80, [233, 34, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
+        ["RobotoCondensed", [15, 15, -2], 80, [233, 116, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
+        ["RobotoCondensed", [15, 15, -2], 80, [195, 195, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
+        ["RobotoCondensed", [15, 15, -2], 80, [141, 195, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]],
+        ["RobotoCondensed", [15, 15, -2], 80, [66, 174, 34, 255], 2, 10, [0, 0], [20, 20, 20, 155]]
     ],
     // I realized that some MOD might need a wider background area than the foreground magatamas in order
     // to draw certain effect. The following factor specifies the number of invisible magatama to be appended.
@@ -78,24 +78,24 @@
     "graphicsBoxBorderColor": [166, 150, 122],
     "graphicsBoxTitleFont": ["wqy-microhei", 16, 2, [228, 213, 160]],
 
-    "generalBoxDestSeatFont": ["SimSun", 12, 2, [105, 103, 91]],
+    "generalBoxDestSeatFont": ["RobotoCondensed", 12, 2, [105, 103, 91]],
 
     "generalCardItemCompanionPromptRegion": [-1, 102, 95, 15],
 	
 	"generalCardSize": [200, 278],
 	"generalCardKingdomArea": [0, 0, 78, 82],
-	"generalCardNameArea": [10, 82, 50, 140],
-    "generalCardNameFont": ["@SimLi", [40, 40, 0], 0, [255, 255, 255, 255], 2, 10, [0, 0], [50, 50, 50, 200]],
+	"generalCardNameArea": [10, 70, 190, 160],
+    "generalCardNameFont": ["RobotoCondensed", [40, 40, 0], 0, [255, 255, 255, 255], 2, 10, [0, 0], [20, 20, 20, 200]],
 	"generalCardMagatamasArea": [80, 10, 14, 20],
 	"generalCardDoubleMagatamasWidth": 22,
 
-    "optionButtonText": ["wqy-microhei", [18, 18, 0], 0, [255, 255, 255, 255], 1, 10, [0, 0], [50, 50, 50, 200]],
+    "optionButtonText": ["RobotoCondensed", [18, 18, 0], 0, [255, 255, 255, 255], 1, 10, [0, 0], [50, 50, 50, 200]],
     "generalButtonPositionIconRegion": [-1, 2, 29, 24],
     "generalButtonNameRegion": [26, 0, 60, 23],
 
     "playerCardBoxPlaceNameText": ["@wqy-microhei", 16, 2, [228, 213, 160]],
 
-	"skinItemTitleText": ["@simli", [18, 18, -1], 0, [255, 255, 255, 255], 1, 10, [0, 0], [50, 50, 50, 200]]
+	"skinItemTitleText": ["RobotoCondensed", [18, 18, -1], 0, [255, 255, 255, 255], 1, 10, [0, 0], [50, 50, 50, 200]]
 },
 "room":
 {
@@ -122,7 +122,7 @@
     "mainFrameArea": [0, 0, 157, 181],
     "canvasArea": [0, 0, 157, 181],
     "handCardNumIconArea": [-8, 104, 30, 18],
-    "handCardFont": ["Arial", [12, 12, -1], 20, [255, 255, 255, 255], 1, 30, [0, 0], [20, 20, 20, 200]],
+    "handCardFont": ["RobotoCondensed", [12, 12, -1], 20, [255, 255, 255, 255], 1, 30, [0, 0], [20, 20, 20, 200]],
     "equipAreas": [[1, 120, 150, 21], [1, 134, 150, 21], [1, 148, 75, 21], [70, 148, 75, 21], [1, 162, 150, 21], [1, 148, 150, 21]],
     "equipImageArea": [0, 1, 140, 19],
     "equipSuitArea": [117, 2, 21, 17],
@@ -130,7 +130,7 @@
     "horseImageArea": [0, 1, 70, 19],
     "horseSuitArea": [48, 2, 21, 17],
     "horsePointArea": [37, -4, 25, 25],
-    "equipPointFont": ["arial", [13, 13, 3], 20, [0, 0, 0, 255], 1, 1, [0, 0], [255, 255, 190, 128]],
+    "equipPointFont": ["RobotoCondensed", [13, 13, 3], 20, [0, 0, 0, 255], 1, 1, [0, 0], [255, 255, 190, 128]],
     "delayedTrickFirstRegion": [120, 170, 24, 24],
     "delayedTrickStep": [-24, 0],
     "roleComboBoxPos": [130, 1],
@@ -143,13 +143,13 @@
     "secondaryAvatarArea": [78, 1, 77, 179],
     "circleArea": [1, 1, 155, 179],
     "avatarNameArea": [3, 23, 40, 60],
-    "avatarNameFont": ["@SimLi", [18, 18, 0], 0, [255, 255, 255, 255], 4, 10, [0, 0], [50, 50, 50, 200]],
+    "avatarNameFont": ["RobotoCondensed", [18, 18, 0], 0, [255, 255, 255, 255], 4, 10, [0, 0], [50, 50, 50, 200]],
     "secondaryAvatarNameArea": [78, 23, 40, 60],
-    "smallAvatarNameFont": ["@SimLi", [18, 18, 0], 0, [255, 255, 255, 255], 4, 10, [0, 0], [50, 50, 50, 200]],
+    "smallAvatarNameFont": ["RobotoCondensed", [18, 18, 0], 0, [255, 255, 255, 255], 4, 10, [0, 0], [50, 50, 50, 200]],
     "kingdomIconArea": [2, -1, 28, 28],
     //"kingdomMaskArea": [-2, 14, 36, 98],
     "screenNameArea": [0, 0, 157, 15],
-    "screenNameFont": ["SimSun", 12, 0, [255, 255, 255, 255], 0, 10, [0, 0], [20, 20, 20, 155]],
+    "screenNameFont": ["RobotoCondensed", 12, 0, [255, 255, 255, 255], 0, 10, [0, 0], [20, 20, 20, 155]],
     "magatamasHorizontal": false,
     "magatamaSize": [18, 17],
     "magatamaImageArea": [1, 1, 17, 17],
@@ -159,7 +159,7 @@
     "phaseArea": [25, 176, 140, 12],
     "onlineStatusArea": [122, 24, 30, 25],
     "onlineStatusBgColor": [0, 0, 0, 0],
-    "onlineStatusFont": ["SimSun",12, 0, [255, 255, 255, 255], 3, 10, [0, 0], [20, 20, 20, 155]],
+    "onlineStatusFont": ["RobotoCondensed",12, 0, [255, 255, 255, 255], 3, 10, [0, 0], [20, 20, 20, 155]],
     "skillNameArea": [0, 83, 160, 32],
     "skillNameFont": ["simkai", 18, 40, [255, 255, 255, 255], 1, 0, [0, 0], [0, 0, 0, 255]],
     "progressBarArea": ["topLeft", "bottomLeft", [0, 8], [160, 10]],
@@ -192,7 +192,7 @@
     "normalHeight": 150,
     "floatingAreaHeight": 50,
     "handCardNumIconArea": [-80, 126, 30, 18],
-    "handCardFont": ["Arial", [12, 12, -1], 20, [255, 255, 255, 255], 1, 30, [0, 0], [20, 20, 20, 200]],
+    "handCardFont": ["RobotoCondensed", [12, 12, -1], 20, [255, 255, 255, 255], 1, 30, [0, 0], [20, 20, 20, 200]],
     "equipAreas": [[6, 12, 145, 22], [6, 41, 145, 22], [6, 70, 145, 22], [6, 99, 145, 22], [6, 128, 145, 22], [6, 70, 145, 22]],
     "equipBorderPos": [-6, -5],
     "equipSelectedOffset": [10, 0],
@@ -202,7 +202,7 @@
     "horseImageArea": [0, 0, 149, 25],
     "horseSuitArea": [128, 5, 21, 17],
     "horsePointArea": [117, -5, 30, 30],
-    "equipPointFont": ["arial", [14, 14, 3], 20, [0, 0, 0, 255], 1, 0, [0, 0], [240, 240, 240, 200]],
+    "equipPointFont": ["RobotoCondensed", [14, 14, 3], 20, [0, 0, 0, 255], 1, 0, [0, 0], [240, 240, 240, 200]],
     "delayedTrickFirstRegion": [155, -11, 28, 28],
     "delayedTrickStep": [28, 0],
     // the width of the region to disperse cards when the cards are to be moved to the special pile.

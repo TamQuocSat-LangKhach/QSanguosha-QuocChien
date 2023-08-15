@@ -98,7 +98,7 @@ const char *QSanRoomSkin::S_SKIN_KEY_HEAD_ICON = "headIcon";
 const char *QSanRoomSkin::S_SKIN_KEY_DEPUTY_ICON = "deputyIcon";
 const char *QSanRoomSkin::S_SKIN_KEY_DISABLE_SHOW_LOCK = "%1DisableShowLock";
 const char *QSanRoomSkin::S_SKIN_KEY_SKILL_NAME_BG = "skillNameBg";
-const char *QSanRoomSkin::S_SKIN_KEY_GENERAL_CARD_BG = "generalCardBg";
+const char *QSanRoomSkin::S_SKIN_KEY_GENERAL_CARD_BG = "generalCardBg-%1";
 const char *QSanRoomSkin::S_SKIN_KEY_GENERAL_CARD_KINGDOM = "generalCardKingdom-%1";
 const char *QSanRoomSkin::S_SKIN_KEY_GENERAL_CARD_MAGATAMAS = "generalCardMagatamas-%1-%2";
 
@@ -412,11 +412,10 @@ QPixmap QSanRoomSkin::getGeneralCardPixmap(const QString generalName, const int 
     QPainter painter(&pixmap);
 
     painter.drawPixmap(0, 0, getPixmap(key, generalName, id, addDefaultArg));
-    painter.drawPixmap(0, 0, getPixmap(S_SKIN_KEY_GENERAL_CARD_BG));
 
     const General *general = Sanguosha->getGeneral(generalName);
     if (general) {
-        QString kingdom = general->getKingdom();        
+        QString kingdom = general->getKingdom();
         if (kingdom != "god") {
             if (general->isLord())
                 kingdom = "lord";
@@ -424,10 +423,14 @@ QPixmap QSanRoomSkin::getGeneralCardPixmap(const QString generalName, const int 
             if (general->isDoubleKingdoms()) {
                 QString kingdom2 = general->getSubordinateKingdom();
                 kingdom_rect.setSize(QSize(kingdom_rect.width()*2/3, kingdom_rect.height()*2/3));
+                painter.drawPixmap(0, 0, getPixmap(S_SKIN_KEY_GENERAL_CARD_BG, kingdom + "-" + kingdom2));
                 painter.drawPixmap(kingdom_rect.translated(kingdom_rect.width()/2, kingdom_rect.height()/2), getPixmap(S_SKIN_KEY_GENERAL_CARD_KINGDOM, kingdom2));
+            } else {
+                painter.drawPixmap(0, 0, getPixmap(S_SKIN_KEY_GENERAL_CARD_BG, kingdom));
             }
-
             painter.drawPixmap(kingdom_rect, getPixmap(S_SKIN_KEY_GENERAL_CARD_KINGDOM, kingdom));
+        } else {
+            painter.drawPixmap(0, 0, getPixmap(S_SKIN_KEY_GENERAL_CARD_BG, kingdom));
         }
 
         int x = general->getDoubleMaxHp();
