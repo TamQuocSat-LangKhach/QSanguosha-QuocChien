@@ -12,7 +12,7 @@ class Bianhua : public TriggerSkill
 public:
     Bianhua() : TriggerSkill("bianhua")
     {
-        events << GeneralShowed << EventPhaseEnd;
+        events << GeneralShown << DFDebut << EventPhaseEnd << GeneralTransforming;
         frequency = Compulsory;
     }
 
@@ -20,9 +20,13 @@ public:
     {
         if (!TriggerSkill::triggerable(player) || !player->hasShownSkill(this))
             return QStringList();
-        if (triggerEvent == GeneralShowed && player->cheakSkillLocation(objectName(), data) && player->getMark("bianhuaUsed") == 0)
+        if (triggerEvent == GeneralShown && player->cheakSkillLocation(objectName(), data.toBool()) && player->getMark("bianhuaUsed") == 0)
+            return QStringList(objectName());
+        if (triggerEvent == DFDebut && room->getTag("GlobalCareeristShow").toBool())
             return QStringList(objectName());
         if (triggerEvent == EventPhaseEnd && player->getPhase() == Player::RoundStart && !player->getBianhuaGeneral())
+            return QStringList(objectName());
+        if (triggerEvent == GeneralTransforming)
             return QStringList(objectName());
         return QStringList();
     }
@@ -31,17 +35,23 @@ public:
     {
         room->sendCompulsoryTriggerLog(player, objectName());
         room->broadcastSkillInvoke(objectName());
-        if (triggerEvent == GeneralShowed) {
+        if (triggerEvent == GeneralShown || triggerEvent == DFDebut) {
             room->addPlayerMark(player, "bianhuaUsed");
         }
         return true;
     }
 
-    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         if (triggerEvent == EventPhaseEnd) {
             room->broadcastSkillInvoke("transform", player->isMale());
             room->transformDeputyGeneral(player);
+            return false;
+        }
+        if (triggerEvent == GeneralTransforming) {
+            int num = data.toInt();
+            num += 2;
+            data = QVariant(num);
             return false;
         }
         QList<ServerPlayer *> targets;

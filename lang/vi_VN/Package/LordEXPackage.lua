@@ -42,7 +42,7 @@ return {
 	["#tangzi"] = "Đắc Thì Thức Phong",
 	["tangzi"] = "Đường Tư",
 	["xingzhao"] = "Hưng Thạo",
-	[":xingzhao"] = "Tỏa định kỹ: Dựa theo số thế lực trên bàn chơi có người bị thương:\n* 1+: Bạn có kỹ năng »Tuân Tuân«.\n* 2+: Sau khi bạn nhận sát thương, giữa bạn và nguồn gây sát thương, người ít bài trên tay hơn rút 1 lá.\n* 3+: Khi bắt đầu giai đoạn bỏ bài, giới hạn trữ bài của bạn +4.\n* 4+: Khi bạn mất bài trong vùng trang bị, bạn rút 1 lá.",
+	[":xingzhao"] = "Tỏa định kỹ: Dựa theo số thế lực trên bàn chơi có người bị thương:\n* 1+: Bạn có kỹ năng »Tuân Tuân«.\n* 2+: Sau khi bạn nhận sát thương, nếu số bài trên tay bạn và nguồn sát thương khác nhau, người ít bài trên tay hơn rút 1 lá.\n* 3+: Khi bắt đầu giai đoạn bỏ bài, giới hạn trữ bài của bạn +4.\n* 4+: Khi bạn mất bài trong vùng trang bị, bạn rút 1 lá.",
 	["xunxun_tangzi"] = "Tuân Tuân",
 	
 	["#zhanglu"] = "Chính Khoan Giáo Huệ",
