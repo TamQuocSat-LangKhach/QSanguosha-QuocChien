@@ -2271,7 +2271,8 @@ int Player::getDeputySkinId() const
 
 const General *Player::getBianhuaGeneral() const
 {
-    if (this->ownSkill("bianhua")) {
+    QVariant &variant = this->property("bianhua-choice");
+    if (variant.isValid()) {
         QString generalName = this->property("bianhua-choice").toString();
         if(!generalName.isNull() && !generalName.isEmpty()) {
             return Sanguosha->getGeneral(generalName);
