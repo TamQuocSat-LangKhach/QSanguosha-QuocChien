@@ -491,7 +491,7 @@ bool Player::isLord() const
 bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 {
     const General *bianhua = getBianhuaGeneral();
-    if (skill_name != "bianhua" && bianhua && bianhua->hasSkill(skill_name) && !hasSkill("bianhua", include_lose)) {
+    if (skill_name != "bianhua" && bianhua && bianhua->hasSkill(skill_name) && !ownSkill("bianhua")) {
         return false;
     }
     const TriggerSkill *trigger = Sanguosha->getTriggerSkill(skill_name);
