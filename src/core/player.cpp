@@ -490,10 +490,7 @@ bool Player::isLord() const
 
 bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 {
-    const General *bianhua = getBianhuaGeneral();
-    if (skill_name != "bianhua" && bianhua && bianhua->hasSkill(skill_name) && !ownSkill("bianhua")) {
-        return false;
-    }
+
     const TriggerSkill *trigger = Sanguosha->getTriggerSkill(skill_name);
     if (trigger && trigger->isGlobal()) return true;
 
@@ -511,7 +508,9 @@ bool Player::hasSkill(const QString &skill_name, bool include_lose) const
             && skill_name != "showhead" && skill_name != "showdeputy") {
 
         if (!include_lose && !hasEquipSkill(skill_name) && !skill->isAttachedLordSkill()) {
-            if (!getAcquiredSkills().contains(skill_name) && ownSkill(skill_name)) {
+            const General *bianhua = getBianhuaGeneral();
+            bool bianhuaSkill = bianhua && bianhua->hasSkill(skill_name);
+            if ((!getAcquiredSkills().contains(skill_name) || bianhuaSkill) && ownSkill(skill_name)) {
                 if (inHeadSkills(skill_name) && !canShowGeneral("h")) return false;
                 if (inDeputySkills(skill_name) && !canShowGeneral("d")) return false;
 
@@ -521,7 +520,7 @@ bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 
             if (skill->getFrequency() != Skill::Compulsory && skill->getFrequency() != Skill::Wake) {
                 if (getMark("skill_invalidity") > 0) return false;
-                if (getMark("skill_invalidity_head") > 0 && head_skills.value(skill_name, false)) return false;
+                if (getMark("skill_invalidity_head") > 0 && (head_skills.value(skill_name, false) || bianhuaSkill)) return false;
                 if (getMark("skill_invalidity_deputy") > 0 && deputy_skills.value(skill_name, false)) return false;
             }
         }
