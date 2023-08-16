@@ -510,7 +510,7 @@ bool Player::hasSkill(const QString &skill_name, bool include_lose) const
         if (!include_lose && !hasEquipSkill(skill_name) && !skill->isAttachedLordSkill()) {
             const General *bianhua = getBianhuaGeneral();
             bool bianhuaSkill = bianhua && bianhua->hasSkill(skill_name);
-            if ((!getAcquiredSkills().contains(skill_name) || bianhuaSkill) && ownSkill(skill_name)) {
+            if ((!getAcquiredSkills().contains(skill_name) && ownSkill(skill_name)) || bianhuaSkill) {
                 if (inHeadSkills(skill_name) && !canShowGeneral("h")) return false;
                 if (inDeputySkills(skill_name) && !canShowGeneral("d")) return false;
 
@@ -2127,7 +2127,7 @@ bool Player::isFriendWith(const Player *player) const
 
     if (role == "careerist" || player->role == "careerist") return false;
 
-    if (role.startsWith("careerist"))
+    if (role.startsWith("careerist") || player->role.startsWith("careerist"))
         return role == player->role;
 
     return kingdom == player->kingdom;

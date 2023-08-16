@@ -31,7 +31,7 @@ public:
     {
         room->sendCompulsoryTriggerLog(player, objectName());
         room->broadcastSkillInvoke(objectName());
-        if (triggerEvent == GeneralShown) {
+        if (triggerEvent == GeneralShowed) {
             room->addPlayerMark(player, "bianhuaUsed");
         }
         return true;

@@ -2632,12 +2632,10 @@ public:
             QList<ServerPlayer *> caoangs = room->findPlayersBySkillName(objectName());
             foreach (ServerPlayer *caoang, caoangs) {
                 if (caoang != NULL && player->isFriendWith(caoang)) {
-                    if (caoang->ownSkill(objectName())) {
-                        if (caoang->inHeadSkills(objectName()) && !caoang->isLord() && !caoang->getActualGeneral1Name().contains("sujiang"))
-                            skill_list.insert(caoang, QStringList(objectName()));
-                        if (caoang->inDeputySkills(objectName()) && caoang->getGeneral2() && !caoang->getActualGeneral1Name().contains("sujiang"))
-                            skill_list.insert(caoang, QStringList(objectName()));
-                    }
+                    if (caoang->inHeadSkills(objectName()) && !caoang->isLord() && !caoang->getActualGeneral1Name().contains("sujiang"))
+                        skill_list.insert(caoang, QStringList(objectName()));
+                    if (caoang->inDeputySkills(objectName()) && caoang->getGeneral2() && !caoang->getActualGeneral1Name().contains("sujiang"))
+                        skill_list.insert(caoang, QStringList(objectName()));
                 }
             }
         }
