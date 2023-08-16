@@ -2079,6 +2079,11 @@ void ServerPlayer::removeGeneral(bool head_general)
                 room->detachSkillFromPlayer(this, skill->objectName(), false, false, true);
             }
         }
+        const General *bianhua = getBianhuaGeneral();
+        if (bianhua) {
+            room->setPlayerProperty(this, "bianhua-choice", QVariant());
+            room->setPlayerMark(this, "##" + bianhua->objectName(), 0);
+        }
     } else {
         if (!hasShownGeneral2())
             showGeneral(false, false); //zoushi?

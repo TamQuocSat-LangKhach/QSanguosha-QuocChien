@@ -161,7 +161,7 @@ return {
     ["@conquering-slash"] = "Khắc Phục Trung Nguyên: Chọn mục tiêu, xem như sử dụng [Sát], hoặc bấm »Hủy bỏ« để rút bài. ",
 
     ["consolidate_country"] = "Cố Quốc An Bang",
-    [":consolidate_country"] = "Bài công cụ - Ngô\n\nMục tiêu: Bạn\nHiệu quả: Mục tiêu rút 8 lá sau đó bỏ ít nhất 6 lá trên tay, nếu bạn thuộc thế lực Ngô, có thể giao tùy ý tối đa 6 lá trong số những lá bỏ cho người khác thuộc thế lực Ngô, mỗi người tối đa 2 lá.",
+    [":consolidate_country"] = "Bài công cụ - Ngô\n\nMục tiêu: Bạn\nHiệu quả: Mục tiêu rút 8 lá sau đó bỏ ít nhất 6 lá trên tay, nếu bạn thuộc thế lực Ngô, có thể giao tùy ý tối đa 6 lá trong số những lá bỏ cho những người khác thuộc thế lực Ngô, mỗi người tối đa 2 lá.",
 
     ["@consolidate_country-discard"] = "Cố Quốc An Bang: Chọn tối thiểu 6 lá trên tay để bỏ",
     ["@consolidate_country-give"] = "Cố Quốc An Bang: Có thể giao 6 lá cho người thế lực Ngô khác, tối đa 2 lá mỗi người.",

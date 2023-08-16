@@ -1272,7 +1272,7 @@ public:
             duanchangList << "deputy";
         room->setPlayerProperty(target, "Duanchang", duanchangList.join(","));
 
-        QList<const Skill *> skills = choice == "head_general" ? target->getActualGeneral1()->getVisibleSkillList()
+        QList<const Skill *> skills = choice == "head_general" ? target->getHeadSkillList()
             : target->getActualGeneral2()->getVisibleSkillList();
         foreach (const Skill *skill, skills)
             if (!skill->isAttachedLordSkill())

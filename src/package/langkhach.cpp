@@ -79,6 +79,7 @@ public:
             foreach (const Skill *skill, skills) {
                 if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
                 if (skill->relateToPlace(player->inDeputySkills(objectName()))) continue;
+                if (skill == this) continue;
                 room->acquireSkill(player, skill, true, player->inHeadSkills(objectName()));
                 if (!skill->getLimitMark().isEmpty()) {
                     room->setPlayerMark(player, skill->getLimitMark(), 1);

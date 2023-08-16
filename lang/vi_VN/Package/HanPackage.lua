@@ -64,7 +64,25 @@ return {
 	[":aiwu"] = "Một lần trong lượt của mỗi người, sau khi người khác nhận sát thương, bạn có thể bỏ từ 1 đến 3 lá, thực hiện lần lượt:\n- Họ có thể bỏ từ 1 đến 3 lá;\n- Nếu tổng số lá đã bỏ bởi kỹ năng này ≥ 3, bạn và họ hồi 1 máu.",
 	["juebie"] = "Quyết Biệt",
 	[":juebie"] = "Khi người khác có cùng thế lực với bạn trận vong, họ có thể giao tất cả bài của họ cho bạn.",
---Quyền
+	
+	["#caiyong"] = "Trực Tình Phi Bạch",
+	["caiyong"] = "Thái Ung",
+	["zhudian"] = "Chú Điển",
+	[":zhudian"] = "Sau khi bạn trở thành mục tiêu của lá Đen do người khác sử dụng, bạn có thể Trùng Chú 1 lá của bạn;\n▷ Nếu lá bạn rút có màu Đen và khác chất với lá được sử dụng, bạn có thể mở lá đó và rút 1 lá.",
+	["botong"] = "Bác Thông",
+	[":botong"] = "Bạn có thể chuyển hóa sử dụng 4 lá khác chất thành 1 lá cơ bản;\n▶ Sau khi lá này kết toán xong, bạn có thể đem những lá này tùy ý giao cho những người khác.",
+	
+	["#huangfusong"] = "Chí Định Tuyết Sương",
+	["huangfusong"] = "Hoàng Phủ Tung",
+	["dingluan"] = "Định Loạn",
+	[":dingluan"] = "Một lần trong lượt của mỗi người, khi phán xét của 1 người ở khoảng cách ≤ số lá trên tay bạn có hiệu lực, nếu kết quả phán xét có chất BÍCH, bạn có thể chặn lần phán xét này;\n▷ Bạn có thể xem như sử dụng 1 [Sát Hỏa] với họ.",
+	["shiji"] = "Thế Kích",
+	[":shiji"] = "Khi bạn gây sát thương thuộc tính cho người khác, nếu số lá trên tay bạn không phải nhiều nhất, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn xem bài trên tay họ và bạn có thể bỏ tối đa 2 lá Đỏ trong đó;\n- Bạn rút số lá tương đương với số lá đã bỏ.",
+
+	--Trận
+	
+	
+	--Quyền
 	["#liuhong"] = "Phong Hỏa Hán Thiên",
 	["liuhong"] = "Lưu Hoành",
 	["yujue"] = "Dục Tước",

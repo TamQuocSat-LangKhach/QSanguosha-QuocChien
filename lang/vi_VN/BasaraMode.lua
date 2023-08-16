@@ -23,19 +23,19 @@
 return
 {
 	["Basara"] = "Tướng ẩn",
-	["#BasaraReveal"] = "%from đã lật tướng, Chủ tướng là %arg, Phó tướng là %arg2",
+	["#BasaraReveal"] = "%from đã mở tướng, Chủ tướng là %arg, Phó tướng là %arg2",
 	["#BasaraConceal"] = "%from đã ẩn tướng, Chủ tướng là %arg, Phó tướng là %arg2",
-	["#BasaraRemove"] = "%from ngoài ra bỏ %arg %arg2",
+	["#BasaraRemove"] = "%from đã loại bỏ %arg %arg2",
 	["@showingreward-choose"] = "Lực chọn hiệu ứng để nhận",
 	["showingreward:recover"] = "Hồi phục sinh lực",
 	["showingreward:draw"] = "Rút 2 thẻ bài",
-	["GameRule_AskForGeneralShow"] = "Lật mở tướng lên",
+	["GameRule_AskForGeneralShow"] = "Mở tướng lên",
 	["GameRule:TurnStart"] = "Chọn mở tướng yêu cầu",
-	["@generalshow-choose"] = "Chọn tướng để lật",
-	["@generalshow-choose-lord"] = "Chọn tướng để lật và trở thành quân chủ",
-	["show_head_general"] = "Lật mở Chủ tướng",
-	["show_deputy_general"] = "Lật mở Phó tướng",
-	["show_both_generals"] = "Lật mở 2 tướng",
+	["@generalshow-choose"] = "Chọn tướng để mở",
+	["@generalshow-choose-lord"] = "Chọn tướng để mở và trở thành quân chủ",
+	["show_head_general"] = "Mở Chủ tướng",
+	["show_deputy_general"] = "Mở Phó tướng",
+	["show_both_generals"] = "Mở 2 tướng",
 	["Companions"] = "Hợp kỹ",
 	["hidden_general"] = "Tướng ẩn",
 	["head_general"] = "Chủ tướng",
@@ -73,8 +73,8 @@ return
 	["changetolord:yes"] = "Có",
 	["changetolord:no"] = "Không",
 
-	["GameRule_AskForGeneralShowHead"] = "Lật chủ tướng" ,
-	["GameRule_AskForGeneralShowDeputy"] = "Lật phó tướng" ,
+	["GameRule_AskForGeneralShowHead"] = "Mở chủ tướng" ,
+	["GameRule_AskForGeneralShowDeputy"] = "Mở phó tướng" ,
 	["armorskill"] = "Chọn kỹ năng để phát động",
 	
 
@@ -122,14 +122,14 @@ return
 	
 	["canshowinplay"] = "Có thể mở tướng này trong giai đoạn ra bài",
 	
-	["showhead"] = "Lật tướng",
-	[":showhead"] = "Lật Chủ tướng",
+	["showhead"] = "Mở tướng",
+	[":showhead"] = "Mở Chủ tướng",
 	
-	["showdeputy"] = "Lật tướng",
-	[":showdeputy"] = "Lật Phó tướng",
+	["showdeputy"] = "Mở tướng",
+	[":showdeputy"] = "Mở Phó tướng",
 	
-	["@careerist-show"] = "Bộc lộ dã tâm: Có thể lật Chủ tướng để tiếp tục ván đấu hoặc đầu hàng.",
-    ["GameRule:CareeristShow:yes"] = "Lật tướng Dã Tâm",
+	["@careerist-show"] = "Bộc lộ dã tâm: Có thể mở Chủ tướng để tiếp tục ván đấu hoặc đầu hàng.",
+    ["GameRule:CareeristShow:yes"] = "Mở tướng Dã Tâm",
     ["GameRule:CareeristShow:no"] = "Chấp nhận đầu hàng để sống",
     
     ["#GameRule_CareeristShow"] = "%from đã bộc lộ Dã Tâm.",
