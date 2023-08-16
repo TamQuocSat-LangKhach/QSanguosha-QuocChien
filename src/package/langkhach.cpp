@@ -588,7 +588,7 @@ public:
     {
         if (player->askForSkillInvoke(this, data)) {
             room->broadcastSkillInvoke(objectName(), player);
-            room->doSuperLightbox("shengweijiang", "@shengweijiangsiweishen");
+            room->doSuperLightbox("shengweijiang", objectName());
             return true;
         }
         return false;
