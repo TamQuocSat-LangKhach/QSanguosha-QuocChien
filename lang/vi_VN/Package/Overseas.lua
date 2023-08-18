@@ -299,7 +299,7 @@ return {
     ["qianxue"] = "Tiềm Học",
     [":qianxue"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người kết thúc lượt, bạn có thể thu lấy tối đa X lá trong những lá đã tiến vào chồng bài bỏ trong lượt này (X là số vùng của bạn mà đã mất đi lá cuối cùng trong lượt này);\n▶ Bạn cần ưu tiên thu lấy những lá phi cơ bản trước;\n▶ Bạn không thể thu lấy [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu].",
     ["zhuhu"] = "Trục Cốc",
-    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, nếu vị trí của tướng này là:\n- Chủ tướng và tướng còn lại của bạn là tướng đơn thế lực: Bạn hoán đổi Chủ tướng và Phó tướng\n- Phó tướng: Bạn thoát khỏi trạng thái xích;\n▶ Bạn đổi Phó tướng.",
+    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, nếu vị trí của tướng này là:\n* Chủ tướng và tướng còn lại của bạn là tướng đơn thế lực: Bạn hoán đổi Chủ tướng và Phó tướng\n* Phó tướng: Bạn thoát khỏi trạng thái xích;\n▶ Bạn đổi Phó tướng.",
     ["qianxue:invoke"] = "Có thể phát động »Tiềm Học«, thu lấy tối đa %arg lá tiến vào chồng bài bỏ lượt này (ưu tiên lá phi cơ bản)",
     ["@qianxue-select"] = "Tiềm học: Chọn tối đa %arg lá, ưu tiên phi cơ bản.",
     ["#qianxue"] = "Tiềm Học",
