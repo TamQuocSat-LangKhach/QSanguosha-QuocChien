@@ -1,57 +1,73 @@
---1.技能
+-- QSanguosha DIY
+-- Bài 2: Tổng quan về kỹ năng
 
---要说三国杀武将DIY，不得不说的就是技能。
---神杀给技能留的接口，与平时我们所说的技能分类有点区别。
+-- Ừm, nói về DIY thì gần như công việc chính của chúng ta là làm kỹ năng.
+-- Chứ làm tướng các kiểu thì dễ quá rồi.
 
---基本上来讲，技能分为以下几种：
+-- Để bắt đầu, chúng ta sẽ đi qua các loại kỹ năng có trong game
 
---视为技：
---龙胆、武圣等等
---特点：可以将某牌当作另一种牌使用
+-- ViewAsSkill
+--[[ 
+Loại hình này dùng cho mọi kỹ năng thuộc nhóm chuyển hóa hoặc kỹ năng chủ động bấm trong giai đoạn ra bài
+Long Đảm, Võ Thánh, kỹ năng chuyển hóa thì bạn thấy nhiều quá rồi
+Ly Gián, Phản Gián
+Ủa, ly gián, phản gián thì liên quan gì đến kỹ năng chuyển hóa nhỉ.
+Thực tế ngoài đời, đây là nhóm kỹ năng bạn bỏ 1 lá để thực hiện điều gì đó
+Nhưng với code, game sẽ hiểu là bạn sử dụng lá bài đánh có tên ly gián, phản gián. Lá ly gián có kỹ năng khiến cho 2 mục tiêu của nó, ng sau dùng quyết đầu với người trước. Lá ly gián có hình thức sử dụng là bỏ lá này.
+]]
 
---触发技：
---奸雄、反馈等等
---特点：在某个时机，可以执行某某效果
+-- TriggerSkill
+--[[
+Kỹ năng này sẽ phát động khi đến thời điểm phù hợp và thỏa mãn điều kiện.
+VD Di Kế, Phản Quỹ là TriggerSkill với thời điểm là sau khi bạn nhận sát thương.
+Để dễ để ý, bạn cứ thấy kỹ năng có chữ khi thì đó là TriggerSkill
+Thậm chí, bản chất của luật chơi chính ra 1 TriggerSkill khổng lồ
+]]
 
---距离技：
---马术、飞影
---特点：不用说大家都明白
+-- Phía trên là 2 loại kỹ năng phổ biến nhất trong game.
+-- Còn dưới đây là 1 nhóm kỹ năng khác ít phổ biến
 
---手牌上限技
---横江（后续效果）
---特点：还能是什么
---克己不是手牌上限技，是触发技
+-- DistanceSkill
+-- Kỹ năng thay đổi khoảng cách giữa 2 người chơi. Mã Thuật là ứng cử viên phổ biến nhất.
 
---目标修改技
---咆哮、集智、天义（后续效果）
---特点：修改某张牌在出牌阶段内的使用次数、修改某张牌可以选择的目标人数、修改某张牌可以选择的距离限制
+-- MaxCardsSkill
+-- Kỹ năng thay đổi giới hạn trữ bài của người chơi. Anh Tư là 1 ví dụ
 
---技能共通：
---所有的技能都通过sgs.CreateXXXSkill这个函数来实现，比如触发技：
+-- TargetModSkill
+-- Kỹ năng thay đổi cách chọn mục tiêu của 1 số lá bài cụ thể
+
+-- AttackRangeSkill
+-- Kỹ năng thay đổi tầm đánh
+
+-- FilterSkill
+-- Hồng nhan Bích như Cơ, ví dụ duy nhất của game này
+
+-- Để tạo 1 kỹ năng, chúng ta dùng lệnh sgs.CreateXXXSkill, XXX là loại kỹ năng tương ứng
+
 thetrigger = sgs.CreateTriggerSkill{
 	name = "thetrigger" ,
-	events = {sgs.EventPhaseStart} ,
+	events = {sgs.Damaged} ,
+	-- Kiểm tra kỹ năng ở timing Sau khi nhận sát thương
 	can_trigger = function(self, event, room, player, data)
-		blablabla
+		-- Điều kiện để phát động kỹ năng
 	end ,
 	on_cost = function(self, event, room, player, data)
-		blablabla
+		-- Có muốn kích kỹ năng không, hoặc có muốn bỏ bài, chọn người, hoặc làm gì đó để kích kỹ năng
 	end ,
 	on_effect = function(self, evnet, room, player, data)
-		blablabla
+		-- Hiệu quả của kỹ năng
 	end ,
 }
 
---所有技能共通的属性放在这里，在技能讲解时将不再仔细讲它们的作用。
---name：
---字符串类型，表示技能的名字
---没有默认值，不能为空。
+-- Một số trường khác hay được sử dụng
 
---relate_to_place：
---字符串类型，但是除了默认值之外，只能取两个值。
---"head"：表示该技能是主将技。
---"deputy"：表示该技能是副将技。
---不写取值或者取值为nil，则为主副将皆有的技能。
+-- relate_to_place:
+-- Chỉ áp dụng cho chủ tướng kỹ và phó tướng kỹ
+-- Giá trị của trường này:
+-- "head": Chủ tướng kỹ
+-- "deputy": Phó tướng kỹ
+-- VD: relate_to_place = "deputy"
+-- Nếu không có trường này thì có nghĩa kỹ năng này có thể phát động mà không cần quan tâm chủ tướng hay phó tướng
 
 
 --除了技能之外，还要讲一下的就是技能卡。

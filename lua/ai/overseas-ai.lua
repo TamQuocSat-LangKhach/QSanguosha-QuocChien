@@ -1589,8 +1589,239 @@ sgs.ai_skill_choice.tanfeng = function(self, choices)
 end
 
 --矜武造成伤害
-sgs.ai_skill_playerchosen["command_jinwu"] = sgs.ai_skill_playerchosen.damage
 
 sgs.ai_skill_playerchosen.xiaolian = sgs.ai_skill_playerchosen.yongjin
 
 sgs.ai_skill_transfercardchosen.xiaolian = sgs.ai_skill_transfercardchosen.yongjin
+
+sgs.ai_skill_invoke.jinwu = function(self, data)
+	if not self:willShowForAttack() then return false end
+	local targets = sgs.SPlayerList()
+	for _, p in sgs.qlist(self.room:getOtherPlayers(self.player)) do
+		local slash = sgs.cloneCard("slash")
+		if self.player:canSlash(p, slash, false) then
+			targets:append(p)
+		end
+	end
+	local use_to = sgs.ai_skill_playerchosen.zero_card_as_slash(self, targets)
+	if use_to and self:isFriend(use_to) and self:isWeak(use_to) then return false end
+	if self.player:hasSkill("zhuke") then return true end--赌造成伤害的军令
+	local best_target, target
+	local defense = 6
+	if self:getOverflow() > 0 and #self:getTurnUse() > 0 then return false end
+	for _, enemy in ipairs(self.enemies) do
+		local def = sgs.getDefenseSlash(enemy, self)
+		local slash = sgs.cloneCard("slash")
+		local eff = self:slashIsEffective(slash, enemy) and sgs.isGoodTarget(enemy, self.enemies, self)
+
+		if not self.player:canSlash(enemy, slash, false) then
+		elseif self:slashProhibit(nil, enemy) then
+		elseif eff then
+			if enemy:getHp() == 1 and getCardsNum("Jink", enemy, self.player) == 0 then
+				best_target = enemy
+				break
+			end
+			if def < defense then
+				best_target = enemy
+				defense = def
+			end
+			target = enemy
+		end
+	end
+	if not best_target and not target then return false end
+	local slashes = self:getCards("Slash")--能正常杀就不用神速2
+	for _, slash in ipairs(slashes) do
+		if not best_target and not target then break end
+		if best_target then 
+			if self.player:canSlash(best_target, slash, true) 
+				and self:slashIsEffective(slash, best_target) 
+				and not self:slashProhibit(slash, best_target) then
+				best_target = nil
+			end
+		end
+		if target then 
+			if self.player:canSlash(target, slash, true) 
+				and self:slashIsEffective(slash, target) 
+				and not self:slashProhibit(slash, target) then
+				target = nil
+			end
+		end
+	end
+	if best_target then return true end
+	if target then return math.random(1,2) > 1 end
+	return false
+end
+
+sgs.ai_skill_choice.startcommand_jinwu = function(self, choices, data)
+    Global_room:writeToConsole("矜武选择军令:"..choices)
+    choices = choices:split("+")
+    if table.contains(choices, "command1") then
+        return "command1"
+    end
+    if table.contains(choices, "command2") then
+        return "command2"
+    end
+    self.player:setFlags("AI_BadJinwu")
+    if table.contains(choices, "command5") and not self.player:faceUp() then
+        return "command5"
+    end
+    if table.contains(choices, "command6") and self.player:getEquips():length() <= 2 and self.player:getHandcardNum() <= 2 then
+        return "command6"
+    end
+    if table.contains(choices, "command3") and sgs.isGoodHp(self.player,self.player) and self.player:getHandcardNum() > 4 then
+        return "command3"
+    end
+    return choices[math.random(1,#choices)]
+end
+
+sgs.ai_skill_choice.docommand_jinwu = function(self, choices, data)
+    if self.player:hasSkill("zhuke") then
+        return "yes"
+    end
+    local index = self.player:getMark("command_index")
+    if index == 1 or index == 2 then
+        return "yes"
+    end
+    if index == 3 and sgs.isGoodHp(self.player,self.player) and self.player:getHandcardNum() > 4 then
+        return "yes"
+    end
+    if index == 5 and not self.player:faceUp() then
+        return "yes"
+    end
+    if index == 6 and self.player:getEquips():length() <= 2 and self.player:getHandcardNum() <= 2 then
+        return "yes"
+    end
+    self.player:setFlags("-AI_BadJinwu")
+    return "no"
+end
+
+sgs.ai_skill_playerchosen["command_jinwu"] = sgs.ai_skill_playerchosen.damage
+
+sgs.ai_skill_playerchosen["jinwu_slash"] = sgs.ai_skill_playerchosen.zero_card_as_slash
+
+sgs.ai_skill_invoke.zhuke = function(self, data)
+--QStringList list = data.toString().split(":")
+--player->tag["ZhukeCommanddata"] = data
+--缺失执行军令技能和军令几的信息
+	local askSkill = ""
+	local command_index = -1
+	local allcommands = {"command1", "command2", "command3", "command4", "command5", "command6"}
+	local data_str = self.player:getTag("ZhukeCommanddata"):toString()
+	if data_str and data_str ~= "" then
+		--"jinwu:command2:sgs1->sgs1"
+		local data_table = data_str:split("+")
+		local command = data_table[2]
+		if table.contains(allcommands,command) then
+			command_index = table.indexOf(allcommands, command)
+			askSkill = data_table[1]
+		end
+	end
+	if command_index > 0 then
+		Global_room:writeToConsole("筑科考虑军令:("..askSkill..")"..tostring(command_index))
+	end
+    if self.player:hasFlag("AI_BadJinwu") then
+        self.player:setFlags("-AI_BadJinwu")
+        return true
+    end
+	return false
+end
+
+sgs.ai_skill_choice.startcommand_zhuke = function(self, choices, data)
+    Global_room:writeToConsole("筑科选择军令:"..choices)
+    choices = choices:split("+")
+    if table.contains(choices, "command1") then
+        return "command1"
+    end
+    if table.contains(choices, "command2") then
+        return "command2"
+    end
+--缺失执行军令技能和军令几的信息
+    if table.contains(choices, "command5") and not self.player:faceUp() then
+        return "command5"
+    end
+    if table.contains(choices, "command6") and self.player:getEquips():length() <= 2 and self.player:getHandcardNum() <= 2 then
+        return "command6"
+    end
+    if table.contains(choices, "command3") and sgs.isGoodHp(self.player,self.player) and self.player:getHandcardNum() > 4 then
+        return "command3"
+    end
+    return choices[math.random(1,#choices)]
+end
+
+sgs.ai_skill_playerchosen.zhuke = function(self, targets)
+	targets = sgs.QList2Table(targets)
+	self:sort(targets, "hp")
+	return targets[1]
+end
+
+sgs.ai_skill_choice["quanjia"] = function(self, choices, data)--quanjia势力召唤
+    choices = choices:split("+")
+--[[
+    if table.contains(choices,"show_head_general") and self.player:inHeadSkills("rende")--君主替换
+      and sgs.GetConfig("EnableLordConvertion", true) and self.player:getMark("Global_RoundCount") <= 1  then
+      return "show_deputy_general"
+    end
+]]
+    if table.contains(choices,"show_both_generals") then
+      local wuhu_show_head, wuhu_show_deputy = false,false
+      local xuanhuo_priority = {"paoxiao", "tieqi", "kuanggu", "liegong", "wusheng", "longdan"}
+      for _, skill in ipairs(xuanhuo_priority) do--有顺序优先度
+        if self.player:hasSkill(skill) then
+          if self.player:inHeadSkills(skill) then
+            wuhu_show_deputy = true
+            break
+          else
+            wuhu_show_head = true
+            break
+          end
+        end
+      end
+      if wuhu_show_deputy then
+        return "show_deputy_general"
+      end
+      if wuhu_show_head then
+        return "show_head_general"
+      end
+      return "show_both_generals"
+    end
+    if table.contains(choices,"show_deputy_general") then
+      return "show_deputy_general"
+    end
+    if table.contains(choices,"show_head_general") then
+      return "show_head_general"
+    end
+    return choices[1]
+end
+
+--sgs.ai_skill_invoke.jutian
+sgs.ai_skill_playerchosen.jutian = function(self, targets)
+	targets = sgs.QList2Table(targets)
+	self:sort(targets, "handcard")
+	local value = 0
+	local target = nil
+	for _, p in ipairs(targets) do
+		if self.player:isFriendWith(p) then
+			if (p:getMaxHp() - p:getHandcardNum()) >= value and p:getMaxHp() > p:getHandcardNum() then
+				value = p:getMaxHp() - p:getHandcardNum()
+				target = p
+				self.jutianchoice = "fillhandcard"
+			end
+		else
+			if (p:getHandcardNum() - p:getHp()) > value then
+				value = p:getHandcardNum() - p:getHp()
+				target = p
+				self.jutianchoice = "discard"
+			end
+		end
+	end
+	if target and value > 0 then return target end
+	return nil
+end
+
+sgs.ai_skill_choice.jutian_choice = function(self, choices)
+	choices = choices:split("+")
+    if self.jutianchoice and table.contains(choices, self.jutianchoice) then
+        return self.jutianchoice
+    end
+    return choices[math.random(1, #choices)]
+end

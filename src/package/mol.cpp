@@ -2769,34 +2769,34 @@ public:
     }
 };
 
-//class Jiange : public OneCardViewAsSkill
-//{
-//public:
-//    Jiange() : OneCardViewAsSkill("jiange")
-//    {
-//        filter_pattern = "EquipCard,TrickCard|.|.|.";
-//        response_or_use = true;
-//    }
+class Jiange : public OneCardViewAsSkill
+{
+public:
+    Jiange() : OneCardViewAsSkill("jiange")
+    {
+        filter_pattern = "EquipCard,TrickCard|.|.|.";
+        response_or_use = true;
+    }
 
-//    virtual bool isEnabledAtPlay(const Player *player) const
-//    {
-//        return Slash::IsAvailable(player);
-//    }
+    virtual bool isEnabledAtPlay(const Player *player) const
+    {
+        return Slash::IsAvailable(player);
+    }
 
-//    virtual bool isEnabledAtResponse(const Player *, const QString &pattern) const
-//    {
-//        return pattern == "slash";
-//    }
+    virtual bool isEnabledAtResponse(const Player *, const QString &pattern) const
+    {
+        return pattern == "slash";
+    }
 
-//    virtual const Card *viewAs(const Card *originalCard) const
-//    {
-//        Card *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
-//        slash->addSubcard(originalCard->getId());
-//        slash->setSkillName(objectName());
-//        slash->setShowSkill(objectName());
-//        return slash;
-//    }
-//};
+    virtual const Card *viewAs(const Card *originalCard) const
+    {
+        Card *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
+        slash->addSubcard(originalCard->getId());
+        slash->setSkillName(objectName());
+        slash->setShowSkill(objectName());
+        return slash;
+    }
+};
 
 //class Qianxue : public TriggerSkill
 //{

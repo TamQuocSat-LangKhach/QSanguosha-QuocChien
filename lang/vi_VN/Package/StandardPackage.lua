@@ -159,7 +159,7 @@ local t = {
 	[":indulgence"] = "Bài công cụ thời gian\n\n<b>Lựa chọn</b>: 1 người khác\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải chất CƠ, bỏ qua giai đoạn ra bài lượt này; sau đó đưa lá này vào chồng bài bỏ.",
 
 	["lightning"] = "Thiểm Điện",
-	[":lightning"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 BÍCH, mục tiêu nhận 3 điểm sát thương Lôi, sau đó đưa lá này vào chồng bài bỏ; nếu không, lá [Thiểm Điện] chuyển sang người tiếp theo.",
+	[":lightning"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Từ 2~9 BÍCH: Mục tiêu nhận 3 sát thương Lôi; đưa [Thiểm Điện] này vào chồng bài bỏ;\n* Ngược lại: [Thiểm Điện] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["iron_chain"] = "Thiết Tác Liên Hoàn",
 	[":iron_chain"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu thay đổi trạng thái xích.\n<b>Trùng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",

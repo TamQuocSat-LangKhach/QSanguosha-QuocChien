@@ -4,7 +4,7 @@ return {
 	["joy"] = "Hoan Lạc",
 
 	["shit"] = "Thỉ",
-	[":shit"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Không có\n\n<b>Hiệu ứng thêm</b>: Trong lượt của bạn, khi lá này từ tay của bạn tiến vào chồng bài bỏ hoặc bàn chơi, nếu chất của lá này là:\n* BÍCH: Mất 1 máu;\n* TÉP: Bạn nhận 1 sát thương Lôi;\n* RÔ: Bạn nhận 1 sát thương;\n* CƠ: Bạn nhận 1 sát thương Hỏa.",
+	[":shit"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Giai đoạn ra bài\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Không có\n\n<b>Hiệu ứng thêm</b>: Trong lượt của bạn, khi lá này từ tay của bạn tiến vào chồng bài bỏ hoặc bàn chơi, nếu chất của lá này là:\n* BÍCH: Bạn mất 1 máu;\n* TÉP: Bạn nhận 1 sát thương Lôi;\n* RÔ: Bạn nhận 1 sát thương;\n* CƠ: Bạn nhận 1 sát thương Hỏa.",
 	["disgusting_card"] = "Lá bốc mùi",
 	["$ShitLostHp"] = "%from đã ăn %card, mất 1 máu",
 	["$ShitDamage"] = "%from đã ăn %card, nhận 1 sát thương.",
@@ -13,19 +13,19 @@ return {
 	["Disaster"] = "Thiên Tai",
 
 	["deluge"] = "Hồng Thủy",
-	[":deluge"] = "Bài công cụ thời gian\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bạn.\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét có điểm là A hoặc K, mục tiêu ngẫu nhiên mở ra số bài bằng số người còn sống, theo vòng bắt đầu từ người tiếp theo với mục tiêu, mỗi người lần lượt nhận 1 lá từ số bài này, sau đó bỏ lá này\nNếu không, lá [Hồng Thủy] chuyển sang mục tiêu tiếp theo.",
+	[":deluge"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét có điểm là:\n* A/K: Thực hiện lần lượt:\n- Mục tiêu ngẫu nhiên mở ra số bài của họ bằng số người còn sống;\n- Những người khác thu lấy 1 lá từ số bài này;\n- Đưa [Hồng Thủy] này vào chồng bài bỏ;\n* Ngược lại: [Hồng Thủy] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["typhoon"] = "Đài Phong",
-	[":typhoon"] = "Bài công cụ thời gian\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bạn.\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 RÔ, những người có khoảng cách 1 với mục tiêu bỏ 6 lá trên tay, sau đó bỏ lá này. Nếu không, lá [Đài Phong] chuyển sang mục tiêu tiếp theo.",
+	[":typhoon"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Từ 2~9 RÔ: Những người ở khoảng cách 1 của mục tiêu bỏ 6 lá trên tay; đưa [Đài Phong] này vào chồng bài bỏ;\n* Ngược lại: [Đài Phong] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["earthquake"] = "Địa Chấn",
-	[":earthquake"] = "Bài công cụ thời gian\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bạn.\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 TÉP, những người trong khoảng cách 1 với mục tiêu (bỏ qua hiệu ứng từ ngựa +1) bỏ tất cả trang bị, sau đó bỏ lá này. Nếu không, lá [Địa Chấn] chuyển sang mục tiêu tiếp theo.",
+	[":earthquake"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Từ 2~9 TÉP: Những người ở khoảng cách 1 của mục tiêu (bỏ qua hiệu ứng từ ngựa +1) bỏ tất cả trang bị; đưa [Địa Chấn] này vào chồng bài bỏ;\n* Ngược lại: [Địa Chấn] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["volcano"] = "Hỏa Sơn",
-	[":volcano"] = "Bài công cụ thời gian\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bạn.\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét từ 2~9 CƠ, mục tiêu nhận 2 sát thương Hỏa, những người trong khoảng cách 1 với mục tiêu (bỏ qua hiệu ứng từ ngựa +1) nhận 1 sát thương Hỏa, sau đó bỏ lá này. Nếu không, lá [Hỏa Sơn] chuyển sang mục tiêu tiếp theo.",
+	[":volcano"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Từ 2~9 CƠ: Mục tiêu nhận 2 sát thương Hỏa, những người ở khoảng cách 1 của mục tiêu (bỏ qua hiệu ứng từ ngựa +1) nhận 1 sát thương Hỏa; đưa [Hỏa Sơn] này vào chồng bài bỏ;\n* Ngược lại: [Hỏa Sơn] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["mudslide"] = "Nễ Thạch Lưu",
-	[":mudslide"] = "Bài công cụ thời gian\n\nSử dụng: Trong giai đoạn ra bài.\nMục tiêu: Bạn.\nHiệu quả: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét có màu Đen và điểm là A, K, 4, 7, bắt đầu từ mục tiêu, bỏ nhiều bài từ vùng trang bị nhất có thể, người không có trang bị nhận 1 sát thương, hiệu quả dừng lại khi có 4 trang bị được bỏ đi, sau đó bỏ lá này\nNếu không, lá [Nễ Thạch Lưu] chuyển sang mục tiêu tiếp theo.",
+	[":mudslide"] = "Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Màu Đen và điểm là A/K/4/7: Thực hiện lần lượt:\n- Mỗi người nếu không có lá trong vùng trang bị, họ nhận 1 sát thương; ngược lại, họ bỏ bài trong vùng trang bị nhiều nhất có thể, tối đa tổng 4 lá trang bị bị bỏ từ tất cả mọi người, ưu tiên theo thứ tự Vũ khí, Phòng cụ, Ngựa +1, Ngựa -1, Bảo vật, Ngựa đặc biệt;\n▷ Nếu tổng số trang bị đã bị bỏ bởi [Nễ Thạch Lưu] là 4, ngưng kết toán với những người còn lại\n- Đưa [Nễ Thạch Lưu] này vào chồng bài bỏ;\n* Ngược lại: [Nễ Thạch Lưu] chuyển sang vùng phán xét của người tiếp theo.",
 
 -- equips
 	["JoyEquip"] = "Hoan Lạc - Trang Bị",

@@ -1,53 +1,111 @@
---大家好我是Fsu0413。
---从这个文件开始讲解DIY接口的用法。
---此文件为修改原作者hypercross的文件，用于神杀V2国战版，有很多的接口都和V1和V2有一些差别（尤其是V1）。
+-- QSanguosha DIY
+-- Bài 1: Bắt đầu
 
---首先，这个文件说明DIY需要的文件及其结构。
+-- Tôi là Lãng Khách
+-- Bắt đầu từ file này, tôi sẽ hướng bạn đễ có thể làm cho mình 1 DIY
+-- File này được viết dành cho phiên bản QSanguosha-LangKhach-QuocChien
 
---DIY是以LUA文件（建议使用Notepad++编辑）的形式存在的。每个文件里返回一个LUA表，表中的值全部为Package类型。
+-- Có thể không hoạt động ở những phiên bản khác của QSanguosha
 
---创建一个Package对象，这里假设对象名为extension
-extension = sgs.Package("moligaloo", sgs.Package_GeneralPack)
--- 第一个参数：指定扩展包的名字。
--- 第二个参数：指定扩展包的类型：取值：
+-- DIY được viết bằng LUA script và lưu với đuôi .lua. Khuyến cáo sử dụng notepad++ để chỉnh sửa.
+-- Tất cả dòng bắt đầu bằng -- sẽ được bỏ qua khi game đọc đến. Hay bạn nào làm dev rồi thì có thể hiểu đây là comment.
+
+
+-- Để bắt đầu, chúng ta hãy tạo 1 pack mở rộng
+-- Giống như các pack như Trận, Thế, Biến, Quyền... DIY cũng phải tôn tại trong pack.
+extension = sgs.Package("LK_Diy_1", sgs.Package_GeneralPack, true)
+-- extension là tên biến toàn cục, có thể truy cập, miễn là còn trong file này.
+-- Lệnh sgs.Package là lệnh dùng để tạo 1 pack.
+-- Tham số thứ nhất là 1 chuỗi ký tự, là tên mã của pack mở rộng.
+--   Nó có thể là bất cứ tên gì bạn muốn. Trong QSGS, tên mã sử dụng tên tiếng Anh của pack. VD Formation là trận, Power là quyền.
+-- Tham số thứ 2 là loại Pack mở rộng, chỉ sử dụng 2 tham số sau
 --[[
-sgs.Package_GeneralPack -- 默认值，表示此扩展包为武将包。
-sgs.Package_CardPack -- 表示此扩展包为卡牌包
+sgs.Package_GeneralPack -- Pack tướng
+sgs.Package_CardPack -- Pack bài đánh
 ]]
+--   Pack tướng và bài đánh không cùng tồn tại trong 1 pack.
+--   Trong hướng dẫn này, chúng ta sẽ thử làm 1 pack tướng cơ bản
+-- Tham số thứ 3 mô tả việc Pack này có phải là DIY hay không. Nếu là DIY thì sẽ xuất hiện ở tab DIY của game.
+--   Tham số này có thể không điền, lúc này được hiểu không phải DIY
 
-shiqian = sgs.General(extension, "shiqian", "qun") 
--- 创建武将对象，这里我们的武将是时迁，是一个2血群雄武将。关于武将属性的详细说明见reference文档。
+-- Tiếp theo, chúng ta sẽ thử làm 1 tướng
+-- Đạo Tặc - Quần Hùng - 2HP
+-- 
+daoze = sgs.General(extension, "daoze", "qun", 4, true) 
+-- Lệnh này dùng để tạo ra 1 lá tướng
+-- Tham số thứ nhất là pack mở rộng để biết tướng này thuộc pack nào.
+--   Hãy truyền biến extension đã tạo bên trên
+-- Tham số thứ 2 là tên mã của tướng này. Trong code sẽ tìm tướng này bằng tên đó. Thường tên mã sử dụng bính âm.
+--   Tên hiển thị (Đạo Tặc) sẽ được tạo ở cuối file này.
+-- Tham số thứ 3 là thế lực. Hiện tại game support những thế lực sau
+--[[
+qun: Quần Hùng
+shu: Thục
+wei: Ngụy
+wu: Ngô
+careerist: Dã Tâm
+god: Nghe hay đấy, bạn nghĩ đó là Thần ư :))). Đúng, nhưng tướng này không thể chơi được. Tướng này sẽ chỉ xuất hiện trong wiki của game với mục đích credit.
+]]
+--   Nếu bạn muốn tướng này là tướng song quốc, sử dụng thêm lệnh sau
+-- daoze:setSubordinateKingdom("wu")
+-- Tham số thứ 4 là số máu. Thay vì 1.5, 2, 2.5 thì chúng ta hãy gấp đôi lên. VD như số 4 ở trên thì đây là tướng 2 máu.
+-- Tham số thứ 5 là giới tính. true là nam, false là nữ.
 
+-- Có tướng rồi thì đến kỹ năng thôi. Tôi sẽ thử làm 1 kỹ năng đơn giản.
+
+-- Thần Thâu: Bạn có thể sử dụng lá Tép (♣) như Thuận Thủ Khiên Dương
 shentou = sgs.CreateOneCardViewAsSkill{ 
---创建技能，技能种类为OneCardViewAsSkill。这里的技能是“出牌阶段，你可以将任意一张梅花手牌当作顺手牵羊使用。” 
+--Với lệnh này, chúng ta có 1 năng có loại là OneCardViewAsSkill, hay có thể hiểu là sử dụng 1 lá như 1 cái gì đó.
+--Không giống như ngoài đời bạn chơi, chỉ xem loại kỹ năng như kiểu tỏa định kỹ, hạn định kỹ thì trong code sẽ phải phân ra thành kỹ năng chuyển hóa, có thời điểm, kỹ năng trạng thái...
+--VD này dùng để giải thích cách làm 1 kỹ năng chuyển hóa đơn giản. Các loại kỹ năng khác cũng như chi tiết từng dòng lệnh sẽ được đề cập ở hướng dẫn sau
+
 	name = "shentou",
+	-- Tên trong code của kỹ năng, giống tên tướng ở trên
 	filter_pattern = ".|club|.|hand" ,
+	-- Áp dụng cho kỹ năng chuyển hóa hoặc bỏ 1 lá để làm gì đó. Dòng trên có thể đọc là lá Tép trên tay.
 	view_as = function(self, card)
 		local new_card = sgs.Sanguosha:cloneCard("snatch", sgs.Card_SuitToBeDecided, -1)
+		-- Lệnh này để tạo ra 1 lá Thuận thủ khiên dương ảo
+		-- snatch là tên mã của thuận thủ khiên dương
 		new_card:addSubcard(card:getId())
+		-- id của là nguồn.
 		new_card:setSkillName(self:objectName())
+		-- để log cũng như kỹ năng khác biết thuận thủ này do kĩ năng nào tạo ra
 		new_card:setShowSkill(self:objectName())
+		-- cần có dòng này để lật tướng khi kích kỹ năng chuyển hóa
 		return new_card
 	end
+	-- Cả cụm này để tạo ra 1 lá Thuận Thủ Khiên Dương chuyển hóa với lá gốc là lá tép trên tay.
 }
---关于技能的说明将是几乎所有其他帮助文件的重点。此处省略。
+shiqian:addSkill(shentou) 
+--Lệnh này để cho đạo tặc có kỹ năng thần thâu
 
 sgs.LoadTranslationTable{
-	["moligaloo"] = "太阳神上" ,
+	["LK_Diy_1"] = "Lãng Khách DIY 1" ,
+	--Tên Pack
 	
-	["shentou"] = "神偷",
-	[":shentou"] = "你可以将一张梅花手牌当做【顺手牵羊】使用。",
+	["daoze"] = "Đạo Tặc",
+	-- Tên tướng
+	["#daoze"] = "Đạo tặc cũng cần xưng hào sao",
+	-- Xưng hào sẽ thêm dấu # ở trước mã của tướng
+	
+	
+	["shentou"] = "Thần Thâu",
+	-- Tên kỹ năng
+	[":shentou"] = "Bạn có thể sử dụng lá TÉP như Thuận Thủ Khiên Dương",
+	-- Mô tả kỹ năng, thêm dấu : trước mã của kỹ năng
 
 }
---此段为翻译，将包名、技能名称与描述中文化，否则你将会看到拼音
+-- Đoạn trên giúp game có thể hiển thị thông tin tướng, kỹ năng.
 
-shiqian:addSkill(shentou) 
---将神偷技能赋予时迁
 
---最后返回包含这个Package对象的表
+-- Vậy là chúng ta tạo xong tướng đầu tiên, nhưng còn 1 bước cuối
+-- return {extension} để cho game đọc được file này
 
 return {extension}
 
---你可以将本文件保存至extension目录下的moligaloo.lua并启动游戏。此时扩展包即已经被添加至游戏。
 
---为了完善DIY扩展包，需要将音频、图片以及翻译代码放到指定目录。这一点将在其他文档中说明。
+-- Bạn có thể copy file này cho vào thư mục extension của game, đổi lại cái tên nào hay hay chút và bạn có thể chơi được tướng đạo tặc trong game.
+-- Tuy nhiên nếu chỉ có thế, bạn sẽ không thấy ảnh tướng trong game. Để có hình ảnh, bạn hãy kiếm file ảnh với các kích thước phù hợp và cho vào các folder sau
+-- \image\generals\card: Hiển thị card trong wiki và lúc chọn tướng
+-- \fullskin\generals\full: Hiển thị tướng ở trong game.

@@ -141,14 +141,14 @@ return {
 	["#command1"] = "Gây 1 sát thương cho 1 người do bạn chọn",
 	["#command2"] = "Rút 1 lá, giao cho bạn 2 lá",
 	["#command3"] = "Mất 1 máu",
-	["#command4"] = "Lượt này, không thể sử dụng/đánh ra bài, vô hiệu kỹ năng trừ Tỏa định kỹ",
+	["#command4"] = "Lượt này, không thể sử dụng/đánh ra bài trên tay, vô hiệu kỹ năng trừ Tỏa định kỹ",
 	["#command5"] = "Chồng tướng, không thể hồi máu lượt này",
 	["#command6"] = "Chọn 1 lá trên tay, 1 trang bị, bỏ những lá còn lại",
 
 	["command1"] = "Gây sát thương",
-	["command2"] = "Rút 1, đưa 2",
+	["command2"] = "Rút 1, giao 2",
 	["command3"] = "Mất máu",
-	["command4"] = "Khóa bài, kỹ năng",
+	["command4"] = "Khóa bài trên tay, kỹ năng",
 	["command5"] = "Chồng tướng, cấm hồi máu",
 	["command6"] = "Giữ 1 trên tay, 1 trang bị",
 
