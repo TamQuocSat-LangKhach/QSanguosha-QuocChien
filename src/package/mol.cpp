@@ -2791,7 +2791,7 @@ public:
     virtual const Card *viewAs(const Card *originalCard) const
     {
         Card *slash = new Slash(originalCard->getSuit(), originalCard->getNumber());
-        slash->addSubcard(originalCard->getId());
+        slash->addSubcard(originalCard->getEffectiveId());
         slash->setSkillName(objectName());
         slash->setShowSkill(objectName());
         return slash;

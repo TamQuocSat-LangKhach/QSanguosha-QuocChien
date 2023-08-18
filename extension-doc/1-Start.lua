@@ -77,7 +77,7 @@ shentou = sgs.CreateOneCardViewAsSkill{
 	end
 	-- Cả cụm này để tạo ra 1 lá Thuận Thủ Khiên Dương chuyển hóa với lá gốc là lá tép trên tay.
 }
-shiqian:addSkill(shentou) 
+daoze:addSkill(shentou) 
 --Lệnh này để cho đạo tặc có kỹ năng thần thâu
 
 sgs.LoadTranslationTable{

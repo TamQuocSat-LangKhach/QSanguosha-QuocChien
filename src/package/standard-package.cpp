@@ -101,7 +101,8 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (triggerEvent == PreCardsMoveOneTime) {
+        switch (triggerEvent) {
+        case PreCardsMoveOneTime: {
             QVariantList move_datas = data.toList();
             foreach (QVariant move_data, move_datas) {
                 CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
@@ -132,6 +133,16 @@ public:
                             }
                         }
                     }
+
+                    if ( move.from_places.contains(Player::PlaceHand) && player->isKongcheng()) {
+                        room->addPlayerMark(player, "GlobalLostLastHandCard");
+                    }
+                    if ( move.from_places.contains(Player::PlaceEquip) && !player->hasEquip()) {
+                        room->addPlayerMark(player, "GlobalLostLastEquipCard");
+                    }
+                    if ( move.from_places.contains(Player::PlaceDelayedTrick) && player->getJudgingArea().isEmpty()) {
+                        room->addPlayerMark(player, "GlobalLostLastJudgeCard");
+                    }
                 }
                 if (player->getPhase() != Player::NotActive && move.to_place == Player::DiscardPile) {
                     QVariantList discardpile = room->getTag("GlobalRoundDisCardPile").toList();
@@ -143,10 +154,12 @@ public:
                     room->setTag("GlobalRoundDisCardPile", discardpile);
                 }
             }
-
-        } else if (triggerEvent == ConfirmMoveCards) {
-
-        } else if (triggerEvent == Dying) {
+            break;
+        }
+        case ConfirmMoveCards: {
+            break;
+        }
+        case Dying: {
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who != player) return;
             ServerPlayer *killer = dying.damage ? dying.damage->from : NULL;
@@ -154,8 +167,9 @@ public:
 
             if (killer && current && current->getPhase() != Player::NotActive)
                 room->addPlayerMark(killer, "GlobalDyingCausedCount");
-
-        } else if (triggerEvent == Death) {
+            break;
+        }
+        case Death: {
             DeathStruct death = data.value<DeathStruct>();
             if (death.who != player) return;
             ServerPlayer *killer = death.damage ? death.damage->from : NULL;
@@ -163,8 +177,9 @@ public:
 
             if (killer && current && current->getPhase() != Player::NotActive)
                 room->addPlayerMark(killer, "GlobalKilledCount");
-
-        } else if (triggerEvent == PreDamageDone) {
+            break;
+        }
+        case PreDamageDone: {
             DamageStruct damage = data.value<DamageStruct>();
             if (damage.card) {
                 QStringList damaged_tag = damage.card->tag["GlobalCardDamagedTag"].toStringList();
@@ -206,8 +221,10 @@ public:
             }
 
             data = QVariant::fromValue(damage);
-
-        } else if (triggerEvent == CardUsed || triggerEvent == CardResponded) {
+            break;
+        }
+        case CardUsed :
+        case CardResponded: {
             //to record used/responded cards
             const Card *card = NULL;
             bool is_use = true;
@@ -298,7 +315,9 @@ public:
 
                 }
             }
-        } else if (triggerEvent == TargetRecord) {
+            break;
+        }
+        case TargetRecord: {
             CardUseStruct use = data.value<CardUseStruct>();
             if (use.card == NULL || use.card->getTypeId() == Card::TypeSkill) return;
 
@@ -328,11 +347,13 @@ public:
                 }
 
             }
-        } else if (triggerEvent == SlashMissed) {
-
+            break;
+        }
+        caseSlashMissed: {
+            break;
         }
     }
-};
+}
 
 
 class GlobalClear : public TriggerSkill
@@ -361,6 +382,9 @@ public:
                     room->setPlayerMark(p, "GlobalInjuredCount", 0);
                     room->setPlayerMark(p, "Global_MaxcardsIncrease", 0);
                     room->setPlayerMark(p, "Global_MaxcardsDecrease", 0);
+                    room->setPlayerMark(p, "GlobalLostLastHandCard", 0);
+                    room->setPlayerMark(p, "GlobalLostLastEquipCard", 0);
+                    room->setPlayerMark(p, "GlobalLostLastJudgeCard", 0);
                     p->tag.remove("RoundUsedCards");
                     p->tag.remove("RoundRespondedCards");
                     p->tag.remove("PhaseUsedCards");
