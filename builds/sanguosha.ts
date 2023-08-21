@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Basic</source>
-        <translation>Cơ bản</translation>
+        <translation>Pack cơ bản</translation>
     </message>
     <message>
         <source>Banlist ...</source>
@@ -122,11 +122,11 @@
     </message>
     <message>
         <source>Game Pacakge Selection</source>
-        <translation>Bản mở rộng</translation>
+        <translation>Pack mở rộng</translation>
     </message>
     <message>
         <source>DIY Package Selection</source>
-        <translation>Bản DIY</translation>
+        <translation>Pack DIY</translation>
     </message>
     <message>
         <source>AI delay After Death</source>
@@ -2668,7 +2668,11 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>&lt;font color=%1&gt;This is an Lua extension&lt;/font&gt;</source>
-        <translation>&lt;font color=%1&gt;This is a Lua extension&lt;/font&gt;</translation>
+        <translation>&lt;font color=%1&gt;Đây là tướng được thêm bên ngoài bởi LUA extension&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;font color=%1&gt;This is an DIY extension&lt;/font&gt;</source>
+        <translation>&lt;font color=%1&gt;Đây là tướng không chính thức&lt;/font&gt;</translation>
     </message>
     <message>
         <source>Female</source>
@@ -2723,7 +2727,11 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>&lt;font color=%1&gt;This is an Lua extension&lt;/font&gt;</source>
-        <translation>&lt;font color=%1&gt;This is a Lua extension&lt;/font&gt;</translation>
+        <translation>&lt;font color=%1&gt;Đây là tướng được thêm bên ngoài bởi LUA extension&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;font color=%1&gt;This is an DIY extension&lt;/font&gt;</source>
+        <translation>&lt;font color=%1&gt;Đây là tướng không chính thức&lt;/font&gt;</translation>
     </message>
     <message>
         <source>Card Overview</source>

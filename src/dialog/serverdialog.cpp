@@ -296,6 +296,7 @@ QWidget *ServerDialog::createDIYTab()
 
     QWidget *widget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(new QLabel("Tướng và bài chơi ở tab này đều không chính thức, không phải do Yoka làm ra. Hãy cân nhắc trước khi chơi!"));
     layout->addWidget(box1);
     layout->addWidget(box2);
 
@@ -355,8 +356,7 @@ QWidget *ServerDialog::createAdvancedTab()
     port_edit->setValidator(new QIntValidator(1000, 65535, port_edit));
 
     layout->addLayout(HLay(forbid_same_ip_checkbox, disable_chat_checkbox));
-    layout->addWidget(random_seat_checkbox);
-    layout->addWidget(enable_cheat_checkbox);
+    layout->addLayout(HLay(enable_cheat_checkbox, random_seat_checkbox));
     layout->addWidget(free_choose_checkbox);
 #if !defined(Q_OS_IOS)
     layout->addLayout(HLay(pile_swapping_label, pile_swapping_spinbox));

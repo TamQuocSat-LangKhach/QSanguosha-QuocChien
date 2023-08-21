@@ -53,11 +53,11 @@ local t = {
 	[":Crossbow"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 1\n<b>Kỹ năng</b>: Tỏa định kỹ: bạn không giới hạn số lần sử dụng lá [Sát].",
 
 	["DoubleSword"] = "Thư Hùng Song Cổ Kiếm",
-	[":DoubleSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Sau khi xác định từng mục tiêu của [Sát], nếu mục tiêu khác giới tính với bạn, bạn có thể lệnh mục tiêu chọn bỏ 1 lá bài trên tay hoặc lệnh bạn rút 1 lá bài.",
+	[":DoubleSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Sau khi bạn xác định mục tiêu của [Sát], nếu bạn và họ 1 người giới tính nam và 1 người giới tính nữ, bạn có thể lệnh mục tiêu chọn bỏ 1 lá bài trên tay hoặc lệnh bạn rút 1 lá bài.",
 	["double-sword-card"] = "%src phát động hiệu quả [Thư Hùng Song Cổ Kiếm], bạn cần phải bỏ 1 lá bài trên tay hoặc để %src rút 1 lá bài.",
 
 	["SixSwords"] = "Ngô Lục Kiếm",
-	[":SixSwords"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: người khác có thế lực giống bạn +1 tầm đánh.",
+	[":SixSwords"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Người khác có cùng thế lực với bạn +1 tầm đánh.",
 
 	["Triblade"] = "Tam Tiêm Lưỡng Nhận Đao",
 	[":Triblade"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3<br/><b>Kỹ năng</b>: Sau khi bạn gây sát thương cho mục tiêu của lá [Sát], bạn có thể bỏ 1 lá bài trên tay và chọn 1 người khác ở khoảng cách 1 của mục tiêu, bạn gây 1 sát thương cho họ.",

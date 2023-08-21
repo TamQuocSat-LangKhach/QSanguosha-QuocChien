@@ -156,9 +156,6 @@ public:
             }
             break;
         }
-        case ConfirmMoveCards: {
-            break;
-        }
         case Dying: {
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who != player) return;
@@ -349,12 +346,12 @@ public:
             }
             break;
         }
-        caseSlashMissed: {
+        default: {
             break;
         }
+        }
     }
-}
-
+};
 
 class GlobalClear : public TriggerSkill
 {

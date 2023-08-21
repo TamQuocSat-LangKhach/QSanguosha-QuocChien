@@ -4581,7 +4581,7 @@ public:
                     break;
                 }
             }
-
+            if (!to_select->isAvailable(Self)) return false;
             if (target == NULL || !to_select->targetRated(target, Self) || Self->isProhibited(target, to_select)) return false;
             if (to_select->targetFixed() && !to_select->isKindOf("AOE") && !to_select->isKindOf("GlobalEffect")) return false;
             return true;

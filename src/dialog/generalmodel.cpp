@@ -120,6 +120,10 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             if (Config.value("LuaPackages", QString()).toString().split("+").contains(general->getPackage())) {
                 return tr("<font color=%1>This is an Lua extension</font>").arg(Config.SkillDescriptionInToolTipColor.name());
             } else {
+                Package *p = qobject_cast<Package *>(general->parent());
+                if (p && p->isDIY()) {
+                    return tr("<font color=%1>This is an DIY extension</font>").arg(Config.SkillDescriptionInToolTipColor.name());
+                }
                 return QString();
             }
         }
