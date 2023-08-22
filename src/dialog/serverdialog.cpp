@@ -189,6 +189,7 @@ QWidget *ServerDialog::createPackageTab()
 
         const QString &extension = package->objectName();
         bool forbid_package = Config.value("ForbidPackages").toStringList().contains(extension);
+        if (forbid_package) continue;
         QCheckBox *checkbox = new QCheckBox;
 #ifdef Q_OS_ANDROID
         QFont f = checkbox->font();
@@ -296,7 +297,7 @@ QWidget *ServerDialog::createDIYTab()
 
     QWidget *widget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(new QLabel("Tướng và bài chơi ở tab này đều không chính thức, không phải do Yoka làm ra. Hãy cân nhắc trước khi chơi!"));
+    layout->addWidget(new QCheckBox("Tướng và bài chơi ở tab này đều không chính thức, không phải do Yoka làm ra. Hãy cân nhắc trước khi chơi!"));
     layout->addWidget(box1);
     layout->addWidget(box2);
 
@@ -328,13 +329,12 @@ QWidget *ServerDialog::createAdvancedTab()
     connect(enable_cheat_checkbox, &QCheckBox::toggled, free_choose_checkbox, &QCheckBox::setVisible);
 #if !defined(Q_OS_IOS)
     pile_swapping_label = new QLabel(tr("Pile-swapping limitation"));
-    pile_swapping_label->setToolTip(tr("<font color=%1>-1 means no limitations</font>").arg(Config.SkillDescriptionInToolTipColor.name()));
     pile_swapping_spinbox = new QSpinBox;
 #ifdef Q_OS_ANDROID
     pile_swapping_spinbox->setMinimumHeight(80);
 #endif
     pile_swapping_spinbox->setRange(-1, 15);
-    pile_swapping_spinbox->setValue(Config.value("PileSwappingLimitation", 5).toInt());
+    pile_swapping_spinbox->setValue(Config.value("PileSwappingLimitation", -1).toInt());
 
     hegemony_maxchoice_label = new QLabel(tr("Upperlimit for hegemony"));
     hegemony_maxchoice_spinbox = new QSpinBox;

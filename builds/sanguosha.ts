@@ -118,7 +118,7 @@
     </message>
     <message>
         <source>Upperlimit for hegemony</source>
-        <translation>Giới hạn chọn tướng cho chế độ Quốc Chiến</translation>
+        <translation>Giới hạn số tướng được chia</translation>
     </message>
     <message>
         <source>Game Pacakge Selection</source>
@@ -238,7 +238,7 @@
     </message>
     <message>
         <source>Pile-swapping limitation</source>
-        <translation>Giới hạn xáo bài</translation>
+        <translation>Giới hạn số lần xáo bài (-1 là vô hạn)</translation>
     </message>
     <message>
         <source>Advanced</source>
