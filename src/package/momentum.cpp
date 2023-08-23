@@ -1371,7 +1371,7 @@ public:
     {
         if (triggerEvent == DamageInflicted) {
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+            if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
             if (ArmorSkill::triggerable(player) && damage.nature != DamageStruct::Normal)
                 return QStringList(objectName());
         } else if (triggerEvent == CardsMoveOneTime && player && player->isAlive()) {
@@ -1388,7 +1388,7 @@ public:
 
                 QString source_name = move.reason.m_playerId;
                 ServerPlayer *source = room->findPlayerbyobjectName(source_name);
-                if (source && source->ingoreArmor(player)) continue;
+                if (source && source->ignoreArmor(player)) continue;
 
                 for (int i = 0; i < move.card_ids.size(); i++) {
                     if (move.from_places[i] != Player::PlaceEquip) continue;
@@ -1462,7 +1462,7 @@ public:
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+        if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
         if (player->hasArmorEffect("PeaceSpell") && damage.nature != DamageStruct::Normal)
             return QStringList("PeaceSpell");
         return QStringList();

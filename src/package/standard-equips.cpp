@@ -310,7 +310,7 @@ public:
         QStringList prompt_list = prompt.split(":");
         if (prompt_list.length() > 1) {
             ServerPlayer *source = room->findPlayerbyobjectName(prompt_list[1]);
-            if (source && source->ingoreArmor(player)) return QStringList();
+            if (source && source->ignoreArmor(player)) return QStringList();
         }
 
         if (asked == "jink") return QStringList(objectName());
@@ -415,7 +415,7 @@ public:
     {
         if (!ArmorSkill::triggerable(player)) return QStringList();
         SlashEffectStruct effect = data.value<SlashEffectStruct>();
-        if (effect.from && effect.from->ingoreArmor(player)) return QStringList();
+        if (effect.from && effect.from->ignoreArmor(player)) return QStringList();
         if (effect.slash->isBlack()) return QStringList(objectName());
 
         return QStringList();
@@ -611,17 +611,17 @@ public:
         if (!ArmorSkill::triggerable(player)) return QStringList();
         if (triggerEvent == SlashEffected) {
             SlashEffectStruct effect = data.value<SlashEffectStruct>();
-            if (effect.from && effect.from->ingoreArmor(player)) return QStringList();
+            if (effect.from && effect.from->ignoreArmor(player)) return QStringList();
             if (effect.nature == DamageStruct::Normal)
                 return QStringList(objectName());
         } else if (triggerEvent == CardEffected) {
             CardEffectStruct effect = data.value<CardEffectStruct>();
-            if (effect.from && effect.from->ingoreArmor(player)) return QStringList();
+            if (effect.from && effect.from->ignoreArmor(player)) return QStringList();
             if (effect.card->isKindOf("SavageAssault") || effect.card->isKindOf("ArcheryAttack"))
                 return QStringList(objectName());
         } else if (triggerEvent == DamageInflicted) {
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+            if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
             if (damage.nature == DamageStruct::Fire)
                 return QStringList(objectName());
         }
@@ -695,7 +695,7 @@ public:
     {
         if (triggerEvent == DamageInflicted) {
             DamageStruct damage = data.value<DamageStruct>();
-            if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+            if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
             if (ArmorSkill::triggerable(player) && damage.damage > 1)
                 return QStringList(objectName());
         } else if (triggerEvent == CardsMoveOneTime && player->isWounded()) {
@@ -711,7 +711,7 @@ public:
 
                 QString source_name = move.reason.m_playerId;
                 ServerPlayer *source = room->findPlayerbyobjectName(source_name);
-                if (source && source->ingoreArmor(player)) continue;
+                if (source && source->ignoreArmor(player)) continue;
 
                 for (int i = 0; i < move.card_ids.size(); i++) {
                     if (move.from_places[i] != Player::PlaceEquip) continue;
@@ -778,7 +778,7 @@ public:
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+        if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
         if (player->hasArmorEffect("SilverLion") && damage.damage > 1)
             return QStringList("SilverLion");
         return QStringList();

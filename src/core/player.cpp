@@ -836,9 +836,9 @@ bool Player::hasArmorEffect(const QString &armor_name) const
     return false;
 }
 
-bool Player::ingoreArmor(const Player *to) const
+bool Player::ignoreArmor(const Player *to) const
 {
-    QStringList list = property("IngoreArmor").toString().split("+");
+    QStringList list = property("IgnoreArmor").toString().split("+");
     return list.contains(to->objectName()) || list.contains("_ALL_PLAYERS");
 }
 

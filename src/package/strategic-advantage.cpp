@@ -285,7 +285,7 @@ public:
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         DamageStruct damage = data.value<DamageStruct>();
-        if (damage.from && damage.from->ingoreArmor(player)) return QStringList();
+        if (damage.from && damage.from->ignoreArmor(player)) return QStringList();
         if (ArmorSkill::triggerable(player) && damage.damage >= player->getHp() && player->getArmor())
             return QStringList(objectName());
         return QStringList();
@@ -338,7 +338,7 @@ public:
         if (!ArmorSkill::triggerable(player)) return QStringList();
         CardUseStruct use = data.value<CardUseStruct>();
         if (!use.card) return QStringList();
-        if (use.from && use.from->ingoreArmor(player)) return QStringList();
+        if (use.from && use.from->ignoreArmor(player)) return QStringList();
         if (!use.to.contains(player) || player->getMark("Equips_of_Others_Nullified_to_You") > 0) return QStringList();
         if (use.card->isKindOf("FireAttack") || use.card->isKindOf("FireSlash") || use.card->isKindOf("BurningCamps"))
             return QStringList(objectName());
