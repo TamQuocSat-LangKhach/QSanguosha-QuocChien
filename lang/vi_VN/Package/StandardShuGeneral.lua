@@ -25,7 +25,7 @@ return {
 	["#liubei"] = "Loạn Thế Đích Kiêu Hùng",
 	["liubei"] = "Lưu Bị",
 	["rende"] = "Nhân Đức",
-	[":rende"] = "Giai đoạn ra bài, bạn có thể đem tùy ý lượng bài trên tay giao cho 1 người khác chưa nhận bài từ kỹ năng này trong giai đoạn này;\n▷ Nếu đây là lần đầu tổng số lá bạn giao bằng kỹ năng này trong giai đoạn này ≥ 2, bạn có thể xem như sử dụng 1 lá cơ bản.",
+	[":rende"] = "Giai đoạn ra bài, bạn có thể đem tùy ý lượng bài trên tay giao cho 1 người khác chưa nhận bài từ kỹ năng này trong giai đoạn này;\n▷ Nếu đây là lần đầu tổng số lá bạn giao bằng kỹ năng này trong giai đoạn này ≥ 2, bạn có thể xem như sử dụng 1 lá cơ bản;\n ▷ Nếu bạn sử dụng [Sát] bởi kỹ năng này, [Sát] này được tính giới hạn số lần trong giai đoạn ra bài.",
     ["@rende-basic"] = "Nhân Đức: Chọn lá cơ bản để sử dụng",
     ["rende_basic"] = "Nhân Đức",
 	

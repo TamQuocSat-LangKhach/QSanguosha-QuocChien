@@ -297,9 +297,9 @@ QWidget *ServerDialog::createDIYTab()
 
     QWidget *widget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(new QCheckBox("Tướng và bài chơi ở tab này đều không chính thức, không phải do Yoka làm ra. Hãy cân nhắc trước khi chơi!"));
-    layout->addWidget(box1);
-    layout->addWidget(box2);
+    layout->addWidget(new QLabel("Tướng và bài chơi ở tab này đều không chính thức, không phải do Yoka làm ra. Hãy cân nhắc trước khi chơi!"), 1);
+    layout->addWidget(box1, 10);
+    layout->addWidget(box2, 10);
 
     widget->setLayout(layout);
     return widget;

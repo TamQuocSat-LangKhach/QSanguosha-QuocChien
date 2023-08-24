@@ -17,10 +17,10 @@ sgs.LoadTranslationTable{
 	"• Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có 3 nguyên tố giống nhau và nguyên tố đó là:\n"..
 	"* [Băng]: Bạn hồi 1 máu;\n"..
 	"* [Lôi]: Trong lượt này, bạn sử dụng bài không hạn chế khoảng cách;\n"..
-	"* [Hỏa]: Nếu bạn thỏa mãn điều kiện sử dụng [Tửu], xem như bạn sử dụng 1 [Tửu]."..
+	"* [Hỏa]: Nếu bạn thỏa mãn điều kiện sử dụng [Tửu], xem như bạn sử dụng 1 [Tửu].",
 	
 	["invoke"] = "Kì Hoán",
-	[":invoke"] "Giai đoạn ra bài hoặc sau khi 1 người bắt đầu lượt, nếu bạn có 3 nguyên tố, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Nếu kỹ năng ứng với tổ hợp nguyên tố của bạn khác với kỹ năng bạn đã có, bạn nhận kỹ năng đó đến khi bạn mất kỹ năng này;\n- Nếu bạn có 3 kỹ năng đã được nhận bởi kỹ năng này, bạn mất kỹ năng đã nhận đầu tiên.",
+	[":invoke"] = "Giai đoạn ra bài hoặc sau khi 1 người bắt đầu lượt, nếu bạn có 3 nguyên tố, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Nếu kỹ năng ứng với tổ hợp nguyên tố của bạn khác với kỹ năng bạn đã có, bạn nhận kỹ năng đó đến khi bạn mất kỹ năng này;\n- Nếu bạn có 3 kỹ năng đã được nhận bởi kỹ năng này, bạn mất kỹ năng đã nhận đầu tiên.",
 
 	["coldsnap"] = "Lãnh Khước",
 	[":coldsnap"] = "Băng-Băng-Băng\nMột lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá và chọn 1 người khác, lệnh họ nhận 1 ký hiệu [Lãnh Khước] đến khi bắt đầu lượt tiếp theo của bạn;\n▶ Sau khi 1 người xác định mục tiêu của lá [Sát], ứng với mỗi mục tiêu, nếu mục tiêu này có [Lãnh Khước], họ thực hiện lần lượt:\n- Người sử dụng [Sát] có thể sử dụng 1 lá RÔ như [Lạc Bất Tư Thục] với họ;\n- Họ không thể hưởng ứng [Sát] này;\n- Loại bỏ [Lãnh Khước].",

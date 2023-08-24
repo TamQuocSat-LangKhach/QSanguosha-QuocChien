@@ -25,7 +25,7 @@ local t = {
 
 
 	["slash"] = "Sát",
-	[":slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương cho mục tiêu.",
+	[":slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Chủ động sử dụng tối đa 1 lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương cho mục tiêu.",
 	["slash-jink"] = "%src đã sử dụng [Sát], hãy sử dụng 1 [Thiểm]",
 	["@multi-jink-start"] = "%src đã sử dụng lá [sát], hãy sử dụng %arg lá [Thiểm]",
 	["@multi-jink"] = "%src đã sử dụng [Sát], hãy sử dụng thêm %arg lá [Thiểm]",
