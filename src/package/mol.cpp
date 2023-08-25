@@ -513,16 +513,18 @@ public:
                         foreach (const Skill *skill, player->getActualGeneral1()->getVisibleSkillList()) {
                             skill_names << skill->objectName();
                         }
+                    }
+                    if (player->getGeneral2() && player->hasShownGeneral2()) {
+                        foreach (const Skill *skill, player->getActualGeneral2()->getVisibleSkillList()) {
+                            skill_names << skill->objectName();
+                        }
+                    }
+                    if (skill_names.contains("bianhua")) {
                         const General *bianhua = player->getBianhuaGeneral();
                         if (bianhua) {
                             foreach (const Skill *skill, bianhua->getVisibleSkillList()) {
                                 skill_names << skill->objectName();
                             }
-                        }
-                    }
-                    if (player->getGeneral2() && player->hasShownGeneral2()) {
-                        foreach (const Skill *skill, player->getActualGeneral2()->getVisibleSkillList()) {
-                            skill_names << skill->objectName();
                         }
                     }
                     if (!skill_names.isEmpty()) {

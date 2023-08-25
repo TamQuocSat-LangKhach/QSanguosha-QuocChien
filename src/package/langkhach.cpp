@@ -6,6 +6,7 @@
 #include "standard.h"
 #include "standard-tricks.h"
 #include "standard-shu-generals.h"
+#include "json.h"
 
 class Bianhua : public TriggerSkill
 {
@@ -59,6 +60,7 @@ public:
         }
         ServerPlayer *to = room->askForPlayerChosen(player, targets, objectName(), "@bianhua-invoke", true, true);
         if (to != NULL) {
+            bool head = player->inHeadSkills(objectName());
             QStringList choicelist;
             if (to->hasShownGeneral1() && !to->getActualGeneral1Name().contains("sujiang")) {
                 choicelist << to->getActualGeneral1Name();
@@ -75,17 +77,21 @@ public:
             room->sendLog(log);
             room->addPlayerMark(player, "##" + choice);
             room->setPlayerProperty(player, "bianhua-choice", choice);
-            QList<const Skill *> skills = general->getVisibleSkillList();
-            foreach (const Skill *skill, skills) {
+            foreach (const Skill *skill, general->getVisibleSkillList(true, head)) {
                 if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
-                if (skill->relateToPlace(player->inDeputySkills(objectName()))) continue;
                 if (skill == this) continue;
-                room->acquireSkill(player, skill, true, player->inHeadSkills(objectName()));
-                if (!skill->getLimitMark().isEmpty()) {
+                //room->acquireSkill(player, skill, true, player->inHeadSkills(objectName()));
+                player->addSkill(skill->objectName(), head);
+                if (skill->getFrequency() == Skill::Limited && !skill->getLimitMark().isEmpty()) {
                     room->setPlayerMark(player, skill->getLimitMark(), 1);
                 }
             }
-            player->setGender(general->getGender());
+            JsonArray args;
+            args << (int)QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
+            room->doNotify(player, QSanProtocol::S_COMMAND_LOG_EVENT, args);
+            if (head) {
+                player->setGender(general->getGender());
+            }
         } else {
             room->setPlayerProperty(player, "maxhp", player->getMaxHp() + 1);
 

@@ -508,9 +508,7 @@ bool Player::hasSkill(const QString &skill_name, bool include_lose) const
             && skill_name != "showhead" && skill_name != "showdeputy") {
 
         if (!include_lose && !hasEquipSkill(skill_name) && !skill->isAttachedLordSkill()) {
-            const General *bianhua = getBianhuaGeneral();
-            bool bianhuaSkill = bianhua && bianhua->hasSkill(skill_name);
-            if ((!getAcquiredSkills().contains(skill_name) && ownSkill(skill_name)) || bianhuaSkill) {
+            if (!getAcquiredSkills().contains(skill_name) && ownSkill(skill_name)) {
                 if (inHeadSkills(skill_name) && !canShowGeneral("h")) return false;
                 if (inDeputySkills(skill_name) && !canShowGeneral("d")) return false;
 
@@ -520,7 +518,7 @@ bool Player::hasSkill(const QString &skill_name, bool include_lose) const
 
             if (skill->getFrequency() != Skill::Compulsory && skill->getFrequency() != Skill::Wake) {
                 if (getMark("skill_invalidity") > 0) return false;
-                if (getMark("skill_invalidity_head") > 0 && (head_skills.value(skill_name, false) || bianhuaSkill)) return false;
+                if (getMark("skill_invalidity_head") > 0 && head_skills.value(skill_name, false)) return false;
                 if (getMark("skill_invalidity_deputy") > 0 && deputy_skills.value(skill_name, false)) return false;
             }
         }
@@ -1436,17 +1434,8 @@ getHeadSkillList(bool visible_only, bool include_acquired, bool include_equip) c
     QList<QString> skills;
     if (include_acquired)
         skills = head_skills.keys() + head_acquired_skills.toList();
-    else {
+    else
         skills = head_skills.keys();
-        const General *bianhua = getBianhuaGeneral();
-        if (bianhua) {
-            foreach (const QString &skillName, head_acquired_skills) {
-                if (bianhua->hasSkill(skillName)) {
-                    skills << skillName;
-                }
-            }
-        }
-    }
     foreach (const QString &skill_name, skills) {
         const Skill *skill = Sanguosha->getSkill(skill_name);
         if (skill != NULL) {
@@ -1941,14 +1930,22 @@ bool Player::cheakSkillLocation(const QString &skill_name, const QVariant &data)
     if (show_list.contains("head")) {
         if (general1_showed && general->ownSkill(skill_name))
             return true;
-
-        const General *bianhua = getBianhuaGeneral();
-        if (bianhua && bianhua->ownSkill(skill_name))
-            return true;
+        if (general->ownSkill("bianhua")) {
+            const General *bianhua = getBianhuaGeneral();
+            if (bianhua && bianhua->ownSkill(skill_name))
+                return true;
+        }
     }
 
-    if (show_list.contains("deputy") && general2_showed && general2 && general2->ownSkill(skill_name))
-        return true;
+    if (show_list.contains("deputy") && general2) {
+        if (general2_showed && general2->ownSkill(skill_name))
+            return true;
+        if (general2->ownSkill("bianhua")) {
+            const General *bianhua = getBianhuaGeneral();
+            if (bianhua && bianhua->ownSkill(skill_name))
+                return true;
+        }
+    }
 
     return false;
 }

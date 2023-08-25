@@ -1272,8 +1272,13 @@ public:
             duanchangList << "deputy";
         room->setPlayerProperty(target, "Duanchang", duanchangList.join(","));
 
-        QList<const Skill *> skills = choice == "head_general" ? target->getHeadSkillList()
+        QList<const Skill *> skills = choice == "head_general" ? target->getActualGeneral1()->getVisibleSkillList()
             : target->getActualGeneral2()->getVisibleSkillList();
+        if (skills.contains(Sanguosha->getSkill("bianhua"))) {
+            const General *bianhua = target->getBianhuaGeneral();
+            if (bianhua)
+                skills += bianhua->getVisibleSkillList();
+        }
         foreach (const Skill *skill, skills)
             if (!skill->isAttachedLordSkill())
                 room->detachSkillFromPlayer(target, skill->objectName(), !target->hasShownSkill(skill), false, choice == "head_general" ? true : false);

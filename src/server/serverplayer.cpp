@@ -1745,12 +1745,6 @@ bool ServerPlayer::showSkill(const QString &skill_name, const QString &skill_pos
             showGeneral(name == "GameRule_AskForGeneralShowHead" ? true : false, true, true, false);
             result = true;
         }
-    } else if (ownSkill("bianhua")) {
-        const General *bianhua = this->getBianhuaGeneral();
-        if (bianhua && bianhua->hasSkill(skill_name)) {
-            showGeneral(inHeadSkills("bianhua"));
-            result = true;
-        }
     }
     return result;
 }
@@ -2079,11 +2073,6 @@ void ServerPlayer::removeGeneral(bool head_general)
                 room->detachSkillFromPlayer(this, skill->objectName(), false, false, true);
             }
         }
-        const General *bianhua = getBianhuaGeneral();
-        if (bianhua) {
-            room->setPlayerProperty(this, "bianhua-choice", QVariant());
-            room->setPlayerMark(this, "##" + bianhua->objectName(), 0);
-        }
     } else {
         if (!hasShownGeneral2())
             showGeneral(false, false); //zoushi?
@@ -2116,7 +2105,13 @@ void ServerPlayer::removeGeneral(bool head_general)
             }
         }
     }
-
+    if (removed_skills.contains("bianhua")) {
+        const General *bianhua = getBianhuaGeneral();
+        if (bianhua) {
+            room->setPlayerProperty(this, "bianhua-choice", QVariant());
+            room->setPlayerMark(this, "##" + bianhua->objectName(), 0);
+        }
+    }
     LogMessage log;
     log.type = "#BasaraRemove";
     log.from = this;
@@ -2150,13 +2145,13 @@ void ServerPlayer::sendSkillsToOthers(bool head_skill /* = true */)
 
 void ServerPlayer::disconnectSkillsFromOthers(bool head_skill /* = true */)
 {
-    foreach (const Skill *skill, head_skill ? getHeadSkillList() : getDeputySkillList()) {
-        QVariant _skill = skill->objectName() + ":" + (head_skill ? "head" : "deputy");
+    foreach (const QString &skill, head_skill ? head_skills.keys() : deputy_skills.keys()) {
+        QVariant _skill = skill + ":" + (head_skill ? "head" : "deputy");
         room->getThread()->trigger(EventLoseSkill, room, this, _skill);
         JsonArray args;
         args << (int)QSanProtocol::S_GAME_EVENT_DETACH_SKILL;
         args << objectName();
-        args << skill->objectName();
+        args << skill;
         args << head_skill;
         foreach(ServerPlayer *p, room->getOtherPlayers(this, true))
             room->doNotify(p, QSanProtocol::S_COMMAND_LOG_EVENT, args);
