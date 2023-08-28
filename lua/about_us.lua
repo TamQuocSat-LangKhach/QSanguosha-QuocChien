@@ -55,7 +55,6 @@ art_designers = {
 	'洛神',
 	'祝家大少',
 	'女王受·虫',
-	'Ong Thành Đạt'
 }
 
 assistants = {
