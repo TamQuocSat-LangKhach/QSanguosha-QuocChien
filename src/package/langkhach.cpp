@@ -77,18 +77,32 @@ public:
             room->sendLog(log);
             room->addPlayerMark(player, "##" + choice);
             room->setPlayerProperty(player, "bianhua-choice", choice);
+            QList<const TriggerSkill *> game_start;
+            QVariant void_data;
             foreach (const Skill *skill, general->getVisibleSkillList(true, head)) {
-                if (skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
-                if (skill == this) continue;
-                //room->acquireSkill(player, skill, true, player->inHeadSkills(objectName()));
+                if (skill == this || skill->isLordSkill() || skill->isAttachedLordSkill()) continue;
+                if (skill->inherits("TriggerSkill")) {
+                    const TriggerSkill *tr = qobject_cast<const TriggerSkill *>(skill);
+                    if (tr && tr->getTriggerEvents().contains(GameStart) && !tr->triggerable(GameStart, room, player, void_data, player).isEmpty()) {
+                        game_start << tr;
+                    }
+                }
                 player->addSkill(skill->objectName(), head);
+                JsonArray args;
+                args << QSanProtocol::S_GAME_EVENT_ADD_SKILL;
+                args << objectName();
+                args << skill->objectName();
+                args << head;
+                foreach(ServerPlayer *p, room->getOtherPlayers(player, true))
+                    room->doNotify(p, QSanProtocol::S_COMMAND_LOG_EVENT, args);
                 if (skill->getFrequency() == Skill::Limited && !skill->getLimitMark().isEmpty()) {
                     room->setPlayerMark(player, skill->getLimitMark(), 1);
                 }
             }
-            JsonArray args;
-            args << (int)QSanProtocol::S_GAME_EVENT_UPDATE_SKILL;
-            room->doNotify(player, QSanProtocol::S_COMMAND_LOG_EVENT, args);
+            foreach (const TriggerSkill *skill, game_start) {
+                if (skill->cost(GameStart, room, player, void_data, player))
+                    skill->effect(GameStart, room, player, void_data, player);
+            }
             if (head) {
                 player->setGender(general->getGender());
             }
@@ -273,165 +287,6 @@ public:
             return -1;
     }
 };
-
-//class FemaleOutfitSkill : public ArmorSkill
-//{
-//public:
-//    FemaleOutfitSkill() : ArmorSkill("FemaleOutfit")
-//    {
-//        events << CardsMoveOneTime;
-//        frequency = Compulsory;
-//    }
-
-//    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
-//    {
-//        if (player->isMale()) {
-//            CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
-//            if (player->hasFlag("TianjituDiscard")) {
-//                if (move.to == player && move.to_place == Player::PlaceEquip) {
-//                    for (int i = 0; i < move.card_ids.size(); i++) {
-//                        const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
-//                        if (card->objectName() == objectName()) {
-//                            player->setFlags("-TianjituDiscard");
-//                            room->setEmotion(player, "treasure/tianjitu");
-
-//                            bool discard = false;
-//                            foreach (const Card *card, player->getCards("he")) {
-//                                if (card->objectName() == objectName()) continue;
-//                                int id = card->getEffectiveId();
-//                                if (!player->canDiscard(player, id)) continue;
-//                                discard = true;
-//                            }
-//                            if (discard)
-//                                room->askForDiscard(player, objectName(), 1, 1, false, true, QString(), "^Tianjitu");
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return QStringList();
-//    }
-
-//    virtual bool cost(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
-//    {
-//        if (triggerEvent == CardsMoveOneTime) return true;
-//        return ArmorSkill::cost(room, player, data);
-//    }
-
-//    virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
-//    {
-//        if (triggerEvent == DamageInflicted) {
-//            DamageStruct damage = data.value<DamageStruct>();
-//            room->setEmotion(player, "armor/silver_lion");
-//            LogMessage log;
-//            log.type = "#SilverLion";
-//            log.from = player;
-//            log.arg = QString::number(damage.damage);
-//            log.arg2 = objectName();
-//            room->sendLog(log);
-
-//            damage.damage = 1;
-//            data = QVariant::fromValue(damage);
-//        } else {
-
-//            room->notifySkillInvoked(player, objectName());
-
-//            room->setEmotion(player, "armor/silver_lion");
-//            RecoverStruct recover;
-//            room->recover(player, recover);
-
-//            return false;
-//        }
-//        return false;
-//    }
-
-//    bool triggerable(const ServerPlayer *target) const
-//    {
-//        return target != NULL && target->isAlive();
-//    }
-
-//    bool trigger(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
-//    {
-//        CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();
-//        if (player->hasFlag("TianjituDiscard")) {
-//            if (move.to == player && move.to_place == Player::PlaceEquip) {
-//                for (int i = 0; i < move.card_ids.size(); i++) {
-//                    const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
-//                    if (card->objectName() == objectName()) {
-//                        player->setFlags("-TianjituDiscard");
-//                        room->setEmotion(player, "treasure/tianjitu");
-
-//                        bool discard = false;
-//                        foreach (const Card *card, player->getCards("he")) {
-//                            if (card->objectName() == objectName()) continue;
-//                            int id = card->getEffectiveId();
-//                            if (!player->canDiscard(player, id)) continue;
-//                            discard = true;
-//                        }
-//                        if (discard)
-//                            room->askForDiscard(player, objectName(), 1, 1, false, true, QString(), "^Tianjitu");
-//                    }
-//                }
-//            }
-//        }
-//        if (player->hasFlag("TianjituDraw")) {
-//            if (move.from != player || !move.from_places.contains(Player::PlaceEquip)) return false;
-//            for (int i = 0; i < move.card_ids.size(); i++) {
-//                if (move.from_places[i] != Player::PlaceEquip) continue;
-//                const Card *card = Sanguosha->getEngineCard(move.card_ids[i]);
-//                if (card->objectName() == objectName()) {
-//                    player->setFlags("-TianjituDraw");
-//                    room->setEmotion(player, "treasure/tianjitu");
-//                    player->drawCards(5 - player->getHandcardNum(), objectName());
-//                }
-//            }
-//        }
-//        return false;
-//    }
-//};
-
-//FemaleOutfit::FemaleOutfit(Suit suit, int number) :Armor(suit, number)
-//{
-//    setObjectName("FemaleOutfit");
-
-//    target_fixed = false;
-//}
-
-//bool FemaleOutfit::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
-//{
-//    return targets.isEmpty();
-//}
-
-
-//void FemaleOutfit::onInstall(ServerPlayer *player) const
-//{
-//    if (player->isAlive() && player->isMale() && player->hasArmorEffect(objectName())) {
-//    Room *room = player->getRoom();
-//    JudgeStruct judge;
-//    judge.pattern = ".|heart";
-//    judge.good = true;
-//    judge.reason = objectName();
-//    judge.who = player;
-
-//    room->judge(judge);
-
-//    if (judge.isBad())
-//        room->askForDiscard(player, "FemaleOutfit_discard", 2, 2, false, true);
-//    }
-//    Armor::onInstall(player);
-//}
-
-//BrokenHalberd::BrokenHalberd(Suit suit, int number) : Weapon(suit, number, 0)
-//{
-//    setObjectName("BrokenHalberd");
-//    target_fixed = false;
-//}
-
-//bool BrokenHalberd::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
-//{
-//    return targets.isEmpty();
-//}
-
 
 class BaixiangRange : public AttackRangeSkill
 {
