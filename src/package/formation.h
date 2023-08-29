@@ -103,14 +103,6 @@ public:
     virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
-class Feiying : public DistanceSkill
-{
-public:
-    explicit Feiying(const QString &owner = QString());
-
-    virtual int getCorrect(const Player *, const Player *to) const;
-};
-
 class FormationPackage : public Package
 {
     Q_OBJECT

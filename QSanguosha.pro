@@ -129,7 +129,6 @@ SOURCES += \
     src/package/lord-ex.cpp \
     src/package/newsgs.cpp \
     src/package/mol.cpp\
-	src/package/removed.cpp\
     src/package/langkhach.cpp\
     src/package/joy.cpp\
     src/ui/fieldcardtransferbox.cpp
@@ -253,7 +252,6 @@ HEADERS += \
     src/package/lord-ex.h \
     src/package/newsgs.h \
     src/package/mol.h\
-	src/package/removed.h\
     src/package/langkhach.h\
     src/package/joy.h\
     src/ui/fieldcardtransferbox.h

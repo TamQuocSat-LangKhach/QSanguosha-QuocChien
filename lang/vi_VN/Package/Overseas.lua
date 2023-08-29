@@ -48,20 +48,6 @@ return {
 	["@huanshi-card"] = CommonTranslationTable["@askforretrial"],
 	["hongyuan-invoke"] = "Có thể phát động »Hoằng Viện«, chọn 1 người nhận bài",
 	
-	["#quancong"] = "Mộ Thế Diệu Tộc",
-    ["quancong"] = "Toàn Tông",
-    ["qinzhong"] = "Thân Trùng",
-    [":qinzhong"] = "Phó tướng kỹ: Sau khi bắt đầu lượt, bạn có thể hoán đổi phó tướng của bạn với 1 người cùng thế lực với bạn.",
-    ["zhaofu"] = "Chiêu Phụ",
-    [":zhaofu"] = "• Khi bắt đầu giai đoạn ra bài, nếu tổng số [Thưởng] của tất cả người khác < 3, bạn có thể bỏ 1 lá và chọn 1 người khác, họ tăng 1 [Thưởng].\n• Sau khi lá cơ bản/công cụ phổ thông do người có [Thưởng] sử dụng kết toán xong, bạn có thể lệnh họ giảm 1 [Thưởng], xem như bạn sử dụng lá đó.",
-
-    ["reward"] = "Thưởng",
-    
-    ["qinzhong-invoke"] = "Có thể phát động »Thân Trùng«, hoán đổi phó tướng với 1 người cùng thế lực.",
-    ["@zhaofu1"] = "Có thể phát động »Chiêu Phụ«, bỏ 1 lá để 1 người được nhận [Thưởng]",
-    ["zhaofu:prompt"] = "Có thể phát động »Chiêu Phụ«, xem như sử dụng [%arg]",
-    ["@zhaofu2"] = "Có thể phát động »Chiêu Phụ«, xem như sử dụng [%arg]",
-	
 	["#guohuai"] = "Thùy Vấn Tần Ung",
     ["guohuai"] = "Quách Hoài",
     ["jingce"] = "Tinh Sách",
@@ -172,29 +158,6 @@ return {
 	["dingke-invoke"] = "Có thể phát động »Định Khoa«, chọn %dest để lệnh họ bỏ 1 lá trên tay hoặc chọn người vừa mất bài để giao họ 1 lá trên tay",
     ["@dingke-give"] = "Định Khoa: Chọn 1 lá trên tay và giao cho %dest",
     
-    ["#zhangyi"] = "Tranh Hổ",
-    ["zhangyi"] = "Trương Dực",
-    ["kangrui"] = "Kháng Nhuệ",
-    [":kangrui"] = "Một lần trong giai đoạn ra bài của 1 người cùng thế lực với bạn, khi họ sử dụng bài có chỉ định 1 người khác làm mục tiêu duy nhất, bạn có thể hủy bỏ mục tiêu của lá đó, lệnh họ chọn 1 mục:\n1. Bổ sung bài trên tay đến X lá (X là số máu của họ), giai đoạn này, họ không thể chỉ định người ngoài họ làm mục tiêu của bài;\n2. Nếu không có người trong trạng thái hấp hối, lệnh mục tiêu ban đầu của lá đó xem như sử dụng [Quyết đấu] với họ, số sát thương của [Quyết đấu] này +1.",
-    
-    ["kangrui:prompt"] = "Có thể phát động »Kháng Nhuệ«, hủy bỏ mục tiêu %dest từ lá [%arg] của %src",
-    ["@kangrui-choose"] = "Kháng Nhuệ: Chọn bổ sung bài trên tay đến giới hạn máu hoặc lệnh %dest xem như sử dụng [Quyết Đấu] với bạn",
-    ["kangrui:fillhandcards"] = "Bổ sung bài",
-    ["kangrui:useduel"] = "Quyết Đấu",
-    
-    ["#chengpu"] = "Hổ Thủ",
-    ["chengpu"] = "Trình Phổ",
-    ["huxun"] = "Hổ Huân",
-    [":huxun"] = "Khi 1 người kết thúc lượt, nếu trong lượt này có người tiến vào trạng thái hấp hối do bạn gây sát thương, bạn có thể chọn 1 mục:\n1. Nếu bạn không phải người duy nhất có giới hạn máu cao nhất, bạn tăng 1 giới hạn máu và hồi 1 máu;\n2. Bạn có thể di chuyển 1 lá trên bàn chơi.",
-    ["yuancong"] = "Nguyên Tòng",
-    [":yuancong"] = "Khi kết thúc giai đoạn ra bài của 1 người cùng thế lực với bạn, nếu trong giai đoạn này họ không gây sát thương, họ có thể giao 1 lá cho bạn, sau đó bạn có thể sử dụng 1 lá trên tay.",
-    
-    ["huxun:gainmaxhp"] = "Tăng giới hạn máu",
-    ["huxun:movecard"] = "Di chuyển 1 lá trên bàn chơi.",
-    ["@huxun-move"] = "Hổ Huân: Có thể di chuyển 1 lá trên bàn chơi.",
-    ["@yuancong"] = "Có thể phát động »Nguyên Tòng« của %src",
-    ["@yuancong-usecard"] = "Nguyên Tòng: Có thể sử dụng 1 lá trên tay.",
-    
     
     ["#chengyu"] = "Thái Sơn Phụng Nhật",
     ["chengyu"] = "Trình Dục",
@@ -221,18 +184,6 @@ return {
 	["@tanfeng-target"] = "Có thể phát động »Tham Phong«, chọn 1 người khác thế lực",
 	["@tanfeng-choose"] = "Tham Phong: Có thể nhận 1 sát thương hỏa để lệnh %src bỏ qua 1 giai đoạn",
 
-
-	["#guyong"] = "Miếu Đường Đích Ngọc Khách",
-	["guyong"] = "Cố Ung",
-	
-	["lifu"] = "Lễ Phụ",
-	[":lifu"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người, lệnh họ bỏ 2 lá, sau đó bạn xem lá trên đầu chồng bài rút và giao cho họ.",
-	["yanzhong"] = "Ngôn Trung",
-	[":yanzhong"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể chọn 1 chất và chọn 1 người khác có bài trên tay, bạn bỏ 1 lá trên tay họ; nếu chất của lá đã bỏ và chất đã đoán:\n* Khác chất: bạn bỏ 1 lá;\n* Cùng chất và chất đó là:\nCƠ: Bạn hồi 1 máu;\nRÔ: Bạn rút 1 lá, loại bỏ trạng thái xích;\nTÉP: Họ giao 1 lá cho bạn;\nBÍCH: Họ mất 1 máu.",
-	["lifu_view:prompt"] = "Lễ Phụ: Lá [%arg] này sẽ được giao cho %dest",
-	["@yanzhong"] = "Có thể phát động »Ngôn Trung«, chọn 1 người khác có bài trên tay",
-	["@yanzhong-give"] = "Ngôn Trung: Chọn 1 lá và giao cho %src",
-
 	["#liyan"] = "Long Lý Toàn Vân",
 	["liyan"] = "Lý Nghiêm",
 	
@@ -257,16 +208,6 @@ return {
     ["@kenshang-choose"] = "Khấn Thương: Chọn 1 kỹ năng để mất đi",
     ["#KenshangTarget"] = "%from thay đổi mục tiêu của [Sát] thành %to ",
 	
-	["#caoang"] = "Hiếu Chiến Sinh Tử",
-	["caoang"] = "Tào Ngang",
-	["xiaolian"] = "Hiếu Liêm",
-	[":xiaolian"] = "• Sau khi mở tướng này lần đầu, bạn có thể di chuyển 1 trang bị trên bàn chơi; sau đó, bạn có thể lặp lại quá trình này thêm 1 lần.\n• Sau khi tướng này bị loại bỏ, người cùng thế lực với bạn rút 1 lá.",
-	["kangkai"] = "Khảng Khái",
-	[":kangkai"] = "Sau khi 1 người cùng thế lực với bạn trở thành mục tiêu của [Sát], bạn có thể loại bỏ tướng này, thực hiện lần lượt:\n- Chọn 1 người, lệnh họ nhận kỹ năng »Phi Ảnh«;\n- Nếu người đó không phải là bạn, người đó hồi 1 máu và thoát trạng thái xích.",
-	["feiying_caoang"] = "Phi Ảnh",
-	["@kangkai-target"] = "Khảng Khái: Chọn 1 người nhận kỹ năng »Phi Ảnh«",
-	["@xiaolian-move"] = "Hiếu Liêm: Bạn có thể di chuyển 1 trang bị trên bàn",
-	
     ["#zhuhuan"] = "Khí Cao Hộ Tiền",
     ["zhuhuan"] = "Chu Hoàn",
     ["jutian"] = "Cự Thiên",
@@ -278,45 +219,5 @@ return {
     ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
     ["jutian_choice:fillhandcard"] = "Bổ sung bài",
     ["jutian_choice:discard"] = "Bỏ bài",
-	
-    ["#chendeng"] = "Hồ Hải Hào Khí",
-    ["chendeng"] = "Trần Đăng",
-    ["haokui"] = "Hào Khôi",
-    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n▶ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực xác định khác bạn, ưu tiên theo thứ tự sau:\n* Người thuộc đại thế lực;\n* Người có số máu lớn nhất trong số những người thế lực xác định khác bạn;\n▶ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn thực hiện lần lượt:\n- Nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
-    ["xushi"] = "Hư Thực",
-    [":xushi"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu tướng này đang úp, bạn có thể hủy bỏ mục tiêu đối với bạn;\n▷ Bạn lệnh họ bỏ 1 lá.",
-	
-    ["@haokui-give"] = "Hào Khôi: Chọn 1 người nhận bài bỏ từ chồng bài bỏ",
-    ["@haokui-transform"] = "Hào Khôi: Bạn có thể chọn 1 người cùng thế lực và lệnh họ đổi phó tướng",
-    ["@haokui-hide1"] = "Hào Khôi: Bạn có thể úp chủ tướng",
-    ["@haokui-hide2"] = "Hào Khôi: Bạn có thể úp phó tướng",
-    ["@xushi-discard"] = "Xushi: Có thể bỏ 1 lá của %dest",
-	
-    ["#shitao"] = "Đồng Tiến Cộng Thoái",
-    ["shitao"] = "Thạch Thao",
-    ["jiange"] = "Kiếm Ca",
-    [":jiange"] = "Bạn có thể chuyển hóa sử dụng/đánh ra lá phi cơ bản thành [Sát].",
-    ["qianxue"] = "Tiềm Học",
-    [":qianxue"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người kết thúc lượt, bạn có thể thu lấy tối đa X lá trong những lá đã tiến vào chồng bài bỏ trong lượt này (X là số vùng của bạn mà đã mất đi lá cuối cùng trong lượt này);\n▶ Bạn cần ưu tiên thu lấy những lá phi cơ bản trước;\n▶ Bạn không thể thu lấy [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu].",
-    ["zhuhu"] = "Trục Cốc",
-    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, nếu vị trí của tướng này là:\n* Chủ tướng và tướng còn lại của bạn là tướng đơn thế lực: Bạn hoán đổi Chủ tướng và Phó tướng\n* Phó tướng: Bạn thoát khỏi trạng thái xích;\n▶ Bạn đổi Phó tướng.",
-    ["qianxue:invoke"] = "Có thể phát động »Tiềm Học«, thu lấy tối đa %arg lá tiến vào chồng bài bỏ lượt này (ưu tiên lá phi cơ bản)",
-    ["@qianxue-select"] = "Tiềm học: Chọn tối đa %arg lá, ưu tiên phi cơ bản.",
-    ["#qianxue"] = "Tiềm Học",
-	
-	["#sunhuan"] = "Tông Thất Nhan Uyên",
-	["sunhuan"] = "Tôn Hoàn",
-	["nizhan"] = "Nghịch Trảm",
-	[":nizhan"] = "Khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] Bỏ qua phòng cụ với họ;",
-	--["@nizhan-give"] = "逆斩：选择一张牌交给%src，或点取消令%src视为对你使用【杀】",
-	
-	["#gongsunzan"] = "Bạch Mã Tướng Quân",
-	["gongsunzan"] = "Công Tôn Toản",
-	["qushi"] = "Khu Thỉ",
-	[":qushi"] = "Tỏa định kỹ: Giai đoạn ra bài của bạn, sau khi lá [Sát] do bạn sử dụng kết toán xong, nếu [Sát] này đã bị triệt tiêu, bạn lệnh giới hạn sử dụng [Sát] và số mục tiêu của [Sát] do bạn sử dụng trong giai đoạn này +1.",
-	["yanxing"] = "Nhạn Hàng",
-	[":yanxing"] = "Trận pháp kỹ: Quan hệ đội hình: Nếu bạn có trong quan hệ đội hình, khoảng cách từ người cùng đội hình với bạn đến người khác -X (X là số người khác có cùng đội hình với bạn).",
-	["yicong"] = "Nghĩa Tòng",
-	[":yicong"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Sau khi lá [Sát] do người khác có cùng thế lực với bạn sử dụng kết toán xong, nếu [Sát] này đã bị triệt tiêu, họ có thể lệnh bạn thu lấy [Sát] này.",
-	["@yicong-choose"] = "Có thể phát động »Nghĩa Tòng« của %src để họ thu lấy [Sát] này",
+
 }

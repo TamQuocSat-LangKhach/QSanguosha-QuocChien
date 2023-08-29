@@ -122,13 +122,6 @@ return {
 	["$sidi4"] = "Ta đã chuẩn bị từ sớm, kêu ngươi không cần tốn công trở lại,",
 	["~caozhen"] = "Đến khi nào thì cơn mưa rào này mới dứt.",
 
-	--顾雍
-	["$lifu2"] = "Phải biết thẩm thời đạc thế, thì mới lường được mọi đổi thay",
-	["$lifu1"]= "Chuyện này cần cân nhắc lại",
-	["$yanzhong1"] = "Luôn giữ vững sự công chính vô tư",
-	["$yanzhong2"] = "Chư quân hãy nhìn kỹ vào",
-	["~guyong"] = "Bênh tật ngày một nghiêm trọng, xem ra quốc sự khó bề yên ổn...",
-
 	--夏侯尚
 	["$tanfeng1"] = "Thăm dò điểm yếu trong phòng vệ của địch, đánh chúng nơi chúng không ngờ đến",
 	["$tanfeng2"] = "Phải tìm được thời cơ để dẫn quân xông lên",
@@ -165,13 +158,6 @@ return {
 	["$shigong1"] = "Ký Châu được ổn định đều nhờ công của Tư không",
 	["$shigong2"] = "Thiếp sẽ tự trói mình lại để cứng tỏ tấm lòng thành",
 	["~liufuren"] = "Hại người để rồi tự hại mình, xấu xa nhất vẫn là lòng dạ đàn bà....",
-
-
-	["$qinzhong1"] = "Hãy xem ta hoán đổi sức mạnh vô dụng thành hữu dụng đây, hahaha.",
-	["$qinzhong2"] = "Xem này, đôi bên cùng có lợi!",
-	["$zhaofu1"] = "Giữ được hạt gạo trong tay là an được lòng dân.",
-	["$zhaofu2"] = "Cứu tế bách tế, sao lo lòng dân không về?",
-	["~quancong"] = "Con à, hãy nhớ báo đáp ân huệ với Ngô Vương",
 
 	["$jingce1"] = "Sách lược tinh tường, không lo bị loạn.",
 	["$jingce2"] = "Tinh binh cự địch, sách thủ như sơn.",
@@ -258,18 +244,6 @@ return {
 	["$jiyuan1"] = "Nếu công không tránh, sẽ bị Sái mạo hãm hại đấy!",
 	["$jiyuan2"] = "Tình hình nguy cấp, xin hãy đi mau!",
 	["~yijibo"] = "Còn chưa kịp...giúp Lưu công trốn thoát.....",
-
-	--张翼
-	["$kangrui1"] = "Sao có thể tự rút lui để rồi bỏ lỡ cơ hội lập công đucợ chứ?",
-	["$kangrui2"] = "Không ngừng thống lĩnh, quyết đánh bại địch!",
-	["~zhangyi"] = "Chỉ mong bách tính không vì vậy mà bị liên lụy, ựa....",
-
-	--程普
-	["$huxun1"] = "Mang theo mỹ tửu để còn ăn mừng chiến công nữa",
-	["$huxun2"] = "Làm ly rượu tiễn biệt, lập công ngay đầu tiên!",
-	["$yuancong1"] = "Lửa này để thiêu sạch lũ xâm lược, không cần phải nhân từ",
-	["$yuancong2"] = "Đã đánh là thắng, dùng lửa lập công",
-	["~chengpu"] = "Dùng bạo duổi tặc, rốt cuộc cũng sẽ gặp báo ứng.....",
 
 
 	["$xingzhao1"] = "Lúc cần đánh thì phải đánh!",
@@ -457,18 +431,6 @@ return {
 	["$jutian2"] = "Cho đi khoản nhỏ, thu về khoản lớn!",
 	["$jutian1"] = "Tên vô danh tiểu tốt nào dám tiến lên một bước?",
 	["~zhuhuan"] = "Thành này cao sừng sững, ta chẳng thể công được...",
-	
-	["$haokui1"] = "Trù hoạch thủy lợi nông vụ, đều vì bách tính Từ Châu.",
-	["$haokui2"] = "Dưỡng kỳ dục cô, thị dân như thương, dĩ phong định Từ Châu",
-	["$xushi1"] = "Ai là hổ, ai là ưng, với ta đều chỉ như quân cờ trên bàn cả",
-	["$xushi2"] = "Liệu đoạn khấu đồ, thi sách dĩ trở",
-	["~chendeng"] = "Không còn nguyên hóa, mệnh ta chỉ đến thế là cùng....",
-
-	["$xiaolian1"] = "Điển tướng quân, hãy xem ai giết địch nhiều hơn nào!",
-	["$xiaolian2"] = "Tên phản tặc ngươi, đến một ta giết một!",
-	["$kangkai1"] = "Phụ thân lên ngựa, hài nhi sẽ đi theo sau.",
-	["$kangkai2"] = "Phụ thân chạy mau, con sẽ đoạn hậu!",
-	["~caoang"] = "Phụ thân đã an toàn rồi....",
 
 	["$tunchu1"] = "Tuân trữ lương thực là việc lớn, tạm thời không cho ngươi nhiều được.",
 	["$tunchu2"] = "Tuân trữ lương thực phục vụ chiến tranh, chớ có động đao thương.",
