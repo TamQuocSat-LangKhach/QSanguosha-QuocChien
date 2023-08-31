@@ -159,28 +159,12 @@ return {
 	["$shigong2"] = "Thiếp sẽ tự trói mình lại để cứng tỏ tấm lòng thành",
 	["~liufuren"] = "Hại người để rồi tự hại mình, xấu xa nhất vẫn là lòng dạ đàn bà....",
 
-	["$jingce1"] = "Sách lược tinh tường, không lo bị loạn.",
-	["$jingce2"] = "Tinh binh cự địch, sách thủ như sơn.",
-	["~guohuai"] = "Khương Duy tiểu nhân, không ngờ...",
-
-	["$mumeng1"] = "Tính tình ngang ngược, đau người hại ta.",
-	["$mumeng2"] = "Nghỉ ngơi để tiếp tục chiến sự",
-	["$naman2"] = "Chờ đã, ta đến đây!",
-	["$naman1"] = "Bỏ tối theo sáng, chiếu rọi vào bậu cửa.",
-	["~maliang"] = "Hoàng thúc sao không nghe lời ta...",
-
 	["$yaowu1"] = "Phan Phụng đã bị ta chặt đầu, còn ai muốn được chết nữa?",
 	["$yaowu2"] = "Mười tám lộ chư hầu? Chà! Chỉ là lũ ô hợp.",
 	["$shiyong1"] = "Chớ vội cười",
 	["$shiyong2"] = "Chà! Còn chả đủ gãi ngứa",
 	["~huaxiong"] = "Ta đã xem nhẹ......",
 
-
-	["$shangshi1"] = "Vô tình làm thương người, cố tình làm thương thân",
-	["$shangshi2"] = "Ta mất tám trăm, địch mất một nghìn!",
-	["$guojue1"] = "Sống chết của ngươi liên quan gì đến ta?",
-	["$guojue2"] = "Không đến không đi, không hận không oán.",
-	["~zhangchunhua"] = "Sao ngươi dám làm vậy với ta....",
 
 	["$jilei1"] = "Ăn thì không có vị, bỏ đi thì tiếc.",
 	["$jilei2"] = "Ta đã hiểu được ý Tào công.",
@@ -190,8 +174,6 @@ return {
 
 	["$wanglie1"] = "Mãnh tướng chi liệt, thống suất chi sở vãng.",
 	["$wanglie2"] = "Trung thành dũng cảm với Tử Long, mãnh liệt tướng hợp.",
-	["$dizai1"] = "Binh pháp rằng, đánh lâu bất lợi, chớ có tham công.",
-	["$dizai2"] = "Sư đoàn tinh nhuệ, ai có thể chống lại?",
 	["~chendao"] = "Bạch nhị binh của ta...không thể tiếp tục cống hiến cho tiên đế được nữa.",
 
 	["$yinbingx2"] = "Tướng quân hãy đi lối nhỏ, truy binh để ta ứng phó!",
@@ -204,12 +186,6 @@ return {
 	["$moukui2"] = "Đồng quy vu tận!",
 	["~fuwan"] = "Sẽ có lần sau thôi ... hehe...",
 
-	--程昱
-	["$shefu1"] = "Bẫy đã đặt, mai phục đã xong, chỉ chờ quân địch xông vào!",
-	["$shefu2"] = "Bầu trời dày đặc như này, dù người có lắp thêm cách cũng khó bề thoát thân!",
-	["$benyu2"] = "Thiên hạ đại loạn, lúc này quần hùng mà khơi binh, thế nào cũng gây được tiếng tăm!",
-	["$benyu1"] = "Trí lược của Tào Công đúng là món quà trời ban!",
-	["~chengyu"] = "Chính lúc nước nhà cần người báo đáp, ta lại không còn nữa!",
 
 	["$zhenlie1"] = "Ta tuyệt đối không khuất phục!",
 	["$zhenlie2"] = "Đừng có coi thường chí khí của người phụ nữ!",
@@ -237,13 +213,6 @@ return {
 	["$zhichi2"] = "Kế hoạch hiện nay, chỉ có lui quân, rồi mới đưa ra quyết định được!",
 	["$zhichi1"] = "Nếu ta sớm biết sẽ thành như này",
 	["~chengong"] = "Chém đầu ta đi!",
-
-	--伊籍
-	["$dingke1"] = "Bái lạy một cái, có gì cực khổ đâu",
-	["$dingke2"] = "Để ý từng cử chỉ lời nói, thì mới có thể ung dung phong nghị",
-	["$jiyuan1"] = "Nếu công không tránh, sẽ bị Sái mạo hãm hại đấy!",
-	["$jiyuan2"] = "Tình hình nguy cấp, xin hãy đi mau!",
-	["~yijibo"] = "Còn chưa kịp...giúp Lưu công trốn thoát.....",
 
 
 	["$xingzhao1"] = "Lúc cần đánh thì phải đánh!",
@@ -424,13 +393,9 @@ return {
     ["$zhuihuan2"] = "Có đuổi theo đánh trả, cũng là nhân quả mà thôi。",
  	["~yangwan"] = "Ngộ nhân……bất thục……",
     
-	["$kenshang1"] = "Chọn binh tuyển tướng thế nào, đánh phát biết liền",
-	["$kenshang2"] = "Tung hoành Tam Phụ, khẩn thương dong phú",
+	["$xiaoqi1"] = "Chọn binh tuyển tướng thế nào, đánh phát biết liền",
+	["$xiaoqi2"] = "Tung hoành Tam Phụ, khẩn thương dong phú",
 	["~maxiumatie"] = "Anh em ta, nguyện chết theo phụ soái.....",
-	
-	["$jutian2"] = "Cho đi khoản nhỏ, thu về khoản lớn!",
-	["$jutian1"] = "Tên vô danh tiểu tốt nào dám tiến lên một bước?",
-	["~zhuhuan"] = "Thành này cao sừng sững, ta chẳng thể công được...",
 
 	["$tunchu1"] = "Tuân trữ lương thực là việc lớn, tạm thời không cho ngươi nhiều được.",
 	["$tunchu2"] = "Tuân trữ lương thực phục vụ chiến tranh, chớ có động đao thương.",

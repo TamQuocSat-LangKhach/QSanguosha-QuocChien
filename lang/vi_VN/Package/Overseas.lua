@@ -47,12 +47,6 @@ return {
 
 	["@huanshi-card"] = CommonTranslationTable["@askforretrial"],
 	["hongyuan-invoke"] = "Có thể phát động »Hoằng Viện«, chọn 1 người nhận bài",
-	
-	["#guohuai"] = "Thùy Vấn Tần Ung",
-    ["guohuai"] = "Quách Hoài",
-    ["jingce"] = "Tinh Sách",
-    [":jingce"] = "Giai đoạn ra bài, sau khi lá thứ X do bạn sử dụng kết toán xong (X là số máu hiện tại của bạn), nếu không có ai đang giải quyết hấp hối, bạn có thể yêu cầu 1 người thế lực xác định khác bạn chấp hành 1 [Quân Lệnh], nếu họ không chấp hành, bạn rút 2 lá.",
-    ["jingce-invoke"] = "Có thể phát động »Tinh Sách«, chọn 1 người khác thế lực chấp hành quân lệnh.",
 
     ["#yangxiu"] = "Thị Tài Phóng Khoáng",
     ["yangxiu"] = "Dương Tu",
@@ -89,9 +83,6 @@ return {
     ["chendao"] = "Trần Đáo",
     ["wanglie"] = "Vãng Liệt",
     [":wanglie"] = "• Lá đầu tiên bạn sử dụng trong giai đoạn ra bài không giới hạn khoảng cách.\n• Giai đoạn ra bài, khi bạn sử dụng [Sát] hoặc công cụ phổ thông, bạn có thể lệnh cho tất cả mọi người không được hưởng ứng với lá này; nếu làm vậy, bạn không thể sử dụng bài trong giai đoạn này.",
-	["dizai"] = "Địa Tải",
-	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
-	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
     ["#tianyu"] = "Quy Lược Minh Luyện",
     ["tianyu"] = "Điền Dự",
@@ -106,16 +97,6 @@ return {
     ["@zhenxi-discard"] = "Chấn Tập: Bỏ 1 lá của %dest",
     ["@jiansu-card"] = "Có thể phát động »Kiệm Tố«, bỏ [Kim] và lệnh 1 người hồi máu.",
 	["money"] = "Kim",
-
-
-    ["#maliang"] = "Bạch Mi Lệnh Sĩ",
-    ["maliang"] = "Mã Lương",
-    ["mumeng"] = "Mục Minh",
-    [":mumeng"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá CƠ trên tay thành [Viễn Giao Cận Công]/[Lục Lực Đồng Tâm]",
-    ["naman"] = "Nạp Man",
-    [":naman"] = "Khi người khác sử dụng bài Đen có chỉ định nhiều mục tiêu, bạn có thể tiến hành phán xét, nếu kết quả phát xét không phải BÍCH, bạn chọn 1 mục:\n1. Lệnh 1 người khác trở thành mục tiêu của bài (Không bị giới hạn khoảng cách);\n2. Hủy bỏ mục tiêu đối với 1 mục tiêu của lá đó.",
-
-    ["@naman-target"] = "Nạp Man: Thêm hoặc bớt 1 mục tiêu của [%arg] do %src sử dụng",
 	
 	["#huaxiong"] = "Ma Tướng",
     ["huaxiong"] = "Hoa Hùng",
@@ -123,16 +104,6 @@ return {
     [":yaowu"] = "Hạn định kỹ: Sau khi bạn gây sát thương, nếu tướng này đang úp mặt, bạn có thể phát động kỹ năng này: Bạn tăng 2 giới hạn máu, hồi 2 máu;\n▶ Sau khi bạn trận vong, tất cả người cùng thế lực với bạn mất 1 máu.",
     ["shiyong"] = "Thị Dũng",
     [":shiyong"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận từ lá bài:\n* Nếu bạn chưa phát động »Diệu Võ« và lá gây ra sát thương không phải màu Đỏ, bạn rút 1 lá;\n* Nếu bạn đã phát động »Diệu Võ« và lá gây sát thương không phải màu Đen, nguồn sát thương rút 1 lá.",
-
-    ["#zhangchunhua"] = "Lãnh Huyết Hoàng Hậu",
-    ["zhangchunhua"] = "Trương Xuân Hoa",
-    ["guojue"] = "Quả Quyết",
-    [":guojue"] = "• Sau khi bạn mở tướng này lần đầu tiên, bạn gây 1 sát thương cho 1 người khác.\n• Khi 1 người khác tiến vào trạng thái hấp hối do bạn gây sát thương, bạn có thể bỏ 1 lá của họ.",
-    ["shangshi"] = "Thương Thệ",
-    [":shangshi"] = "Sau khi bạn nhận sát thương, bạn có thể chọn bỏ 1 lá hoặc giao X lá trên tay bạn cho 1 người khác; nếu làm vậy, bạn rút X lá (X lá số máu bạn đã mất).",
-    ["@guojue-damage"] = "Quả quyết: Chọn 1 người khác để gây 1 sát thương",
-    ["@shangshi-card"] = "Có thể phát động »Thương Thệ«, chọn bỏ 1 lá hoặc giao %arg lá trên tay cho 1 người khác",
-    ["@shangshi-card-full"] = "Có thể phát động »Thương Thệ«, chọn bỏ 1 lá",
 
 	["#liufuren"] = "Khốc Đố Đích Hải Đường",
 	["liufuren"] = "Lưu Phu Nhân",
@@ -147,34 +118,6 @@ return {
 	["zhuidu_choice:damage"] = "Sát thương +1",
 	
 	["@shigong-choose"] = "Kỳ Cung: Có thể nhận 1 kỹ năng của %arg",
-	    
-    ["#yijibo"] = "Kiến lễ vu thế",
-    ["yijibo"] = "Y Tịch",
-    ["dingke"] = "Định Khoa",
-    [":dingke"] = "Một lần trong lượt của mỗi người, sau khi 1 người cùng thế lực với bạn mất bài ngoài lượt không vì sử dụng/đánh ra, bạn có thể chọn 1 mục:\n1. Giao 1 lá trên tay cho họ;\n2. Lệnh người đang có lượt bỏ 1 lá trên tay;\n▷ Nếu số [Âm dương ngư] của bạn nhỏ hơn giới hạn máu, bạn thu lấy 1 tiêu ký [Âm dương ngư].",
-    ["jiyuan"] = "Cấp Viện",
-    [":jiyuan"] = "Khi có người tiến vào trạng thái hấp hối hoặc sau khi có người được bạn giao bài do phát động »Định Khoa«, bạn có thể lệnh họ rút 1 lá.",
-
-	["dingke-invoke"] = "Có thể phát động »Định Khoa«, chọn %dest để lệnh họ bỏ 1 lá trên tay hoặc chọn người vừa mất bài để giao họ 1 lá trên tay",
-    ["@dingke-give"] = "Định Khoa: Chọn 1 lá trên tay và giao cho %dest",
-    
-    
-    ["#chengyu"] = "Thái Sơn Phụng Nhật",
-    ["chengyu"] = "Trình Dục",
-    ["shefu"] = "Phục Binh",
-    [":shefu"] = "• Một lần trong giai đoạn ra bài, bạn có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Phục Binh].\n• Khi 1 người khác sử dụng bài trên tay, bạn có thể đưa 1 [Phục Binh] có cùng tên với lá đó vào chồng bài bỏ, hủy bỏ hoàn toàn lá đó.\n• Khi bắt đầu giai đoạn chuẩn bị, nếu số [Phục Binh] > 2, bạn đưa số [Phục Binh] vào chồng bài bỏ đến khi còn 2.",
-    ["benyu"] = "Bí Dục",
-    [":benyu"] = "Sau khi bạn nhận sát thương:\n* Nếu bài trên tay bạn ít hơn nguồn sát thương, bạn chọn 1 mục:\n1. Bổ sung bài trên tay đến khi bằng với họ, tối đa 5 lá;\n2. Lệnh họ bỏ đi bài trên tay đến khi bằng bạn, tối đa bỏ 5 lá.\n* Nếu bài trên tay bạn nhiều hơn nguồn sát thương, bạn có thể bỏ số bài trên tay bằng số bài trên tay họ +1, sau đó gây 1 sát thương cho họ.",
-
-    ["#shefu-compulsory"] = "Phục Binh",
-    ["ambush"] = "Phục Binh",
-    ["@shefu-invoke"] = "Có thể phát động »Phục Binh«, bỏ 1 [Phục Binh] có tên [%arg] để hủy bỏ hoàn toàn lá [%arg] do %src sử dụng",
-    ["@shefu-remove"] = "Phục Binh: chọn 1 [Phục Binh] để bỏ",
-	
-	["@benyu-invoke"] = "Có thể phát động »Bí Dục«, bỏ %arg lá trên tay để gây 1 sát thương cho %dest",
-    ["@benyu-choose"] = "Bí Dục: Chọn phương pháp để bài trên tay bạn bằng với %dest",
-    ["benyu:draw"] = "Bạn bổ sung bài",
-    ["benyu:discard"] = "Họ bỏ bài",
 	
 	["#xiahoushang"] = "Ngụy Dận Tiền Khu",
 	["xiahoushang"] = "Hạ Hầu Thượng",
@@ -207,17 +150,5 @@ return {
     ["_kenshang:prompt"] = "Khẩn Thương: Có thể thay đổi mục tiêu thành tất cả người ngoài tầm đánh",
     ["@kenshang-choose"] = "Khấn Thương: Chọn 1 kỹ năng để mất đi",
     ["#KenshangTarget"] = "%from thay đổi mục tiêu của [Sát] thành %to ",
-	
-    ["#zhuhuan"] = "Khí Cao Hộ Tiền",
-    ["zhuhuan"] = "Chu Hoàn",
-    ["jutian"] = "Cự Thiên",
-    [":jutian"] = "Một lần trong lượt của mỗi người đối với mỗi mục lựa chọn, sau khi bạn gây sát thương cho người khác, bạn có thể chọn 1 mục:\n1. Bạn chọn 1 người cùng thế lực với người đã nhận sát thương, lệnh họ bỏ bài trên tay đến khi bằng với số máu của họ, tối đa bỏ 5 lá;\n2. Bạn chọn 1 người cùng thế lực với bạn, lệnh họ bổ sung bài trên tay đến giới hạn máu của họ.",
-    ["@jutian-fillhandcard-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài hoặc chọn 1 người cùng thế lực với %dest để bỏ bài",
-    ["@jutian-fillhandcard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài",
-    ["@jutian-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với %dest để bỏ bài",
-    
-    ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
-    ["jutian_choice:fillhandcard"] = "Bổ sung bài",
-    ["jutian_choice:discard"] = "Bỏ bài",
 
 }

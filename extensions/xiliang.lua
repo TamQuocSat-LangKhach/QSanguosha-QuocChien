@@ -339,30 +339,33 @@ diy_xushu:addSkill(pozhen)
 diy_xushu:addSkill(jiancai)
 
 sgs.LoadTranslationTable{
-	["#diy_xushu"] = "化剑为犁",
-	["diy_xushu"] = "徐庶",
+
+	
+    ["#diy_xushu"] = "Hoa Kiếm Vi Lê",
+    ["diy_xushu"] = "Từ Thứ",
 	["illustrator:diy_xushu"] = "Zero",
-	["designer:diy_xushu"] = "梦魇&老萌",
-	["zhuhai"] = "诛害",
-	[":zhuhai"] = "其他角色的结束阶段，若该角色于此回合内造成过伤害，你可以对其使用一张无距离限制的【杀】。",
-	["pozhen"] = "破阵",
-	[":pozhen"] = "限定技，其他角色的准备阶段，你可以令其本回合不可使用、打出或重铸手牌；若其处于队列或围攻关系中，你可依次弃置此队列或参与围攻关系的其他角色的一张牌。",
-	["jiancai"] = "荐才",
-	[":jiancai"] = "副将技，此武将牌上单独的阴阳鱼个数-1。与你势力相同的角色即将受到伤害而进入濒死状态时，你可以令此伤害-1，若如此做，你须变更副将；与你势力相同的角色变更副将时，你可令其额外获得两张备选武将牌。",
+	["designer:diy_xushu"] = "Mộng Yểm & Lão Manh",
+    ["zhuhai"] = "Tru Hại",
+    [":zhuhai"] = "Khi bắt đầu giai đoạn kết thúc của người khác, nếu họ trong lượt này từng gây sát thương, bạn có thể sử dụng [Sát] không giới hạn tầm đánh với họ.",
+    ["pozhen"] = "Phá Trận",
+    [":pozhen"] = "Hạn định kỹ: Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Lệnh họ trong lượt chơi này không thể sử dụng/đánh ra/Trùng Chú bài trên tay;\n- Nếu họ trong quan hệ đội hình hoặc quan hệ vây công, bạn có thể bỏ 1 lá của những người khác có chung đội hình với họ hoặc người vây công trong quan hệ vây công với họ.",
+    ["jiancai"] = "Tiến Tài",
+    [":jiancai"] = "Phó tướng kỹ, Giảm 0.5 máu gốc:\n• Khi 1 người cùng thế lực với bạn nhận sát thương, nếu số sát thương không nhỏ hơn số máu của họ, bạn có thể lệnh sát thương này -1, sau đó bạn đổi tướng này.\n• Khi người cùng thế lực với bạn đổi phó tướng, bạn có thể lệnh số tướng để lựa chọn +2.",
+    
+    ["@zhuhai"] = "Có thể phát động »Tru Hại«, sử dụng [Sát] với %src",
+    ["@pozhen-discard"] = "Phá Trận: Có thể bỏ 1 lá của người chung quan hệ đội hình hoặc vây công với %dest",
+    ["jiancai:damage"] = "Có thể phát động »Tiến Tài«, -1 sát thương lên %src",
+    ["jiancai:transform"] = "Có thể phát động »Tiến Tài«, số tướng được xem để lựa chọn +2",
 	
-	["@zhuhai"] = "是否使用“诛害”，对%src使用【杀】",
-	["@pozhen-discard"] = "破阵：是否弃置与%dest处于同一队列或围攻关系的角色的各一张牌",
-	["jiancai:damage"] = "是否使用“荐才”，令%dest受到的伤害-1",
-	["jiancai:transform"] = "是否使用“荐才”，令%dest变更时的备选武将数+2",
-	
-	["cv:diy_xushu"] = "一木",
-	["$zhuhai1"] = "仗剑行天下，除恶当此时！",
-	["$zhuhai2"] = "广元，速与某诛杀此贼！",
-	["$pozhen1"] = "子龙将军自入生门，此阵必破！",
-	["$pozhen2"] = "汝阵虽妙，吾必破之。",
-	["$jiancai1"] = "老母手书来唤，庶不容不去。",
-	["$jiancai2"] = "卧龙绝代奇才，使君何不求之？",
-	["~diy_xushu"] = "愿诸公善事使君，勿效庶之无始终……",
+	["cv:diy_xushu"] = "Nhất Mộc",
+	["$zhuhai1"] = "Trượng kiếm hàng thiên hạ, trừ ác ngay bây giờ.",
+	["$zhuhai2"] = "Quảng Nguyên, mau giết tên giặc này cho ta.",
+	["$pozhen1"] = "Tử Long tướng quân đã vào cửa, trận này ắt bị phá.",
+	["$pozhen2"] = "Trận mi tuy đẹp nhưng ta sẽ phá được.",
+	["$jiancai1"] = "Nét chữ của mẹ già đang gọi, Thứ không thể không đi.",
+	["$jiancai2"] = "Ngoạ Long là thiên tài vô song, sứ quân sao không đến cầu tài?",
+	["~diy_xushu"] = "Mong mọi người làm việc tốt cho vua, đừng bắt đầu rồi kết thúc như ta.",
+
 
 }
 
@@ -441,17 +444,17 @@ chendao:addSkill(dizai)
 
 
 sgs.LoadTranslationTable{
-	["#diy_chendao"] = "白毦督",
-	["diy_chendao"] = "陈到",
-	["designer:diy_chendao"] = "梦魇狂朝",
-	["illustrator:diy_chendao"] = "庄晓健",
+	["#diy_chendao"] = "Bạch Nhị Đốc",
+	["diy_chendao"] = "Trần Đáo",
+	["designer:diy_chendao"] = "Mộng Yểm Cuồng Triều",
+	["illustrator:diy_chendao"] = "Bành Hiểu Kiện",
 	
-	["dizai"] = "地载",
-	[":dizai"] = "阵法技，若你是围攻角色，此围攻关系中的围攻角色使用【杀】即将对被围攻角色造成伤害时，另一名围攻角色可弃一张牌，令此伤害+1。",
-	["@dizai_discard"] = "地载：是否弃置一张牌令%src对%dest造成的伤害+1",
+	["dizai"] = "Địa Tải",
+	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
+	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
-	["$dizai1"] = "兵法云，久战不利，勿要贪功。",
-	["$dizai2"] = "精锐之师，何人能挡？",
+	["$dizai1"] = "Binh pháp rằng, đánh lâu bất lợi, chớ có tham công.",
+	["$dizai2"] = "Sư đoàn tinh nhuệ, ai có thể chống lại?",
 }
 
 jutian = sgs.CreateTriggerSkill{
@@ -539,25 +542,24 @@ jutian = sgs.CreateTriggerSkill{
 zhuhuan:addSkill(jutian)
 
 sgs.LoadTranslationTable{
-	["#zhuhuan"] = "气高护前",
-	["zhuhuan"] = "朱桓",
-	["illustrator:zhuhuan"] = "荧光笔",
-	["designer:zhuhuan"] = "梦魇狂朝",
-	["jutian"] = "拒天",
-	[":jutian"] = "每回合每项限一次，当你对一名其他角色造成伤害后，你可选择一项：1.令一名与其势力相同的角色将手牌弃至该角色的体力值（最多弃置五张）；"..
-		"2.令一名与你势力相同的角色将手牌摸至该角色的体力上限。",
 
-	["@jutian-fillhandcard-discard"] = "是否使用“拒天”，选择令与你势力相同的角色补牌或令与%dest势力相同的角色弃牌",
-	["@jutian-fillhandcard"] = "是否使用“拒天”，令与你势力相同的角色补牌",
-	["@jutian-discard"] = "是否使用“拒天”，令与%dest势力相同的角色弃牌",
-	
-	["@jutian-choice"] = "拒天：选择令%dest执行的效果",
-	["jutian_choice:fillhandcard"] = "将手牌补至体力上限",
-	["jutian_choice:discard"] = "将手牌弃置至体力值",
+    ["#zhuhuan"] = "Khí Cao Hộ Tiền",
+    ["zhuhuan"] = "Chu Hoàn",
+	["illustrator:zhuhuan"] = "Huỳnh Quang Bút",
+	["designer:zhuhuan"] = "Mộng Yểm Cuồng Triều",
+    ["jutian"] = "Cự Thiên",
+    [":jutian"] = "Một lần trong lượt của mỗi người đối với mỗi mục lựa chọn, sau khi bạn gây sát thương cho người khác, bạn có thể chọn 1 mục:\n1. Bạn chọn 1 người cùng thế lực với người đã nhận sát thương, lệnh họ bỏ bài trên tay đến khi bằng với số máu của họ, tối đa bỏ 5 lá;\n2. Bạn chọn 1 người cùng thế lực với bạn, lệnh họ bổ sung bài trên tay đến giới hạn máu của họ.",
+    ["@jutian-fillhandcard-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài hoặc chọn 1 người cùng thế lực với %dest để bỏ bài",
+    ["@jutian-fillhandcard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với bạn để bổ sung bài",
+    ["@jutian-discard"] = "Có thể phát độ »Cự Thiên«, chọn 1 người cùng thế lực với %dest để bỏ bài",
+    
+    ["@jutian-choice"] = "Cự Thiện: Chọn hiệu ứng để lệnh %dest thực hiện",
+    ["jutian_choice:fillhandcard"] = "Bổ sung bài",
+    ["jutian_choice:discard"] = "Bỏ bài",
 
-    ["$jutian2"] = "予以小利，必有大获！",
-	["$jutian1"] = "无名小卒，可敢再前进一步？！",
-    ["~zhuhuan"] = "这巍巍巨城，吾竟无力撼动……" ,
+	["$jutian2"] = "Cho đi khoản nhỏ, thu về khoản lớn!",
+	["$jutian1"] = "Tên vô danh tiểu tốt nào dám tiến lên một bước?",
+	["~zhuhuan"] = "Thành này cao sừng sững, ta chẳng thể công được...",
 }
 
 guojue = sgs.CreateTriggerSkill{
@@ -685,26 +687,30 @@ if not sgs.Sanguosha:getSkill("shangshigive") then skills:append(shangshigive) e
 
 
 sgs.LoadTranslationTable{
-	["#zhangchunhua"] = "冷血皇后",
-	["zhangchunhua"] = "张春华",
-	["illustrator:zhangchunhua"] = "雪君S",
-	["designer:zhangchunhua"] = "小狼甫心",
-	["guojue"] = "果决",
-	[":guojue"] = "当你首次明置此武将牌后，对一名其他角色造成1点伤害。当你令其他角色进入濒死状态时，你可弃置其一张牌。",
-	["shangshi"] = "伤逝",
-	[":shangshi"] = "当你受到伤害后，你可以弃一张牌，或将X张手牌交给一名其他角色，然后你摸X张牌（X为你已损失体力值）。",
-	["@guojue-damage"] = "果决：选择一名其他角色对其造成1点伤害",
-	
-	["shangshi:givecard"] = "将手牌交给其他角色",
-	["shangshi:discard"] = "弃置一张牌",
-	["@shangshi-discard"] = "伤逝：选择一张牌弃置",
-	["@shangshi-give"] = "伤逝：选择%arg张手牌交给其他角色",
 
-	["$shangshi1"] = "无情者伤人，有情者自伤。",
-	["$shangshi2"] = "自损八百，可伤敌一千！",
-	["$guojue1"] = "你的死活与我何干？",
-	["$guojue2"] = "无来无去，不悔不怨。",
-	["~zhangchunhua"] = "怎能如此对我……",
+	
+    ["#zhangchunhua"] = "Lãnh Huyết Hoàng Hậu",
+    ["zhangchunhua"] = "Trương Xuân Hoa",
+	["illustrator:zhangchunhua"] = "Tuyết Quân S",
+	["designer:zhangchunhua"] = "Tiểu Lang Phủ Tâm",
+    ["guojue"] = "Quả Quyết",
+    [":guojue"] = "• Sau khi bạn mở tướng này lần đầu tiên, bạn gây 1 sát thương cho 1 người khác.\n• Khi 1 người khác tiến vào trạng thái hấp hối do bạn gây sát thương, bạn có thể bỏ 1 lá của họ.",
+    ["shangshi"] = "Thương Thệ",
+    [":shangshi"] = "Sau khi bạn nhận sát thương, bạn có thể chọn bỏ 1 lá hoặc giao X lá trên tay bạn cho 1 người khác; nếu làm vậy, bạn rút X lá (X lá số máu bạn đã mất).",
+    ["@guojue-damage"] = "Quả quyết: Chọn 1 người khác để gây 1 sát thương",
+    ["@shangshi-card"] = "Có thể phát động »Thương Thệ«, chọn bỏ 1 lá hoặc giao %arg lá trên tay cho 1 người khác",
+    ["@shangshi-card-full"] = "Có thể phát động »Thương Thệ«, chọn bỏ 1 lá",
+	["shangshi:givecard"] = "Giao lá trên tay cho người khác",
+	["shangshi:discard"] = "Bỏ 1 lá",
+	["@shangshi-discard"] = "Thương Thệ: Chọn 1 lá để bỏ",
+	["@shangshi-give"] = "Thương Thệ: Chọn %arg lá trên tay và giao cho người khác",
+
+
+	["$shangshi1"] = "Vô tình làm thương người, cố tình làm thương thân",
+	["$shangshi2"] = "Ta mất tám trăm, địch mất một nghìn!",
+	["$guojue1"] = "Sống chết của ngươi liên quan gì đến ta?",
+	["$guojue2"] = "Không đến không đi, không hận không oán.",
+	["~zhangchunhua"] = "Sao ngươi dám làm vậy với ta....",
 }
 
 shefuCard = sgs.CreateSkillCard{
@@ -922,32 +928,31 @@ chengyu:addSkill(benyu)
 xiliang:insertRelatedSkills("shefu", "#shefu-compulsory")
 
 sgs.LoadTranslationTable{
-	["#chengyu"] = "泰山捧日",
-	["chengyu"] = "程昱",
+	
+    ["#chengyu"] = "Thái Sơn Phụng Nhật",
+    ["chengyu"] = "Trình Dục",
 	["illustrator:chengyu"] = "Mr_Sleeping",
-	["designer:chengyu"] = "梦魇狂朝",
-	["shefu"] = "设伏",
-	[":shefu"] = "出牌阶段限一次，你可将一张手牌置于你的武将牌上，称为“伏兵”。当其他角色使用了一张手牌时，你可弃置同牌名的“伏兵”，取消此牌。"..
-		"准备阶段开始时，若“伏兵”数大于2，你将“伏兵”弃置至两张。",
-	["benyu"] = "贲育",
-	[":benyu"] = "当你受到伤害后，你可以选择一项：1.将手牌摸至与伤害来源手牌数相同（最多摸至五张）；2.令伤害来源将手牌数弃至于你手牌数相同（最多弃置五张）；"..
-		"3.弃置大于伤害来源手牌数张手牌，然后对其造成1点伤害。",
+	["designer:chengyu"] = "Mộng Yểm Cuồng Triều",
+    ["shefu"] = "Phục Binh",
+    [":shefu"] = "• Một lần trong giai đoạn ra bài, bạn có thể đặt 1 lá trên tay lên tướng của bạn, gọi là [Phục Binh].\n• Khi 1 người khác sử dụng bài trên tay, bạn có thể đưa 1 [Phục Binh] có cùng tên với lá đó vào chồng bài bỏ, hủy bỏ hoàn toàn lá đó.\n• Khi bắt đầu giai đoạn chuẩn bị, nếu số [Phục Binh] > 2, bạn đưa số [Phục Binh] vào chồng bài bỏ đến khi còn 2.",
+    ["benyu"] = "Bí Dục",
+    [":benyu"] = "Sau khi bạn nhận sát thương, nếu bài trên tay bạn so với nguồn sát thương:\n* Ít hơn: Bạn có thể chọn 1 mục:\n 1. Bổ sung bài trên tay đến khi bằng với họ, tối đa 5 lá;\n 2. Lệnh họ bỏ đi bài trên tay đến khi bằng bạn, tối đa bỏ 5 lá.\n* Nhiều hơn: Bạn có thể bỏ số bài trên tay bằng số bài trên tay họ +1, sau đó gây 1 sát thương cho họ.",
 
-	["ambush"] = "伏兵",
-	["@shefu-invoke"] = "是否使用“设伏”，弃置一张同名的伏兵牌令%src使用的【%arg】无效",
-	["@shefu-remove"] = "设伏：选择一张伏兵牌弃置",
+    ["ambush"] = "Phục Binh",
+    ["@shefu-invoke"] = "Có thể phát động »Phục Binh«, bỏ 1 [Phục Binh] có tên [%arg] để hủy bỏ hoàn toàn lá [%arg] do %src sử dụng",
+    ["@shefu-remove"] = "Phục Binh: chọn 1 [Phục Binh] để bỏ",
+    ["#shefu-compulsory"] = "Phục Binh",
 
-	["@benyu-invoke"] = "是否使用“贲育”，弃置至少%arg张手牌对%dest造成1点伤害",
-	["@benyu-choose"] = "贲育：选择补充手牌至与%dest相同，或令%dest弃置手牌至与你相同",
-	["benyu:draw"] = "补充手牌",
-	["benyu:discard"] = "令其弃牌",
+	["@benyu-invoke"] = "Có thể phát động »Bí Dục«, bỏ %arg lá trên tay để gây 1 sát thương cho %dest",
+    ["@benyu-choose"] = "Bí Dục: Chọn phương pháp để bài trên tay bạn bằng với %dest",
+    ["benyu:draw"] = "Bạn bổ sung bài",
+    ["benyu:discard"] = "Họ bỏ bài",
 
-    --程昱
-    ["$shefu1"] = "圈套已设，埋伏已完，只等敌军进来！",
-    ["$shefu2"] = "如此天网，谅你插翅也难逃！",
-    ["$benyu2"] = "天下大乱，群雄并起，必有命世！",
-    ["$benyu1"] = "曹公智略乃上天所授！",
-    ["~chengyu"] = "此诚报效国家之时，吾却休矣！！" ,
+	["$shefu1"] = "Bẫy đã đặt, mai phục đã xong, chỉ chờ quân địch xông vào!",
+	["$shefu2"] = "Bầu trời dày đặc như này, dù người có lắp thêm cách cũng khó bề thoát thân!",
+	["$benyu2"] = "Thiên hạ đại loạn, lúc này quần hùng mà khơi binh, thế nào cũng gây được tiếng tăm!",
+	["$benyu1"] = "Trí lược của Tào Công đúng là món quà trời ban!",
+	["~chengyu"] = "Chính lúc nước nhà cần người báo đáp, ta lại không còn nữa!",
 }
 
 jingce = sgs.CreateTriggerSkill{
@@ -1037,68 +1042,19 @@ jingce = sgs.CreateTriggerSkill{
 guohuai:addSkill(jingce)
 
 sgs.LoadTranslationTable{
-	["#guohuai"] = "垂问秦雍",
-	["guohuai"] = "郭淮",
-	["designer:guohuai"] = "梦魇狂朝",
+
+	["#guohuai"] = "Thùy Vấn Tần Ung",
+    ["guohuai"] = "Quách Hoài",
+	["designer:guohuai"] = "Mộng Yểm Cuồng Triều",
 	["illustrator:guohuai"] = "DH",
-	["jingce"] = "精策",
-	[":jingce"] = "出牌阶段，当你使用了第X张牌后（X为你当前体力值），你可以令一名与你势力不同的角色执行军令，若其不执行，你摸两张牌。",
-	["jingce-invoke"] = "是否使用“精策”，令一名与你势力不同的角色执行军令",
+    ["jingce"] = "Tinh Sách",
+    [":jingce"] = "Giai đoạn ra bài, sau khi lá thứ X do bạn sử dụng kết toán xong (X là số máu hiện tại của bạn), nếu không có ai đang giải quyết hấp hối, bạn có thể yêu cầu 1 người thế lực xác định khác bạn chấp hành 1 [Quân Lệnh], nếu họ không chấp hành, bạn rút 2 lá.",
+    ["jingce-invoke"] = "Có thể phát động »Tinh Sách«, chọn 1 người khác thế lực chấp hành quân lệnh.",
 
-	["$jingce1"] = "方策精详，有备无患。",
-	["$jingce2"] = "精兵拒敌，策守如山。",
-	["~guohuai"] = "姜维小儿，竟然……",
+	["$jingce1"] = "Sách lược tinh tường, không lo bị loạn.",
+	["$jingce2"] = "Tinh binh cự địch, sách thủ như sơn.",
+	["~guohuai"] = "Khương Duy tiểu nhân, không ngờ...",
 }
---[[
-mumengviewas = sgs.CreateOneCardViewAsSkill{
-	name = "mumengviewas",
-	response_or_use = true,
-    response_pattern = "@@mumengviewas",
-	view_filter = function(self, to_select)
-		if to_select:isEquipped() or to_select:getSuit() ~= sgs.Card_Heart then return false end
-		local card_name = sgs.Self:property("naman_name"):toString()
-		local ex = sgs.Sanguosha:cloneCard(card_name, to_select:getSuit(), to_select:getNumber())
-		ex:addSubcard(to_select:getId())
-		ex:deleteLater()
-		return ex:isAvailable(sgs.Self)
-	end,
-	view_as = function(self, card)
-		local card_name = sgs.Self:property("naman_name"):toString()
-		local ex = sgs.Sanguosha:cloneCard(card_name, card:getSuit(), card:getNumber())
-		ex:addSubcard(card:getId())
-		ex:setSkillName("_mumeng")
-        return ex
-	end,
-}
-
-mumengCard = sgs.CreateSkillCard{
-	name = "mumengCard",
-	target_fixed = true,
-    on_use = function(self, room, source)
-		local all_names = {"befriend_attacking", "fight_together"}
-		local card_names = {}
-		for _,c_name in pairs(all_names)do
-			local ex = sgs.Sanguosha:cloneCard(c_name, sgs.Card_SuitToBeDecided, -1)
-			ex:setSkillName("_mumeng")
-			ex:setCanRecast(false)
-			ex:deleteLater()
-			if ex:isAvailable(source) then
-				table.insert(card_names, c_name)
-			end
-		end
-		if #card_names > 0 then
-			local card_name = room:askForChoice(source, "naman", table.concat(card_names, "+"), sgs.QVariant(), "@mumeng-choose", "befriend_attacking+fight_together")
-			room:setPlayerProperty(source, "naman_name", sgs.QVariant(card_name))
-			room:askForUseCard(source, "@@mumengviewas", "@mumeng-usecard:::" .. card_name, -1, sgs.Card_MethodUse, false)
-			room:setPlayerProperty(source, "naman_name", sgs.QVariant())
-		end
-	end
-}
-
-
-if not sgs.Sanguosha:getSkill("mumengviewas") then skills:append(mumengviewas) end
-
-]]
 
 
 mumeng = sgs.CreateOneCardViewAsSkill{
@@ -1116,7 +1072,7 @@ mumeng = sgs.CreateOneCardViewAsSkill{
 		end
 	end,
     enabled_at_play = function(self, player)
-		return player:usedTimes("ViewAsSkill_mumengCard") == 0
+		return player:usedTimes("ViewAsSkill_mumengCard") < 1
 	end,
 	vs_card_names = function(self, selected)
 		if #selected == 1 then
@@ -1192,24 +1148,24 @@ maliang:addSkill(mumeng)
 maliang:addSkill(naman)
 
 sgs.LoadTranslationTable{
-	["#maliang"] = "白眉令士",
-	["maliang"] = "马良",
-	["designer:maliang"] = "梦魇狂朝",
+
+    ["#maliang"] = "Bạch Mi Lệnh Sĩ",
+    ["maliang"] = "Mã Lương",
+	["designer:maliang"] = "Mộng Yểm Cuồng Triều",
 	["illustrator:maliang"] = "biou09",
-	["mumeng"] = "穆盟",
-	[":mumeng"] = "出牌阶段限一次，你的红桃手牌可作为【远交近攻】或【勠力同心】使用。",
-	["naman"] = "纳蛮",
-	[":naman"] = "当有其他角色使用黑色牌指定多个目标时，你可进行一次判定，若不为黑桃，你可令这张牌增加或减少一个目标。",
-
-	["@mumeng-choose"] = "穆盟：选择要转化使用的卡牌名称",
-	["@mumeng-usecard"] = "穆盟：选择一张红桃手牌转化为【%arg】使用",
-	["@naman-target"] = "纳蛮：选择为%src使用的【%arg】增加或减少一个目标",
-
-	["$mumeng1"] = "暴戾之气，伤人害己。",
-    ["$mumeng2"] = "休要再起战事。",
-    ["$naman2"] = "慢着，让我来！",
-    ["$naman1"] = "弃暗投明，光耀门楣！",
-    ["~maliang"] = "皇叔为何不听我之言……" ,
+    ["mumeng"] = "Mục Minh",
+    [":mumeng"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá CƠ trên tay thành [Viễn Giao Cận Công]/[Lục Lực Đồng Tâm]",
+    ["naman"] = "Nạp Man",
+    [":naman"] = "Khi người khác sử dụng bài Đen có chỉ định nhiều mục tiêu, bạn có thể tiến hành phán xét, nếu kết quả phát xét không phải BÍCH, bạn chọn 1 mục:\n1. Lệnh 1 người khác trở thành mục tiêu của bài (Không bị giới hạn khoảng cách);\n2. Hủy bỏ mục tiêu đối với 1 mục tiêu của lá đó.",
+	--["@mumeng-choose"] = "Mục Minh: Chọn lá muốn sử dụng",
+	--["@mumeng-usecard"] = "Mục Minh: Chọn lá CƠ để chuyển hóa sử dụng thành [%arg]",
+    ["@naman-target"] = "Nạp Man: Thêm hoặc bớt 1 mục tiêu của [%arg] do %src sử dụng",
+	
+	["$mumeng1"] = "Tính tình ngang ngược, đau người hại ta.",
+	["$mumeng2"] = "Nghỉ ngơi để tiếp tục chiến sự",
+	["$naman2"] = "Chờ đã, ta đến đây!",
+	["$naman1"] = "Bỏ tối theo sáng, chiếu rọi vào bậu cửa.",
+	["~maliang"] = "Hoàng thúc sao không nghe lời ta...",
 }
 
 dingke = sgs.CreateTriggerSkill{
@@ -1345,24 +1301,24 @@ yijibo:addSkill(dingke)
 yijibo:addSkill(jiyuan)
 
 sgs.LoadTranslationTable{
-	["#yijibo"] = "见礼于世",
-	["yijibo"] = "伊籍",
+
+    ["#yijibo"] = "Kiến Lễ Vu Thế",
+    ["yijibo"] = "Y Tịch",
 	["illustrator:yijibo"] = "DH",
-	["designer:yijibo"] = "梦魇狂朝",
-	["dingke"] = "定科",
-	[":dingke"] = "每回合限一次，当一名与你势力相同的角色于其回合外不因使用或打出而失去牌后，你可选择一项：1.交给其一张手牌，2.令当前回合者弃置一张手牌。"..
-		"然后若你的阴阳鱼标记数少于体力上限，你获得一个阴阳鱼标记。",
-	["jiyuan"] = "急援",
-	[":jiyuan"] = "当一名角色进入濒死状态时，或你通过“定科”交给一名其他角色牌时，你可令其摸一张牌。",
+	["designer:yijibo"] = "Mộng Yểm Cuồng Triều",
+    ["dingke"] = "Định Khoa",
+    [":dingke"] = "Một lần trong lượt của mỗi người, sau khi 1 người cùng thế lực với bạn mất bài ngoài lượt không vì sử dụng/đánh ra, bạn có thể chọn 1 mục:\n1. Giao 1 lá trên tay cho họ;\n2. Lệnh người đang có lượt bỏ 1 lá trên tay;\n▷ Nếu số [Âm dương ngư] của bạn < giới hạn máu, bạn thu lấy 1 tiêu ký [Âm dương ngư].",
+    ["jiyuan"] = "Cấp Viện",
+    [":jiyuan"] = "Khi có người tiến vào trạng thái hấp hối hoặc sau khi có người được bạn giao bài do phát động »Định Khoa«, bạn có thể lệnh họ rút 1 lá.",
 
-	["dingke-invoke"] = "是否使用“定科”，选%dest令其弃一张手牌，或选一名失去牌的角色交给其一张手牌",
-	["@dingke-give"] = "定科：选择一张手牌交给%dest",
-
-	["$dingke1"] = "一拜一起，未足为劳。",
-	["$dingke2"] = "识言观行，方能雍容风仪",
-	["$jiyuan1"] = "公若辞，必遭蔡瑁之害矣！",
-	["$jiyuan2"] = "情势危急，还请速行！",
-	["~yijibo"] = "未能……救得刘公脱险……",	
+	["dingke-invoke"] = "Có thể phát động »Định Khoa«, chọn %dest để lệnh họ bỏ 1 lá trên tay hoặc chọn người vừa mất bài để giao họ 1 lá trên tay",
+    ["@dingke-give"] = "Định Khoa: Chọn 1 lá trên tay và giao cho %dest",
+	
+	["$dingke1"] = "Bái lạy một cái, có gì cực khổ đâu",
+	["$dingke2"] = "Để ý từng cử chỉ lời nói, thì mới có thể ung dung phong nghị",
+	["$jiyuan1"] = "Nếu chủ công không tránh, sẽ bị Thái Mạo hãm hại đấy!",
+	["$jiyuan2"] = "Tình hình nguy cấp, xin hãy đi mau!",
+	["~yijibo"] = "Còn chưa kịp...giúp Lưu công trốn thoát.....",
 }
 
 kangrui = sgs.CreateTriggerSkill{
@@ -1828,29 +1784,9 @@ sgs.LoadTranslationTable{
 	["~chengpu"] = "汝等叛逆之贼，安敢索命于我！啊……",
 }
 
-qinzhong = sgs.CreateTriggerSkill{
-	name = "qinzhong" ,
-	events = {sgs.EventPhaseEnd},
-    relate_to_place = "deputy";
-	can_trigger = function(self, event, room, player, data)
-		if skillTriggerable(player, self:objectName()) and player:getPhase() == sgs.RoundStart then
-			for _,p in sgs.qlist(room:getOtherPlayers(player)) do
-				if p:isFriendWith(player) and p:getGeneral2() then
-					return self:objectName()
-				end
-			end
-		end
-		return ""
-	end,
-
-}
-quancong:addSkill(qinzhong)
-
-zhaofu = sgs.CreateTriggerSkill{
-	name = "zhaofu" ,
-
-}
-quancong:addSkill(zhaofu)
+-- quancong will be add later
+quancong:addSkill("qinzhong")
+quancong:addSkill("zhaofu")
 
 sgs.LoadTranslationTable{
 
@@ -2243,6 +2179,8 @@ sgs.LoadTranslationTable{
 	
     ["#chendeng"] = "Hồ Hải Hào Khí",
     ["chendeng"] = "Trần Đăng",
+	["illustrator:chendeng"] = "Dật Danh",
+	["designer:chendeng"] = "Mộng Yểm Cuồng Triều",
     ["haokui"] = "Hào Khôi",
     [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n▶ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực khác bạn, ưu tiên theo thứ tự sau:\n* Người thuộc đại thế lực;\n* Người có số máu lớn nhất trong số những người thế lực xác định khác bạn;\n▶ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn thực hiện lần lượt:\n- Nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
     ["xushi"] = "Hư Thực",
@@ -2522,7 +2460,7 @@ sgs.LoadTranslationTable{
     ["qianxue"] = "Tiềm Học",
     [":qianxue"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người kết thúc lượt, bạn có thể thu lấy tối đa X lá trong những lá đã tiến vào chồng bài bỏ trong lượt này (X là số vùng của bạn mà đã mất đi lá cuối cùng trong lượt này);\n▶ Bạn cần ưu tiên thu lấy những lá phi cơ bản trước;\n▶ Bạn không thể thu lấy [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu].",
     ["zhuhu"] = "Trục Cốc",
-    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, nếu vị trí của tướng này là:\n* Chủ tướng: Bạn hoán đổi Chủ tướng và Phó tướng\n* Phó tướng: Bạn thoát khỏi trạng thái xích;\n▶ Bạn đổi Phó tướng.",
+    [":zhuhu"] = "Tỏa định kỹ: Sau khi người cùng thế lực với bạn đổi Phó tướng hoặc trận vong, bạn thực hiện lần lượt:\n- Nếu vị trí của tướng này là:\n * Chủ tướng: Bạn hoán đổi Chủ tướng và Phó tướng\n * Phó tướng: Bạn thoát khỏi trạng thái xích;\n- Bạn đổi Tướng này.",
     ["qianxue:invoke"] = "Có thể phát động »Tiềm Học«, thu lấy tối đa %arg lá tiến vào chồng bài bỏ lượt này (ưu tiên lá phi cơ bản)",
     ["@qianxue-select"] = "Tiềm học: Chọn tối đa %arg lá, ưu tiên phi cơ bản.",
     ["#qianxue"] = "Tiềm Học",
@@ -2793,7 +2731,7 @@ sgs.LoadTranslationTable{
 	["illustrator:sunhuan"] = "Thinking",
 	["designer:sunhuan"] = "Mộng Yểm Cuồng Triều",
 	["nizhan"] = "Nghịch Trảm",
-	[":nizhan"] = "Khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] vô hiệu phòng cụ với họ.",
+	[":nizhan"] = "Khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] với họ;\n▶ Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
 
 	["@nizhan-choose"] = "Nghịch Trảm: Chọn 1 hiệu ứng cho %dest",
 	["nizhan:extraction"] = "Thu 1 lá",

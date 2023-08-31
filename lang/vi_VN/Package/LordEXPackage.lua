@@ -115,7 +115,7 @@ return {
     ["qiance"] = "Khiêm Sách",
 	[":qiance"] = "Sau khi người cùng thế lực với bạn xác định mục tiêu của lá công cụ, họ có thể lệnh những mục tiêu thuộc Đại thế lực không thể hướng ứng với lá này.",
 	["jujian"] = "Cử Tiến",
-	[":jujian"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người cùng thế lực với bạn tiến vào trạng thái hấp hối, bạn có thể lệnh họ hồi đến 1 máu, sau đó bạn đổi Phó tướng.",
+	[":jujian"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người cùng thế lực với bạn tiến vào trạng thái hấp hối, bạn có thể lệnh họ hồi đến 1 máu, sau đó bạn đổi Tướng này.",
 	["@qiance"] = "Có thể phát động »Khiêm Sách« của %src",
     
     ["#wujing"] = "Hàn Mã Lưu Kim",
