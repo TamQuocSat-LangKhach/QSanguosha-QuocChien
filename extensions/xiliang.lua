@@ -109,14 +109,6 @@ listIndexOf = function(theqlist, theitem)
 	end
 end
 
-CardList2Table = function(theqlist)
-	local result = {}
-	for _, item in sgs.qlist(theqlist) do
-		table.insert(result, item:getId())
-	end
-	return result
-end
-
 --建立获取服务器玩家函数
 function getServerPlayer(room, name)
 	for _, p in sgs.qlist(room:getAllPlayers(true)) do
@@ -2274,34 +2266,6 @@ qianxue = sgs.CreateTriggerSkill{
 	name = "qianxue",
 	events = {sgs.EventPhaseChanging, sgs.ConfirmMoveCards},
 	relate_to_place = "head",
-	on_record = function(self, event, room, player, data)
-		if event == sgs.ConfirmMoveCards then
-			local move_datas = data:toList()
-			local handcards = CardList2Table(player:getHandcards())
-			local equips = CardList2Table(player:getEquips())
-			local delayedtricks = CardList2Table(player:getJudgingArea())
-			local h_cheak = (#handcards > 0)
-			local e_cheak = (#equips > 0)
-			local j_cheak = (#delayedtricks > 0)
-			for _, move_data in sgs.qlist(move_datas) do
-				local move = move_data:toMoveOneTime()
-				for _, id in sgs.qlist(move.card_ids) do
-					table.removeOne(handcards, id)
-					table.removeOne(equips, id)
-					table.removeOne(delayedtricks, id)
-				end
-			end
-			if h_cheak and #handcards == 0 then
-				room:setPlayerFlag(player, "GlobalLoseAllHandCards")
-			end
-			if e_cheak and #equips == 0 then
-				room:setPlayerFlag(player, "GlobalLoseAllEquips")
-			end
-			if j_cheak and #delayedtricks == 0 then
-				room:setPlayerFlag(player, "GlobalLoseAllDelayedTricks")
-			end
-		end
-	end,
     can_trigger = function(self, event, room, player, data)
 		local skill_list = {}
 		local name_list = {}
@@ -2624,22 +2588,6 @@ sgs.LoadTranslationTable{
 nizhan = sgs.CreateTriggerSkill{
 	name = "nizhan",
 	events = {sgs.EventPhaseChanging, sgs.ConfirmMoveCards},
-	on_record = function(self, event, room, player, data)
-		if event == sgs.ConfirmMoveCards then
-			local move_datas = data:toList()
-			local handcards = CardList2Table(player:getHandcards())
-			local h_cheak = (#handcards > 0)
-			for _, move_data in sgs.qlist(move_datas) do
-				local move = move_data:toMoveOneTime()
-				for _, id in sgs.qlist(move.card_ids) do
-					table.removeOne(handcards, id)
-				end
-			end
-			if h_cheak and #handcards == 0 then
-				room:setPlayerFlag(player, "GlobalLoseAllHandCards")
-			end
-		end
-	end,
     can_trigger = function(self, event, room, player, data)
 		local skill_list = {}
 		local name_list = {}

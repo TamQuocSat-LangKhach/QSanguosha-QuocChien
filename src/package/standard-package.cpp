@@ -102,6 +102,36 @@ public:
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         switch (triggerEvent) {
+        case ConfirmMoveCards: {
+            QList<int> handcards = player->handCards();
+            QList<int> equips;
+            foreach (const Card *card, player->getEquips()) {
+                equips << card->getId();
+            }
+            QList<int> delayedtricks = player->getJudgingAreaID();
+            bool h_cheak = !handcards.isEmpty();
+            bool e_cheak = !equips.isEmpty();
+            bool j_cheak = !delayedtricks.isEmpty();
+            QVariantList move_datas = data.toList();
+            foreach (QVariant move_data, move_datas) {
+                CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
+                foreach(int id, move.card_ids) {
+                    handcards.removeOne(id);
+                    equips.removeOne(id);
+                    delayedtricks.removeOne(id);
+                }
+            }
+            if (h_cheak and handcards.isEmpty()) {
+                room->setPlayerFlag(player, "GlobalLoseAllHandCards");
+            }
+            if (e_cheak and equips.isEmpty()) {
+                room->setPlayerFlag(player, "GlobalLoseAllEquips");
+            }
+            if (j_cheak and delayedtricks.isEmpty()) {
+                room->setPlayerFlag(player, "GlobalLoseAllDelayedTricks");
+            }
+            break;
+        }
         case PreCardsMoveOneTime: {
             QVariantList move_datas = data.toList();
             foreach (QVariant move_data, move_datas) {
