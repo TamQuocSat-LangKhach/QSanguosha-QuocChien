@@ -274,7 +274,7 @@ return {
     ["#gongsunyuan"] = "Giáo Đồ Huyền Hải",
     ["gongsunyuan"] = "Công Tôn Uyên",
     ["huaiyi"] = "Hoài Dị",
-    [":huaiyi"] = "• Một lần trong giai đoạn ra bài, bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Bạn có thể sử dụng hoặc đánh ra [Dị] như bài trên tay.",
+    [":huaiyi"] = "• Một lần trong giai đoạn ra bài, bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Dị].",
     ["zisui"] = "Tứ Tuy",
     [":zisui"] = "Tỏa định kỹ:\n• Giai đoạn rút bài, nếu có [Dị], bạn rút thêm X lá (X là số [Dị]).\n• Khi bắt đầu giai đoạn kết thúc, nếu số [Dị] > giới hạn máu của bạn, bạn trận vong.",
     

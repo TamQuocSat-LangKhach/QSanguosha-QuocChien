@@ -47,9 +47,9 @@ return {
 
 
 	["WoodenOx"] = "Mộc Ngưu Lưu Mã",
-	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n• Một lần trong giai đoạn ra bài, nếu số lá trong [Mộc Ngưu Lưu Mã] < 5, bạn có thể đặt úp 1 lá trên tay vào [Mộc Ngưu Lưu Mã], sau đó bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n• Bạn có thể sử dụng hoặc đánh ra bài trên [Mộc Ngưu Lưu Mã] như bài trên tay.\n• Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, đưa tất cả lá trong [Mộc Ngưu Lưu Mã] vào chồng bài bỏ.",
+	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n• Một lần trong giai đoạn ra bài, nếu số [Tri] < 5, bạn có thể đặt úp 1 lá trên tay lên [Mộc Ngưu Lưu Mã], gọi là [Tri], sau đó bạn có thể di chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Tri].\n• Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, đưa tất cả lá [Tri] vào chồng bài bỏ.",
 	["@wooden_ox-move"] = "Bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của một người khác",
-	["wooden_ox"] = "Mộc Ngưu Lưu Mã",
+	["wooden_ox"] = "Tri",
 	["#WoodenOx"] = "%from đánh ra %arg lá %arg2 bài",
 
 

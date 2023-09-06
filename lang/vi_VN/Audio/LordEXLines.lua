@@ -169,7 +169,7 @@ return {
 	["$jilei1"] = "Ăn thì không có vị, bỏ đi thì tiếc.",
 	["$jilei2"] = "Ta đã hiểu được ý Tào công.",
 	["$danlao1"] = "Nào nào, mỗi người một miếng.",
-	["$danlao2"] = "Tao thích thế.",
+	["$danlao2"] = "Ta thích thế.",
 	["~yangxiu"] = "Đã quá muộn để cản cái chết này....",
 
 	["$wanglie1"] = "Mãnh tướng chi liệt, thống suất chi sở vãng.",

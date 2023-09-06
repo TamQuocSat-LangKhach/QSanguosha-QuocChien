@@ -11,8 +11,8 @@ sgs.LoadTranslationTable{
 	["element"] = "Nguyên Tố",
 	[":element"] = "• Giai đoạn ra bài hoặc sau khi 1 người bắt đầu lượt, bạn có thể bỏ 1 lá có trong danh sách dưới đây và nhận hiệu quả tương ứng:\n"..
 	"* [Sát] phổ thông, [Quyết Đấu], [Hàn Băng Kiếm]: Bạn nhận 1 điểm nguyên tố [Băng];\n"..
-	"* [Sát Lôi], [Thủy Yêm Thất Quân], [Thiểm Điện]: Bạn nhận 1 điểm nguyên tố [Lôi];\n"..
-	"* [Sát Hỏa], [Hỏa Công], [Hỏa Thiêu Liên Doanh], [Chu Tước Vũ Phiến]: Bạn nhận 1 điểm nguyên tố [Hỏa];\n"..
+	"* [Sát Lôi], [Đào], [Thủy Yêm Thất Quân], [Thiểm Điện]: Bạn nhận 1 điểm nguyên tố [Lôi];\n"..
+	"* [Sát Hỏa], [Tửu], [Hỏa Công], [Hỏa Thiêu Liên Doanh], [Chu Tước Vũ Phiến]: Bạn nhận 1 điểm nguyên tố [Hỏa];\n"..
 	"▷ Nếu tổng số điểm nguyên tố của bạn là 4, bạn bỏ đi điểm nguyên tố đầu tiên đã nhận được.\n"..
 	"• Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có 3 nguyên tố giống nhau và nguyên tố đó là:\n"..
 	"* [Băng]: Bạn hồi 1 máu;\n"..
