@@ -85,7 +85,7 @@ return {
 	[":leiji"] = "Khi bạn sử dụng/đánh ra [Thiểm], bạn có thể lệnh 1 người khác tiến hành phán xét, nếu kết quả phán xét có chất BÍCH, bạn gây 2 sát thương Lôi cho họ.",
 	["leiji-invoke"] = "Có thể phát động »Lôi Kích«: Chọn 1 người khác",
 	["guidao"] = "Quỷ Đạo",
-	[":guidao"] = "Khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 lá Đen để hoán đổi kết quả phán xét đó.",
+	[":guidao"] = "Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 lá Đen để hoán đổi kết quả phán xét đó.",
 	["@guidao-card"] = CommonTranslationTable["@askforretrial"],
 	["~guidao"] = "Chọn 1 lá màu Đen và nhấn \"Xác nhận\"",
 

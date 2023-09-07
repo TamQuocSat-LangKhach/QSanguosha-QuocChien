@@ -232,7 +232,7 @@ return {
     
     ["@xiongnve-choice"] = "Hung Ngược: Lựa chọn 1 tác dụng.",
     ["xiongnve:adddamage"] = "+1 sát thương",
-    ["xiongnve:extraction"] = "Lấy bài sau khi gây sát thương",
+    ["xiongnve:extraction"] = "Lấy bài khi gây sát thương",
     ["xiongnve:nolimit"] = "Sử dụng bài không giới hạn số lần",
     
     ["#xiongnveAdddamage"] = "Lượt này, sát thương %from gây cho người thế lực %arg +1",

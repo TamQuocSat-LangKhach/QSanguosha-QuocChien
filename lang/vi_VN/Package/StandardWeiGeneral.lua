@@ -33,7 +33,7 @@ return {
 	["fankui"] = "Phản Quỹ",
 	[":fankui"] = "Sau khi bạn nhận sát thương, bạn có thể thu lấy 1 lá của nguồn sát thương.",
 	["guicai"] = "Quỷ Tài",
-	[":guicai"] = "Khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 lá để thay thế kết quả phán xét đó.",
+	[":guicai"] = "Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 lá để thay thế kết quả phán xét đó.",
 	["@guicai-card"] = CommonTranslationTable["@askforretrial"],
 	["~guicai"] = "Chọn 1 lá bài xong bấm \"Xác nhận\"",
 

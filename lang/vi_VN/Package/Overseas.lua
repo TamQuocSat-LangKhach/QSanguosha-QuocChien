@@ -39,7 +39,7 @@ return {
 	["#zhugejin"] = "Liên Minh Đích Duy Hệ Giả",
 	["zhugejin"] = "Gia Cát Cẩn",
 	["huanshi"] = "Hoãn Thích",
-	[":huanshi"] = "Khi phán xét của người cùng thế lực với bạn có hiệu lực, bạn có thể đánh ra 1 lá để thay thế kết quả phán xét đó.",
+	[":huanshi"] = "Trước khi phán xét của người cùng thế lực với bạn có hiệu lực, bạn có thể đánh ra 1 lá để thay thế kết quả phán xét đó.",
 	["hongyuan"] = "Hoằng Viện",
 	[":hongyuan"] = "•Khi bạn rút bài vì hiệu quả của »Hợp Tung«, bạn có thể lệnh 1 người khác có cùng thế lực với bạn rút bài thay bạn.\n• Một lần trong giai đoạn ra bài, bạn có thể mở 1 lá trên tay, lá đó khi ở trên tay bạn trong giai đoạn này xem như có ký hiệu »Hợp Tung«.",
 	["mingzhe"] = "Minh Triết",

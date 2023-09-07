@@ -442,7 +442,7 @@ sgs.LoadTranslationTable{
 	["illustrator:diy_chendao"] = "Bành Hiểu Kiện",
 	
 	["dizai"] = "Địa Tải",
-	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công còn lại có thể bỏ 1 lá để lệnh sát thương này +1.",
+	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi 1 người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công khác có thể bỏ 1 lá để lệnh sát thương này +1.",
 	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
 	["$dizai1"] = "Binh pháp rằng, đánh lâu bất lợi, chớ có tham công.",
@@ -1127,6 +1127,9 @@ naman = sgs.CreateTriggerSkill{
 					sgs.Room_cancelTarget(use, target)
 				else
 					use.to:append(target)
+					if (use.card:hasFlag("BladeEffect")) then
+						room:setPlayerDisableShow(target, "hd", "Blade");
+					end
 					room:sortByActionOrder(use.to)
 				end
 				data:setValue(use)
