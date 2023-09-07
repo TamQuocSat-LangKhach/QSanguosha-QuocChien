@@ -313,34 +313,6 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if ((triggerEvent == GeneralHidden && player->ownSkill(this) && player->inHeadSkills(objectName()) == data.toBool())) {
-            bool zhiwei_clear = false;
-            if (triggerEvent == GeneralHidden) {
-                const General *general = player->getActualGeneral1();
-                if (general && general->ownSkill(objectName()))
-                    zhiwei_clear = true;
-            } else if (triggerEvent == GeneralRemoved) {
-                QString general_name = data.toString().split(":").first();
-                const General *general = Sanguosha->getGeneral(general_name);
-                if (general && general->ownSkill(objectName()))
-                    zhiwei_clear = true;
-            }
-
-            if (zhiwei_clear) {
-                ServerPlayer *AssistTarget = player->tag["ZhiweiTarget"].value<ServerPlayer *>();
-                player->tag.remove("ZhiweiTarget");
-                if (AssistTarget) {
-                    LogMessage log;
-                    log.type = "#ZhiweiFinsh";
-                    log.from = player;
-                    log.to << AssistTarget;
-                    log.arg = objectName();
-                    room->sendLog(log);
-                    room->removePlayerMark(AssistTarget, "##zhiwei");
-                }
-            }
-        }
-
         if (triggerEvent == Death) {
             QList<ServerPlayer *> allplayers = room->getAlivePlayers();
             foreach (ServerPlayer *p, allplayers) {
@@ -355,6 +327,26 @@ public:
                     if (clearflag)
                         room->setPlayerMark(p, "##zhiwei", 0);
                 }
+            }
+            return;
+        }
+        bool zhiwei_clear = false;
+        if (triggerEvent == GeneralHidden && player->ownSkill(this) && player->inHeadSkills(objectName()) == data.toBool()) {
+            zhiwei_clear = true;
+        } else if (triggerEvent == GeneralRemoved) {
+            zhiwei_clear = data.toString().split(":").last().split("+").contains(objectName());
+        }
+        if (zhiwei_clear) {
+            ServerPlayer *AssistTarget = player->tag["ZhiweiTarget"].value<ServerPlayer *>();
+            player->tag.remove("ZhiweiTarget");
+            if (AssistTarget) {
+                LogMessage log;
+                log.type = "#ZhiweiFinsh";
+                log.from = player;
+                log.to << AssistTarget;
+                log.arg = objectName();
+                room->sendLog(log);
+                room->removePlayerMark(AssistTarget, "##zhiwei");
             }
         }
     }

@@ -96,4 +96,8 @@ return {
     ["biyue_liyunpeng"] = "Bế Nguyệt",
     ["xuanyang"] = "Huyễn Dương",
     [":xuanyang"] = "Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn có thể lệnh họ chọn 1 mục:\n1. Bỏ 1 lá trên tay;\n2. Lệnh bạn rút 1 lá.",
+    ["@xuanyang-discard"] = "Huyễn Dương: Bạn bỏ 1 lá trên tay hoặc lệnh %src rút 1 lá",
+    ["bingjiu"] = "Bệnh Tửu",
+    [":bingjiu"] = "Tỏa định kỹ:\n• Sau khi [Tửu] do bạn sử dụng kết toán xong, bạn gây 1 sát thương cho bạn.\n• Sau khi điểm sát thương thứ 2 kết toán trong giai đọa nra bài, bạn lệnh người bị thương có cùng thế lực với bạn hồi 1 máu.",
+    ["@bingjiu-recover"] = "Bệnh Tửu: Chọn 1 người cùng thế lực với bạn để hồi máu",
 }

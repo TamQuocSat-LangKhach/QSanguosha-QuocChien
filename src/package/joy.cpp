@@ -47,11 +47,11 @@ public:
             CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
 
             if (!move.from)
-                return;
+                continue;
             if (move.from->objectName() != player->objectName())
-                return;
+                continue;
             if (move.to_place != Player::PlaceTable && move.to_place != Player::DiscardPile)
-                return;
+                continue;
 
             QList<int> shits;
             for (int index = 0; index < move.card_ids.length(); index++) {
@@ -62,7 +62,7 @@ public:
                 }
             }
             if (shits.isEmpty())
-                return;
+                continue;
             if (shits.length() > 1) {
                 AskForMoveCardsStruct data = room->askForArrangeCards(player, shits, Room::GuanxingUpOnly);
                 shits = data.top;
