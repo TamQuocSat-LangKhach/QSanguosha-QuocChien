@@ -207,7 +207,7 @@ public:
             ServerPlayer *current = room->getCurrent();
             if (current && current->getPhase() != Player::NotActive) {
                 if (damage.from) {
-                    room->addPlayerMark(damage.from, "Global_DamagePiont_Round", damage.damage);
+                    room->addPlayerMark(damage.from, "Global_DamagePoint_Round", damage.damage);
 
 
                     QStringList player_list = damage.from->property("Global_DamagePlayers_Phase").toString().split("+");
@@ -225,7 +225,7 @@ public:
 
                 }
 
-                room->addPlayerMark(player, "Global_InjuredPiont_Round", damage.damage);
+                room->addPlayerMark(player, "Global_InjuredPoint_Round", damage.damage);
 
                 room->addPlayerMark(player, "Global_InjuredTimes_Phase");
             }
@@ -401,8 +401,8 @@ public:
                     room->setPlayerMark(p, "skill_invalidity_deputy", 0);
                     room->setPlayerProperty(p, "usecard_targets", QVariant());
 
-                    room->setPlayerMark(p, "Global_DamagePiont_Round", 0);
-                    room->setPlayerMark(p, "Global_InjuredPiont_Round", 0);
+                    room->setPlayerMark(p, "Global_DamagePoint_Round", 0);
+                    room->setPlayerMark(p, "Global_InjuredPoint_Round", 0);
 
                     room->setPlayerMark(p, "AnalepticUsedTimes", 0);
 

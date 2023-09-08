@@ -669,7 +669,7 @@ public:
     {
         if (!TriggerSkill::triggerable(player)) return QStringList();
         if (triggerEvent == EventPhaseStart && player->getPhase() == Player::Discard) {
-            int x = player->getCardUsedTimes("."), y = player->getMark("Global_DamagePiont_Round");
+            int x = player->getCardUsedTimes("."), y = player->getMark("Global_DamagePoint_Round");
             if ((x > 0 && y == 0) || x == 0)
                 return QStringList(objectName());
         }

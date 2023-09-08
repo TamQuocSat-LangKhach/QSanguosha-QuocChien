@@ -277,15 +277,13 @@ int Player::getAttackRange(bool include_weapon) const
     if (hasFlag("InfinityAttackRange") || getMark("InfinityAttackRange") > 0)
         return 1000;
 
-    include_weapon = include_weapon && weapon != NULL;
-
     int fixeddis = Sanguosha->correctAttackRange(this, include_weapon, true);
     if (fixeddis > 0)
         return fixeddis;
 
     int real_range = 1;
 
-    if (include_weapon) {
+    if (include_weapon && weapon) {
         const Weapon *card = qobject_cast<const Weapon *>(weapon->getRealCard());
         Q_ASSERT(card);
         real_range = card->getRange();
