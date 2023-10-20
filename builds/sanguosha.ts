@@ -3427,7 +3427,7 @@ Lý do:
     <name>General</name>
     <message>
         <source>%1 Generals</source>
-        <translation>%1 Thế lực võ tướng</translation>
+        <translation>Tất cả tướng %1</translation>
     </message>
 </context>
 <context>

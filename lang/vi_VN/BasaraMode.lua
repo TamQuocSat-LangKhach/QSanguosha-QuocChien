@@ -69,7 +69,7 @@ return
 	["#FirstShowReward"] = "%from 全场第一个亮将，选择摸两张牌或回复1点体力",
 	["#ShowingRewardOfCareerist"] = "%from 亮将成为野心家，选择摸两张牌或回复1点体力",
 	["#ShowingRewardOfKingdom"] = "%from 是 %arg势力 第一个亮将的角色，摸一张牌",
-	["@changetolord"] = "Bạn có muốn chuyển hóa tướng thành quân chủ?",
+	["@changetolord"] = "Bạn có muốn thay đổi tướng thành quân chủ?",
 	["changetolord:yes"] = "Có",
 	["changetolord:no"] = "Không",
 
@@ -127,6 +127,8 @@ return
 	
 	["showdeputy"] = "Mở tướng",
 	[":showdeputy"] = "Mở Phó tướng",
+
+	["#ChooseInitialKingdom"] = "Chọn thế lực ban đầu",
 	
 	["@careerist-show"] = "Bộc lộ dã tâm: Có thể mở Chủ tướng để tiếp tục ván đấu hoặc đầu hàng.",
     ["GameRule:CareeristShow:yes"] = "Mở tướng Dã Tâm",

@@ -1801,10 +1801,13 @@ void ServerPlayer::showGeneral(bool head_general, bool trigger_event, bool sendL
             if (!getRole().startsWith("careerist"))
                 room->setPlayerProperty(this, "role", "careerist");
         } else if (first_time_show) {
-            QString kingdom = getKingdom() != getGeneral()->getKingdom() ? getKingdom() : getGeneral()->getKingdom();
+            QString role = getRole();
+            QString kingdom = HegemonyMode::GetMappedKingdom(role);
+            if (kingdom.isEmpty()) {
+                kingdom = getKingdom() != getGeneral()->getKingdom() ? getKingdom() : getGeneral()->getKingdom();
+                role = HegemonyMode::GetMappedRole(kingdom);
+            }
             room->setPlayerProperty(this, "kingdom", kingdom);
-
-            QString role = HegemonyMode::GetMappedRole(kingdom);
 
             if (!room->getTag("GlobalQuanjiaShow").toBool()) {
                 int i = 1;
@@ -1873,17 +1876,17 @@ void ServerPlayer::showGeneral(bool head_general, bool trigger_event, bool sendL
             room->notifyProperty(p, this, "deputy_skin_id");
 
         if (first_time_show) {
-            QString kingdom = getKingdom();
+            QString role = getRole();
+            QString kingdom = HegemonyMode::GetMappedKingdom(role);
             if (kingdom.isEmpty()) {
                 if (getGeneral2()->isDoubleKingdoms())
                     kingdom = getGeneral()->getKingdom();
                 else
                     kingdom = getGeneral2()->getKingdom();
+                role = HegemonyMode::GetMappedRole(kingdom);
             }
 
             room->setPlayerProperty(this, "kingdom", kingdom);
-
-            QString role = HegemonyMode::GetMappedRole(kingdom);
 
             if (!room->getTag("GlobalQuanjiaShow").toBool()) {
                 int i = 1;

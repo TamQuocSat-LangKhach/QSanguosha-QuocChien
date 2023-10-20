@@ -122,30 +122,6 @@ public:
 };
 
 
-//class PoisonSkill : public TriggerSkill
-//{
-//public:
-//    PoisonSkill() : TriggerSkill("poison")
-//    {
-//        events << CardsMoveOneTime;
-//        frequency = Compulsory;
-//        global = true;
-//    }
-
-
-
-//    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *player) const
-//    {
-//        room->broadcastSkillInvoke(objectName(), player);
-//        return true;
-//    }
-
-//    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *player) const
-//    {
-//        room->loseHp(player);
-//        return false;
-//    }
-//};
 // -----------  Deluge -----------------
 
 Deluge::Deluge(Card::Suit suit, int number)

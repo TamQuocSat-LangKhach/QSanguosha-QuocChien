@@ -3615,13 +3615,14 @@ void Room::assignGeneralsForPlayers(const QList<ServerPlayer *> &to_assign)
 
         foreach (QString generalName1, choices) {
             const General *general1 = Sanguosha->getGeneral(generalName1);
-            if (general1->isDoubleKingdoms()) continue;
             bool matched = false;
             foreach (QString generalName2, choices) {
                 if (generalName1 == generalName2) continue;
                 const General *general2 = Sanguosha->getGeneral(generalName2);
                 if (general2->getKingdom() == "careerist") continue;
-                if (general1->getKingdom() == "careerist" || general2->getKingdoms().contains(general1->getKingdom())) {
+                if (general1->getKingdom() == "careerist"
+                        || general2->getKingdoms().contains(general1->getKingdom())
+                        || (general1->isDoubleKingdoms() && general2->getKingdoms().contains(general1->getSubordinateKingdom()))) {
                     matched = true;
                     player->addToSelected(generalName1);
                     player->addToSelected(generalName2);
@@ -3716,6 +3717,37 @@ void Room::chooseGenerals(QList<ServerPlayer *> &to_assign, bool has_assign, boo
             notifyProperty(player, player, "general2", name);
         }
         this->setTag(player->objectName(), QVariant::fromValue(names));
+    }
+    foreach (ServerPlayer *player, to_assign) {
+        QString _all_choices = "wei+qun+shu+wu";
+        QStringList choices;
+        QString kingdom1 = player->getActualGeneral1()->getKingdom();
+        foreach (QString kingdom, player->getActualGeneral2()->getKingdoms()) {
+            if (kingdom1 == "careerist" || kingdom1 == kingdom) {
+                choices << kingdom;
+            }
+            if (player->getActualGeneral1()->isDoubleKingdoms() && player->getActualGeneral1()->getSubordinateKingdom() == kingdom) {
+                choices << kingdom;
+            }
+        }
+        JsonArray args;
+        args << "ChooseInitialKingdom" << choices.join("+") << "#ChooseInitialKingdom" << _all_choices;
+        player->m_commandArgs = args;
+    }
+    doBroadcastRequest(to_assign, S_COMMAND_MULTIPLE_CHOICE);
+    foreach (ServerPlayer *player, to_assign) {
+        const QVariant &choiceResponse = player->getClientReply();
+        QString kingdom;
+        if (!player->m_isClientResponseReady || !JsonUtils::isString(choiceResponse)) {
+            kingdom = player->m_commandArgs.value<JsonArray>()[1].toString().split("+")[0];
+        } else {
+            kingdom = choiceResponse.toString();
+        }
+        QString role = HegemonyMode::GetMappedRole(kingdom);
+        if (role.isEmpty())
+            role = kingdom;
+        player->setRole(role);
+        notifyProperty(player, player, "role", role);
     }
 }
 

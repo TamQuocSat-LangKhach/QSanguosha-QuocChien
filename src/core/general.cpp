@@ -216,7 +216,7 @@ QString General::getPackage() const
 QString General::getCompanions() const
 {
     if (isLord())
-        return tr("Tất cả tướng %1").arg(Sanguosha->translate(getKingdom()));
+        return tr("%1 Generals").arg(Sanguosha->translate(getKingdom()));
     QStringList name;
     foreach (const QString &general, companions)
         name << QString("%1").arg(Sanguosha->translate(general));

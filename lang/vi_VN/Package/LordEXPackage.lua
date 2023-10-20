@@ -31,7 +31,7 @@ return {
 	["qiuan"] = "Cầu An",
 	[":qiuan"] = "Khi bạn nhận sát thương, nếu bạn không có [Hàm], bạn có thể đem lá gây sát thương cho bạn đặt lên tướng này, gọi là [Hàm], sau đó chặn sát thương này.",
 	["liangfan"] = "Lượng Phản",
-	[":liangfan"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Hàm], bạn mất 1 máu, sau đó thu lấy tất cả [Hàm];\n▶ Trong lượt này, sau khi bạn gây sát thương cho 1 người do sử dụng [Hàm], bạn có thể thu lấy 1 lá của họ.",
+	[":liangfan"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Hàm], bạn mất 1 máu, sau đó thu lấy tất cả [Hàm];\n▶ Trong lượt này, sau khi bạn gây sát thương cho 1 người do sử dụng bài có bao gồm [Hàm], bạn có thể thu lấy 1 lá của họ.",
 	["letter"] = "Hàm",
 
 	["#LiangfanEffect"] = "%from đã sử dụng [%arg] để gây sát thương và thu lấy 1 lá của %to",
@@ -72,7 +72,7 @@ return {
 	["#liuqi"] = "Cư Ngoại Nhi An",
 	["liuqi"] = "Lưu Kỳ",
 	["wenji"] = "Vấn Kế",
-	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n* Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng lá này không giới hạn khoảng cách và số lần và không thể hưởng ứng;\n* Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác ngửa mặt.",
+	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n* Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng bài có bao gồm lá này không giới hạn khoảng cách, số lần sử dụng và không thể hưởng ứng;\n* Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác ngửa mặt.",
 	
 	["tunjiang"] = "Truân Giang",
 	[":tunjiang"] = "Khi bắt đầu giai đoạn kết thúc, nếu bạn trong giai đoạn ra bài đã sử dụng ít nhất 1 lá và không chỉ định người khác làm mục tiêu, bạn có thể rút X lá (X là số thế lực trên bàn chơi).",
@@ -106,7 +106,7 @@ return {
     ["#dongzhao"] = "Di Tôn Dị Đỉnh",
     ["dongzhao"] = "Đổng Chiêu",
     ["quanjin"] = "Khuyến Tiến",
-    [":quanjin"] = "Một lần trong giai đoạn ra bài, bạn có thể giao 1 lá trên tay cho người từng nhận sát thương trong giai đoạn này và lệnh họ chấp hành 1 [Quân Lệnh]:\n* Nếu họ chấp hành, bạn rút 1 lá;\n* Nếu họ không chấp hành và bạn không phải người có nhiều bài trên tay nhất, bạn bổ sung bài trên tay đến khi bằng người có nhiều bài trên tay nhất, tối đa 5 lá.",
+    [":quanjin"] = "Một lần trong giai đoạn ra bài, bạn có thể giao 1 lá trên tay cho người từng nhận sát thương trong giai đoạn này và lệnh họ chấp hành 1 [Quân Lệnh]:\n* Nếu họ chấp hành, bạn rút 1 lá;\n* Nếu họ không chấp hành và bạn không phải người có nhiều bài trên tay nhất, bạn bổ sung bài trên tay đến khi bằng người có nhiều bài trên tay nhất, tối đa rút thêm 5 lá.",
     ["zaoyun"] = "Tạc Vận",
     [":zaoyun"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người thế lực xác định với bạn và khoảng cách từ bạn đến họ lớn hơn 1 và bỏ X lá bài trên tay (X là khoảng cách từ bạn đến họ -1), lệnh khoảng cách từ bạn đến họ là 1 trong lượt này, sau đó bạn gây 1 sát thương cho họ.",
 
@@ -308,7 +308,7 @@ return {
 	["#sufei"] = "Hùng Mãnh Dật Tài",
 	["sufei"] = "Tô Phi",
 	["lianpian"] = "Liên Phiên",
-	[":lianpian"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu trong lượt này tổng số lá tiến vào chồng bài bỏ do bạn chỉ định bỏ đi > số máu của bạn, nếu lượt này là lượt của:\n* Bạn: Bạn có thể lệnh 1 người cùng thế lực với bạn bổ sung bài trên tay đến giới hạn máu của họ;\n* Người khác: Họ có thể chọn bỏ 1 lá của bạn hoặc lệnh bạn hồi 1 máu.",
+	[":lianpian"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu trong lượt này tổng số lá tiến vào chồng bài bỏ do họ chỉ định bỏ đi > số máu của bạn, nếu lượt này là lượt của:\n* Bạn: Bạn có thể lệnh 1 người cùng thế lực với bạn bổ sung bài trên tay đến giới hạn máu của họ;\n* Người khác: Họ có thể chọn bỏ 1 lá của bạn hoặc lệnh bạn hồi 1 máu.",
 	
 	["@lianpian-target"] = "Có thể phát động »Liên Phiên«, chọn 1 người bổ sung bài trên tay đến giới hạn máu",
 	["@lianpian"] = "Có thể phát động »Liên Phiên« của %src",
