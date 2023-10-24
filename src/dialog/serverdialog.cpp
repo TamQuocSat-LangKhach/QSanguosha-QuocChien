@@ -797,6 +797,10 @@ bool ServerDialog::config()
             diy_packages.insert(package_name);
         }
     }
+    foreach (QString package_name, Config.value("ForbidPackages").toStringList()) {
+        Sanguosha->addBanPackage(package_name);
+        ban_packages.insert(package_name);
+    }
 
     Config.BanPackages = ban_packages.toList();
     Config.setValue("BanPackages", Config.BanPackages);
