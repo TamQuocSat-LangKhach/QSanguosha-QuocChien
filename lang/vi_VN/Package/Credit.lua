@@ -246,4 +246,5 @@ return {
 	["illustrator:lvfan"] = "Minhzmy",
 	["designer:lord_sunquan"] = "Hàn Húc",
 	["illustrator:lord_sunquan"] = "Khạp Khạp Nhất Hưu",
+	["illustrator:ty_duyu"] = "Phàm Quả",
 }

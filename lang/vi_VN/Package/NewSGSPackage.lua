@@ -86,4 +86,15 @@ return {
     
     ["@yanzheng"] = "Có thể phát động »Ngôn Chính«, chọn 1 lá trên tay và bỏ đi những lá còn lại.",
     ["@yanzheng-damage"] = "Ngôn Chính: chọn tối đa %arg người nhận 1 sát thương.",
+
+	["#ty_duyu"] = "Văn Thành Võ Đức",
+	["ty_duyu"] = "Đỗ Dự",
+	["jianguo"] = "Gián Quốc",
+	[":jianguo"] = "Một lần trong giai đoạn ra bài, bạn có thể lệnh 1 người làm 1 mục do bạn chọn:\n1. Rút 1 lá, sau đó bỏ X lá trên tay;\n2. Bỏ 1 lá, sau đó rút X lá;\n(X là số lá trên tay họ, làm tròn xuống).",
+	["qingshi"] = "Khuynh Thế",
+	[":qingshi"] = "Hai lần trong lượt của mỗi người, sau khi bạn xác định người khác làm mục tiêu của [Sát]/công cụ, nếu lá này là lá thứ X bạn sử dụng trong lượt này, bạn có thể gây 1 sát thương cho 1 mục tiêu của lá này (X là số lá trên tay bạn).",
+	["#jianguo-choice"] = "Gián Quốc: Chọn hiệu quả để %dest thực hiện",
+	["jianguo:d1tx"] = "Rút 1 xong bỏ bài",
+	["jianguo:t1dx"] = "Bỏ 1 xong rút bài",
+	["qingshi-invoke"] = "Có thể phát động »Khuynh Thế«, chọn 1 người nhận 1 sát thương",
 }

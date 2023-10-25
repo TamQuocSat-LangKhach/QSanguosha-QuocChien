@@ -3204,7 +3204,133 @@ public:
 };
 
 
+JianguoCard::JianguoCard()
+{
+}
 
+bool JianguoCard::targetFilter(const QList<const Player *> &targets, const Player *, const Player *) const
+{
+    return targets.isEmpty();
+}
+
+void JianguoCard::onEffect(const CardEffectStruct &effect) const
+{
+    Room *room = effect.from->getRoom();
+    QStringList choicelist;
+    choicelist << "d1tx" << "t1dx";
+    QString choice = room->askForChoice(effect.from, "jianguo", choicelist.join("+"), QVariant(), "#jianguo-choice::" + effect.to->objectName(), choicelist.join("+") );
+    if (choice == "d1tx") {
+        room->drawCards(effect.to, 1, "jianguo");
+        int x = effect.to->getHandcardNum() / 2;
+        if (x > 0) {
+            room->askForDiscard(effect.to, "jianguo", x, x);
+        }
+    } else if (choice == "t1dx") {
+        room->askForDiscard(effect.to, "jianguo", 1, 1, false, true);
+        int x = effect.to->getHandcardNum() / 2;
+        if (x > 0) {
+            room->drawCards(effect.to, x, "jianguo");
+        }
+    }
+}
+
+class Jianguo : public ZeroCardViewAsSkill
+{
+public:
+    Jianguo() : ZeroCardViewAsSkill("jianguo")
+    {
+    }
+
+    virtual bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("JianguoCard");
+    }
+
+    virtual const Card *viewAs() const
+    {
+        JianguoCard *card = new JianguoCard;
+        card->setShowSkill(objectName());
+        return card;
+    }
+};
+
+
+class Qingshi : public TriggerSkill
+{
+public:
+    Qingshi() : TriggerSkill("qingshi")
+    {
+        events << TargetChosen << EventPhaseStart;
+    }
+
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    {
+        if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
+            QList<ServerPlayer *> allplayers = room->getAlivePlayers();
+            foreach (ServerPlayer *p, allplayers) {
+                room->setPlayerMark(p, "#qingshi", 0);
+            }
+        }
+    }
+
+
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (triggerEvent != TargetChosen || !TriggerSkill::triggerable(player)) return QStringList();
+        CardUseStruct use = data.value<CardUseStruct>();
+        if (use.index == 0 && use.card != NULL
+                && (use.card->isKindOf("Slash") || use.card->getTypeId() == Card::TypeTrick)
+                && player->getMark("#qingshi") < 2
+                && player->getCardUsedTimes(".") == player->getHandcardNum()) {
+            foreach (ServerPlayer *p, use.to) {
+                if (p != player) {
+                    return QStringList(objectName());
+                }
+            }
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        QList<ServerPlayer *> players;
+        CardUseStruct use = data.value<CardUseStruct>();
+        foreach (ServerPlayer *p, use.to) {
+            if (p != player) {
+                players << p;
+            }
+        }
+        ServerPlayer *target = room->askForPlayerChosen(player, players, objectName(), "qingshi-invoke", true, true);
+        if (target != NULL) {
+            room->broadcastSkillInvoke(objectName(), player);
+            QStringList target_list = player->tag["qingshi_target"].toStringList();
+            target_list.append(target->objectName());
+            player->tag["qingshi_target"] = target_list;
+            room->addPlayerMark(player, "#qingshi");
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        QStringList target_list = player->tag["qingshi_target"].toStringList();
+        QString target_name = target_list.last();
+        target_list.removeLast();
+        player->tag["qingshi_target"] = target_list;
+
+        ServerPlayer *to = NULL;
+        foreach (ServerPlayer *p, room->getPlayers()) {
+            if (p->objectName() == target_name) {
+                to = p;
+                break;
+            }
+        }
+        if (to != NULL)
+            room->damage(DamageStruct(objectName(), player, to));
+        return false;
+    }
+};
 
 
 
@@ -3310,11 +3436,17 @@ NewSGSPackage::NewSGSPackage()
     nanhualaoxian->addRelateSkill("guanyue");
     nanhualaoxian->addRelateSkill("yanzheng");
 
+    General *ty_duyu = new General(this, "ty_duyu", "wei", 3);
+    ty_duyu->addCompanion("yanghu");
+    ty_duyu->addSkill(new Jianguo);
+    ty_duyu->addSkill(new Qingshi);
+
     addMetaObject<DaoshuCard>();
     addMetaObject<JingheCard>();
     addMetaObject<HuoqiCard>();
     addMetaObject<XianshouCard>();
     addMetaObject<ZhuangrongCard>();
+    addMetaObject<JianguoCard>();
 
 
 

@@ -115,7 +115,7 @@ return {
     ["#yanghu"] = "Chế Hoành Đồng Quỹ",
     ["yanghu"] = "Dương Hỗ",
     ["deshao"] = "Đức Thiệu",
-    [":deshao"] = "X lần trong lượt của mỗi người (X là số máu của bạn), sau khi bạn trở thành mục tiêu duy nhất của bài Đen do người khác sử dụng, nếu họ đã mở số tướng ≤ hơn bạn, bạn có thể bỏ 1 lá của họ.",
+    [":deshao"] = "X lần trong lượt của mỗi người (X là số máu của bạn), sau khi người khác xác định bạn là mục tiêu duy nhất của bài Đen do họ sử dụng, nếu họ đã mở số tướng ≤ hơn bạn, bạn có thể bỏ 1 lá của họ.",
     ["mingfa"] = "Minh Phạt",
     [":mingfa"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác thế lực;\n▶ Khi kết thúc lượt tiếp theo của họ, nếu số lá trên tay họ so với bạn:\n* Ít hơn: Bạn gây 1 sát thương cho họ và thu lấy 1 lá trên tay họ;\n* Nhiều hơn: Bạn bổ sung bài trên tay đến khi bằng họ, tối đa rút thêm 5 lá.",
 
