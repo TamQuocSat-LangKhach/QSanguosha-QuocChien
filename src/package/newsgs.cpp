@@ -3301,7 +3301,7 @@ public:
             }
         }
         ServerPlayer *target = room->askForPlayerChosen(player, players, objectName(), "qingshi-invoke", true, true);
-        if (target != NULL) {
+        if (target) {
             room->broadcastSkillInvoke(objectName(), player);
             QStringList target_list = player->tag["qingshi_target"].toStringList();
             target_list.append(target->objectName());
@@ -3326,17 +3326,169 @@ public:
                 break;
             }
         }
-        if (to != NULL)
+        if (to)
             room->damage(DamageStruct(objectName(), player, to));
         return false;
     }
 };
 
 
+QuanjianCard::QuanjianCard()
+{
+}
+
+bool QuanjianCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *self) const
+{
+    return targets.isEmpty() && to_select != self;
+}
+
+void QuanjianCard::onEffect(const CardEffectStruct &effect) const
+{
+    ServerPlayer *source = effect.from;
+    ServerPlayer *target = effect.to;
+    Room *room = source->getRoom();
+
+    if (!source->askCommandto("quanjian", target)) {
+        room->addPlayerMark(target, "##quanjian");
+    }
+
+}
+
+class Quanjian : public ZeroCardViewAsSkill
+{
+public:
+    Quanjian() : ZeroCardViewAsSkill("quanjian")
+    {
+    }
+
+    virtual bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("QuanjianCard");
+    }
+
+    virtual const Card *viewAs() const
+    {
+        QuanjianCard *card = new QuanjianCard;
+        card->setShowSkill(objectName());
+        return card;
+    }
+};
 
 
+class QuanjianDamage : public TriggerSkill
+{
+public:
+    QuanjianDamage() : TriggerSkill("#quanjian-damage")
+    {
+        events << DamageInflicted << EventPhaseStart;
+        frequency = Compulsory;
+    }
 
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    {
+        if (triggerEvent == EventPhaseStart) {
+            if (player->getPhase() == Player::NotActive) {
+                QList<ServerPlayer *> allplayers = room->getAlivePlayers();
+                foreach (ServerPlayer *p, allplayers) {
+                    room->setPlayerMark(p, "##quanjian", 0);
+                }
+            }
+        }
+    }
 
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer * &) const
+    {
+        if (triggerEvent == DamageInflicted && player != NULL && player->isAlive() && player->getMark("##quanjian") > 0) {
+            return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        room->sendCompulsoryTriggerLog(player, "quanjian", false);
+        return true;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        DamageStruct damage = data.value<DamageStruct>();
+        damage.damage += player->getMark("##quanjian");
+        data = QVariant::fromValue(damage);
+        room->setPlayerMark(player, "##quanjian", 0);
+        return false;
+    }
+};
+
+class Tujue : public TriggerSkill
+{
+public:
+    Tujue() : TriggerSkill("tujue")
+    {
+        events << Dying;
+        frequency = Limited;
+        limit_mark = "@impasse";
+    }
+
+    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (TriggerSkill::triggerable(player)) {
+            DyingStruct dying = data.value<DyingStruct>();
+            if (dying.who == player && player->getHp() < 1 && !player->isNude())
+                return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent , Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        ServerPlayer *target = room->askForPlayerChosen(player, room->getOtherPlayers(player), objectName(), "tujue-invoke", true, true);
+        if (target) {
+            room->broadcastSkillInvoke(objectName(), player);
+            room->doSuperLightbox("huangquan", objectName());
+            room->setPlayerMark(player, limit_mark, 0);
+            QStringList target_list = player->tag["tujue_target"].toStringList();
+            target_list.append(target->objectName());
+            player->tag["tujue_target"] = target_list;
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent , Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        QStringList target_list = player->tag["tujue_target"].toStringList();
+        QString target_name = target_list.last();
+        target_list.removeLast();
+        player->tag["tujue_target"] = target_list;
+
+        ServerPlayer *to = NULL;
+        foreach (ServerPlayer *p, room->getPlayers()) {
+            if (p->objectName() == target_name) {
+                to = p;
+                break;
+            }
+        }
+        if (to) {
+            QList<int> give_ids = player->handCards();
+            foreach (const Card *card, player->getEquips())
+                give_ids << card->getEffectiveId();
+            int x = give_ids.length();
+            if (x > 0) {
+                DummyCard dummy(give_ids);
+                CardMoveReason reason(CardMoveReason::S_REASON_GIVE, player->objectName(), to->objectName(), objectName(), QString());
+                room->obtainCard(to, &dummy, reason, false);
+                int heal = qMin(x, player->getMaxHp() - player->getHp());
+                RecoverStruct recover;
+                recover.who = player;
+                recover.recover = heal;
+                room->recover(player, recover);
+                room->drawCards(player, x, objectName());
+            }
+        }
+        return false;
+    }
+};
 
 ManoeuvrePackage::ManoeuvrePackage()
     : Package("manoeuvre")
@@ -3441,12 +3593,19 @@ NewSGSPackage::NewSGSPackage()
     ty_duyu->addSkill(new Jianguo);
     ty_duyu->addSkill(new Qingshi);
 
+    General *huangquan = new General(this, "huangquan", "shu", 3);
+    huangquan->addSkill(new Quanjian);
+    huangquan->addSkill(new QuanjianDamage);
+    huangquan->addSkill(new Tujue);
+    insertRelatedSkills("quanjian", "#quanjian-damage");
+
     addMetaObject<DaoshuCard>();
     addMetaObject<JingheCard>();
     addMetaObject<HuoqiCard>();
     addMetaObject<XianshouCard>();
     addMetaObject<ZhuangrongCard>();
     addMetaObject<JianguoCard>();
+    addMetaObject<QuanjianCard>();
 
 
 

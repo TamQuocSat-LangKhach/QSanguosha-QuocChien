@@ -141,7 +141,7 @@ return {
 	["#zoushi"] = "Hoặc Tâm Chi Mị",
 	["zoushi"] = "Trâu Thị",
 	["huoshui"] = "Họa Thủy",
-	[":huoshui"] = "Tỏa định kỹ: Trong lượt của bạn:\n• Người khác không thể mở tướng.\n• Khi bạn sử dụng [Sát]/[Vạn Tiễn Tề Phát], nếu mục tiêu của lá thế lực xác định khác bạn và có tướng úp, họ không thể sử dụng/đánh ra [Thiểm] để hưởng ứng.",
+	[":huoshui"] = "Tỏa định kỹ: Trong lượt của bạn:\n• Người khác không thể mở tướng.\n• Khi bạn sử dụng [Sát]/[Vạn Tiễn Tề Phát], bạn lệnh tất cả người có thế lực xác định khác bạn và có tướng úp không thể sử dụng/đánh ra [Thiểm] để hưởng ứng lá này.",
 	["qingcheng"] = "Khuynh Thành",
 	[":qingcheng"] = "Giai đoạn ra bài, bạn có thể bỏ 1 lá Đen và chọn 1 người khác đã mở tất cả tướng, bạn úp 1 tướng của họ;\n▷ Nếu lá bạn bỏ là trang bị, bạn có thể chọn 1 người khác đã mở tất cả tướng, bạn úp 1 tướng của họ.",
 	["qingcheng-second"] = "Khuynh thành: Bạn có thể úp tướng của 1 người khác.",

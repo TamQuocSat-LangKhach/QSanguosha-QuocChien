@@ -67,12 +67,17 @@ void RoleComboBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QW
     double scale = G_ROOM_LAYOUT.scale;
     if (!fixed_role.isEmpty()) {
         QPixmap pix;
-        QString file = "image/system/roles/%1.png";
-        if (m_player && m_player->isBigKingdomPlayer())
+        QString file;
+        int x, y;
+        if (m_player && m_player->isBigKingdomPlayer()) {
             file = "image/system/roles/big/%1.png";
-
+            x = -6; y = -6;
+        } else {
+            file = "image/system/roles/%1.png";
+            x = 0; y = 0;
+        }
         pix.load(file.arg(fixed_role));
-        painter->drawPixmap(0, 0, (int)(pix.width() * scale),(int)(pix.height() * scale), pix);
+        painter->drawPixmap(x, y, (int)(pix.width() * scale),(int)(pix.height() * scale), pix);
         return;
     }
     QStringList kingdoms = Sanguosha->getKingdoms();

@@ -150,5 +150,7 @@ return {
     ["_kenshang:prompt"] = "Khẩn Thương: Có thể thay đổi mục tiêu thành tất cả người ngoài tầm đánh",
     ["@kenshang-choose"] = "Khấn Thương: Chọn 1 kỹ năng để mất đi",
     ["#KenshangTarget"] = "%from thay đổi mục tiêu của [Sát] thành %to ",
+	["xiaoqi"] = "Kiêu Kị",
+	[":xiaoqi"] = "Khi bạn sử dụng [Sát], bạn có thể chuyển hóa [Sát] này thành [Quyết Đấu];\n▶ Tối đa X lần trong lúc giải quyết hiệu quả của [Quyết Đấu] này, bạn có thể xem như đã đánh ra lá [Sát] để hưởng ứng (X là số lá tướng đã mở trên bàn chơi có kỹ năng gốc »Mã Thuật«)",
 
 }

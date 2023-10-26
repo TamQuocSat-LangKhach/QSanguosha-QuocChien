@@ -1,6 +1,6 @@
 return {
 
-    ["MOL"] = "Mobile",
+    ["MOL"] = "Thập Niên Kinh Điển",
     
     
     ["#duyu"] = "Văn Thành Võ Đức",

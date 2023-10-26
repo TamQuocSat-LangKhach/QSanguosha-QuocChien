@@ -1880,10 +1880,10 @@ public:
         foreach (ServerPlayer *p, room->getAlivePlayers()) {
             if (p->hasShownOneGeneral() && !p->hasShownAllGenerals() && !p->isFriendWith(player))
                 targets << p->objectName();
-        }
+            }
 
         if (use.card->isKindOf("Slash")) {
-            use.disresponsive_list << "_ALL_PLAYERS";
+            use.disresponsive_list << targets;
             data = QVariant::fromValue(use);
         }
         if (use.card->isKindOf("ArcheryAttack")) {

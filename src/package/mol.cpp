@@ -2507,6 +2507,124 @@ public:
     }
 };
 
+class XiaoqiVS : public ZeroCardViewAsSkill
+{
+public:
+    XiaoqiVS() : ZeroCardViewAsSkill("xiaoqi")
+    {
+        response_or_use = true;
+    }
+
+    virtual const Card *viewAs() const
+    {
+        Slash *slash = new Slash(Card::NoSuit, 0);
+        slash->setSkillName(objectName());
+        return slash;
+    }
+
+    virtual bool isEnabledAtPlay(const Player *) const
+    {
+        return false;
+    }
+
+    virtual bool isEnabledAtResponse(const Player *player, const QString &pattern) const
+    {
+        return pattern == "slash" && player->hasFlag("xiaoqi_duel") && player->hasFlag("xiaoqi_slash");
+    }
+};
+
+class Xiaoqi : public TriggerSkill
+{
+public:
+    Xiaoqi() : TriggerSkill("xiaoqi")
+    {
+        events << CardUsed << CardResponded << CardFinished << CardAsked;
+        view_as_skill = new XiaoqiVS;
+    }
+
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (player) {
+            if (triggerEvent == CardFinished) {
+                const Card *card = data.value<CardUseStruct>().card;
+                if (card && card->objectName() == "duel" && card->getSkillName() == objectName()) {
+                    room->setPlayerMark(player, "xiaoqi-slash", 0);
+                    room->setPlayerFlag(player, "-xiaoqi_slash");
+                    room->setPlayerFlag(player, "-xiaoqi_duel");
+                }
+            } else if (triggerEvent == CardResponded) {
+                const Card *card = data.value<CardResponseStruct>().m_card;
+                if (card->isKindOf("Slash") && card->getSkillName() == objectName()) {
+                    room->addPlayerMark(player, "xiaoqi-slash");
+                }
+            } else if (triggerEvent == CardAsked) {
+                if (!player->hasFlag("xiaoqi_duel")) {
+                    return;
+                }
+                QStringList data_list = data.toStringList();
+                if (data_list.length() != 2) return;
+                QString asked = data_list.first();
+                if (asked == "slash") {
+                    room->setPlayerFlag(player, "-xiaoqi_slash");
+                    int i = 0;
+                    foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                        if (p->hasShownGeneral1() && !p->getGeneralName().contains("sujiang")) {
+                            foreach (const Skill *skill, p->getActualGeneral1()->getVisibleSkillList()) {
+                                if (skill->objectName().startsWith("mashu")) {
+                                    i++;
+                                }
+                            }
+                        }
+                        if (p->getGeneral2() && p->hasShownGeneral2() && !p->getGeneral2Name().contains("sujiang")) {
+                            foreach (const Skill *skill, p->getActualGeneral2()->getVisibleSkillList()) {
+                                if (skill->objectName().startsWith("mashu")) {
+                                    i++;
+                                }
+                            }
+                        }
+                    }
+                    if (player->getMark("xiaoqi-slash") < i) {
+                        room->setPlayerFlag(player, "xiaoqi_slash");
+                    }
+                }
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    {
+        if (triggerEvent != CardUsed)
+            return QStringList();
+        CardUseStruct use = data.value<CardUseStruct>();
+        if (TriggerSkill::triggerable(player) && use.card != NULL && use.card->isKindOf("Slash")) {
+            return QStringList(objectName());
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        if (player->askForSkillInvoke(this, data)) {
+            room->broadcastSkillInvoke(objectName(), player);
+            return true;
+        }
+        return false;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    {
+        CardUseStruct use = data.value<CardUseStruct>();
+        Duel *duel = new Duel(use.card->getSuit(), use.card->getNumber());
+        duel->copyFrom(use.card);
+        duel->setSkillName(objectName());
+        use.card = duel;
+        data = QVariant::fromValue(use);
+        room->setPlayerFlag(player, "xiaoqi_duel");
+        return false;
+    }
+};
+
+
 class Qinzhong : public TriggerSkill
 {
 public:
@@ -2906,8 +3024,7 @@ OverseasPackage::OverseasPackage()
 
     General *maxiumatie = new General(this, "maxiumatie", "qun");
     maxiumatie->addSkill(new Mashu("maxiumatie"));
-    maxiumatie->addSkill(new Kenshang);
-    maxiumatie->addSkill(new KenshangEffect);
+    maxiumatie->addSkill(new Xiaoqi);
     related_skills.insertMulti("kenshang", "#kenshang-effect");
 
     General *xiahoushang = new General(this, "xiahoushang", "wei");
