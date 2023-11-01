@@ -68,7 +68,7 @@ return {
     ["yusui"] = "Ngọc Toái",
     [":yusui"] = "Một lần trong lượt của mỗi người, sau khi bạn trở thành mục tiêu của bài Đen do người thế lực xác định khác bạn sử dụng, bạn có thể mất 1 máu, sau đó lựa chọn 1 mục:\n1. Bạn lệnh họ bỏ X lá trên tay (X là giới hạn máu của họ);\n2. Bạn lệnh họ mất máu đến khi bằng với số máu của bạn.",
     ["boyan"] = "Bác Ngôn",
-    [":boyan"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác, thực hiện lần lượt:\n- Họ bổ sung bài trên tay đến giới hạn máu của họ;\n- Trong lượt này họ không thể sử dụng hoặc đánh ra bài trên tay của họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Bác Ngôn (Tung Hoành)« (Bỏ qua dòng đầu và hiệu ứng Tung Hoành) cho đến sau khi kết thúc lượt chơi tiếp theo của họ.",
+    [":boyan"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác, thực hiện lần lượt:\n- Họ bổ sung bài trên tay đến giới hạn máu của họ;\n- Trong lượt này họ không thể sử dụng hoặc đánh ra bài trên tay của họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Bác Ngôn (Tung Hoành)« (Bỏ qua dòng đầu và hiệu ứng Tung Hoành) cho đến khi kết thúc lượt chơi tiếp theo của họ.",
     ["@yusui-choice"] = "Ngọc Toái: lựa chọn hành động cho %dest chấp hành",
     ["yusui:losehp"] = "Mất máu đến khi số máu bằng bạn.",
     ["yusui:discard"] = "Bỏ số bài trên tay bằng giới hạn máu.",
@@ -83,7 +83,7 @@ return {
 	["jianliang"] = "Giản Lượng",
 	[":jianliang"] = "Đầu giai đoạn rút bài, nếu bạn là người có ít bài trên tay nhất, bạn có thể lệnh người cùng thế lực bạn lần lượt rút 1 lá.",
 	["weimeng"] = "Ngụy Minh",
-	[":weimeng"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác có bài trên tay, bạn thu lấy tối đa X lá trên tay của họ (X là số máu của bạn), sau đó bạn giao lượng bài tương đương cho họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Ngụy Minh (Tung Hoành)« (Thay mô tả \"X\" thành \"1\" và bỏ qua hiệu ứng Tung Hoành) cho đến sau khi kết thúc lượt tiếp theo của họ.",
+	[":weimeng"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác có bài trên tay, bạn thu lấy tối đa X lá trên tay của họ (X là số máu của bạn), sau đó bạn giao lượng bài tương đương cho họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Ngụy Minh (Tung Hoành)« (Thay mô tả \"X\" thành \"1\" và bỏ qua hiệu ứng Tung Hoành) cho đến khi kết thúc lượt tiếp theo của họ.",
 
 	["weimengzongheng"] = "Ngụy Minh",
 	[":weimengzongheng"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác có bài trên tay, bạn thu lấy 1 lá trên tay của họ, sau đó giao 1 lá cho họ.",
@@ -99,7 +99,7 @@ return {
 	["#xunchen"] = "Tam Công Mưu Chủ",
     ["xunchen"] = "Tuân Kham",
     ["fenglve"] = "Phong Lược",
-    [":fenglve"] = "Một lần trong giai đoạn ra bài, bạn có thể đấu điểm với 1 người khác:\n* Nếu bạn thắng, họ giao 2 lá trong vùng chơi của họ cho bạn;\n* Nếu bạn thua, bạn giao 1 lá cho họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Phong Lược (Tung Hoành)« (Thay mô tả \"2\" thành \"1\" và bỏ qua hiệu ứng Tung Hoành) cho đến sau khi kết thúc lượt tiếp theo của họ.",
+    [":fenglve"] = "Một lần trong giai đoạn ra bài, bạn có thể đấu điểm với 1 người khác:\n* Nếu bạn thắng, họ giao 2 lá trong vùng chơi của họ cho bạn;\n* Nếu bạn thua, bạn giao 1 lá cho họ;\n▷ Tung Hoành: Bạn có thể lệnh họ nhận kỹ năng »Phong Lược (Tung Hoành)« (Thay mô tả \"2\" thành \"1\" và bỏ qua hiệu ứng Tung Hoành) cho đến khi kết thúc lượt tiếp theo của họ.",
     ["anyong"] = "Ám Dũng",
     [":anyong"] = "Một lần trong lượt của mỗi người, khi 1 người cùng thế lực với bạn gây sát thương cho 1 người khác ngoài họ, có thể lệnh cho sát thương này gấp đôi; sau đó, nếu người nhận sát thương đã:\n* Mở tất cả tướng: Bạn tự mất 1 máu và mất kỹ năng này;\n* Mở 1 tướng và không phải tất cả: Bạn bỏ 2 lá trên tay.",
     ["@fenglve-give1"] = "Phong Lược: Chọn 1 lá giao cho %dest",
@@ -117,7 +117,7 @@ return {
     ["deshao"] = "Đức Thiệu",
     [":deshao"] = "X lần trong lượt của mỗi người (X là số máu của bạn), sau khi người khác xác định bạn là mục tiêu duy nhất của bài Đen do họ sử dụng, nếu họ đã mở số tướng ≤ hơn bạn, bạn có thể bỏ 1 lá của họ.",
     ["mingfa"] = "Minh Phạt",
-    [":mingfa"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác thế lực;\n▶ Khi kết thúc lượt tiếp theo của họ, nếu số lá trên tay họ so với bạn:\n* Ít hơn: Bạn gây 1 sát thương cho họ và thu lấy 1 lá trên tay họ;\n* Nhiều hơn: Bạn bổ sung bài trên tay đến khi bằng họ, tối đa rút thêm 5 lá.",
+    [":mingfa"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người khác thế lực;\n▶ Trước khi kết thúc lượt tiếp theo của họ, nếu số lá trên tay họ so với bạn:\n* Ít hơn: Bạn gây 1 sát thương cho họ và thu lấy 1 lá trên tay họ;\n* Nhiều hơn: Bạn bổ sung bài trên tay đến khi bằng họ, tối đa rút thêm 5 lá.",
 
     ["#MingfaEffect"] = "%arg của %from có hiệu lực",
 	

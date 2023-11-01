@@ -28,7 +28,7 @@ return {
 	["&cuiyanmaojie"] = "Thôi Diễm Mao Giới",
 	["#cuiyanmaojie"] = "Nhật Xuất Nguyệt Thịnh",
 	["zhengbi"] = "Chinh Tịch",
-	[":zhengbi"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể chọn 1 mục:\n1. Chọn 1 người khác không có thế lực, bạn sử dụng bài với họ không giới hạn khoảng cách và số lần đến sau khi kết thúc lượt này hoặc sau khi họ lật tướng;\n2. Chọn 1 người khác đã có thế lực, bạn giao cho họ 1 lá cơ bản, lệnh họ giao cho bạn 2 lá cơ bản hoặc 1 lá phi cơ bản.",
+	[":zhengbi"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể chọn 1 mục:\n1. Chọn 1 người khác không có thế lực, bạn sử dụng bài với họ không giới hạn khoảng cách và số lần đến sau khi kết thúc lượt này hoặc sau khi họ mở tướng;\n2. Chọn 1 người khác đã có thế lực, bạn giao cho họ 1 lá cơ bản, lệnh họ giao cho bạn 2 lá cơ bản hoặc 1 lá phi cơ bản.",
 	["@zhengbi"] = "Phát động »Chinh Tịch«",
 	["@zhengbi-give"] = "Chinh Tịch: Hãy chọn 2 lá cơ bản hoặc 1 lá phi cơ bản để giao cho %src",
 	["fengying"] = "Phụng Nghênh",

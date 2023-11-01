@@ -20,7 +20,7 @@ return {
 	["#zhangrang"] = "Thiết Hạnh Tuyệt Nhân",
 	["zhangrang"] = "Trương Nhượng",
 	["taoluan"] = "Thao Loạn",
-	[":taoluan"] = "Khi bạn cần sử dụng 1 lá cơ bản/công cụ phổ thông, bạn có thể mở tướng này, xem như sử dụng lá đó;\n▶ Khi kết thúc lượt này, nếu bạn đã mở tất cả tướng, bạn chọn tối đa 3 người khác đã trở thành mục tiêu của lá đó và có bài trên tay, thực hiện lần lượt:\n- Bạn lệnh họ mở 1 lá trên tay và giao cho bạn;\n- Trong số những lá đã mở, nếu số lá màu Đỏ > màu Đen, bạn úp tướng này.",
+	[":taoluan"] = "Khi bạn cần sử dụng 1 lá cơ bản/công cụ phổ thông, bạn có thể mở tướng này, xem như sử dụng lá đó;\n▶ Trước kết thúc lượt này, nếu bạn đã mở tất cả tướng, bạn chọn tối đa 3 người khác đã trở thành mục tiêu của lá đó và có bài trên tay, thực hiện lần lượt:\n- Bạn lệnh họ mở 1 lá trên tay và giao cho bạn;\n- Trong số những lá đã mở, nếu số lá màu Đỏ > màu Đen, bạn úp tướng này.",
 		
 	["#hejin"] = "Phanh Miếu Tế Đường",
 	["hejin"] = "Hà Tiến",

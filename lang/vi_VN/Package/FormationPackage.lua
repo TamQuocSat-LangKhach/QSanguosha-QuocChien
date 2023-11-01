@@ -104,7 +104,7 @@ return {
 	[":zhendu"] = "Khi bắt đầu giai đoạn ra bài của người khác, bạn có thể bỏ 1 lá bài trên tay, nếu họ thỏa mãn điều kiện sử dụng [Tửu], thực hiện lần lượt:\n- Họ xem như sử dụng [Tửu];\n- Bạn gây 1 sát thương cho họ.",
 	["@zhendu-discard"] = "Có thể phát động »Độc Tửu«, bỏ 1 lá trên tay.",
 	["qiluan"] = "Thích Loạn",
-	[":qiluan"] = "Khi kết thúc lượt của 1 người, nếu trong lượt này bạn đã giết người, bạn có thể rút 3 lá.",
+	[":qiluan"] = "Trước khi kết thúc lượt của 1 người, nếu trong lượt này bạn đã giết người, bạn có thể rút 3 lá.",
 
 	["#lord_liubei"] = "Long Hoành Thục Hán",
 	["lord_liubei"] = "Lưu Bị - Quân",

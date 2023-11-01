@@ -38,7 +38,7 @@ return {
 	["#zangba"] = "Tiết Độ Thanh Từ",
 	["zangba"] = "Tang Bá",
 	["hengjiang"] = "Hoành Giang",
-	[":hengjiang"] = "Sau khi bạn nhận sát thương, ứng với mỗi sát thương, nếu giới hạn trữ bài của người đang có lượt > 0, bạn có thể lệnh người đang có lượt giảm 1 giới hạn trữ bài;\n▶ Khi kết thúc lượt này, nếu ở giai đoạn bỏ bài, họ không bỏ lá nào, bạn rút X lá bài (X là số lần bạn đã phát động kỹ năng này trong lượt này).",
+	[":hengjiang"] = "Sau khi bạn nhận sát thương, ứng với mỗi sát thương, nếu giới hạn trữ bài của người đang có lượt > 0, bạn có thể lệnh người đang có lượt giảm 1 giới hạn trữ bài;\n▶ Trước khi kết thúc lượt này, nếu ở giai đoạn bỏ bài, họ không bỏ lá nào, bạn rút X lá bài (X là số lần bạn đã phát động kỹ năng này trong lượt này).",
 	["@hengjiang"] = "Hoành Giang",
 	["#HengjiangDraw"] = "%from không bỏ bài, %to phát động hiệu quả [%arg]",
 	["#hengjiang-draw"] = "Hoành Giang (Rút bài)",

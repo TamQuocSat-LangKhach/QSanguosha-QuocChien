@@ -665,7 +665,9 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
             if (player != dying.who && player != jiaxu)
                 break;
         }
-
+        if (player->hasFlag("CannotHelp")) {
+            break;
+        }
         const Card *cheak_peach = Sanguosha->cloneCard("peach", Card::NoSuit, 0);
 
         while (dying.who->getHp() <= 0) {
@@ -681,6 +683,13 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
         break;
     }
     case AskForPeachesDone: {
+        foreach (ServerPlayer *p, room->getPlayers()) {
+            if (p->hasFlag("CannotHelp")) {
+                p->setFlags("-CannotHelp");
+                break;
+            }
+        }
+
         if (player->getHp() <= 0 && player->isAlive()) {
 #ifndef QT_NO_DEBUG
             if (!player->getAI() && player->askForSkillInvoke("userdefine:revive")) {

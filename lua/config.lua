@@ -35,18 +35,21 @@ config = {
 	skill_colors = {
 		compulsory = "#0000FF",
 		once_per_turn = "#008000",
+		once_per_round = "#008000",
 		once_per_whole_turn = "#008000",
 		once_per_your_whole_turn = "#008000",
 		once_per_whole_game = "#008000",
 		twice_per_turn = "#008000",
 		twice_per_whole_turn = "#008000",
 		four_per_turn = "#008000",
+		four_per_your_whole_turn = "#008000",
 		x_per_whole_turn = "#008000",
 		limited = "#FF0000",
 		head = "#00FF00",
 		deputy = "#00FFFF",
 		array = "#800080",
 		lord = "#FFA500",
+		switch = "#FFC0CB",
 	},
 
 	-- Sci-fi style background

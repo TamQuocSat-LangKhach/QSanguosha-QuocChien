@@ -89,7 +89,7 @@ return {
 	["@threaten_emperor"] = "Nhận hiệu quả của [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu], có thể bỏ 1 lá trên tay để nhận thêm 1 lượt",
 
 	["imperial_order"] = "Sắc lệnh",
-	[":imperial_order"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục:\n1. Mở 1 tướng và rút 1 lá;\n2.Bỏ 1 trang bị;\n3. Mất 1 máu.\n<b>Hiệu ứng thêm</b>: Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút;\n▶ Khi kết thúc lượt này, tất cả người không có thế lực có thế lực giải quyết hiệu quả của lá này.",
+	[":imperial_order"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người không có thế lực.\n<b>Hiệu quả</b>: Mục tiêu chọn 1 mục:\n1. Mở 1 tướng và rút 1 lá;\n2.Bỏ 1 trang bị;\n3. Mất 1 máu.\n<b>Hiệu ứng thêm</b>: Khi lá này tiến vào chồng bài bỏ không phải do sử dụng, lá này bị loại bỏ khỏi trận đấu, sau đó đưa [Chiếu Thư] vào đáy chồng bài rút;\n▶ Trước khi kết thúc lượt này, tất cả người không có thế lực có thế lực giải quyết hiệu quả của lá này.",
 
 	["#RemoveImperialOrder"] = "[%arg] bị bỏ ra nhưng chưa sử dụng, sẽ bị loại khỏi trận đấu.",
 	["#ImperialOrderEffect"] = "%from kết thúc lượt, phát động hiệu quả của [%arg] đã bị loại bỏ",

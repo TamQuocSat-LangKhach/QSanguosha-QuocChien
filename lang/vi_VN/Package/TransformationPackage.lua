@@ -46,7 +46,7 @@ return {
 	["#lijueguosi"] = "Phạm Tộ Khuynh Họa",
 	["&lijueguosi"] = "Lý Giác Quách Tỷ",
 	["xiongsuan"] = "Hung Toán",
-	[":xiongsuan"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể bỏ 1 lá bài trên tay và chọn 1 người cùng thế lực, thực hiện lần lượt:\n- Bạn gây 1 sát thương cho họ;\n- Bạn rút 3 lá;\n- Bạn chọn 1 Hạn định kỹ đã phát động của họ;\n▶ Khi kết thúc lượt này, thêm 1 giới hạn phát động Hạn định kỹ đó.",
+	[":xiongsuan"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể bỏ 1 lá bài trên tay và chọn 1 người cùng thế lực, thực hiện lần lượt:\n- Bạn gây 1 sát thương cho họ;\n- Bạn rút 3 lá;\n- Bạn chọn 1 Hạn định kỹ đã phát động của họ;\n▶ Trước khi kết thúc lượt này, thêm 1 giới hạn phát động Hạn định kỹ đó.",
 	["@xiongsuan-reset"] = "Hung Toán: Đặt lại 1 Hạn định kỹ của %dest",
 	["#XiongsuanReset"] = "%from đặt lại Kỹ năng »%arg«",
 	

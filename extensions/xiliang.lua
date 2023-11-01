@@ -522,7 +522,7 @@ jutian = sgs.CreateTriggerSkill{
 			elseif choice == "discard" then
 				room:setPlayerFlag(player, "jutian2Used")
 				if target:getHandcardNum() > target:getHp() then
-                    local x = math.max(target:getHandcardNum() - target:getHp(), 5)
+                    local x = math.min(target:getHandcardNum() - target:getHp(), 5)
                     room:askForDiscard(target, "jutian_discard", x, x)
                 end
 			end
@@ -2177,9 +2177,9 @@ sgs.LoadTranslationTable{
 	["illustrator:chendeng"] = "Dật Danh",
 	["designer:chendeng"] = "Mộng Yểm Cuồng Triều",
     ["haokui"] = "Hào Khôi",
-    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n▶ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực khác bạn, ưu tiên theo thứ tự sau:\n* Người thuộc đại thế lực;\n* Người có số máu lớn nhất trong số những người thế lực xác định khác bạn;\n▶ Khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn thực hiện lần lượt:\n- Nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
+    [":haokui"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể rút 2 lá;\n▶ Khi có bài tiến vào chồng bài bỏ trong giai đoạn bỏ bài lượt này, bạn đem những lá này giao cho 1 người thế lực khác bạn, ưu tiên theo thứ tự sau:\n* Người thuộc đại thế lực;\n* Người có số máu lớn nhất trong số những người thế lực xác định khác bạn;\n▶ Trước khi kết thúc lượt này, nếu bạn không giao bài cho người khác bởi kỹ năng này, bạn thực hiện lần lượt:\n- Nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này;\n- Bạn có thể chọn 1 người cùng thế lực với bạn, họ có thể đổi Phó tướng.",
     ["xushi"] = "Hư Thực",
-    [":xushi"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu tướng này đang úp, bạn có thể hủy bỏ mục tiêu đối với bạn;\n▷ Bạn lệnh họ bỏ 1 lá.",
+    [":xushi"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu tướng này đang úp, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Hủy bỏ mục tiêu đối với bạn;\n- Bạn lệnh người sử dụng bỏ 1 lá.",
 	
     ["@haokui-give"] = "Hào Khôi: Chọn 1 người nhận bài bỏ từ chồng bài bỏ",
     ["@haokui-transform"] = "Hào Khôi: Bạn có thể chọn 1 người cùng thế lực và lệnh họ đổi phó tướng",
@@ -2682,7 +2682,7 @@ sgs.LoadTranslationTable{
 	["illustrator:sunhuan"] = "Thinking",
 	["designer:sunhuan"] = "Mộng Yểm Cuồng Triều",
 	["nizhan"] = "Nghịch Trảm",
-	[":nizhan"] = "Khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] với họ;\n▶ Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
+	[":nizhan"] = "Trước khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] với họ;\n▶ Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
 
 	["@nizhan-choose"] = "Nghịch Trảm: Chọn 1 hiệu ứng cho %dest",
 	["nizhan:extraction"] = "Thu 1 lá",

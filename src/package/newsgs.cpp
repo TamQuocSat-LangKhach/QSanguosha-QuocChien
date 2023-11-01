@@ -1,4 +1,4 @@
-﻿/********************************************************************
+/********************************************************************
     Copyright (c) 2013-2015 - Mogara
 
     This file is part of QSanguosha-Hegemony.
@@ -3216,20 +3216,22 @@ bool JianguoCard::targetFilter(const QList<const Player *> &targets, const Playe
 void JianguoCard::onEffect(const CardEffectStruct &effect) const
 {
     Room *room = effect.from->getRoom();
+    ServerPlayer *to = effect.to;
     QStringList choicelist;
-    choicelist << "d1tx" << "t1dx";
-    QString choice = room->askForChoice(effect.from, "jianguo", choicelist.join("+"), QVariant(), "#jianguo-choice::" + effect.to->objectName(), choicelist.join("+") );
-    if (choice == "d1tx") {
-        room->drawCards(effect.to, 1, "jianguo");
+    choicelist << "d1tx";
+    if (!to->isNude())
+        choicelist << "t1dx";
+    if (room->askForChoice(effect.from, objectName(), choicelist.join("+"), QVariant(), "#jianguo-choice::" + effect.to->objectName(), "d1tx+t1dx") == "t1dx") {
+        room->askForDiscard(effect.to, objectName(), 1, 1, false, true);
         int x = effect.to->getHandcardNum() / 2;
         if (x > 0) {
-            room->askForDiscard(effect.to, "jianguo", x, x);
+            room->drawCards(effect.to, x, objectName());
         }
-    } else if (choice == "t1dx") {
-        room->askForDiscard(effect.to, "jianguo", 1, 1, false, true);
+    } else {
+        room->drawCards(effect.to, 1, objectName());
         int x = effect.to->getHandcardNum() / 2;
         if (x > 0) {
-            room->drawCards(effect.to, x, "jianguo");
+            room->askForDiscard(effect.to, objectName(), x, x);
         }
     }
 }
@@ -3265,7 +3267,7 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
             QList<ServerPlayer *> allplayers = room->getAlivePlayers();
             foreach (ServerPlayer *p, allplayers) {
                 room->setPlayerMark(p, "#qingshi", 0);
@@ -3432,7 +3434,7 @@ public:
 
     virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (TriggerSkill::triggerable(player)) {
+        if (TriggerSkill::triggerable(player) && player->getMark("@impasse") > 0) {
             DyingStruct dying = data.value<DyingStruct>();
             if (dying.who == player && player->getHp() < 1 && !player->isNude())
                 return QStringList(objectName());

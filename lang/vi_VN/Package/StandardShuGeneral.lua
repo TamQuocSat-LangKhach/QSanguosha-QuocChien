@@ -125,7 +125,7 @@ return {
 	[":xiangle"] = "Tỏa định kỹ: Sau khi bạn trở thành mục tiêu của [Sát], người sử dụng [Sát] chọn 1 mục:\n1. Họ bỏ 1 lá cơ bản;\n2. Lệnh [Sát] đó không có hiệu quả với bạn.",
 	["@xiangle-discard"] = "%src đã phát động [Hưởng Lạc], hãy bỏ thêm 1 lá cơ bản nếu không lá [Sát] sẽ vô hiệu.",
 	["fangquan"] = "Ủy Quyền",
-	[":fangquan"] = "Khi tiến vào giai đoạn ra bài, bạn có thể bỏ qua giai đoạn này;\n▶ Khi kết thúc lượt này, bạn có thể bỏ 1 lá bài trên tay, lệnh 1 người có 1 lượt sau lượt này.",
+	[":fangquan"] = "Khi tiến vào giai đoạn ra bài, bạn có thể bỏ qua giai đoạn này;\n▶ Trước khi kết thúc lượt này, bạn có thể bỏ 1 lá bài trên tay, lệnh 1 người có 1 lượt sau lượt này.",
 	["@fangquan-discard"] = "Bạn có thể bỏ ra 1 lá bài và chọn 1 người để họ có lượt sau bạn.",
 	["#fangquan-after"] = "Ủy Quyền",
 	["~fangquan"] = "Chọn 1 lá bài, chọn 1 người và kích \"Xác nhận\"",
