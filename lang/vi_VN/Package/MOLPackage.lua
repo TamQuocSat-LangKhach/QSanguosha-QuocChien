@@ -29,7 +29,6 @@ return {
 
 	["#wangji"] = "Kinh Hành Hợp Nhất",
 	["wangji"] = "Vương Cơ",
-	["illustrator:wangji"] = "雪君S",
 	["qizhi"] = "Kì Chế",
 	[":qizhi"] = "Bốn lần trong lượt của bạn, khi bạn sử dụng lá phi trang bị, bạn có thể bỏ 1 lá của 1 người không phải là mục tiêu của lá này, sau đó lệnh họ rút 1 lá.",
 	["jinqu"] = "Tiến Xu",
@@ -39,7 +38,6 @@ return {
 	["#yanyan"] = "Đoạn Đầu Tướng Quân",
 	--["designer:yanyan"] = "",
 	["yanyan"] = "Nghiêm Nhan",
-	["illustrator:yanyan"] = "琛·美弟奇",
 	["juzhan"] = "Cự Chiến",
 	[":juzhan"] = "Chuyển hoán kỹ:\n• Dương: Sau khi bạn trở thành mục tiêu của [Sát], bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn và người sử dụng rút X lá (X là số máu đã mất của người sử dụng [Sát], tối thiểu 1);\n- Nếu họ đã mở tất cả tướng, bạn có thể úp 1 tướng của họ, lệnh họ không thể mở tướng đó trong lượt này.\n• Âm: Sau khi bạn xác định mục tiêu của [Sát], bạn có thể chọn 1 người trong các mục tiêu, thực hiện lần lượt:\n- Bạn thu lấy X lá của họ (X là số máu đã mất của bạn, tối thiểu 1);\n- Nếu bạn đã mở tất cả tướng, họ có thể úp 1 tướng của bạn, sau đó bạn không thể mở tướng đó trong lượt này.",
 	["juzhan-invoke"] = "Có thể phát động »Cự Chiến«, chọn 1 mục tiêu",
@@ -50,7 +48,6 @@ return {
 	["#zhuran"] = "Bất Động Chi Đốc",
 	--["designer:zhuran"] = "",
 	["zhuran"] = "Chu Nhiên",
-	["illustrator:zhuran"] = "Ccat",
 	["danshou"] = "Đàm Thủ",
 	[":danshou"] = "Một lần trong mỗi vòng chơi, khi bắt đầu giai đoạn chuẩn bị của 1 người, bạn có thể bỏ tất cả bài trong vùng chơi của bạn;\n▶ Khi bắt đầu 1 giai đoạn trong lượt này (Ngoại trừ giai đoạn chuẩn bị và kết thúc), nếu số lá trên tay bạn ≤ số lá bị bỏ bởi kỹ năng này, bạn chọn 1 mục:\n1. Tích Lũy +1 trong lượt này;\n2. Bạn rút X lá và loại bỏ tất cả Tích Lũy (X là số Tích Lũy của bạn +1);\n ▷ Nếu X=4, bạn có thể gây sát thương cho người đang có lượt.",
 
@@ -62,7 +59,6 @@ return {
 	["#xugong"] = "Độc Kế Kích Lưu",
 	--["designer:xugong"] = "",
 	["xugong"] = "Hứa Cống",
-	["illustrator:xugong"] = "君桓文化",
 	["biaozhao"] = "Biểu Triệu",
 	[":biaozhao"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 2 người khác có thể lực xác định khác nhau, thực hiện lần lượt:\n- Bạn xem như sử dụng [Tri Kỷ Tri Bỉ] với người thứ nhất;\n- Bạn giao 1 lá cho người thứ 2;\n- Bạn rút 1 lá.",
 	["yechou"] = "Nghiệp Cừu",
