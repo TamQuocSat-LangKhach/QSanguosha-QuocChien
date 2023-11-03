@@ -36,7 +36,7 @@ return {
 	["shengweijiang"] = "Sinh Vi Tướng",
 	[":shengweijiang"] = "Sau khi bạn giải quyết hấp hối, nếu số máu của bạn ≤0, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn hồi máu đến tối đa và bổ xung bài trên tay tới giới hạn máu;\n- Lệnh người đang trong giai đoạn ra bài kết thúc giai đoạn này;\n- Bạn mất kỹ năng này, nhận kỹ năng »Tử Vi Thần«.",
 	["siweishen"] = "Tử Vi Thần",
-	[":siweishen"] = "• Một lần trong ván đấu, khi người cùng thế lực với bạn gây sát thương, bạn có thể lệnh sát thương này +1.\n• Tỏa định kỹ: Sau khi bạn kết thúc lượt, bạn trận vong.",
+	[":siweishen"] = "• Một lần trong ván đấu, khi người cùng thế lực với bạn gây sát thương, bạn có thể lệnh sát thương này +1.\n• Tỏa định kỹ: Sau khi bạn kết thúc lượt, nếu lượt này không phải là lượt bạn nhận kỹ năng này, bạn trận vong.",
 	["#siweishen-death"] = "Sinh Vi Tướng, Tử Vi Thần, %from đã tuẫn tiết",
 	["#shengweijiang-end"] = "Sinh Vi Tướng của %from có hiệu lực, %to kết thúc giai đoạn ra bài",
 }

@@ -473,7 +473,7 @@ public:
             room->sendLog(log);
         }
         room->addPlayerMark(player, "##shengweijiang");
-        room->addPlayerMark(player, "##siweishen");
+        //room->addPlayerMark(player, "##siweishen");
         room->handleAcquireDetachSkills(player, "-shengweijiang|siweishen!");
         return false;
     }
@@ -490,12 +490,20 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive && player->isAlive() && player->getMark("##siweishen") > 0) {
-            LogMessage log;
-            log.type = "#siweishen-death";
-            log.from = player;
-            room->sendLog(log);
-            room->killPlayer(player);
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive && player->isAlive()) {
+            if (player->getMark("##siweishen") > 0) {
+                LogMessage log;
+                log.type = "#siweishen-death";
+                log.from = player;
+                room->sendLog(log);
+                room->killPlayer(player);
+            } else {
+                foreach (ServerPlayer *p, room->getAlivePlayers()) {
+                    if (p->hasShownSkill(this) && p->getMark("##siweishen") < 1) {
+                        room->addPlayerMark(p, "##siweishen");
+                    }
+                }
+            }
         }
     }
 

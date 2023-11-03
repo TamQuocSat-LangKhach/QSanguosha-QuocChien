@@ -1914,7 +1914,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>Club</source>
-        <translation>Chuồn</translation>
+        <translation>Tép</translation>
     </message>
     <message>
         <source>Dead</source>
