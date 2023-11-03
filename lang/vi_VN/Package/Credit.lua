@@ -248,4 +248,8 @@ return {
 	["illustrator:lord_sunquan"] = "Khạp Khạp Nhất Hưu",
 	["illustrator:ty_duyu"] = "Phàm Quả",
 	["illustrator:huangquan"] = "Tượng Nhân Hội",
+	["illustrator:wangji"] = "Tuyết Quân S",
+	["illustrator:yanyan"] = "Sâm·Mĩ Đệ Kì",
+	["illustrator:zhuran"] = "Ccat",
+	["illustrator:xugong"] = "Quân Hoàn Văn Hóa",
 }
