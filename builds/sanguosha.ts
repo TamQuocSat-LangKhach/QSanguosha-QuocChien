@@ -3402,7 +3402,7 @@ Lý do:
     <name>Skill</name>
     <message>
         <source>this skill cannot preshow</source>
-        <translation>Không có thời điểm</translation>
+        <translation>Không thể tiềm phục</translation>
     </message>
     <message>
         <source>this skill can show in play</source>
