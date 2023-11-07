@@ -1151,7 +1151,7 @@ sgs.LoadTranslationTable{
     ["mumeng"] = "Mục Minh",
     [":mumeng"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá CƠ trên tay thành [Viễn Giao Cận Công]/[Lục Lực Đồng Tâm]",
     ["naman"] = "Nạp Man",
-    [":naman"] = "Khi người khác sử dụng bài Đen có chỉ định nhiều mục tiêu, bạn có thể tiến hành phán xét, nếu kết quả phát xét không phải BÍCH, bạn chọn 1 mục:\n1. Lệnh 1 người khác trở thành mục tiêu của bài (Không bị giới hạn khoảng cách);\n2. Hủy bỏ mục tiêu đối với 1 mục tiêu của lá đó.",
+    [":naman"] = "Khi người khác sử dụng bài Đen có chỉ định nhiều mục tiêu, bạn có thể tiến hành phán xét, nếu kết quả phát xét không phải BÍCH, bạn chọn 1 mục:\n1. Lệnh 1 người khác trở thành mục tiêu của bài (Không bị giới hạn khoảng cách);\n2. Hủy bỏ 1 mục tiêu của lá đó.",
 	--["@mumeng-choose"] = "Mục Minh: Chọn lá muốn sử dụng",
 	--["@mumeng-usecard"] = "Mục Minh: Chọn lá CƠ để chuyển hóa sử dụng thành [%arg]",
     ["@naman-target"] = "Nạp Man: Thêm hoặc bớt 1 mục tiêu của [%arg] do %src sử dụng",

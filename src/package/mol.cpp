@@ -1886,8 +1886,6 @@ private:
     {
         if (skill->isAttachedLordSkill() || skill->isLordSkill()) return false;
         if (!skill->getRelatePlace().isEmpty() || skill->inherits("BattleArraySkill")) return false;
-        QString des_src = Sanguosha->translate(":" + skill_name);
-        if (des_src.startsWith("Chuyển Hoán Kĩ")) return false;
         return (skill->getFrequency() == Skill::Frequent || skill->getFrequency() == Skill::NotFrequent);
     }
 };
@@ -3092,18 +3090,12 @@ class Juzhan : public TriggerSkill
 public:
     Juzhan() : TriggerSkill("juzhan")
     {
-        events << TargetChosen << TargetConfirmed << GeneralShown << DFDebut << EventPhaseStart;
+        events << TargetChosen << TargetConfirmed << EventPhaseStart;
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if ((triggerEvent == GeneralShown || triggerEvent == DFDebut)
-                && player->hasShownSkill(this)
-                && player->isAlive()
-                && player->getMark("##SwitchYang") < 1
-                && player->getMark("##SwitchYin") < 1) {
-            room->addPlayerMark(player, "##SwitchYang");
-        } else if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
+        if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
             foreach (ServerPlayer *p, room->getAlivePlayers()) {
                 room->removePlayerDisableShow(p, objectName());
             }
@@ -3112,21 +3104,16 @@ public:
 
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if ((triggerEvent != TargetChosen && triggerEvent != TargetConfirmed)
-                || !TriggerSkill::triggerable(player)) return QStringList();
+        if (triggerEvent == EventPhaseStart || !TriggerSkill::triggerable(player)) return QStringList();
         CardUseStruct use = data.value<CardUseStruct>();
         if (use.card && use.card->isKindOf("Slash")) {
-            if (triggerEvent == TargetChosen) {
-                if (use.index == 0 && player->getMark("##SwitchYin") > 0) {
-                    foreach (ServerPlayer *p, use.to) {
-                        if (p != player && !p->isNude())
-                            return QStringList(objectName());
-                    }
+            if (triggerEvent == TargetChosen && use.index == 0 && player->getMark("#juzhan") & 1) {
+                foreach (ServerPlayer *p, use.to) {
+                    if (p != player && !p->isNude())
+                        return QStringList(objectName());
                 }
-            } else if (triggerEvent == TargetConfirmed) {
-                if (use.from && use.from != player && player->getMark("##SwitchYin") < 1) {
-                    return QStringList(objectName());
-                }
+            } else if (triggerEvent == TargetConfirmed && use.from && use.from != player && !(player->getMark("#juzhan") & 1)) {
+                return QStringList(objectName());
             }
         }
         return QStringList();
@@ -3137,8 +3124,6 @@ public:
         if (triggerEvent == TargetConfirmed) {
             if (player->askForSkillInvoke(this)) {
                 room->broadcastSkillInvoke(objectName(), player);
-                room->setPlayerMark(player, "##SwitchYang", 0);
-                room->addPlayerMark(player, "##SwitchYin");
                 return true;
             }
         } else {
@@ -3151,8 +3136,6 @@ public:
             ServerPlayer *target = room->askForPlayerChosen(player, plist, objectName(), "juzhan-invoke", true, true);
             if (target) {
                 room->broadcastSkillInvoke(objectName(), player);
-                room->setPlayerMark(player, "##SwitchYin", 0);
-                room->addPlayerMark(player, "##SwitchYang");
                 QStringList target_list = player->tag["juzhan_target"].toStringList();
                 target_list.append(target->objectName());
                 player->tag["juzhan_target"] = target_list;
@@ -3195,6 +3178,7 @@ public:
                 doJuzhan(to, player);
             }
         }
+        room->addPlayerMark(player, "#juzhan");
         return false;
     }
 
@@ -3208,7 +3192,7 @@ private:
         if (!to->getActualGeneral1Name().contains("sujiang") && !to->isLord())
             generals << "head";
 
-        if (to->getGeneral2() != NULL && !to->getGeneral2Name().contains("sujiang"))
+        if (to->getGeneral2() && !to->getGeneral2Name().contains("sujiang"))
             generals << "deputy";
 
         if (generals.isEmpty()) return;

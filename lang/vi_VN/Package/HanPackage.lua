@@ -15,7 +15,7 @@ return {
 	["shiyuan"] = "Thi Oán",
 	[":shiyuan"] = "Một lần trong lượt của mỗi người, sau khi bạn trở thành mục tiêu của bài do người khác sử dụng, nếu số máu của họ so với bạn:\n* Lớn hơn: Bạn có thể rút 2 lá;\n* Ngược lại: Bạn có thể rút 1 lá.",
 	["dushi"] = "Độc Thệ",
-    [":dushi"] = "Tỏa định kỹ:\n• Người khác không thể sử dụng [Đào] với bạn.\n• Khi bạn trận vong do người khác gay sát thương, họ nhận kỹ năng này.",
+    [":dushi"] = "Tỏa định kỹ:\n• Người khác không thể sử dụng [Đào] với bạn.\n• Khi bạn trận vong do người khác gây sát thương, họ nhận kỹ năng này.",
 	
 	["#zhangrang"] = "Thiết Hạnh Tuyệt Nhân",
 	["zhangrang"] = "Trương Nhượng",

@@ -39,7 +39,7 @@ return {
 	--["designer:yanyan"] = "",
 	["yanyan"] = "Nghiêm Nhan",
 	["juzhan"] = "Cự Chiến",
-	[":juzhan"] = "Chuyển hoán kỹ:\n• Dương: Sau khi bạn trở thành mục tiêu của [Sát], bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn và người sử dụng rút X lá (X là số máu đã mất của người sử dụng [Sát], tối thiểu 1);\n- Nếu họ đã mở tất cả tướng, bạn có thể úp 1 tướng của họ, lệnh họ không thể mở tướng đó trong lượt này.\n• Âm: Sau khi bạn xác định mục tiêu của [Sát], bạn có thể chọn 1 người trong các mục tiêu, thực hiện lần lượt:\n- Bạn thu lấy X lá của họ (X là số máu đã mất của bạn, tối thiểu 1);\n- Nếu bạn đã mở tất cả tướng, họ có thể úp 1 tướng của bạn, sau đó bạn không thể mở tướng đó trong lượt này.",
+	[":juzhan"] = "Nếu số lần bạn đã phát động kỹ năng này trong trò chơi là:\n• Chẵn: Sau khi bạn trở thành mục tiêu của [Sát], bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn và người sử dụng rút X lá (X là số máu đã mất của người sử dụng [Sát], tối thiểu 1);\n- Nếu họ đã mở tất cả tướng, bạn có thể úp 1 tướng của họ, lệnh họ không thể mở tướng đó trong lượt này.\n• Lẻ: Sau khi bạn xác định mục tiêu của [Sát], bạn có thể chọn 1 người trong các mục tiêu, thực hiện lần lượt:\n- Bạn thu lấy X lá của họ (X là số máu đã mất của bạn, tối thiểu 1);\n- Nếu bạn đã mở tất cả tướng, họ có thể úp 1 tướng của bạn, sau đó bạn không thể mở tướng đó trong lượt này.",
 	["juzhan-invoke"] = "Có thể phát động »Cự Chiến«, chọn 1 mục tiêu",
 	["@juzhan-hide"] = "Cự Chiến: Có thể úp 1 tướng của %dest",
 	["juzhan:head"] = "Chủ tướng",

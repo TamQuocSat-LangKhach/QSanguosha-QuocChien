@@ -82,7 +82,7 @@ return {
 	["#huangyueying"] = "Quy Ẩn Kiệt Nữ",
 	["huangyueying"] = "Hoàng Nguyệt Anh",
 	["jizhi"] = "Tập Trí",
-	[":jizhi"] = "Khi bạn sử dụng công cụ phổ thông không phải chuyển hóa, bạn có thể rút 1 lá.",
+	[":jizhi"] = "Khi bạn sử dụng công cụ phổ thông phi chuyển hóa, bạn có thể rút 1 lá.",
 	["qicai"] = "Kỳ Tài",
 	[":qicai"] = "Tỏa định kỹ: Công cụ bạn sử dụng không giới hạn khoảng cách.",
 
