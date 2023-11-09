@@ -3300,6 +3300,82 @@ public:
     }
 };
 
+BiaozhaoCard::BiaozhaoCard()
+{
+    mute = true;
+}
+
+bool BiaozhaoCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    if (to_select == Self || !to_select->hasShownOneGeneral() || targets.length() >= 2) {
+        return false;
+    }
+    if (targets.length() == 0) {
+        KnownBoth *knownBoth = new KnownBoth(Card::NoSuit, 0);
+        knownBoth->deleteLater();
+        if (Self->isCardLimited(knownBoth, Card::MethodUse) || Self->isProhibited(to_select, knownBoth) || (to_select->isKongcheng() && to_select->hasShownAllGenerals())) {
+            return false;
+        }
+    } else {
+        if (to_select->isFriendWith(targets.first())) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool BiaozhaoCard::targetsFeasible(const QList<const Player *> &targets, const Player *) const
+{
+    return targets.length() == 2;
+}
+
+void BiaozhaoCard::use(Room *room, ServerPlayer *from, QList<ServerPlayer *> &targets) const
+{
+    ServerPlayer *first = targets.at(0);
+    ServerPlayer *second = targets.at(1);
+
+    KnownBoth *knownBoth = new KnownBoth(Card::NoSuit, 0);
+    knownBoth->setSkillName("biaozhao");
+    if (!from->isCardLimited(knownBoth, Card::MethodUse) && !from->isProhibited(first, knownBoth))
+        room->useCard(CardUseStruct(knownBoth, from, first));
+    else
+        delete knownBoth;
+
+    if (!from->isNude()) {
+        QList<int> ints = room->askForExchange(from, "biaozhao", 1, 1, "@biaozhao-give::" + second->objectName());
+
+        int card_id = -1;
+        if (ints.isEmpty()) {
+            card_id = from->getCards("he").first()->getEffectiveId();
+        } else
+            card_id = ints.first();
+
+        CardMoveReason reason(CardMoveReason::S_REASON_GIVE, from->objectName(), second->objectName(), "biaozhao", QString());
+        reason.m_playerId = second->objectName();
+        room->moveCardTo(Sanguosha->getCard(card_id), second, Player::PlaceHand, reason);
+    }
+    room->drawCards(from, 1, "biaozhao");
+}
+
+class Biaozhao : public ZeroCardViewAsSkill
+{
+public:
+    Biaozhao() : ZeroCardViewAsSkill("biaozhao")
+    {
+    }
+
+    virtual bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("BiaozhaoCard");
+    }
+
+    virtual const Card *viewAs() const
+    {
+        BiaozhaoCard *biaozhao_card = new BiaozhaoCard;
+        biaozhao_card->setShowSkill(objectName());
+        return biaozhao_card;
+    }
+};
 
 class Yechou : public TriggerSkill
 {
@@ -3337,29 +3413,38 @@ public:
     {
         DeathStruct death = data.value<DeathStruct>();
         ServerPlayer *target = death.damage->from;
-        if (target->isAlive()) {
-            Slash *slash = new Slash(Card::NoSuit, 0);
-            slash->setFlags("Global_NoDistanceChecking");
-            slash->setFlags("yechou_1");
-            slash->setSkillName("_yechou");
-            CardUseStruct use = CardUseStruct(slash, player, target);
+        Slash *slash1 = new Slash(Card::NoSuit, 0);
+        slash1->setFlags("Global_NoDistanceChecking");
+        slash1->setFlags("yechou_1");
+        slash1->setSkillName("_yechou");
+        if (target->isDead() || target->isRemoved() || player->isProhibited(target, slash1)) {
+            delete slash1;
+            return false;
+        } else {
+            CardUseStruct use = CardUseStruct(slash1, player, target);
             use.disresponsive_list << "_ALL_PLAYERS";
             room->useCard(use, false);
         }
-        if (target->isAlive()) {
-            Slash *slash = new Slash(Card::NoSuit, 0);
-            slash->setFlags("Global_NoDistanceChecking");
-            slash->setFlags("yechou_2");
-            slash->setSkillName("_yechou");
-            CardUseStruct use = CardUseStruct(slash, player, target);
+        Slash *slash2 = new Slash(Card::NoSuit, 0);
+        slash2->setFlags("Global_NoDistanceChecking");
+        slash2->setFlags("yechou_2");
+        slash2->setSkillName("_yechou");
+        if (target->isDead() || target->isRemoved() || player->isProhibited(target, slash2)) {
+            delete slash2;
+            return false;
+        } else {
+            CardUseStruct use = CardUseStruct(slash2, player, target);
             room->useCard(use, false);
         }
-        if (target->isAlive()) {
-            Slash *slash = new Slash(Card::NoSuit, 0);
-            slash->setFlags("Global_NoDistanceChecking");
-            slash->setFlags("yechou_3");
-            slash->setSkillName("_yechou");
-            CardUseStruct use = CardUseStruct(slash, player, target);
+        Slash *slash3 = new Slash(Card::NoSuit, 0);
+        slash3->setFlags("Global_NoDistanceChecking");
+        slash3->setFlags("yechou_3");
+        slash3->setSkillName("_yechou");
+        if (target->isDead() || target->isRemoved() || player->isProhibited(target, slash3)) {
+            delete slash3;
+            return false;
+        } else {
+            CardUseStruct use = CardUseStruct(slash3, player, target);
             room->useCard(use, false);
         }
         return false;
@@ -3448,10 +3533,22 @@ MOLPackage::MOLPackage()
     wangji->addSkill(new Qizhi);
     wangji->addSkill(new Jinqu);
 
+    General *yanyan = new General(this, "yanyan", "shu", 3);
+    yanyan->addSkill(new Juzhan);
+
     General *zhuran = new General(this, "zhuran", "wu");
     zhuran->addSkill(new Danshou);
 
+    General *xugong = new General(this, "xugong", "wu", 3);
+    xugong->addSkill(new Biaozhao);
+    xugong->addSkill(new Yechou);
+    xugong->addSkill(new YechouEffect);
+    related_skills.insertMulti("yechou", "#yechou-effect");
+    xugong->setSubordinateKingdom("qun");
+    xugong->addCompanion("yanbaihu");
+
     addMetaObject<MiewuCard>();
+    addMetaObject<BiaozhaoCard>();
 }
 
 OverseasPackage::OverseasPackage()

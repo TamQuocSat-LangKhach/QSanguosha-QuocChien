@@ -70,7 +70,7 @@ return {
 	[":burning_camps"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người cùng đội hình với người phía sau bạn.\n<b>Hiệu quả</b>: Bạn gây 1 sát thương Hỏa đối với mục tiêu. ",
 
 	["lure_tiger"] = "Điệu Hổ Ly Sơn",
-	[":lure_tiger"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Trong lượt này, mục tiêu không tính khoảng cách, vị trí; không thể sử dụng bài; không thể bị chỉ định làm mục tiêu của bài; không thể thay đổi số máu.",
+	[":lure_tiger"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người khác\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Trong lượt này, mục tiêu rời bàn chơi.\n\n<b>Rời bàn chơi</b>: Người rời bàn chơi nhận những hiệu quả sau:\n* Không tính vào khoảng cách, vị trí;\n* Không thể sử dụng bài;\n* Không thể bị chỉ định làm mục tiêu của bài;\n* Không thể bắt đầu quá trình nhận sát thương, hồi máu, thay đổi số máu.",
 	["lure_tiger_effect"] = "Điệu Hổ Ly Sơn",
 	["#lure_tiger-prohibit"] = "Điệu Hổ Ly Sơn",
 

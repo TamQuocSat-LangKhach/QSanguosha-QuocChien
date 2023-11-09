@@ -8,7 +8,7 @@ return {
 	["wanggui:prompt"] = "Có thể kích »Vong Quy«, người cùng thế lực rút 1 lá.",
 	["wanggui-invoke"] = "Có thể kích »Vong Quy«, gây 1 sát thương cho người không cùng thế lực.",
 	["xibing"] = "Tức Binh",
-	[":xibing"] = "Sau khi 1 người khác lần đầu trong giai đoạn ra bài của họ xác định 1 mục tiêu duy nhất của lá [Sát] Đen hoặc công cụ phổ thông Đen, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Nếu số lá trên tay họ < số máu của họ, bạn lệnh họ bổ sung bài trên tay đến số máu của họ và không thể tiếp tục sử dụng bài trên tay trong lượt này;\n- Nếu bạn và họ đã mở tất cả tướng, bạn có thể úp 1 tướng của bạn và họ, trong lượt này không thể mở lại tướng đó.",
+	[":xibing"] = "Sau khi 1 người khác lần đầu trong giai đoạn ra bài của họ xác định 1 mục tiêu duy nhất của lá [Sát]/công cụ phổ thông có màu Đen, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Nếu số lá trên tay họ < số máu của họ, bạn lệnh họ bổ sung bài trên tay đến số máu của họ và không thể tiếp tục sử dụng bài trên tay trong lượt này;\n- Nếu bạn và họ đã mở tất cả tướng, bạn có thể úp 1 tướng của bạn và họ, trong lượt này không thể mở lại tướng đó.",
 	["@xibing-hide"] = "Tức Binh: Chọn tướng của %dest để úp.",
 	["xibing:head"] = "Chủ tướng",
 	["xibing:deputy"] = "Phó tướng",

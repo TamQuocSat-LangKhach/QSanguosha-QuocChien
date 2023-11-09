@@ -328,11 +328,15 @@ int Player::originalRightDistanceTo(const Player *other) const
 
 int Player::distanceTo(const Player *other, int distance_fix) const
 {
-    if (this == other || isDead() || other->isDead())
+    if (this == other)
         return 0;
 
     if (isRemoved() || other->isRemoved())
         return -1;
+
+    if (isDead() || other->isDead()) {
+        return 0;
+    }
 
     if (fixed_distance.contains(other))
         return fixed_distance.value(other);

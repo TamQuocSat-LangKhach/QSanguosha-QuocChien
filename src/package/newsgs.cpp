@@ -132,17 +132,27 @@ class Xibing : public TriggerSkill
 public:
     Xibing() : TriggerSkill("xibing")
     {
-        events << TargetChosen << EventPhaseStart;
+        events << TargetChosen << EventPhaseStart << EventPhaseChanging;
 
     }
 
-    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
             QList<ServerPlayer *> alls = room->getAlivePlayers();
             foreach (ServerPlayer *p, alls) {
                 room->setPlayerMark(p, "##xibing", 0);
                 room->removePlayerDisableShow(p, objectName());
+            }
+        } else if (triggerEvent == EventPhaseChanging && data.value<PhaseChangeStruct>().from == Player::Play) {
+            room->setPlayerMark(player, "xibingPass", 0);
+        } else if (triggerEvent == TargetChosen
+                   && player && player->isAlive() && player->getPhase() == Player::Play && player->getMark("xibingPass") < 1) {
+            CardUseStruct use = data.value<CardUseStruct>();
+            const Card *card = use.card;
+            if (card && card->isBlack() && (card->isNDTrick() || card->isKindOf("Slash")) && use.to.size() == 1) {
+                room->setCardFlag(card, "GlobalXiBing");
+                room->addPlayerMark(player, "xibingPass");
             }
         }
     }
@@ -152,7 +162,8 @@ public:
         if (triggerEvent == TargetChosen && player && player->isAlive() && player->getPhase() == Player::Play) {
             TriggerList skill_list;
             CardUseStruct use = data.value<CardUseStruct>();
-            if (use.card->hasFlag("GlobalXiBing") && use.to.size() == 1) {
+
+            if (use.card->hasFlag("GlobalXiBing")) {
                 QList<ServerPlayer *> skill_owners = room->findPlayersBySkillName(objectName());
                 foreach (ServerPlayer *skill_owner, skill_owners) {
                     if (skill_owner == player) continue;

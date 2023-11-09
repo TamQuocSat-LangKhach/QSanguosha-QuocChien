@@ -540,6 +540,99 @@ public:
     }
 };
 
+
+ColdsnapCard::ColdsnapCard()
+{
+
+}
+
+bool ColdsnapCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+{
+    return targets.isEmpty() && to_select != Self && to_select->getMark("##coldsnap") < 1;
+}
+
+void ColdsnapCard::onEffect(const CardEffectStruct &effect) const
+{
+    ServerPlayer *target = effect.to;
+    Room *room = source->getRoom();
+    room->addPlayerMark(target, "#coldsnap");
+}
+
+class Coldsnap : public OneCardViewAsSkill
+{
+public:
+    Coldsnap() : OneCardViewAsSkill("coldsnap")
+    {
+        filter_pattern = ".|.|.|hand";
+    }
+
+    const Card *viewAs(const Card *originalCard) const
+    {
+        ColdsnapCard *skill_card = new ColdsnapCard;
+        skill_card->addSubcard(originalCard);
+        skill_card->setShowSkill(objectName());
+        return skill_card;
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return !player->hasUsed("ColdsnapCard");
+    }
+
+    virtual int getEffectIndex(const ServerPlayer *, const Card *card) const
+    {
+        return (card->getTypeId() == Card::TypeSkill) ? -1 : 0;
+    }
+};
+
+class ColdsnapEffect : public TriggerSkill
+{
+public:
+    ColdsnapEffect() : TriggerSkill("#coldsnap-effect")
+    {
+        events << Damaged << EventPhaseStart;
+        frequency = Compulsory;
+        global = true;
+    }
+
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    {
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
+            room->setPlayerMark(player, "#coldsnap", 0);
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    {
+        if (triggerEvent == Damaged) {
+            DamageStruct damage = data.value<DamageStruct>();
+            const Card *card = damage.card;
+            if (player->getMark("#coldsnap") > 0 && card && card->isKindOf("Slash")
+                    && damage.by_user && !damage.chain && !damage.transfer) {
+                return QStringList(objectName());
+            }
+        }
+        return QStringList();
+    }
+
+    virtual bool cost(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer *) const
+    {
+        return true;
+    }
+
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
+    {
+        int x = player->getMark("#coldsnap");
+        if (room->askForDiscard(player, "coldsnap", x, x, true, true, "@coldsnap-effect")) {
+            room->addPlayerMark(target, "#coldsnap");
+        } else {
+            room->setPlayerMark(player, "#coldsnap", 0);
+            player->turnOver();
+        }
+        return false;
+    }
+};
+
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach", GeneralPack, true)
 {

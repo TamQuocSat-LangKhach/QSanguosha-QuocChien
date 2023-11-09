@@ -824,8 +824,8 @@ void FireAttack::onEffect(const CardEffectStruct &effect) const
             effect.from->setFlags("FireAttackFailed_" + effect.to->objectName()); // For AI
     }
 
-    if (card->isVirtualCard())
-        delete card;
+//    if (card->isVirtualCard())
+//        delete card;
 }
 
 Indulgence::Indulgence(Suit suit, int number)

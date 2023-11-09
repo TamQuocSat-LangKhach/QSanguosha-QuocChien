@@ -104,7 +104,17 @@ public:
     virtual void onUse(Room *room, const CardUseStruct &card_use) const;
 };
 
+class BiaozhaoCard : public SkillCard
+{
+    Q_OBJECT
 
+public:
+    Q_INVOKABLE BiaozhaoCard();
+
+    virtual bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
+    virtual bool targetsFeasible(const QList<const Player *> &targets, const Player *Self) const;
+    virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
 
 class MOLPackage : public Package
 {

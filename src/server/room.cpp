@@ -1502,7 +1502,8 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
     if (isHegNullification && heg_nullification_selection == "all" && result) {
         setTag("HegNullificationValid", true);
     }
-
+    if (card->isVirtualCard())
+        delete card;
     return result;
 }
 
@@ -4258,11 +4259,11 @@ bool Room::useCard(const CardUseStruct &use, bool add_history)
         }
         throw triggerEvent;
     }
-    /*
-    if (card->isVirtualCard()){
-    delete card;
+
+    if (card->isVirtualCard() && !card->isKindOf("Nullification")){
+        delete card;
     }
-    */ //temporily revert this because it cause sudden exits
+     //temporily revert this because it cause sudden exits
     return true;
 }
 

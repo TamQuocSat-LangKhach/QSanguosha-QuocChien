@@ -31,7 +31,7 @@ return {
 	["qiuan"] = "Cầu An",
 	[":qiuan"] = "Khi bạn nhận sát thương, nếu bạn không có [Hàm], bạn có thể đem lá gây sát thương cho bạn đặt lên tướng này, gọi là [Hàm], sau đó chặn sát thương này.",
 	["liangfan"] = "Lượng Phản",
-	[":liangfan"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Hàm], bạn mất 1 máu, sau đó thu lấy tất cả [Hàm];\n▶ Trong lượt này, sau khi bạn gây sát thương cho 1 người do sử dụng bài có bao gồm [Hàm], bạn có thể thu lấy 1 lá của họ.",
+	[":liangfan"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Hàm], bạn thu lấy tất cả [Hàm], sau đó bạn mất 1 máu;\n▶ Trong lượt này, sau khi bạn gây sát thương cho 1 người do sử dụng bài có bao gồm [Hàm], bạn có thể thu lấy 1 lá của họ.",
 	["letter"] = "Hàm",
 
 	["#LiangfanEffect"] = "%from đã sử dụng [%arg] để gây sát thương và thu lấy 1 lá của %to",

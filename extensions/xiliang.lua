@@ -16,15 +16,16 @@ caoang = sgs.General(xiliang, "caoang", "wei")
 caoang:addCompanion("dianwei")
 
 
-diy_xushu = sgs.General(xiliang, "diy_xushu", "shu")
-diy_xushu:addCompanion("wolong")
-diy_xushu:addCompanion("zhaoyun")
-diy_xushu:setDeputyMaxHpAdjustedValue()
-
 shitao = sgs.General(xiliang, "shitao", "shu")
 shitao:addCompanion("wolong")
-shitao:addCompanion("diy_xushu")
+shitao:addCompanion("xushu")
 shitao:setHeadMaxHpAdjustedValue()
+
+--diy_xushu = sgs.General(xiliang, "diy_xushu", "shu")
+--diy_xushu:addCompanion("wolong")
+--diy_xushu:addCompanion("zhaoyun")
+--diy_xushu:addCompanion("shitao")
+--diy_xushu:setDeputyMaxHpAdjustedValue()
 
 chengpu = sgs.General(xiliang, "chengpu", "wu")
 chengpu:addCompanion("zhouyu")
@@ -40,8 +41,8 @@ chengyu:addCompanion("caopi")
 guohuai = sgs.General(xiliang, "guohuai", "wei")
 guohuai:addCompanion("zhanghe")
 
-chendao = sgs.General(xiliang, "diy_chendao", "shu")
-chendao:addCompanion("zhaoyun")
+--chendao = sgs.General(xiliang, "diy_chendao", "shu")
+--chendao:addCompanion("zhaoyun")
 
 maliang = sgs.General(xiliang, "maliang", "shu", 3)
 maliang:addCompanion("zhugeliang")
@@ -326,9 +327,9 @@ jiancai = sgs.CreateTriggerSkill{
 	end,
 }
 
-diy_xushu:addSkill(zhuhai)
-diy_xushu:addSkill(pozhen)
-diy_xushu:addSkill(jiancai)
+--diy_xushu:addSkill(zhuhai)
+--diy_xushu:addSkill(pozhen)
+--diy_xushu:addSkill(jiancai)
 
 sgs.LoadTranslationTable{
 
@@ -431,8 +432,8 @@ dizai = sgs.CreateTriggerSkill{
 }
 
 
-chendao:addSkill("wanglie")
-chendao:addSkill(dizai)
+--chendao:addSkill("wanglie")
+--chendao:addSkill(dizai)
 
 
 sgs.LoadTranslationTable{
@@ -442,7 +443,7 @@ sgs.LoadTranslationTable{
 	["illustrator:diy_chendao"] = "Bành Hiểu Kiện",
 	
 	["dizai"] = "Địa Tải",
-	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi 1 người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công khác có thể bỏ 1 lá để lệnh sát thương này +1.",
+	[":dizai"] = "Trận pháp kỹ: Quan hệ vây công: Nếu bạn là người vây công, khi 1 người vây công gây sát thương cho mục tiêu bị vây công của lá [Sát], người vây công khác bạn có thể bỏ 1 lá để lệnh sát thương này +1.",
 	["@dizai_discard"] = "Địa Tải: Có thể bỏ 1 lá để lệnh sát thương %src gây cho %dest +1",
 
 	["$dizai1"] = "Binh pháp rằng, đánh lâu bất lợi, chớ có tham công.",
