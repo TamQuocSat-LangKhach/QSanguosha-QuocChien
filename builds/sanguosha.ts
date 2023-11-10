@@ -2671,7 +2671,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
         <translation>&lt;font color=%1&gt;Đây là tướng được thêm bên ngoài bởi LUA extension&lt;/font&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=%1&gt;This is an DIY extension&lt;/font&gt;</source>
+        <source>&lt;font color=%1&gt;This is an DIY general&lt;/font&gt;</source>
         <translation>&lt;font color=%1&gt;Đây là tướng không chính thức&lt;/font&gt;</translation>
     </message>
     <message>

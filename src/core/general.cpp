@@ -35,7 +35,7 @@ General::General(Package *package, const QString &name, const QString &kingdom,
     double_max_hp(double_max_hp), gender(male ? Male : Female),
     hidden(hidden), never_shown(never_shown),
     head_max_hp_adjusted_value(0), deputy_max_hp_adjusted_value(0),
-    skin_count(-1)
+    skin_count(-1), is_diy(package->isDIY())
 {
     static QChar lord_symbol('$');
     if (name.endsWith(lord_symbol)) {
@@ -97,6 +97,11 @@ bool General::isHidden() const
 bool General::isTotallyHidden() const
 {
     return never_shown;
+}
+
+bool General::isDIY() const
+{
+    return is_diy;
 }
 
 int General::getMaxHpHead() const

@@ -57,6 +57,7 @@ public:
     bool isLord() const;
     bool isHidden() const;
     bool isTotallyHidden() const;
+    bool isDIY() const;
 
     int getMaxHpHead() const;
     int getMaxHpDeputy() const;
@@ -123,6 +124,7 @@ private:
     QStringList related_skills;
     bool hidden;
     bool never_shown;
+    bool is_diy;
     QStringList companions;
     int head_max_hp_adjusted_value;
     int deputy_max_hp_adjusted_value;

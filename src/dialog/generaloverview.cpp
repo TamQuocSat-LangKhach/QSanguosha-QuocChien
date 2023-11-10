@@ -347,10 +347,20 @@ GeneralOverview::GeneralOverview(QWidget *parent)
 
 void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool init)
 {
-    QList<const General *> generalsCopy = generals;
+    QList<const General *> generalsCopy;
+    QList<const General *> generalsOfficial;
+    QList<const General *> generalsDIY;
+    QList<const General *> generalsMode;
     QMap<const General *, int> tempGeneralMap;
-    foreach (const General *general, generalsCopy) {
+    foreach (const General *general, generals) {
         if (!general->isTotallyHidden()) {
+            if (Sanguosha->isGeneralHidden(general->objectName()) && !general->isLord()) {
+                generalsMode << general;
+            } else if (general->isDIY()) {
+                generalsDIY << general;
+            } else {
+                generalsOfficial << general;
+            }
             int skinId = 0;
             if (Self && Self->getGeneral()) {
                 if (general == Self->getGeneral())
@@ -364,14 +374,13 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
 #ifdef Q_OS_IOS
             ui->comboBox->addItem(general->getTitle() + " " + Sanguosha->translate(general->objectName()), QVariant::fromValue(general->objectName()));
 #endif
-        } else {
-            generalsCopy.removeOne(general);
         }
     }
 
     if (tempGeneralMap.isEmpty())
         return;
 
+    generalsCopy << generalsOfficial << generalsDIY << generalsMode;
     GeneralModel *model = new GeneralModel(tempGeneralMap, generalsCopy);
 
     if (init) {

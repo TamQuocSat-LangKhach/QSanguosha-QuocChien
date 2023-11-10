@@ -112,6 +112,9 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             if (Sanguosha->isGeneralHidden(general->objectName())) {
                 return tr("<font color=%1>This general is hidden</font>")
                     .arg(Config.SkillDescriptionInToolTipColor.name());
+            } else if (general->isDIY()) {
+                return tr("<font color=%1>This is an DIY general</font>")
+                    .arg(Config.SkillDescriptionInToolTipColor.name());
             } else {
                 return QString();
             }
@@ -120,10 +123,6 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             if (Config.value("LuaPackages", QString()).toString().split("+").contains(general->getPackage())) {
                 return tr("<font color=%1>This is an Lua extension</font>").arg(Config.SkillDescriptionInToolTipColor.name());
             } else {
-                Package *p = qobject_cast<Package *>(general->parent());
-                if (p && p->isDIY()) {
-                    return tr("<font color=%1>This is an DIY extension</font>").arg(Config.SkillDescriptionInToolTipColor.name());
-                }
                 return QString();
             }
         }
@@ -137,6 +136,8 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
         case NameColumn: {
             if (Sanguosha->isGeneralHidden(general->objectName()))
                 return QBrush(Qt::gray);
+            else if (general->isDIY())
+                return QBrush(Qt::lightGray);
             else
                 break;
         }
@@ -144,12 +145,8 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             if (Config.value("LuaPackages", QString()).toString().split("+").contains(general->getPackage())) {
                 return QBrush(QColor(0x66, 0xCC, 0xFF));
             } else {
-                Package *p = qobject_cast<Package *>(general->parent());
-                if (p && p->isDIY()) {
-                    return QBrush(QColor(0x00, 0xFF, 0xCC));
-                }
+                break;
             }
-            break;
         }
         default: break;
         }

@@ -5,7 +5,7 @@ xiliang = sgs.Package("xiliang", sgs.Package_GeneralPack)
 
 
 sgs.LoadTranslationTable{
-    ["xiliang"] = "Tây Lương Studio",
+    ["xiliang"] = "SP - Dự bị",
 }
 
 --建立武将

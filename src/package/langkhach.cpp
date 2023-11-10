@@ -554,7 +554,7 @@ bool ColdsnapCard::targetFilter(const QList<const Player *> &targets, const Play
 void ColdsnapCard::onEffect(const CardEffectStruct &effect) const
 {
     ServerPlayer *target = effect.to;
-    Room *room = source->getRoom();
+    Room *room = target->getRoom();
     room->addPlayerMark(target, "#coldsnap");
 }
 
@@ -597,18 +597,15 @@ public:
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::NotActive) {
+        if (triggerEvent == EventPhaseStart && player->getPhase() == Player::RoundStart) {
             room->setPlayerMark(player, "#coldsnap", 0);
         }
     }
 
-    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
+    virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
         if (triggerEvent == Damaged) {
-            DamageStruct damage = data.value<DamageStruct>();
-            const Card *card = damage.card;
-            if (player->getMark("#coldsnap") > 0 && card && card->isKindOf("Slash")
-                    && damage.by_user && !damage.chain && !damage.transfer) {
+            if (player->getMark("#coldsnap") > 0) {
                 return QStringList(objectName());
             }
         }
@@ -623,8 +620,8 @@ public:
     virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
         int x = player->getMark("#coldsnap");
-        if (room->askForDiscard(player, "coldsnap", x, x, true, true, "@coldsnap-effect")) {
-            room->addPlayerMark(target, "#coldsnap");
+        if (room->askForDiscard(player, "coldsnap", x, x, true, true, "@coldsnap-effect:::" + x)) {
+            room->addPlayerMark(player, "#coldsnap");
         } else {
             room->setPlayerMark(player, "#coldsnap", 0);
             player->turnOver();
@@ -632,6 +629,110 @@ public:
         return false;
     }
 };
+
+class Ghostwalk : public TriggerSkill
+{
+public:
+    Ghostwalk() : TriggerSkill("ghostwalk")
+    {
+        events << EventPhaseStart << GeneralShown;
+        frequency = Compulsory;
+    }
+
+    virtual bool canPreshow() const
+    {
+        return false;
+    }
+
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart) {
+            if (player != NULL && player->isAlive() && player->getPhase() == Player::RoundStart) {
+                ServerPlayer *caohong = room->findPlayerBySkillName("heyi");
+                if (caohong && caohong->isAlive() && caohong->hasShownSkill("heyi") && player->inFormationRalation(caohong)) {
+                    room->doBattleArrayAnimate(caohong);
+                    room->broadcastSkillInvoke(objectName(), caohong);
+                }
+            }
+        } else if (triggerEvent == GeneralShown) {
+            if (TriggerSkill::triggerable(player) && player->hasShownSkill(objectName()) && data.toBool() == player->inHeadSkills(objectName())) {
+                room->doBattleArrayAnimate(player);
+                room->broadcastSkillInvoke(objectName(), player);
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer * &) const
+    {
+        return QStringList();
+    }
+};
+
+class Icewall : public BattleArraySkill
+{
+public:
+    Icewall() : BattleArraySkill("icewall", HegemonyMode::Formation)
+    {
+        events << EventPhaseStart << GeneralShown;
+    }
+
+    virtual bool canPreshow() const
+    {
+        return false;
+    }
+
+    virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
+    {
+        if (triggerEvent == EventPhaseStart) {
+            if (player != NULL && player->isAlive() && player->getPhase() == Player::RoundStart) {
+                ServerPlayer *caohong = room->findPlayerBySkillName("heyi");
+                if (caohong && caohong->isAlive() && caohong->hasShownSkill("heyi") && player->inFormationRalation(caohong)) {
+                    room->doBattleArrayAnimate(caohong);
+                    room->broadcastSkillInvoke(objectName(), caohong);
+                }
+            }
+        } else if (triggerEvent == GeneralShown) {
+            if (TriggerSkill::triggerable(player) && player->hasShownSkill(objectName()) && data.toBool() == player->inHeadSkills(objectName())) {
+                room->doBattleArrayAnimate(player);
+                room->broadcastSkillInvoke(objectName(), player);
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer * &) const
+    {
+        return QStringList();
+    }
+};
+
+class IcewallVH : public ViewHasSkill
+{
+public:
+    IcewallVH() : ViewHasSkill("icewallVH")
+    {
+        global = true;
+    }
+
+    virtual bool ViewHas(const Player *player, const QString &skill_name, const QString &flag) const
+    {
+        if (flag != "skill" || skill_name != "feiying" && skill_name != "ganglie") return false;
+        QList<const Player *> sib = player->getAliveSiblings();
+        sib << player;
+        if (sib.length() < 4) return false;
+
+        QList<const Player *> teammates = player->getFormation();
+
+        if (teammates.length() < 2) return false;
+
+        foreach (const Player *caohong, teammates) {
+            if (caohong->hasShownSkill("icewall"))
+                return true;
+        }
+
+        return false;
+    }
+};
+
 
 LangKhachPackage::LangKhachPackage()
     : Package("langkhach", GeneralPack, true)
