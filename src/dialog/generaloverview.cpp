@@ -347,12 +347,13 @@ GeneralOverview::GeneralOverview(QWidget *parent)
 
 void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool init)
 {
-    QList<const General *> generalsCopy;
+    QList<const General *> generalsCopy = generals;
     QList<const General *> generalsOfficial;
     QList<const General *> generalsDIY;
     QList<const General *> generalsMode;
+    QList<const General *> generalsAll;
     QMap<const General *, int> tempGeneralMap;
-    foreach (const General *general, generals) {
+    foreach (const General *general, generalsCopy) {
         if (!general->isTotallyHidden()) {
             if (Sanguosha->isGeneralHidden(general->objectName()) && !general->isLord()) {
                 generalsMode << general;
@@ -380,8 +381,8 @@ void GeneralOverview::fillGenerals(const QList<const General *> &generals, bool 
     if (tempGeneralMap.isEmpty())
         return;
 
-    generalsCopy << generalsOfficial << generalsDIY << generalsMode;
-    GeneralModel *model = new GeneralModel(tempGeneralMap, generalsCopy);
+    generalsAll << generalsOfficial << generalsDIY << generalsMode;
+    GeneralModel *model = new GeneralModel(tempGeneralMap, generalsAll);
 
     if (init) {
         ui->returnButton->hide();

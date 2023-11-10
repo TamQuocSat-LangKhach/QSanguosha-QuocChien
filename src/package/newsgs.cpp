@@ -132,7 +132,7 @@ class Xibing : public TriggerSkill
 public:
     Xibing() : TriggerSkill("xibing")
     {
-        events << TargetChosen << EventPhaseStart << EventPhaseChanging;
+        events << TargetRecord << TargetChosen << EventPhaseStart << EventPhaseChanging;
 
     }
 
@@ -146,7 +146,7 @@ public:
             }
         } else if (triggerEvent == EventPhaseChanging && data.value<PhaseChangeStruct>().from == Player::Play) {
             room->setPlayerMark(player, "xibingPass", 0);
-        } else if (triggerEvent == TargetChosen
+        } else if (triggerEvent == TargetRecord
                    && player && player->isAlive() && player->getPhase() == Player::Play && player->getMark("xibingPass") < 1) {
             CardUseStruct use = data.value<CardUseStruct>();
             const Card *card = use.card;
