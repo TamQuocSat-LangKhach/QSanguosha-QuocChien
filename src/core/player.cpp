@@ -946,13 +946,20 @@ bool Player::isBigKingdomPlayer() const
     int num = getPlayerNumWithKingdom();
     if (num < 2) return false;
     QList<const Player *> siblings = getAliveSiblings();
-
+    bool hasTreasure = false;
     foreach (const Player *p, siblings) {
-        if (p->hasShownOneGeneral() && p->hasTreasure("JadeSeal")) return isFriendWith(p);
+        if (p->hasShownOneGeneral() && p->hasTreasure("JadeSeal")) {
+            if (isFriendWith(p)) {
+                return true;
+            }
+            hasTreasure = true;
+        }
     }
-
+    if (hasTreasure) {
+        return false;
+    }
     foreach (const Player *p, siblings) {
-        if (p->hasShownOneGeneral() && p->getPlayerNumWithKingdom() > num) return false;
+        if (p->hasShownOneGeneral() && !p->isFriendWith(this) && p->getPlayerNumWithKingdom() > num) return false;
     }
 
     return true;

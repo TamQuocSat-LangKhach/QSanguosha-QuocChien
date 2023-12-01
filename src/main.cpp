@@ -160,17 +160,39 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load("sanguosha.qm");
     qApp->installTranslator(&translator);
+    QStringList funMess;
+    funMess << "Đang đi chiếm Kinh Châu..." << "Đang đi mời Gia Cát Lượng..."
+            << "Đang trị độc cho Quan Vũ..." << "Đang cạo râu cho Tào Tháo..."
+            << "Đang ra chợ mua Đào..." << "Đang cho Nghiêm Bạch Hổ ăn..."
+            << "Đang hát karaoke cùng Trương Phi..." << "Đang cởi giáp cho Hứa Chử..."
+            << "Đang tiến về Hứa Xương..." << "Đang đi đoạt Hán Trung..."
+            << "Đang đi đánh Đông Ngô..." << "Đang tiếp giá Tôn Quyền..."
+            << "Đang đi tìm Hán Hiến Đế..." << "Đang yết kiến Lưu hoàng thúc..."
+            << "Đang huấn luyện cho AI Tài Tống..." << "Đang vận lương tới Kỳ Sơn..."
+            << "Đang tỉ thí với Tôn Thượng Hương..." << "Đang đi mua ngựa Xích Thố..."
+            << "Đang thu xếp quân lương..." << "Đang triệu tập binh mã..."
+            << "Đang tiêu diệt giặc Khăn Vàng..." << "Đang triệu tập 18 lộ chư hầu..."
+            << "Đang truy đuổi Đổng Trác..." << "Đang Hỏa Công Xích Bích..."
+            << "Đang vây bắt Mạnh Hoạch..." << "Đang thu nhận Trương Liêu..."
+            << "Đang quyết đấu với Lữ Bố..." << "Đang không biết làm gì..."
+            << "Đang bận chạy deadline..." << "Đang vá lỗ hổng không gian..."
+            << "Đang chuẩn bị máy ảnh..." << "Đang trở về quá khứ..."
+            << "Đang hồi sinh cho Quách Gia..." << "Đang ngủ trưa..."
+            << "Đang bận chọc Chu Du..." << "Đang đi in bài..."
+            << "Đang bận chửi Dev code ngu..."
+               ;
+    std::random_shuffle(funMess.begin(), funMess.end());
 
-    showSplashMessage(QSplashScreen::tr("Loading translation..."));
+    showSplashMessage(funMess.at(0));
     QTranslator qt_translator;
     qt_translator.load("qt_zh_CN.qm");
     qApp->installTranslator(&qt_translator);
 
-    showSplashMessage(QSplashScreen::tr("Initializing game engine..."));
+    showSplashMessage(funMess.at(1));
     new Settings;
     Sanguosha = new Engine;
 
-    showSplashMessage(QSplashScreen::tr("Loading user's configurations..."));
+    showSplashMessage(funMess.at(2));
     Config.init();
     if (!noGui) {
         QFont f = Config.AppFont;
@@ -192,7 +214,7 @@ int main(int argc, char *argv[])
         return qApp->exec();
     }
 
-    showSplashMessage(QSplashScreen::tr("Loading style sheet..."));
+    showSplashMessage(funMess.at(3));
     QFile file("style-sheet/sanguosha.qss");
     QString styleSheet;
     if (file.open(QIODevice::ReadOnly)) {
@@ -211,14 +233,14 @@ int main(int argc, char *argv[])
     qApp->setStyleSheet(styleSheet + StyleHelper::styleSheetOfTooltip());
 
 #ifdef AUDIO_SUPPORT
-    showSplashMessage(QSplashScreen::tr("Initializing audio module..."));
+    showSplashMessage(funMess.at(4));
     Audio::init();
 #else
     if (!noGui)
         QMessageBox::warning(NULL, QMessageBox::tr("Warning"), QMessageBox::tr("Audio support is disabled when compiled"));
 #endif
 
-    showSplashMessage(QSplashScreen::tr("Loading main window..."));
+    showSplashMessage(funMess.at(5));
     MainWindow main_window;
 
     Sanguosha->setParent(&main_window);

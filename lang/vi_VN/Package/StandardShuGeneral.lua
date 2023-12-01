@@ -109,7 +109,7 @@ return {
 	[":niepan"] = "Hạn định kỹ: Khi bạn trong trạng thái hấp hối, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn bỏ toàn bộ bài trong vùng chơi;\n- Bạn hồi máu đến 3 và rút 3 lá;\n- Bạn loại bỏ trạng thái xích và chồng tướng.",
 	["@nirvana"] = "Niết Bàn",
 
-	["#wolong"] = "Ngoạ Long",
+	["#wolong"] = "Ngọa Long",
 	["wolong"] = "Khổng Minh",
 	["&wolong"] = "Gia Cát Lượng",
 	["bazhen"] = "Bát Trận",

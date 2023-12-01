@@ -73,7 +73,7 @@ return {
 	["#sunshangxiang"] = "Cung Yêu Cơ",
 	["sunshangxiang"] = "Tôn Thượng Hương",
 	["jieyin"] = "Kết Nhân",
-	[":jieyin"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người có giới tính nam đang bị thương, bạn và họ hồi 1 máu.",
+	[":jieyin"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người khác có giới tính nam đang bị thương, bạn và họ hồi 1 máu.",
 	["xiaoji"] = "Kiêu Cơ",
 	["xiaojidraw"] = "Kiêu Cơ: Rút bài.",
 	[":xiaoji"] = "Sau khi bạn mất bài trong vùng trang bị, bạn có thể:\n* Nếu đang là lượt của bạn, bạn rút 1 lá;\n* Nếu không phải lượt của bạn, bạn rút 3 lá.",

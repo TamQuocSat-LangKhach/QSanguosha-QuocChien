@@ -27,7 +27,7 @@ return {
 	["is_transferable"] = "Lá này có thể được »Hợp Tung«",
 
 	["Blade"] = "Thanh Long Yển Nguyệt Đao",
-	[":Blade"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Tỏa định kỹ: Khi bạn sử dụng [Sát], mục tiêu của lá [Sát] này không thể mở tướng cho đến khi [Sát] này kết toán xong",
+	[":Blade"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Tỏa định kỹ: Khi bạn sử dụng [Sát], mục tiêu của lá [Sát] này không thể mở tướng cho đến khi [Sát] này kết toán xong.\n<i>Lần đầu tiên, trái Thanh Long có trên Trường Đao!</i>",
 
 	["Halberd"] = "Phương Thiên Hoạ Kích",
 	[":Halberd"] = "Bài Trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Sau khi bạn chỉ định mục tiêu cho [Sát], bạn có thể chỉ định ở các thế lực xác định khác với mục tiêu, mỗi thế lực một người, đồng thời có thể chọn những người không có thế lực, lệnh họ trở thành mục tiêu của [Sát] này;\n▶ Sau khi 1 mục tiêu sử dụng [Thiểm] triệt tiêu [Sát] này, lệnh cho [Sát] này không có hiệu quả với những mục tiêu còn lại.",
