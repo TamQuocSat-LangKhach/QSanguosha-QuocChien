@@ -176,7 +176,7 @@ return {
     ["#jg_zhaoyun"] = "Thục Hán Anh Hồn",
     ["jg_zhaoyun"] = "Bồ Nguy Tử Long",
     ["jgfengjian"] = "Phong Giam",
-    [":jgfengjian"] = "Tỏa định kỹ: Sau khi bạn gây sát thương cho người khác, bạn lệnh họ không thể sử dụng bài với bạn cho đến khi kết thúc lượt của họ.",
+    [":jgfengjian"] = "Tỏa định kỹ: Sau khi bạn gây sát thương cho người khác, bạn lệnh họ không thể chỉ định bạn làm mục tiêu của bài cho đến khi kết thúc lượt của họ.",
     ["jgkeding"] = "Khắc Định",
     [":jgkeding"] = "Sau khi bạn chỉ định 1 mục tiêu duy nhất cho [Sát] hoặc công cụ phổ thông, bạn có thể bỏ ít nhất 1 lá trên tay và lệnh số người tương ứng với số lá bỏ cũng trở thành mục tiêu của lá này.",
     ["jglongwei"] = "Long Uy",

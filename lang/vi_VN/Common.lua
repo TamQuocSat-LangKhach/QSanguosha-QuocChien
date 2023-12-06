@@ -66,6 +66,7 @@ CommonTranslationTable = {
 	["once_per_your_whole_turn"] = "Một lần trong lượt của bạn",
 	["twice_per_turn"] = "Hai lần trong giai đoạn ra bài",
 	["twice_per_whole_turn"] = "Hai lần trong lượt của mỗi người",
+	["three_per_your_whole_turn"] = "Ba lần trong lượt của bạn",
 	["four_per_turn"] = "Bốn lần trong giai đoạn ra bài",
 	["four_per_your_whole_turn"] = "Bốn lần trong lượt của bạn",
 	["x_per_whole_turn"] = "X lần trong lượt của mỗi người",

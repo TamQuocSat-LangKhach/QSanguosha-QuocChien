@@ -70,7 +70,7 @@ return {
 	[":shengxi"] = "Khi bắt đầu giai đoạn kết thúc, nếu trong lượt này bạn không gây sát thương, bạn có thể rút 2 lá.",
 	["shoucheng"] = "Thủ Thành",
 	[":shoucheng"] = "Sau khi người cùng thế lực với bạn mất đi lá cuối cùng trên tay họ nếu ở ngoài lượt của họ, bạn có thể lệnh họ rút 1 lá.",
-	["@shoucheng"] = "Có thể phát động »Thủ Thành«, lệnh cho 1 người rút 1 lá.",
+	["@shoucheng"] = "Có thể phát động »Thủ Thành«, chọn những người được rút 1 lá.",
 
 	["#jiangqin"] = "Kỳ Hề Chi Khí",
 	["jiangqin"] = "Tưởng Khâm",

@@ -2276,7 +2276,7 @@ public:
         if (player == NULL || player->isDead() || player->getPhase() != Player::Finish) return skill_list;
         QList<ServerPlayer *> owners = room->findPlayersBySkillName(objectName());
         foreach (ServerPlayer *ask_who, owners) {
-            if (!ask_who->getPile("food").isEmpty() && ask_who->isFriendWith(player)
+            if (ask_who != player && !ask_who->getPile("food").isEmpty() && ask_who->isFriendWith(player)
                     && ask_who->distanceTo(player) <= ask_who->getPile("food").length())
                 skill_list.insert(ask_who, QStringList(objectName()));
         }
@@ -2994,11 +2994,18 @@ public:
         if (use.card
                 && use.card->getTypeId() != Card::TypeSkill
                 && use.card->getTypeId() != Card::TypeEquip
-                && player->getMark("#qizhi") < 4
+                && player->getMark("#qizhi") < 3
                 ) {
             foreach (ServerPlayer *p, room->getAlivePlayers()) {
-                if (!use.to.contains(p) && use.from->canDiscard(p, "he")) {
-                    return QStringList(objectName());
+                if (use.to.contains(p)) continue;
+                if (p->hasShownOneGeneral() && !player->willBeFriendWith(p)) {
+                    if (player->canDiscard(p, "h")) {
+                        return QStringList(objectName());
+                    }
+                } else {
+                    if (player->canDiscard(p, "he")) {
+                        return QStringList(objectName());
+                    }
                 }
             }
         }
@@ -3010,8 +3017,15 @@ public:
         QList<ServerPlayer *> players;
         CardUseStruct use = data.value<CardUseStruct>();
         foreach (ServerPlayer *p, room->getAlivePlayers()) {
-            if (!use.to.contains(p) && use.from->canDiscard(p, "he")) {
-                players << p;
+            if (use.to.contains(p)) continue;
+            if (p->hasShownOneGeneral() && !player->willBeFriendWith(p)) {
+                if (player->canDiscard(p, "h")) {
+                    players << p;
+                }
+            } else {
+                if (player->canDiscard(p, "he")) {
+                    players << p;
+                }
             }
         }
         ServerPlayer *target = room->askForPlayerChosen(player, players, objectName(), "qizhi-invoke", true, true);
@@ -3041,7 +3055,9 @@ public:
             }
         }
         if (to) {
-            int card_id = room->askForCardChosen(player, to, "he", objectName(), false, Card::MethodDiscard);
+            int card_id = room->askForCardChosen(player, to,
+                                                 to->hasShownOneGeneral() && !player->willBeFriendWith(to) ? "h" : "he",
+                                                 objectName(), false, Card::MethodDiscard);
             room->throwCard(card_id, to, player, objectName());
             room->drawCards(to, 1, objectName());
         }
@@ -3098,6 +3114,9 @@ public:
         if (triggerEvent == EventPhaseStart && player->getPhase() ==  Player::NotActive) {
             foreach (ServerPlayer *p, room->getAlivePlayers()) {
                 room->removePlayerDisableShow(p, objectName());
+                QStringList prohibitList = player->property("juzhan_prohibit").toStringList();
+                prohibitList.clear();
+                room->setPlayerProperty(player, "juzhan_prohibit", prohibitList);
             }
         }
     }
@@ -3147,6 +3166,7 @@ public:
 
     virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
+        room->addPlayerMark(player, "#juzhan");
         int x = qMax(1, player->getLostHp());
         if (triggerEvent == TargetConfirmed) {
             CardUseStruct use = data.value<CardUseStruct>();
@@ -3169,16 +3189,14 @@ public:
                 }
             }
             if (to) {
-                QList<int> toGet = room->askForCardsChosen(player, to, "he", objectName(), x, x, false, Card::MethodGet);
-                if (!toGet.isEmpty()) {
-                    DummyCard dummy(toGet);
-                    CardMoveReason reason(CardMoveReason::S_REASON_EXTRACTION, player->objectName(), to->objectName(), objectName(), QString());
-                    room->obtainCard(player, &dummy, reason, false);
-                }
-                doJuzhan(to, player);
+                int card_id = room->askForCardChosen(player, to, "he", objectName(), false, Card::MethodGet);
+                CardMoveReason reason(CardMoveReason::S_REASON_EXTRACTION, player->objectName(), to->objectName(), objectName(), QString());
+                room->obtainCard(player, Sanguosha->getCard(card_id), reason, false);
+                QStringList prohibitList = player->property("juzhan_prohibit").toStringList();
+                prohibitList.append(to->objectName());
+                room->setPlayerProperty(player, "juzhan_prohibit", prohibitList);
             }
         }
-        room->addPlayerMark(player, "#juzhan");
         return false;
     }
 
@@ -3204,6 +3222,21 @@ private:
         bool head = (choice == "head");
         to->hideGeneral(head);
         room->setPlayerDisableShow(to, head ? "h":"d", "juzhan");
+    }
+};
+
+class JuzhanProhibit : public ProhibitSkill
+{
+public:
+    JuzhanProhibit() : ProhibitSkill("#juzhan-prohibit")
+    {
+    }
+
+    virtual bool isProhibited(const Player *from, const Player *to, const Card *card, const QList<const Player *> &) const
+    {
+        if (card->getTypeId() == Card::TypeSkill) return false;
+        QStringList prohibitList = from->property("juzhan_prohibit").toStringList();
+        return prohibitList.contains(to->objectName());
     }
 };
 
@@ -3535,6 +3568,8 @@ MOLPackage::MOLPackage()
 
     General *yanyan = new General(this, "yanyan", "shu", 3);
     yanyan->addSkill(new Juzhan);
+    yanyan->addSkill(new JuzhanProhibit);
+    related_skills.insertMulti("juzhan", "#juzhan-prohibit");
 
     General *zhuran = new General(this, "zhuran", "wu");
     zhuran->addSkill(new Danshou);

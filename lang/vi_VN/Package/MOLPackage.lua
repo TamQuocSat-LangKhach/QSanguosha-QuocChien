@@ -19,7 +19,7 @@ return {
 	[":tunchu"] = "Giai đoạn rút bài, bạn có thể rút thêm 2 lá;\n▷ Bạn không thể sử dụng [Sát] trong lượt này;\n▶ Khi kết thúc giai đoạn rút bài, bạn đặt từ 1 đến 2 lá trên tay lên tướng này, gọi là [Lương]." ,
 	["shuliang"] = "Thâu Lương",
 	["@shuliang"] = "Có thể bỏ 1 [Lương] để cho %src rút 2 lá.",
-	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",
+	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người khác có cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",
 	
 		
     ["lingcao"] = "Lăng Tháo",
@@ -30,7 +30,7 @@ return {
 	["#wangji"] = "Kinh Hành Hợp Nhất",
 	["wangji"] = "Vương Cơ",
 	["qizhi"] = "Kì Chế",
-	[":qizhi"] = "Bốn lần trong lượt của bạn, khi bạn sử dụng lá phi trang bị, bạn có thể bỏ 1 lá của 1 người không phải là mục tiêu của lá này, sau đó lệnh họ rút 1 lá.",
+	[":qizhi"] = "Ba lần trong lượt của bạn, khi bạn sử dụng lá phi trang bị, bạn có thể bỏ 1 lá của 1 người không phải là mục tiêu của lá này (nếu người đó có thế lực xác định khác bạn, đổi thành bỏ 1 lá trên tay), sau đó lệnh họ rút 1 lá.",
 	["jinqu"] = "Tiến Xu",
 	[":jinqu"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể rút 2 lá, sau đó bỏ bớt bài trên tay đến X lá (X là số lần bạn đã phát động »Kì Chế« trong lượt này).",
 	["qizhi-invoke"] = "Có thể phát động »Kì Chế«, chọn 1 người không phải mục tiêu của lá đang sử dụng.",
@@ -39,7 +39,7 @@ return {
 	--["designer:yanyan"] = "",
 	["yanyan"] = "Nghiêm Nhan",
 	["juzhan"] = "Cự Chiến",
-	[":juzhan"] = "Nếu số lần bạn đã phát động kỹ năng này trong trò chơi là:\n• Chẵn: Sau khi bạn trở thành mục tiêu của [Sát], bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn và người sử dụng rút X lá (X là số máu đã mất của người sử dụng [Sát], tối thiểu 1);\n- Nếu họ đã mở tất cả tướng, bạn có thể úp 1 tướng của họ, lệnh họ không thể mở tướng đó trong lượt này.\n• Lẻ: Sau khi bạn xác định mục tiêu của [Sát], bạn có thể chọn 1 người trong các mục tiêu, thực hiện lần lượt:\n- Bạn thu lấy X lá của họ (X là số máu đã mất của bạn, tối thiểu 1);\n- Nếu bạn đã mở tất cả tướng, họ có thể úp 1 tướng của bạn, sau đó bạn không thể mở tướng đó trong lượt này.",
+	[":juzhan"] = "Nếu số lần bạn đã phát động kỹ năng này trong trò chơi là:\n• Chẵn: Sau khi bạn trở thành mục tiêu của [Sát], bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn và người sử dụng rút 1 lá;\n- Nếu họ đã mở tất cả tướng, bạn có thể úp 1 tướng của họ, lệnh họ không thể mở tướng đó trong lượt này.\n• Lẻ: Sau khi bạn xác định mục tiêu của [Sát], bạn có thể chọn 1 người trong các mục tiêu, thực hiện lần lượt:\n- Bạn thu lấy 1 lá của họ;\n- Bạn không thể chỉ định họ làm mục tiêu của bài trong lượt này.",
 	["juzhan-invoke"] = "Có thể phát động »Cự Chiến«, chọn 1 mục tiêu",
 	["@juzhan-hide"] = "Cự Chiến: Có thể úp 1 tướng của %dest",
 	["juzhan:head"] = "Chủ tướng",

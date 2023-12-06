@@ -252,4 +252,6 @@ return {
 	["illustrator:yanyan"] = "Sâm·Mĩ Đệ Kì",
 	["illustrator:zhuran"] = "Ccat",
 	["illustrator:xugong"] = "Quân Hoàn Văn Hóa",
+	["illustrator:panjinshu"] = "Dương Dương & Hạ Quý",
+    ["illustrator:xianglang"] = "Tượng Nhân Hội",
 }

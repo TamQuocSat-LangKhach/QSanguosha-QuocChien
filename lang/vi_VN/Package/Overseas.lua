@@ -153,4 +153,11 @@ return {
 	["xiaoqi"] = "Kiêu Kị",
 	[":xiaoqi"] = "Khi bạn sử dụng [Sát], bạn có thể chuyển hóa [Sát] này thành [Quyết Đấu];\n▶ Tối đa X lần trong lúc giải quyết hiệu quả của [Quyết Đấu] này, bạn có thể xem như đã đánh ra lá [Sát] để hưởng ứng (X là số lá tướng đã mở trên bàn chơi có kỹ năng gốc »Mã Thuật«)",
 
+    ["#xianglang"] = "校书翾翻",
+    ["xianglang"] = "向朗",
+    ["kanji"] = "勘集",
+    [":kanji"] = "出牌阶段限一次，你可以展示所有手牌，若每张牌花色均不同，你摸两张牌，然后若因此使手牌满足四种花色，则你跳过本回合的弃牌阶段。",
+    ["qianzheng"] = "愆正",
+    [":qianzheng"] = "当你成为其他角色使用普通锦囊牌或【杀】的目标后，你可以重铸两张牌；若这两张牌与使用牌类型均不同，此牌结算后进入弃牌堆时，你可以获得之。每回合限一次。",
+    ["@qianzheng-cost"] = "你可以发动“愆正”，重铸两张牌",
 }

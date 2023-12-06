@@ -41,6 +41,7 @@ config = {
 		once_per_whole_game = "#008000",
 		twice_per_turn = "#008000",
 		twice_per_whole_turn = "#008000",
+		three_per_your_whole_turn = "#008000",
 		four_per_turn = "#008000",
 		four_per_your_whole_turn = "#008000",
 		x_per_whole_turn = "#008000",
