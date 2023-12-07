@@ -116,6 +116,26 @@ public:
     virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
+class KanjiCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE KanjiCard();
+    virtual void extraCost(Room *room, const CardUseStruct &card_use) const;
+    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
+class QianzhengCard : public SkillCard
+{
+    Q_OBJECT
+
+public:
+    Q_INVOKABLE QianzhengCard();
+
+    virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
+};
+
 class MOLPackage : public Package
 {
     Q_OBJECT
