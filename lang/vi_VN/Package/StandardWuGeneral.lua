@@ -132,7 +132,7 @@ return {
 	["zhijian"] = "Trực Gián",
 	[":zhijian"] = "Giai đoạn ra bài, bạn có thể đặt 1 trang bị trên tay vào vùng trang bị trống tương ứng của người khác, sau đó bạn rút 1 lá.",
 	["guzheng"] = "Cổ Chính",
-	[":guzheng"] = "Khi kết thúc giai đoạn bỏ bài của người khác, bạn có thể giao cho họ 1 lá trong những lá đã bỏ đi trong giai đoạn này;\n▷ Bạn có thể thu lấy những lá còn lại.",
+	[":guzheng"] = "Khi kết thúc giai đoạn bỏ bài của người khác, bạn có thể giao cho họ 1 lá trong những lá đã bị bỏ đi từ trên tay họ trong giai đoạn này;\n▷ Bạn có thể thu lấy tất cả lá đã bị bỏ đi trong giai đoạn này.",
 	["$ZhijianEquip"] = "%from được trang bị %card",
 	["@guzheng"] = "Có thể phát động »Cổ Chính« để khiến %src lấy lại 1 lá trong chỗ bài bỏ." ,
 	["@guzheng-obtain"] = "Cổ chính: Có thể lấy những lá bỏ còn lại.",
