@@ -35,8 +35,8 @@ return {
 	["$MoluAnimate"] = "学姐有头不科学！",
 
 	----A003
-	["s_kyouko"] = "佐仓杏子", 
-	["&s_kyouko"] = "佐仓杏子", 
+	["s_kyouko"] = "Kyouko Sakura", 
+	["&s_kyouko"] = "Kyouko Sakura", 
 	["#s_kyouko"] = "正义之惘",
 	["#&s_kyouko"] = "Puella Magi Madoka Magica",
 	["~s_kyouko"] = "独自一人很寂寞吧...好吧，就让我陪你一起上路吧...沙耶香...", 
@@ -44,16 +44,16 @@ return {
 	["cv:s_kyouko"] = "野中藍",
 	["illustrator:s_kyouko"] = "38241810",
 
-	["yingqiang"] = "缨枪",
-	[":yingqiang"] = "出牌阶段限一次，你可以将两到四张不同花色的手牌当一张无距离限制的【杀】使用；根据这些牌的花色： \n黑桃-每当此【杀】对你距离1的角色造成1点伤害后，你回复1点体力；\n红桃-每当此【杀】对一名角色造成伤害后，你令其摸X张牌，然后令其将武将牌叠置（X为其体力值）；\n梅花-此【杀】指定目标后，你无视目标的防具；\n方块-此【杀】指定目标后，你摸一张牌。",
-	["yingqiang_spade"] = "缨枪（黑桃）",
-	[":yingqiang_spade"] = "每当此【杀】对你距离1的角色造成1点伤害后，你回复1点体力",
-	["yingqiang_heart"] = "缨枪（红桃）",
-	[":yingqiang_heart"] = "每当此【杀】对一名角色造成伤害后，你令其摸X张牌，然后令其将武将牌叠置（X为其体力值）",
-	["yingqiang_club"] = "缨枪（梅花）",
-	[":yingqiang_club"] = "此【杀】指定目标后，你无视目标的防具",
-	["yingqiang_diamond"] = "缨枪（方块）",
-	[":yingqiang_diamond"] = "此【杀】指定目标后，你摸一张牌",
+	["yingqiang"] = "Anh Thương",
+	[":yingqiang"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng ít nhất 2 lá khác chất thành [Sát] không giới hạn khoảng cách;\n▶ Dựa theo chất của những lá đã đem sử dụng bằng kỹ năng này:\n- BÍCH: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu;\n- CƠ: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ);\n- TÉP: Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận;\n- RÔ: Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
+	["yingqiang_spade"] = "Anh Thương (BÍCH)",
+	[":yingqiang_spade"] = "Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu.",
+	["yingqiang_heart"] = "Anh Thương (CƠ)",
+	[":yingqiang_heart"] = "Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ).",
+	["yingqiang_club"] = "Anh Thương (TÉP)",
+	[":yingqiang_club"] = "Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
+	["yingqiang_diamond"] = "Anh Thương (RÔ)",
+	[":yingqiang_diamond"] = "Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
 
 	----A004	
 	["sayaka"] = "美树沙耶香", 
@@ -69,8 +69,8 @@ return {
 	[":wuwei"] = "出牌阶段限一次，你可以失去1点体力，若如此做，你将一张手牌当【杀】使用，此【杀】对目标角色造成伤害时，你令此伤害+1（此【杀】不计入出牌阶段使用次数限制）。",
 
 	----A005
-	["homura"] = "Akemi Homura", 
-	["&homura"] = "Akemi Homura", 
+	["homura"] = "Homura Akemi", 
+	["&homura"] = "Homura Akemi", 
 	["#homura"] = "Luân Hồi Chi Bán", 
 	["#&homura"] = "Puella Magi Madoka Magica",
 	["~homura"] = "不要，那样，那样的话我.....是为了什么.",
@@ -79,7 +79,7 @@ return {
 	["illustrator:homura"] = "45754521",
 
 	["shiting"] = "Thời Đình",
-	[":shiting"] = "Sau khi người cùng thế lực với bạn trở thành mục tiêu duy nhất của [Sát] do người thế lực xác định khác với bạn sử dụng, bạn có thể bỏ 2 lá trên tay, ngưng kết toán lá này và bạn thực hiện 1 lượt chơi xen kẽ;\n▷ Trong lượt này, khi bạn sử dụng bài có chỉ định người khác làm mục tiêu, ngưng kết toán lá này;\n▷ Sau khi kết thúc lượt này, lần lượt tiếp tục kết toán tất cả những lá bị ngưng.",
+	[":shiting"] = "Sau khi người cùng thế lực với bạn trở thành mục tiêu duy nhất của [Sát] do người thế lực xác định khác với bạn sử dụng, bạn có thể bỏ 2 lá trên tay, tạm dừng kết toán lá này và bạn thực hiện 1 lượt chơi xen kẽ;\n▷ Trong lượt này, khi bạn sử dụng bài có chỉ định người khác làm mục tiêu, tạm dừng kết toán lá này;\n▷ Sau khi kết thúc lượt này, lần lượt tiếp tục kết toán tất cả lá bị tạm dừng.",
 	["@shiting-ask"] = "Có thể phát động »Thời Đình«, bỏ 2 lá trên tay",
 	["#ShitingStart"] = "%from đã bỏ 2 lá trên tay và phát động »%arg«",
 	

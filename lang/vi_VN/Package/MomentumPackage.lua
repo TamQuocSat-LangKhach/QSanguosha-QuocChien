@@ -63,7 +63,7 @@ return {
 	["cunsi"] = "Tồn Tự",
 	[":cunsi"] = "Giai đoạn ra bài, nếu bạn đã mở tướng này, bạn có thể chọn 1 người, thực hiện lần lượt:\n- Bạn loại bỏ tướng này;\n- Họ nhận kỹ năng »Dũng Quyết«;\n- Nếu họ không phải bạn, họ rút 2 lá bài.",
 	["yongjue"] = "Dũng Quyết",
-	[":yongjue"] = "Sau khi kết toán xong [Sát] do người cùng thế lực với bạn sử dụng trong giai đoạn ra bài của họ, nếu lá này là lá đầu tiên họ sử dụng trong giai đoạn này, bạn có thể lệnh họ thu lấy lá [Sát] này.",
+	[":yongjue"] = "Sau khi kết toán xong [Sát] do người cùng thế lực với bạn sử dụng trong giai đoạn ra bài của họ, nếu lá này là lá đầu tiên họ sử dụng trong giai đoạn này, bạn lệnh họ có thể thu lấy lá [Sát] này.",
 	["@yongjue-choose"] = "«Dũng Quyết«: Cho phép %src lấy lại lá [Sát]",
 	
 	["#sunce"] = "Giang Đông Đích Tiểu Bá Vương",
