@@ -181,7 +181,7 @@ return {
     ["#simazhao"] = "Trào Phong Khai Thiên",
     ["simazhao"] = "Tư Mã Chiêu",
     ["suzhi"] = "Túc Trí",
-    [":suzhi"] = "Tỏa định kỹ:\n• Giới hạn ba lần trong lượt của bạn đối với các mục sau:\n* Khi bạn gây sát thương cho mục tiêu của [Sát] hoặc [Quyết Đấu], bạn lệnh số sát thương +1;\n* Khi bạn sử dụng công cụ phi chuyển hóa, bạn rút 1 lá;\n* Sau khi bài của người khác tiến vào chồng bài bỏ do bỏ đi, bạn thu lấy 1 lá của họ.\n• Nếu chưa phát động »Túc Trí« 3 lần trong lượt:\n* Bạn có thể sử dụng công cụ phi chuyển hóa không giới hạn khoảng cách;\n* Khi bạn kết thúc lượt, bạn nhận kỹ năng »Phản Quỹ« đến khi bắt đầu lượt tiếp theo của bạn.",
+    [":suzhi"] = "Tỏa định kỹ:\n• Giới hạn ba lần trong lượt của bạn:\n* Khi bạn gây sát thương cho mục tiêu của [Sát] hoặc [Quyết Đấu], bạn lệnh số sát thương +1;\n* Khi bạn sử dụng công cụ phi chuyển hóa, bạn rút 1 lá;\n* Sau khi bài của người khác tiến vào chồng bài bỏ do bỏ đi, bạn thu lấy 1 lá của họ.\n• Nếu chưa phát động kỹ năng này 3 lần trong lượt:\n* Bạn có thể sử dụng công cụ phi chuyển hóa không giới hạn khoảng cách;\n* Khi bạn kết thúc lượt, bạn nhận kỹ năng »Phản Quỹ« đến khi bắt đầu lượt tiếp theo của bạn.",
     ["zhaoxin"] = "Chiêu Tâm",
     [":zhaoxin"] = "Sau khi bạn nhận sát thương, bạn có thể mở tất cả bài trên tay, sau đó hoán đổi bài trên tay với 1 người khác có số lá trên tay ≤ bạn.",
     ["@zhaoxin-exchange"] = "Chiêu Tâm: Chọn 1 người có bài trên tay không nhiều hơn bạn để đổi bài.",
@@ -208,7 +208,7 @@ return {
     ["aocai"] = "Ngạo Tài",
     [":aocai"] = "Ngoài lượt của bạn, khi bạn cần sử dụng/đánh ra bài cơ bản, bạn có thể xem hai lá trên đầu chồng bài, bạn có thể sử dụng/đánh ra lá cơ bản có tên tương ứng trong đó.",
     ["duwu"] = "Độc Võ",
-    [":duwu"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chọn 1 [Quân Lệnh], yêu cầu tất cả người thế lực khác bạn chấp hành [Quân Lệnh] này; nếu họ không chấp hành, bạn gây 1 sát thương cho họ và rút một lá;\n- Nếu trong những người còn sống có người đã tiến vào trạng thái hấp hối trong quá trình trên, bạn mất 1 máu.",
+    [":duwu"] = "Hạn định kỹ: Giai đoạn ra bài, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chọn 1 [Quân Lệnh], yêu cầu tất cả người thế lực khác bạn và trong tầm đánh của bạn chấp hành [Quân Lệnh] này; nếu họ không chấp hành, bạn gây 1 sát thương cho họ và rút một lá;\n- Nếu trong những người còn sống có người đã tiến vào trạng thái hấp hối trong quá trình trên, bạn mất 1 máu.",
     
     ["#aocai"] = "Ngạo Tài",
     ["@aocai-view"] = "Ngạo Tài: Chọn 1 lá phù hợp để sử dụng/đánh ra",

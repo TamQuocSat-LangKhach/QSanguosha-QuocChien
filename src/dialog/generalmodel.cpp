@@ -89,7 +89,13 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
             }
             return maxHp;
         }
-        case PackageColumn: return Sanguosha->translate(general->getPackage());
+        case PackageColumn: {
+            QString packageName = Sanguosha->translate("#&" + general->objectName());
+            if (packageName.isNull() || packageName.isEmpty()) {
+                packageName = Sanguosha->translate(general->getPackage());
+            }
+            return packageName;
+        }
         }
     }
     case Qt::DecorationRole: {
