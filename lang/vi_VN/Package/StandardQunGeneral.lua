@@ -112,7 +112,7 @@ return {
 	["mingshi"] = "Danh Sĩ",
 	[":mingshi"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận, nếu nguồn sát thương có tướng chưa mở, lệnh sát thương này -1.",
 	["lirang"] = "Lễ Nhượng",
-	[":lirang"] = "Khi bài của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể giao tùy ý cho những người khác.",
+	[":lirang"] = "Sau khi bài của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể giao tùy ý cho những người khác.",
 	["@lirang-give"] = "Lễ Nhượng: Bạn có thể giao bài bỏ cho người khác.",
 	["#lirang"] = "Lễ nhượng",
 	["#Mingshi"] = "%from đã phát động »<font color=\"yellow\"><b>Danh Sĩ</b></font>«, sát thương từ %arg đến %arg2 -1.",

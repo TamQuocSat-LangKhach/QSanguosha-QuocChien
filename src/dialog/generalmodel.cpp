@@ -91,7 +91,7 @@ QVariant GeneralModel::data(const QModelIndex &index, int role) const
         }
         case PackageColumn: {
             QString packageName = Sanguosha->translate("#&" + general->objectName());
-            if (packageName.isNull() || packageName.isEmpty()) {
+            if (packageName.isNull() || packageName.isEmpty() || packageName.startsWith("#&")) {
                 packageName = Sanguosha->translate(general->getPackage());
             }
             return packageName;

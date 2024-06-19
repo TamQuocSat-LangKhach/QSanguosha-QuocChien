@@ -76,8 +76,6 @@ CommonTranslationTable = {
 	["array"] = "Trận pháp kỹ",
 	["lord"] = "Quân chủ kỹ",
 	["switch"] = "Chuyển hoán kỹ",
-	["SwitchYang"] = "Dương",
-	["SwitchYin"] = "Âm",
 
 	["spade_char"] = "♠",
 	["club_char"] = "♣",

@@ -45,6 +45,10 @@ return {
 	["juzhan:head"] = "Chủ tướng",
 	["juzhan:deputy"] = "Phó tướng",
 
+
+	["SwitchYang"] = "Dương",
+	["SwitchYin"] = "Âm",
+
 	["#zhuran"] = "Bất Động Chi Đốc",
 	--["designer:zhuran"] = "",
 	["zhuran"] = "Chu Nhiên",

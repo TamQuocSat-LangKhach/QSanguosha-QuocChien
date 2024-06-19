@@ -104,60 +104,8 @@ public:
 };
 
 
-class ZhaofuCard : public SkillCard
-{
-    Q_OBJECT
 
-public:
-    Q_INVOKABLE ZhaofuCard();
 
-    virtual void onEffect(const CardEffectStruct &effect) const;
-};
-
-class ZhaofuVSCard : public SkillCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE ZhaofuVSCard();
-
-    virtual bool targetFixed() const;
-    virtual bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
-    virtual bool targetsFeasible(const QList<const Player *> &targets, const Player *Self) const;
-    virtual void onUse(Room *room, const CardUseStruct &card_use) const;
-};
-
-class BiaozhaoCard : public SkillCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE BiaozhaoCard();
-
-    virtual bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
-    virtual bool targetsFeasible(const QList<const Player *> &targets, const Player *Self) const;
-    virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
-};
-
-class KanjiCard : public SkillCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE KanjiCard();
-    virtual void extraCost(Room *room, const CardUseStruct &card_use) const;
-    void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
-};
-
-class QianzhengCard : public SkillCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE QianzhengCard();
-
-    virtual void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
-};
 
 class MOLPackage : public Package
 {

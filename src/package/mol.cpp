@@ -2856,6 +2856,7 @@ class Biaozhao : public ZeroCardViewAsSkill
 public:
     Biaozhao() : ZeroCardViewAsSkill("biaozhao")
     {
+
     }
 
     virtual bool isEnabledAtPlay(const Player *player) const
@@ -3399,23 +3400,11 @@ OverseasPackage::OverseasPackage()
     fuwan->addSkill(new MoukuiEffect);
     related_skills.insertMulti("moukui", "#moukui-effect");
 
-    General *xianglang = new General(this, "xianglang", "shu", 3);
-    xianglang->addSkill(new Kanji);
-    xianglang->addSkill(new Qianzheng);
-    xianglang->addSkill(new QianzhengFinish);
-    related_skills.insertMulti("qianzheng", "#qianzheng-finish");
-
     addMetaObject<GuishuCard>();
     addMetaObject<HongyuanCard>();
     addMetaObject<JiansuCard>();
     addMetaObject<KanjiCard>();
 
-    addMetaObject<ZhaofuCard>();
-    addMetaObject<ZhaofuVSCard>();
-
-    addMetaObject<KanjiCard>();
-    addMetaObject<QianzhengCard>();
-
-    skills << new ZhenxiTrick << new Qinzhong << new Zhaofu;
+    skills << new ZhenxiTrick;
 }
 

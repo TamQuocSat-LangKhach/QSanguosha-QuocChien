@@ -10,11 +10,11 @@ return {
 	["cv:madoka"] = "悠木碧",
 	["illustrator:madoka"] = "46401177",
 
-	["cibei"] = "慈悲",
-	[":cibei"] = "每当你对一名角色造成伤害时，你可以防止此伤害，改为弃置该角色的一张手牌和一张装备牌。 ",
+	["cibei"] = "Từ Bi",
+	[":cibei"] = "Khi bạn gây sát thương cho 1 người, bạn có thể chặn sát thương này, bạn bỏ 1 lá trên tay và 1 lá trong vùng trang bị của họ.",
 
-	["renmin"] = "仁悯",
-	[":renmin"] = "每当与你势力相同的角色的牌因弃置而进入弃牌堆后，你可以令该角色获得这些牌。每名角色限用一次。",
+	["renmin"] = "Nhân Mẫn",
+	[":renmin"] = "Một lần trong ván đấu với mỗi người cùng thế lực với bạn, sau khi bài của họ tiến vào chồng bài bỏ do bỏ bài, bạn có thể lệnh họ thu lấy những lá này.",
 	["@renmin_used"] = "已被使用仁悯",
 	
 	----A002
