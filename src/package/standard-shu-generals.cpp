@@ -86,7 +86,6 @@ void RendeCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &tar
     room->setPlayerMark(source, "rende", new_value);
 
     if (old_value < 2 && new_value >= 2) {
-
         room->askForUseCard(source, "@@rende_basic", "@rende-basic");
     }
 }
@@ -1478,7 +1477,7 @@ public:
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
         CardUseStruct use = data.value<CardUseStruct>();
-        if (use.card->isKindOf("Slash") && TriggerSkill::triggerable(player))
+        if (use.card->isKindOf("Slash") && TriggerSkill::triggerable(player) && use.from->isAlive())
             return QStringList(objectName());
         return QStringList();
     }
