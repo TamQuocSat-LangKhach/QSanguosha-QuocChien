@@ -308,8 +308,6 @@ QStringList ClientPlayer::getBigKingdoms(const QString &, MaxCardsType::MaxCards
     kingdom_map.insert("shu", 0);
     kingdom_map.insert("wu", 0);
     kingdom_map.insert("qun", 0);
-    kingdom_map.insert("han", 0);
-    kingdom_map.insert("jin", 0);
     QList<const Player *> players = getAliveSiblings();
     players.prepend(this);
     foreach (const Player *p, players) {

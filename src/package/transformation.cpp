@@ -2237,6 +2237,13 @@ TransformationPackage::TransformationPackage()
     insertRelatedSkills("xiongsuan", "#xiongsuan-reset");
     Liguo->addCompanion("jiaxu");
 
+    General *Zuoci = new General(this, "zuoci", "qun", 3, true, true, true);
+    Zuoci->addSkill(new Huashen);
+    Zuoci->addSkill(new HuashenClear);
+    insertRelatedSkills("huashen", "#huashen-clear");
+    Zuoci->addSkill(new Xinsheng);
+    //Zuoci->addCompanion("yuji");
+
     General *Zuoci_new = new General(this, "new_zuoci", "qun", 3);
     Zuoci_new->addSkill(new Yigui);
     Zuoci_new->addSkill(new YiguiShow);
@@ -2290,8 +2297,6 @@ TransformationPackage::TransformationPackage()
     skills << new ZhimanSecond;
     skills << new FlameMap;
     skills << new Yingzi("flamemap") << new Shelie << new HaoshiFlamemap << new HaoshiFlamemapGive << new DuoshiFlamemap;
-    skills << new Huashen << new HuashenClear << new Xinsheng;
-    insertRelatedSkills("huashen", "#huashen-clear");
 }
 
 ADD_PACKAGE(Transformation)

@@ -1504,8 +1504,7 @@ bool Room::_askForNullification(const Card *trick, ServerPlayer *from, ServerPla
     if (isHegNullification && heg_nullification_selection == "all" && result) {
         setTag("HegNullificationValid", true);
     }
-    if (card->isVirtualCard())
-        delete card;
+
     return result;
 }
 
@@ -3183,7 +3182,6 @@ void Room::freeChain()
                 addPlayerMark(p, "Global_hasShownAllGenerals");
                 if (p->getGeneral2() && !p->getGeneral()->objectName().contains("sujiang") &&
                         !p->getGeneral2()->objectName().contains("sujiang")) {
-
                     if (p->getGeneral()->isCompanionWith(p->getGeneral2()->objectName()))
                         addPlayerMark(p, "@companion");
 
@@ -3780,37 +3778,6 @@ void Room::chooseGenerals(QList<ServerPlayer *> &to_assign, bool has_assign, boo
         player->setRole(role);
         notifyProperty(player, player, "role", role);
     }
-    foreach (ServerPlayer *player, to_assign) {
-        QString _all_choices = "wei+qun+shu+wu";
-        QStringList choices;
-        QString kingdom1 = player->getActualGeneral1()->getKingdom();
-        foreach (QString kingdom, player->getActualGeneral2()->getKingdoms()) {
-            if (kingdom1 == "careerist" || kingdom1 == kingdom) {
-                choices << kingdom;
-            }
-            if (player->getActualGeneral1()->isDoubleKingdoms() && player->getActualGeneral1()->getSubordinateKingdom() == kingdom) {
-                choices << kingdom;
-            }
-        }
-        JsonArray args;
-        args << "ChooseInitialKingdom" << choices.join("+") << "#ChooseInitialKingdom" << _all_choices;
-        player->m_commandArgs = args;
-    }
-    doBroadcastRequest(to_assign, S_COMMAND_MULTIPLE_CHOICE);
-    foreach (ServerPlayer *player, to_assign) {
-        const QVariant &choiceResponse = player->getClientReply();
-        QString kingdom;
-        if (!player->m_isClientResponseReady || !JsonUtils::isString(choiceResponse)) {
-            kingdom = player->m_commandArgs.value<JsonArray>()[1].toString().split("+")[0];
-        } else {
-            kingdom = choiceResponse.toString();
-        }
-        QString role = HegemonyMode::GetMappedRole(kingdom);
-        if (role.isEmpty())
-            role = kingdom;
-        player->setRole(role);
-        notifyProperty(player, player, "role", role);
-    }
 }
 
 void Room::run()
@@ -4319,11 +4286,11 @@ bool Room::useCard(const CardUseStruct &use, bool add_history)
         }
         throw triggerEvent;
     }
-
-    if (card->isVirtualCard() && !card->isKindOf("Nullification")){
-        delete card;
+    /*
+    if (card->isVirtualCard()){
+    delete card;
     }
-     //temporily revert this because it cause sudden exits
+    */ //temporily revert this because it cause sudden exits
     return true;
 }
 

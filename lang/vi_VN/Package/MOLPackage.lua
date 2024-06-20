@@ -66,6 +66,6 @@ return {
 	["biaozhao"] = "Biểu Triệu",
 	[":biaozhao"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 2 người khác có thể lực xác định khác nhau, thực hiện lần lượt:\n- Bạn xem như sử dụng [Tri Kỷ Tri Bỉ] với người thứ nhất;\n- Bạn giao 1 lá cho người thứ 2;\n- Bạn rút 1 lá.",
 	["yechou"] = "Nghiệp Cừu",
-	[":yechou"] = "Tỏa định kỹ: Khi bạn trận vong, bạn xem như sử dụng 3 [Sát] với người giết bạn;\n▷ [Sát] thứ 1 không thể hưởng ứng;\n▷ [Sát] thứ 2 bỏ qua phòng cụ của họ;\n▷ [Sát] thứ 3 +1 sát thương;\n▶ Nếu họ tiến vào trạng thái hấp hối bởi kỹ năng này, người cùng thế lực với họ ngoại trừ họ không thế sử dụng [Đào] với họ",
+	[":yechou"] = "Tỏa định kỹ: Khi bạn trận vong, bạn xem như sử dụng 3 [Sát] với người giết bạn;\n▷ [Sát] thứ 1 không thể bị hưởng ứng;\n▷ [Sát] thứ 2 bỏ qua phòng cụ của họ;\n▷ [Sát] thứ 3 +1 sát thương;\n▶ Nếu họ tiến vào trạng thái hấp hối bởi kỹ năng này, người cùng thế lực với họ ngoại trừ họ không thế sử dụng [Đào] với họ",
 	["@biaozhao-give"] = "Biểu Triệu: Chọn 1 lá giao cho %dest",
 }

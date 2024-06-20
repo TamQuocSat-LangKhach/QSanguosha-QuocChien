@@ -72,7 +72,7 @@ return {
 	["#liuqi"] = "Cư Ngoại Nhi An",
 	["liuqi"] = "Lưu Kỳ",
 	["wenji"] = "Vấn Kế",
-	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n* Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng bài có bao gồm lá này không giới hạn khoảng cách, số lần sử dụng và không thể hưởng ứng;\n* Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác ngửa mặt.",
+	[":wenji"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể lệnh 1 người khác giao cho bạn 1 lá ngửa mặt:\n* Nếu họ cùng thế lực với bạn hoặc không có thế lực, lượt này bạn sử dụng bài có bao gồm lá này không giới hạn khoảng cách, số lần sử dụng và không thể bị hưởng ứng;\n* Nếu họ thế lực xác định khác bạn, bạn giao cho họ 1 lá bài khác ngửa mặt.",
 	
 	["tunjiang"] = "Truân Giang",
 	[":tunjiang"] = "Khi bắt đầu giai đoạn kết thúc, nếu bạn trong giai đoạn ra bài đã sử dụng ít nhất 1 lá và không chỉ định người khác làm mục tiêu, bạn có thể rút X lá (X là số thế lực trên bàn chơi).",
@@ -264,7 +264,7 @@ return {
     ["#huangzu"] = "Giang Hạ Phúc Tâm",
     ["huangzu"] = "Hoàng Tổ",
     ["xishe"] = "Vãn Cung",
-    [":xishe"] = "• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ, nếu số máu của họ nhỏ hơn của bạn, bạn lệnh cho [Sát] này không thể hưởng ứng; bạn có thể lặp lại quá trình này.\n• Trước khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
+    [":xishe"] = "• Khi bắt đầu giai đoạn chuẩn bị của người khác, bạn có thể bỏ 1 lá trong vùng trang bị và xem như sử dụng 1 [Sát] với họ, nếu số máu của họ nhỏ hơn của bạn, bạn lệnh cho [Sát] này không thể bị hưởng ứng; bạn có thể lặp lại quá trình này.\n• Trước khi kết thúc lượt này, nếu trong lượt người trận vong và nguồn là [Sát] từ kỹ năng này của bạn, bạn có thể đổi phó tướng, tướng sau khi đổi được úp xuống.",
     ["@xishe-slash"] = "Có thể phát động »Văn Cung«, bỏ 1 lá trong vùng trang bị, xem như sử dụng [Sát] với %src",
     
     ["#xishe-transform"] = "Vãn Cung",
