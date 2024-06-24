@@ -170,19 +170,16 @@ return {
 	["cv:rei"] = "林原めぐみ",
 	["illustrator:rei"] = "36951533",
 	
-	["wuxinAya"] = "无心",
-	[":wuxinAya"] = "限定技，当你受到伤害时，若伤害值不小于你的体力值，你可以回复体力至体力上限，然后令一名角色获得技能“勇决”，再防止此伤害。",
-	["@wuxin"] = "无心",
-	["@wuxin_text"] = "请选择一名角色，使其获得“勇决”",
+	["wuxinAya"] = "Vô Tâm",
+	[":wuxinAya"] = "Hạn định kỹ: Khi bạn nhận sát thương, nếu số sát thương ≥ số máu hiện tại của bạn, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn chặn sát thương này và hồi máu đến tối đa;\n- Bạn lệnh 1 người nhận kỹ năng »Dũng Quyết«.",
+	["@wuxin"] = "Vô Tâm",
+	["@wuxin_text"] = "Chọn 1 người nhận »Dũng Quyết«",
 	["Neon Genesis Evangelionngelion"] = "Neon Genesis Evangelionngelion",
 	
-	["chidun"] = "持盾",
-	[":chidun"] = "每当与你势力相同的其他角色受到伤害时，你可以将此伤害转移给你，然后摸一张牌。若如此做，该角色可以对伤害来源使用一张【杀】（不计入出牌阶段使用【杀】次数限制）。",	
+	["chidun"] = "Trì Thuẫn",
+	[":chidun"] = "Khi 1 người cùng thế lực với bạn nhận sát thương, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn rút 1 lá;- Chuyển sát thương này cho bạn; Lệnh người nhận sát thương ban đầu có thể sử dụng 1 [Sát] với nguồn sát thương bỏ qua giới hạn khoảng cách và không tính số lần sử dụng.",	
 	["@chidun"] = "你可以对 %src 使用一张【杀】",
 	["#ChidunTransfer"] = "%from 发动了“%arg”，将 %to 受到的 %arg2 点伤害转移给了自己",
-
-	["yongjue"] = "勇决",
-	[":yongjue"] = "每当与你势力相同的一名角色于其出牌阶段内使用的【杀】因结算完毕而置入弃牌堆后，若此【杀】为其于此阶段内使用的第一张牌，其可以获得之。",
 
 	----A011
 	["asuka"] = "惣流·明日香·兰格雷", 
