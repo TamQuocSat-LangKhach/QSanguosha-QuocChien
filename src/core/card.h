@@ -279,16 +279,6 @@ public:
     const Card *validate(CardUseStruct &card_use) const;
 };
 
-class ShowDistanceCard : public SkillCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE ShowDistanceCard();
-
-    const Card *validate(CardUseStruct &card_use) const;
-};
-
 class TransferCard : public SkillCard
 {
     Q_OBJECT
