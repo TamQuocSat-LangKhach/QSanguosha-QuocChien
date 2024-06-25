@@ -57,6 +57,8 @@ CommonTranslationTable = {
 	["ndtrick"] = "công cụ phổ thông",
 	["nothing"] = "Không phát động",
 	["handcards"] = "trên tay",
+	["red"] = "Lá Đỏ",
+    ["black"] = "Lá Đen",
 
 	["compulsory"] = "Tỏa định kỹ",
 	["once_per_whole_game"] = "Một lần trong ván đấu",
