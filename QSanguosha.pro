@@ -130,6 +130,11 @@ SOURCES += \
     src/package/mol.cpp\
     src/package/langkhach.cpp\
     src/package/joy.cpp\
+	src/package/moesen-package.cpp \
+    src/package/animation.cpp \
+    src/package/comic.cpp \
+    src/package/game.cpp \
+    src/package/novel.cpp \
     src/ui/fieldcardtransferbox.cpp
 
 HEADERS += \
@@ -253,6 +258,11 @@ HEADERS += \
     src/package/mol.h\
     src/package/langkhach.h\
     src/package/joy.h\
+	src/package/animation.h \
+    src/package/comic.h \
+    src/package/game.h \
+    src/package/moesen-package.h \
+    src/package/novel.h \
     src/ui/fieldcardtransferbox.h
 
 FORMS += \
