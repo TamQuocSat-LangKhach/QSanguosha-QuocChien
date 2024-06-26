@@ -817,6 +817,7 @@ shefu = sgs.CreateTriggerSkill{
     on_effect = function(self, event, room, player, data)
 		if event == sgs.CardUsed then
 			local use = data:toCardUse()
+			use.to:clear()
 			local nullified_list = use.nullified_list
 			table.insert(nullified_list, "_ALL_TARGETS")
 			use.nullified_list = nullified_list

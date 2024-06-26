@@ -221,7 +221,7 @@ return {
 	["illustrator:kazusa"] = "official pics",
 
 	["bingshan"] = "冰山",
-	[":bingshan"] = "锁定技，当其他角色计算与你的距离时，始终+X。（X为你已损失的体力值）",
+	[":bingshan"] = "Tỏa định kỹ: Khoảng cách từ người khác đến bạn +X (X là số máu bạn đã mất).",
 
 	["shenai"] = "深爱",
 	[":shenai"] = "出牌阶段限一次，你可以指定一名角色并弃置Y/2（向下取整）张牌，然后该角色摸Y张牌（至多为5）。（Y为该角色与你的距离）",

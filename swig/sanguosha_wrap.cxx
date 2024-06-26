@@ -4246,11 +4246,75 @@ QString LuaViewAsSkill::getExpandPile() const
     int error = lua_pcall(L, 1, 1, 0);
     if (error) {
         Error(L);
-        return false;
+        return QString();
     } else {
         const char *result = lua_tostring(L, -1);
         lua_pop(L, 1);
         return QString(QLatin1String(result));
+    }
+}
+
+QStringList LuaViewAsSkill::getViewAsCardNames(const QList<const Card *> &cards) const
+{
+    if (vs_card_names == 0)
+        return ViewAsSkill::getViewAsCardNames(cards);
+
+    lua_State *L = Sanguosha->getLuaState();
+
+    lua_rawgeti(L, LUA_REGISTRYINDEX, vs_card_names);
+
+    pushSelf(L);
+
+    lua_createtable(L, cards.length(), 0);
+    for (int i = 0; i < cards.length(); ++i) {
+        const Card *card = cards[i];
+        SWIG_NewPointerObj(L, card, SWIGTYPE_p_Card, 0);
+        lua_rawseti(L, -2, i + 1);
+    }
+
+    int error = lua_pcall(L, 2, 1, 0);
+    if (error) {
+        Error(L);
+        return ViewAsSkill::getViewAsCardNames(cards);
+    } else {
+        QString card_list_str = lua_tostring(L, -1);
+        lua_pop(L, 1);
+		if (card_list_str.isEmpty())
+			return QStringList();
+
+        QStringList card_list = card_list_str.split("+");
+        return card_list;
+    }
+}
+
+bool LuaViewAsSkill::isEnabledtoViewAsCard(const QString &button_name, const QList<const Card *> &selected) const
+{
+    if (enabled_to_vs_card == 0)
+        return ViewAsSkill::isEnabledtoViewAsCard(button_name, selected);
+
+    lua_State *L = Sanguosha->getLuaState();
+
+    lua_rawgeti(L, LUA_REGISTRYINDEX, enabled_to_vs_card);
+
+    pushSelf(L);
+
+    lua_pushstring(L, button_name.toLatin1());
+
+    lua_createtable(L, selected.length(), 0);
+    for (int i = 0; i < selected.length(); ++i) {
+        const Card *card = selected[i];
+        SWIG_NewPointerObj(L, card, SWIGTYPE_p_Card, 0);
+        lua_rawseti(L, -2, i + 1);
+    }
+
+    int error = lua_pcall(L, 3, 1, 0);
+    if (error) {
+        Error(L);
+        return false;
+    } else {
+        bool result = lua_toboolean(L, -1);
+        lua_pop(L, 1);
+        return result;
     }
 }
 
@@ -5417,16 +5481,47 @@ int LuaAI::askForCardChosen(ServerPlayer *who, const QString &flags, const QStri
     return TrustAI::askForCardChosen(who, flags, reason, method, disabled_ids);
 }
 
-QList<int> LuaAI::askForCardsChosen(const QList<ServerPlayer *> &targets, const QString &flags, const QString &reason, int min, int max, const QList<int> &disabled_ids)
+int LuaAI::askForTransferFieldCards(const QList<ServerPlayer *> targets, const QString &reason, bool equipArea, bool judgingArea)
 {
     lua_State *L = room->getLuaState();
 
     pushCallback(L, __FUNCTION__);
     SWIG_NewPointerObj(L, &targets, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0);
-    lua_pushstring(L, flags.toLatin1());
 	lua_pushstring(L, reason.toLatin1());
-    lua_pushinteger(L, min);
-    lua_pushinteger(L, max);
+    lua_pushboolean(L, equipArea);
+    lua_pushboolean(L, judgingArea);
+
+    int error = lua_pcall(L, 5, 1, 0);
+    if (error) {
+        const char *error_msg = lua_tostring(L, -1);
+        lua_pop(L, 1);
+        room->output(error_msg);
+
+        return TrustAI::askForTransferFieldCards(targets, reason, equipArea, judgingArea);
+    }
+
+    if (lua_isnumber(L, -1)) {
+        int result = lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        return result;
+    }
+
+    room->output(QString("The result of function %1 should be an integer!").arg(__FUNCTION__));
+    lua_pop(L, 1);
+    return TrustAI::askForTransferFieldCards(targets, reason, equipArea, judgingArea);
+}
+
+QList<int> LuaAI::askForCardsChosen(ServerPlayer *who, const QString &flags, const QString &reason, int min_num, int max_num, Card::HandlingMethod method, const QList<int> &disabled_ids)
+{
+    lua_State *L = room->getLuaState();
+
+    pushCallback(L, __FUNCTION__);
+    SWIG_NewPointerObj(L, who, SWIGTYPE_p_ServerPlayer, 0);
+    lua_pushstring(L, flags.toLatin1());
+    lua_pushstring(L, reason.toLatin1());
+    lua_pushinteger(L, min_num);
+    lua_pushinteger(L, max_num);
+    lua_pushinteger(L, (int)method);
     lua_createtable(L, disabled_ids.length(), 0);
 
     for (int i = 0; i < disabled_ids.length(); ++i) {
@@ -5435,17 +5530,20 @@ QList<int> LuaAI::askForCardsChosen(const QList<ServerPlayer *> &targets, const 
         lua_rawseti(L, -2, i + 1);
     }
 
-    int error = lua_pcall(L, 7, 1, 0);
+    int error = lua_pcall(L, 8, 1, 0);
     if (error) {
-        reportError(L);
-        return TrustAI::askForCardsChosen(targets, flags, reason, min, max, disabled_ids);
-    }
+        const char *error_msg = lua_tostring(L, -1);
+        lua_pop(L, 1);
+        room->output(error_msg);
 
+        return TrustAI::askForCardsChosen(who, flags, reason, min_num, max_num, method, disabled_ids);
+    }
+    
     QList<int> result;
     if (getTable(L, result))
         return result;
     else
-        return TrustAI::askForCardsChosen(targets, flags, reason, min, max, disabled_ids);
+        return TrustAI::askForCardsChosen(who, flags, reason, min_num, max_num, method, disabled_ids);
 }
 
 QList<ServerPlayer *> LuaAI::askForPlayersChosen(const QList<ServerPlayer *> &targets, const QString &reason, int max_num, int min_num)
@@ -17151,6 +17249,33 @@ static int _wrap_General_getVisibleSkillList(lua_State* L) {
 }
 
 
+static int _wrap_General_ownSkill(lua_State* L) {
+  int SWIG_arg = 0;
+  General *arg1 = (General *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("General::ownSkill",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("General::ownSkill",1,"General const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("General::ownSkill",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_General,0))){
+    SWIG_fail_ptr("General_ownSkill",1,SWIGTYPE_p_General);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (bool)((General const *)arg1)->ownSkill((char const *)arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_General_addRelateSkill(lua_State* L) {
   int SWIG_arg = 0;
   General *arg1 = (General *) 0 ;
@@ -17724,6 +17849,7 @@ static swig_lua_method swig_General_methods[]= {
     { "hasSkill", _wrap_General_hasSkill},
     { "getSkillList", _wrap_General_getSkillList},
     { "getVisibleSkillList", _wrap_General_getVisibleSkillList},
+    { "ownSkill", _wrap_General_ownSkill},
     { "addRelateSkill", _wrap_General_addRelateSkill},
     { "getRelatedSkillNames", _wrap_General_getRelatedSkillNames},
     { "getPackage", _wrap_General_getPackage},
@@ -21805,6 +21931,37 @@ static int _wrap_Player_canGetCard(lua_State* L) {
 }
 
 
+static int _wrap_Player_canPindianTo(lua_State* L) {
+  int SWIG_arg = 0;
+  Player *arg1 = (Player *) 0 ;
+  Player *arg2 = (Player *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Player::canPindianTo",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Player::canPindianTo",1,"Player const *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Player::canPindianTo",2,"Player const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Player,0))){
+    SWIG_fail_ptr("Player_canPindianTo",1,SWIGTYPE_p_Player);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Player,0))){
+    SWIG_fail_ptr("Player_canPindianTo",2,SWIGTYPE_p_Player);
+  }
+  
+  result = (bool)((Player const *)arg1)->canPindianTo((Player const *)arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Player_canTransform(lua_State* L) {
   int SWIG_arg = 0;
   Player *arg1 = (Player *) 0 ;
@@ -23174,6 +23331,43 @@ static int _wrap_Player_getPileName(lua_State* L) {
   arg2 = (int)lua_tonumber(L, 2);
   result = ((Player const *)arg1)->getPileName(arg2);
   lua_pushstring(L, (&result)->toUtf8()); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Player_getGeneralPile(lua_State* L) {
+  int SWIG_arg = 0;
+  Player *arg1 = (Player *) 0 ;
+  char *arg2 = (char *) 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("Player::getGeneralPile",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Player::getGeneralPile",1,"Player const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Player::getGeneralPile",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Player,0))){
+    SWIG_fail_ptr("Player_getGeneralPile",1,SWIGTYPE_p_Player);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = ((Player const *)arg1)->getGeneralPile((char const *)arg2);
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -26213,6 +26407,139 @@ static int _wrap_Player_inDeputySkills(lua_State* L) {
 }
 
 
+static int _wrap_Player_cheakSkillLocation__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Player *arg1 = (Player *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool arg3 ;
+  bool result;
+  
+  SWIG_check_num_args("Player::cheakSkillLocation",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Player::cheakSkillLocation",1,"Player const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Player::cheakSkillLocation",2,"char const *");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Player::cheakSkillLocation",3,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Player,0))){
+    SWIG_fail_ptr("Player_cheakSkillLocation",1,SWIGTYPE_p_Player);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (lua_toboolean(L, 3)!=0);
+  result = (bool)((Player const *)arg1)->cheakSkillLocation((char const *)arg2,arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Player_cheakSkillLocation__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Player *arg1 = (Player *) 0 ;
+  char *arg2 = (char *) 0 ;
+  QVariant *arg3 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Player::cheakSkillLocation",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Player::cheakSkillLocation",1,"Player const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Player::cheakSkillLocation",2,"char const *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Player::cheakSkillLocation",3,"QVariant const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Player,0))){
+    SWIG_fail_ptr("Player_cheakSkillLocation",1,SWIGTYPE_p_Player);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Player_cheakSkillLocation",3,SWIGTYPE_p_QVariant);
+  }
+  
+  result = (bool)((Player const *)arg1)->cheakSkillLocation((char const *)arg2,(QVariant const &)*arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Player_cheakSkillLocation(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Player, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Player_cheakSkillLocation__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Player, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Player_cheakSkillLocation__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Player_cheakSkillLocation'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Player::cheakSkillLocation(char const *,bool) const\n"
+    "    Player::cheakSkillLocation(char const *,QVariant const &) const\n");
+  lua_error(L);return 0;
+}
+
+
 static int _wrap_Player_getActualGeneral1(lua_State* L) {
   int SWIG_arg = 0;
   Player *arg1 = (Player *) 0 ;
@@ -28280,6 +28607,7 @@ static swig_lua_method swig_Player_methods[]= {
     { "isAllNude", _wrap_Player_isAllNude},
     { "canDiscard", _wrap_Player_canDiscard},
     { "canGetCard", _wrap_Player_canGetCard},
+    { "canPindianTo", _wrap_Player_canPindianTo},
     { "canTransform", _wrap_Player_canTransform},
     { "addMark", _wrap_Player_addMark},
     { "removeMark", _wrap_Player_removeMark},
@@ -28296,6 +28624,7 @@ static swig_lua_method swig_Player_methods[]= {
     { "getPile", _wrap_Player_getPile},
     { "getPileNames", _wrap_Player_getPileNames},
     { "getPileName", _wrap_Player_getPileName},
+    { "getGeneralPile", _wrap_Player_getGeneralPile},
     { "pileOpen", _wrap_Player_pileOpen},
     { "setPileOpen", _wrap_Player_setPileOpen},
     { "getHandPile", _wrap_Player_getHandPile},
@@ -28336,6 +28665,7 @@ static swig_lua_method swig_Player_methods[]= {
     { "preshowSkill", _wrap_Player_preshowSkill},
     { "inHeadSkills", _wrap_Player_inHeadSkills},
     { "inDeputySkills", _wrap_Player_inDeputySkills},
+    { "cheakSkillLocation", _wrap_Player_cheakSkillLocation},
     { "getActualGeneral1", _wrap_Player_getActualGeneral1},
     { "getActualGeneral2", _wrap_Player_getActualGeneral2},
     { "getActualGeneral1Name", _wrap_Player_getActualGeneral1Name},
@@ -29133,6 +29463,120 @@ fail:
 }
 
 
+static int _wrap_ServerPlayer_fillHandCards__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  int arg2 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("ServerPlayer::fillHandCards",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::fillHandCards",1,"ServerPlayer *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ServerPlayer::fillHandCards",2,"int");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::fillHandCards",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_fillHandCards",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->fillHandCards(arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_fillHandCards__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("ServerPlayer::fillHandCards",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::fillHandCards",1,"ServerPlayer *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ServerPlayer::fillHandCards",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_fillHandCards",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  (arg1)->fillHandCards(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_fillHandCards(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_ServerPlayer_fillHandCards__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_ServerPlayer_fillHandCards__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_fillHandCards'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::fillHandCards(int,char const *)\n"
+    "    ServerPlayer::fillHandCards(int)\n");
+  lua_error(L);return 0;
+}
+
+
 static int _wrap_ServerPlayer_drawCards__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
@@ -29252,6 +29696,43 @@ static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_0(lua_State* L) {
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   char *arg2 = (char *) 0 ;
   QVariant *arg3 = 0 ;
+  bool arg4 ;
+  bool result;
+  
+  SWIG_check_num_args("ServerPlayer::askForSkillInvoke",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",2,"char const *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",3,"QVariant const &");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_askForSkillInvoke",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("ServerPlayer_askForSkillInvoke",3,SWIGTYPE_p_QVariant);
+  }
+  
+  arg4 = (lua_toboolean(L, 4)!=0);
+  result = (bool)(arg1)->askForSkillInvoke((char const *)arg2,(QVariant const &)*arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  QVariant *arg3 = 0 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::askForSkillInvoke",3,3)
@@ -29281,7 +29762,7 @@ fail:
 }
 
 
-static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_1(lua_State* L) {
+static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -29308,7 +29789,48 @@ fail:
 }
 
 
-static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_2(lua_State* L) {
+static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  Skill *arg2 = (Skill *) 0 ;
+  QVariant *arg3 = 0 ;
+  bool arg4 ;
+  bool result;
+  
+  SWIG_check_num_args("ServerPlayer::askForSkillInvoke",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",1,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",2,"Skill const *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",3,"QVariant const &");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::askForSkillInvoke",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_askForSkillInvoke",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Skill,0))){
+    SWIG_fail_ptr("ServerPlayer_askForSkillInvoke",2,SWIGTYPE_p_Skill);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("ServerPlayer_askForSkillInvoke",3,SWIGTYPE_p_QVariant);
+  }
+  
+  arg4 = (lua_toboolean(L, 4)!=0);
+  result = (bool)(arg1)->askForSkillInvoke((Skill const *)arg2,(QVariant const &)*arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_4(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   Skill *arg2 = (Skill *) 0 ;
@@ -29346,7 +29868,7 @@ fail:
 }
 
 
-static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_3(lua_State* L) {
+static int _wrap_ServerPlayer_askForSkillInvoke__SWIG_5(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   Skill *arg2 = (Skill *) 0 ;
@@ -29379,8 +29901,8 @@ fail:
 
 static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
   int argc;
-  int argv[4]={
-    1,2,3,4
+  int argv[5]={
+    1,2,3,4,5
   };
   
   argc = lua_gettop(L);
@@ -29404,7 +29926,7 @@ static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
         }
       }
       if (_v) {
-        return _wrap_ServerPlayer_askForSkillInvoke__SWIG_3(L);
+        return _wrap_ServerPlayer_askForSkillInvoke__SWIG_5(L);
       }
     }
   }
@@ -29423,7 +29945,7 @@ static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
         _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
-        return _wrap_ServerPlayer_askForSkillInvoke__SWIG_1(L);
+        return _wrap_ServerPlayer_askForSkillInvoke__SWIG_2(L);
       }
     }
   }
@@ -29456,7 +29978,7 @@ static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
           }
         }
         if (_v) {
-          return _wrap_ServerPlayer_askForSkillInvoke__SWIG_2(L);
+          return _wrap_ServerPlayer_askForSkillInvoke__SWIG_4(L);
         }
       }
     }
@@ -29485,7 +30007,80 @@ static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
           }
         }
         if (_v) {
-          return _wrap_ServerPlayer_askForSkillInvoke__SWIG_0(L);
+          return _wrap_ServerPlayer_askForSkillInvoke__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Skill, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_ServerPlayer_askForSkillInvoke__SWIG_3(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_ServerPlayer_askForSkillInvoke__SWIG_0(L);
+          }
         }
       }
     }
@@ -29493,8 +30088,10 @@ static int _wrap_ServerPlayer_askForSkillInvoke(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_askForSkillInvoke'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::askForSkillInvoke(char const *,QVariant const &,bool)\n"
     "    ServerPlayer::askForSkillInvoke(char const *,QVariant const &)\n"
     "    ServerPlayer::askForSkillInvoke(char const *)\n"
+    "    ServerPlayer::askForSkillInvoke(Skill const *,QVariant const &,bool)\n"
     "    ServerPlayer::askForSkillInvoke(Skill const *,QVariant const &)\n"
     "    ServerPlayer::askForSkillInvoke(Skill const *)\n");
   lua_error(L);return 0;
@@ -29849,14 +30446,14 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   Card *arg4 = (Card *) 0 ;
   PindianStruct *result = 0 ;
   
   SWIG_check_num_args("ServerPlayer::pindianSelect",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianSelect",1,"ServerPlayer *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindianSelect",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"char const *");
   if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("ServerPlayer::pindianSelect",4,"Card const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
@@ -29868,17 +30465,13 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_0(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindianSelect",2,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindianSelect",3,SWIGTYPE_p_QString);
-  }
-  
+  arg3 = (char *)lua_tostring(L, 3);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Card,0))){
     SWIG_fail_ptr("ServerPlayer_pindianSelect",4,SWIGTYPE_p_Card);
   }
   
-  result = (PindianStruct *)(arg1)->pindianSelect(arg2,(QString const &)*arg3,(Card const *)arg4);
+  result = (PindianStruct *)(arg1)->pindianSelect(arg2,(char const *)arg3,(Card const *)arg4);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -29894,13 +30487,13 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   PindianStruct *result = 0 ;
   
   SWIG_check_num_args("ServerPlayer::pindianSelect",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianSelect",1,"ServerPlayer *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindianSelect",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("ServerPlayer_pindianSelect",1,SWIGTYPE_p_ServerPlayer);
@@ -29911,12 +30504,8 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_1(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindianSelect",2,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindianSelect",3,SWIGTYPE_p_QString);
-  }
-  
-  result = (PindianStruct *)(arg1)->pindianSelect(arg2,(QString const &)*arg3);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (PindianStruct *)(arg1)->pindianSelect(arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -29932,14 +30521,14 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   QList< ServerPlayer * > *arg2 = 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   Card *arg4 = (Card *) 0 ;
   PindianStruct *result = 0 ;
   
   SWIG_check_num_args("ServerPlayer::pindianSelect",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianSelect",1,"ServerPlayer *");
   if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::pindianSelect",2,"QList< ServerPlayer * > const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"char const *");
   if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("ServerPlayer::pindianSelect",4,"Card const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
@@ -29951,17 +30540,13 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_2(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindianSelect",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindianSelect",3,SWIGTYPE_p_QString);
-  }
-  
+  arg3 = (char *)lua_tostring(L, 3);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Card,0))){
     SWIG_fail_ptr("ServerPlayer_pindianSelect",4,SWIGTYPE_p_Card);
   }
   
-  result = (PindianStruct *)(arg1)->pindianSelect((QList< ServerPlayer * > const &)*arg2,(QString const &)*arg3,(Card const *)arg4);
+  result = (PindianStruct *)(arg1)->pindianSelect((QList< ServerPlayer * > const &)*arg2,(char const *)arg3,(Card const *)arg4);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -29977,13 +30562,13 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_3(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   QList< ServerPlayer * > *arg2 = 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   PindianStruct *result = 0 ;
   
   SWIG_check_num_args("ServerPlayer::pindianSelect",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianSelect",1,"ServerPlayer *");
   if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::pindianSelect",2,"QList< ServerPlayer * > const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianSelect",3,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("ServerPlayer_pindianSelect",1,SWIGTYPE_p_ServerPlayer);
@@ -29994,12 +30579,8 @@ static int _wrap_ServerPlayer_pindianSelect__SWIG_3(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindianSelect",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindianSelect",3,SWIGTYPE_p_QString);
-  }
-  
-  result = (PindianStruct *)(arg1)->pindianSelect((QList< ServerPlayer * > const &)*arg2,(QString const &)*arg3);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (PindianStruct *)(arg1)->pindianSelect((QList< ServerPlayer * > const &)*arg2,(char const *)arg3);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -30039,12 +30620,7 @@ static int _wrap_ServerPlayer_pindianSelect(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           return _wrap_ServerPlayer_pindianSelect__SWIG_1(L);
@@ -30073,12 +30649,7 @@ static int _wrap_ServerPlayer_pindianSelect(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           return _wrap_ServerPlayer_pindianSelect__SWIG_3(L);
@@ -30107,12 +30678,7 @@ static int _wrap_ServerPlayer_pindianSelect(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           {
@@ -30151,12 +30717,7 @@ static int _wrap_ServerPlayer_pindianSelect(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           {
@@ -30177,10 +30738,10 @@ static int _wrap_ServerPlayer_pindianSelect(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_pindianSelect'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    ServerPlayer::pindianSelect(ServerPlayer *,QString const &,Card const *)\n"
-    "    ServerPlayer::pindianSelect(ServerPlayer *,QString const &)\n"
-    "    ServerPlayer::pindianSelect(QList< ServerPlayer * > const &,QString const &,Card const *)\n"
-    "    ServerPlayer::pindianSelect(QList< ServerPlayer * > const &,QString const &)\n");
+    "    ServerPlayer::pindianSelect(ServerPlayer *,char const *,Card const *)\n"
+    "    ServerPlayer::pindianSelect(ServerPlayer *,char const *)\n"
+    "    ServerPlayer::pindianSelect(QList< ServerPlayer * > const &,char const *,Card const *)\n"
+    "    ServerPlayer::pindianSelect(QList< ServerPlayer * > const &,char const *)\n");
   lua_error(L);return 0;
 }
 
@@ -30353,14 +30914,14 @@ static int _wrap_ServerPlayer_pindian__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   Card *arg4 = (Card *) 0 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::pindian",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindian",1,"ServerPlayer *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindian",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindian",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindian",3,"char const *");
   if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("ServerPlayer::pindian",4,"Card const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
@@ -30372,17 +30933,13 @@ static int _wrap_ServerPlayer_pindian__SWIG_0(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindian",2,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindian",3,SWIGTYPE_p_QString);
-  }
-  
+  arg3 = (char *)lua_tostring(L, 3);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Card,0))){
     SWIG_fail_ptr("ServerPlayer_pindian",4,SWIGTYPE_p_Card);
   }
   
-  result = (bool)(arg1)->pindian(arg2,(QString const &)*arg3,(Card const *)arg4);
+  result = (bool)(arg1)->pindian(arg2,(char const *)arg3,(Card const *)arg4);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -30398,13 +30955,13 @@ static int _wrap_ServerPlayer_pindian__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QString *arg3 = 0 ;
+  char *arg3 = (char *) 0 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::pindian",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindian",1,"ServerPlayer *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindian",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ServerPlayer::pindian",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindian",3,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("ServerPlayer_pindian",1,SWIGTYPE_p_ServerPlayer);
@@ -30415,12 +30972,8 @@ static int _wrap_ServerPlayer_pindian__SWIG_1(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_pindian",2,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_pindian",3,SWIGTYPE_p_QString);
-  }
-  
-  result = (bool)(arg1)->pindian(arg2,(QString const &)*arg3);
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (bool)(arg1)->pindian(arg2,(char const *)arg3);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -30460,12 +31013,7 @@ static int _wrap_ServerPlayer_pindian(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           return _wrap_ServerPlayer_pindian__SWIG_1(L);
@@ -30494,12 +31042,7 @@ static int _wrap_ServerPlayer_pindian(lua_State* L) {
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           {
@@ -30520,9 +31063,364 @@ static int _wrap_ServerPlayer_pindian(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_pindian'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    ServerPlayer::pindian(ServerPlayer *,QString const &,Card const *)\n"
-    "    ServerPlayer::pindian(ServerPlayer *,QString const &)\n");
+    "    ServerPlayer::pindian(ServerPlayer *,char const *,Card const *)\n"
+    "    ServerPlayer::pindian(ServerPlayer *,char const *)\n");
   lua_error(L);return 0;
+}
+
+
+static int _wrap_ServerPlayer_pindianStruct__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  Card *arg4 = (Card *) 0 ;
+  PindianStruct *result = 0 ;
+  
+  SWIG_check_num_args("ServerPlayer::pindianStruct",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianStruct",1,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindianStruct",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianStruct",3,"char const *");
+  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("ServerPlayer::pindianStruct",4,"Card const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_pindianStruct",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_pindianStruct",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("ServerPlayer_pindianStruct",4,SWIGTYPE_p_Card);
+  }
+  
+  result = (PindianStruct *)(arg1)->pindianStruct(arg2,(char const *)arg3,(Card const *)arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_pindianStruct__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  PindianStruct *result = 0 ;
+  
+  SWIG_check_num_args("ServerPlayer::pindianStruct",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::pindianStruct",1,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ServerPlayer::pindianStruct",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::pindianStruct",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_pindianStruct",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_pindianStruct",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  result = (PindianStruct *)(arg1)->pindianStruct(arg2,(char const *)arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_PindianStruct,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_pindianStruct(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_ServerPlayer_pindianStruct__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            void *ptr;
+            if (SWIG_isptrtype(L,argv[3])==0 || SWIG_ConvertPtr(L,argv[3], (void **) &ptr, SWIGTYPE_p_Card, 0)) {
+              _v = 0;
+            } else {
+              _v = 1;
+            }
+          }
+          if (_v) {
+            return _wrap_ServerPlayer_pindianStruct__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_pindianStruct'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::pindianStruct(ServerPlayer *,char const *,Card const *)\n"
+    "    ServerPlayer::pindianStruct(ServerPlayer *,char const *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_ServerPlayer_askCommandto(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  ServerPlayer *arg3 = (ServerPlayer *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ServerPlayer::askCommandto",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askCommandto",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askCommandto",2,"char const *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ServerPlayer::askCommandto",3,"ServerPlayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_askCommandto",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_askCommandto",3,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  result = (bool)(arg1)->askCommandto((char const *)arg2,arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_startCommand__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  ServerPlayer *arg3 = (ServerPlayer *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("ServerPlayer::startCommand",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::startCommand",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::startCommand",2,"char const *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ServerPlayer::startCommand",3,"ServerPlayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_startCommand",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_startCommand",3,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  result = (int)(arg1)->startCommand((char const *)arg2,arg3);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_startCommand__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("ServerPlayer::startCommand",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::startCommand",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::startCommand",2,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_startCommand",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (int)(arg1)->startCommand((char const *)arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_startCommand(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_ServerPlayer_startCommand__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_ServerPlayer_startCommand__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_startCommand'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::startCommand(char const *,ServerPlayer *)\n"
+    "    ServerPlayer::startCommand(char const *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_ServerPlayer_doCommand(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  ServerPlayer *arg4 = (ServerPlayer *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ServerPlayer::doCommand",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::doCommand",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::doCommand",2,"char const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("ServerPlayer::doCommand",3,"int");
+  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("ServerPlayer::doCommand",4,"ServerPlayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_doCommand",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (int)lua_tonumber(L, 3);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_doCommand",4,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  result = (bool)(arg1)->doCommand((char const *)arg2,arg3,arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
 }
 
 
@@ -33351,6 +34249,266 @@ static int _wrap_ServerPlayer_addToPile(lua_State* L) {
 }
 
 
+static int _wrap_ServerPlayer_addToGeneralPile__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool arg4 ;
+  
+  SWIG_check_num_args("ServerPlayer::addToGeneralPile",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",3,"char const *");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_addToGeneralPile",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (lua_toboolean(L, 4)!=0);
+  (arg1)->addToGeneralPile((char const *)arg2,(char const *)arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_addToGeneralPile__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("ServerPlayer::addToGeneralPile",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::addToGeneralPile",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_addToGeneralPile",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->addToGeneralPile((char const *)arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_addToGeneralPile(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_ServerPlayer_addToGeneralPile__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_ServerPlayer_addToGeneralPile__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_addToGeneralPile'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::addToGeneralPile(char const *,char const *,bool)\n"
+    "    ServerPlayer::addToGeneralPile(char const *,char const *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_ServerPlayer_removeGeneralPile__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool arg4 ;
+  
+  SWIG_check_num_args("ServerPlayer::removeGeneralPile",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",3,"char const *");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_removeGeneralPile",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (lua_toboolean(L, 4)!=0);
+  (arg1)->removeGeneralPile((char const *)arg2,(char const *)arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_removeGeneralPile__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerPlayer *arg1 = (ServerPlayer *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("ServerPlayer::removeGeneralPile",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",1,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("ServerPlayer::removeGeneralPile",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("ServerPlayer_removeGeneralPile",1,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->removeGeneralPile((char const *)arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ServerPlayer_removeGeneralPile(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_ServerPlayer_removeGeneralPile__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_ServerPlayer_removeGeneralPile__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_removeGeneralPile'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ServerPlayer::removeGeneralPile(char const *,char const *,bool)\n"
+    "    ServerPlayer::removeGeneralPile(char const *,char const *)\n");
+  lua_error(L);return 0;
+}
+
+
 static int _wrap_ServerPlayer_gainAnExtraTurn(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
@@ -34284,7 +35442,7 @@ static int _wrap_ServerPlayer_disconnectSkillsFromOthers(lua_State* L) {
 static int _wrap_ServerPlayer_askForGeneralShow__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
-  QString *arg2 = 0 ;
+  char *arg2 = (char *) 0 ;
   bool arg3 ;
   bool arg4 ;
   bool arg5 ;
@@ -34293,7 +35451,7 @@ static int _wrap_ServerPlayer_askForGeneralShow__SWIG_0(lua_State* L) {
   
   SWIG_check_num_args("ServerPlayer::askForGeneralShow",6,6)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",1,"ServerPlayer *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"char const *");
   if(!lua_isboolean(L,3)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",3,"bool");
   if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",4,"bool");
   if(!lua_isboolean(L,5)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",5,"bool");
@@ -34303,16 +35461,12 @@ static int _wrap_ServerPlayer_askForGeneralShow__SWIG_0(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_askForGeneralShow",1,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_askForGeneralShow",2,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
   arg3 = (lua_toboolean(L, 3)!=0);
   arg4 = (lua_toboolean(L, 4)!=0);
   arg5 = (lua_toboolean(L, 5)!=0);
   arg6 = (lua_toboolean(L, 6)!=0);
-  result = (bool)(arg1)->askForGeneralShow((QString const &)*arg2,arg3,arg4,arg5,arg6);
+  result = (bool)(arg1)->askForGeneralShow((char const *)arg2,arg3,arg4,arg5,arg6);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -34327,7 +35481,7 @@ fail:
 static int _wrap_ServerPlayer_askForGeneralShow__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
-  QString *arg2 = 0 ;
+  char *arg2 = (char *) 0 ;
   bool arg3 ;
   bool arg4 ;
   bool arg5 ;
@@ -34335,7 +35489,7 @@ static int _wrap_ServerPlayer_askForGeneralShow__SWIG_1(lua_State* L) {
   
   SWIG_check_num_args("ServerPlayer::askForGeneralShow",5,5)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",1,"ServerPlayer *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"char const *");
   if(!lua_isboolean(L,3)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",3,"bool");
   if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",4,"bool");
   if(!lua_isboolean(L,5)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",5,"bool");
@@ -34344,15 +35498,11 @@ static int _wrap_ServerPlayer_askForGeneralShow__SWIG_1(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_askForGeneralShow",1,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_askForGeneralShow",2,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
   arg3 = (lua_toboolean(L, 3)!=0);
   arg4 = (lua_toboolean(L, 4)!=0);
   arg5 = (lua_toboolean(L, 5)!=0);
-  result = (bool)(arg1)->askForGeneralShow((QString const &)*arg2,arg3,arg4,arg5);
+  result = (bool)(arg1)->askForGeneralShow((char const *)arg2,arg3,arg4,arg5);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -34367,14 +35517,14 @@ fail:
 static int _wrap_ServerPlayer_askForGeneralShow__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
-  QString *arg2 = 0 ;
+  char *arg2 = (char *) 0 ;
   bool arg3 ;
   bool arg4 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::askForGeneralShow",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",1,"ServerPlayer *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"char const *");
   if(!lua_isboolean(L,3)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",3,"bool");
   if(!lua_isboolean(L,4)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",4,"bool");
   
@@ -34382,14 +35532,10 @@ static int _wrap_ServerPlayer_askForGeneralShow__SWIG_2(lua_State* L) {
     SWIG_fail_ptr("ServerPlayer_askForGeneralShow",1,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_askForGeneralShow",2,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
   arg3 = (lua_toboolean(L, 3)!=0);
   arg4 = (lua_toboolean(L, 4)!=0);
-  result = (bool)(arg1)->askForGeneralShow((QString const &)*arg2,arg3,arg4);
+  result = (bool)(arg1)->askForGeneralShow((char const *)arg2,arg3,arg4);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -34404,26 +35550,22 @@ fail:
 static int _wrap_ServerPlayer_askForGeneralShow__SWIG_3(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
-  QString *arg2 = 0 ;
+  char *arg2 = (char *) 0 ;
   bool arg3 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::askForGeneralShow",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",1,"ServerPlayer *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"char const *");
   if(!lua_isboolean(L,3)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",3,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("ServerPlayer_askForGeneralShow",1,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_askForGeneralShow",2,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
   arg3 = (lua_toboolean(L, 3)!=0);
-  result = (bool)(arg1)->askForGeneralShow((QString const &)*arg2,arg3);
+  result = (bool)(arg1)->askForGeneralShow((char const *)arg2,arg3);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -34438,23 +35580,19 @@ fail:
 static int _wrap_ServerPlayer_askForGeneralShow__SWIG_4(lua_State* L) {
   int SWIG_arg = 0;
   ServerPlayer *arg1 = (ServerPlayer *) 0 ;
-  QString *arg2 = 0 ;
+  char *arg2 = (char *) 0 ;
   bool result;
   
   SWIG_check_num_args("ServerPlayer::askForGeneralShow",2,2)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",1,"ServerPlayer *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("ServerPlayer::askForGeneralShow",2,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("ServerPlayer_askForGeneralShow",1,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("ServerPlayer_askForGeneralShow",2,SWIGTYPE_p_QString);
-  }
-  
-  result = (bool)(arg1)->askForGeneralShow((QString const &)*arg2);
+  arg2 = (char *)lua_tostring(L, 2);
+  result = (bool)(arg1)->askForGeneralShow((char const *)arg2);
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -34485,12 +35623,7 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         return _wrap_ServerPlayer_askForGeneralShow__SWIG_4(L);
@@ -34509,12 +35642,7 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
@@ -34538,12 +35666,7 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
@@ -34572,12 +35695,7 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
@@ -34611,12 +35729,7 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
@@ -34646,11 +35759,11 @@ static int _wrap_ServerPlayer_askForGeneralShow(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ServerPlayer_askForGeneralShow'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    ServerPlayer::askForGeneralShow(QString const &,bool,bool,bool,bool)\n"
-    "    ServerPlayer::askForGeneralShow(QString const &,bool,bool,bool)\n"
-    "    ServerPlayer::askForGeneralShow(QString const &,bool,bool)\n"
-    "    ServerPlayer::askForGeneralShow(QString const &,bool)\n"
-    "    ServerPlayer::askForGeneralShow(QString const &)\n");
+    "    ServerPlayer::askForGeneralShow(char const *,bool,bool,bool,bool)\n"
+    "    ServerPlayer::askForGeneralShow(char const *,bool,bool,bool)\n"
+    "    ServerPlayer::askForGeneralShow(char const *,bool,bool)\n"
+    "    ServerPlayer::askForGeneralShow(char const *,bool)\n"
+    "    ServerPlayer::askForGeneralShow(char const *)\n");
   lua_error(L);return 0;
 }
 
@@ -34998,6 +36111,7 @@ static swig_lua_method swig_ServerPlayer_methods[]= {
     { "throwAllMarks", _wrap_ServerPlayer_throwAllMarks},
     { "clearOnePrivatePile", _wrap_ServerPlayer_clearOnePrivatePile},
     { "clearPrivatePiles", _wrap_ServerPlayer_clearPrivatePiles},
+    { "fillHandCards", _wrap_ServerPlayer_fillHandCards},
     { "drawCards", _wrap_ServerPlayer_drawCards},
     { "askForSkillInvoke", _wrap_ServerPlayer_askForSkillInvoke},
     { "forceToDiscard", _wrap_ServerPlayer_forceToDiscard},
@@ -35010,6 +36124,10 @@ static swig_lua_method swig_ServerPlayer_methods[]= {
     { "pindianResult", _wrap_ServerPlayer_pindianResult},
     { "pindianFinish", _wrap_ServerPlayer_pindianFinish},
     { "pindian", _wrap_ServerPlayer_pindian},
+    { "pindianStruct", _wrap_ServerPlayer_pindianStruct},
+    { "askCommandto", _wrap_ServerPlayer_askCommandto},
+    { "startCommand", _wrap_ServerPlayer_startCommand},
+    { "doCommand", _wrap_ServerPlayer_doCommand},
     { "turnOver", _wrap_ServerPlayer_turnOver},
     { "play", _wrap_ServerPlayer_play},
     { "changePhase", _wrap_ServerPlayer_changePhase},
@@ -35050,6 +36168,8 @@ static swig_lua_method swig_ServerPlayer_methods[]= {
     { "introduceTo", _wrap_ServerPlayer_introduceTo},
     { "marshal", _wrap_ServerPlayer_marshal},
     { "addToPile", _wrap_ServerPlayer_addToPile},
+    { "addToGeneralPile", _wrap_ServerPlayer_addToGeneralPile},
+    { "removeGeneralPile", _wrap_ServerPlayer_removeGeneralPile},
     { "gainAnExtraTurn", _wrap_ServerPlayer_gainAnExtraTurn},
     { "copyFrom", _wrap_ServerPlayer_copyFrom},
     { "getCardUsedTimes", _wrap_ServerPlayer_getCardUsedTimes},
@@ -37862,6 +38982,56 @@ fail:
 }
 
 
+static int _wrap_CardEffectStruct_disresponsive_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardEffectStruct *arg1 = (CardEffectStruct *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("CardEffectStruct::disresponsive",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardEffectStruct::disresponsive",1,"CardEffectStruct *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("CardEffectStruct::disresponsive",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardEffectStruct,0))){
+    SWIG_fail_ptr("CardEffectStruct_disresponsive_set",1,SWIGTYPE_p_CardEffectStruct);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  if (arg1) (arg1)->disresponsive = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardEffectStruct_disresponsive_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardEffectStruct *arg1 = (CardEffectStruct *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("CardEffectStruct::disresponsive",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardEffectStruct::disresponsive",1,"CardEffectStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardEffectStruct,0))){
+    SWIG_fail_ptr("CardEffectStruct_disresponsive_get",1,SWIGTYPE_p_CardEffectStruct);
+  }
+  
+  result = (bool) ((arg1)->disresponsive);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_CardEffectStruct(void *obj) {
 CardEffectStruct *arg1 = (CardEffectStruct *) obj;
 delete arg1;
@@ -37879,6 +39049,7 @@ static swig_lua_attribute swig_CardEffectStruct_attributes[] = {
     { "from", _wrap_CardEffectStruct_from_get, _wrap_CardEffectStruct_from_set },
     { "to", _wrap_CardEffectStruct_to_get, _wrap_CardEffectStruct_to_set },
     { "nullified", _wrap_CardEffectStruct_nullified_get, _wrap_CardEffectStruct_nullified_set },
+    { "disresponsive", _wrap_CardEffectStruct_disresponsive_get, _wrap_CardEffectStruct_disresponsive_set },
     {0,0,0}
 };
 static swig_lua_method swig_CardEffectStruct_methods[]= {
@@ -39237,6 +40408,123 @@ fail:
 }
 
 
+static int _wrap_CardUseStruct_disresponsive_list_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardUseStruct *arg1 = (CardUseStruct *) 0 ;
+  QStringList arg2 ;
+  
+  SWIG_check_num_args("CardUseStruct::disresponsive_list",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardUseStruct::disresponsive_list",1,"CardUseStruct *");
+  if(!lua_istable(L,2)) SWIG_fail_arg("CardUseStruct::disresponsive_list",2,"QStringList");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("CardUseStruct_disresponsive_list_set",1,SWIGTYPE_p_CardUseStruct);
+  }
+  
+  
+  for (size_t i = 0; i < lua_rawlen(L, 2); ++i) {
+    lua_rawgeti(L, 2, i + 1);
+    const char *elem = luaL_checkstring(L, -1);
+    arg2 << elem;
+    lua_pop(L, 1);
+  }
+  
+  if (arg1) (arg1)->disresponsive_list = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardUseStruct_disresponsive_list_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardUseStruct *arg1 = (CardUseStruct *) 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("CardUseStruct::disresponsive_list",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardUseStruct::disresponsive_list",1,"CardUseStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("CardUseStruct_disresponsive_list_get",1,SWIGTYPE_p_CardUseStruct);
+  }
+  
+  result =  ((arg1)->disresponsive_list);
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardUseStruct_index_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardUseStruct *arg1 = (CardUseStruct *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("CardUseStruct::index",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardUseStruct::index",1,"CardUseStruct *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CardUseStruct::index",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("CardUseStruct_index_set",1,SWIGTYPE_p_CardUseStruct);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  if (arg1) (arg1)->index = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardUseStruct_index_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardUseStruct *arg1 = (CardUseStruct *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("CardUseStruct::index",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardUseStruct::index",1,"CardUseStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("CardUseStruct_index_get",1,SWIGTYPE_p_CardUseStruct);
+  }
+  
+  result = (int) ((arg1)->index);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_CardUseStruct(void *obj) {
 CardUseStruct *arg1 = (CardUseStruct *) obj;
 delete arg1;
@@ -39258,6 +40546,8 @@ static swig_lua_attribute swig_CardUseStruct_attributes[] = {
     { "m_addHistory", _wrap_CardUseStruct_m_addHistory_get, _wrap_CardUseStruct_m_addHistory_set },
     { "m_isHandcard", _wrap_CardUseStruct_m_isHandcard_get, _wrap_CardUseStruct_m_isHandcard_set },
     { "nullified_list", _wrap_CardUseStruct_nullified_list_get, _wrap_CardUseStruct_nullified_list_set },
+    { "disresponsive_list", _wrap_CardUseStruct_disresponsive_list_get, _wrap_CardUseStruct_disresponsive_list_set },
+    { "index", _wrap_CardUseStruct_index_get, _wrap_CardUseStruct_index_set },
     {0,0,0}
 };
 static swig_lua_method swig_CardUseStruct_methods[]= {
@@ -40772,6 +42062,73 @@ fail:
 }
 
 
+static int _wrap_CardsMoveOneTimeStruct_cards_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardsMoveOneTimeStruct *arg1 = (CardsMoveOneTimeStruct *) 0 ;
+  QStringList arg2 ;
+  
+  SWIG_check_num_args("CardsMoveOneTimeStruct::cards",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardsMoveOneTimeStruct::cards",1,"CardsMoveOneTimeStruct *");
+  if(!lua_istable(L,2)) SWIG_fail_arg("CardsMoveOneTimeStruct::cards",2,"QStringList");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardsMoveOneTimeStruct,0))){
+    SWIG_fail_ptr("CardsMoveOneTimeStruct_cards_set",1,SWIGTYPE_p_CardsMoveOneTimeStruct);
+  }
+  
+  
+  for (size_t i = 0; i < lua_rawlen(L, 2); ++i) {
+    lua_rawgeti(L, 2, i + 1);
+    const char *elem = luaL_checkstring(L, -1);
+    arg2 << elem;
+    lua_pop(L, 1);
+  }
+  
+  if (arg1) (arg1)->cards = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardsMoveOneTimeStruct_cards_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardsMoveOneTimeStruct *arg1 = (CardsMoveOneTimeStruct *) 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("CardsMoveOneTimeStruct::cards",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardsMoveOneTimeStruct::cards",1,"CardsMoveOneTimeStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardsMoveOneTimeStruct,0))){
+    SWIG_fail_ptr("CardsMoveOneTimeStruct_cards_get",1,SWIGTYPE_p_CardsMoveOneTimeStruct);
+  }
+  
+  result =  ((arg1)->cards);
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_CardsMoveOneTimeStruct_from_places_set(lua_State* L) {
   int SWIG_arg = 0;
   CardsMoveOneTimeStruct *arg1 = (CardsMoveOneTimeStruct *) 0 ;
@@ -41619,6 +42976,7 @@ static int _proxy__wrap_new_CardsMoveOneTimeStruct(lua_State *L) {
 }
 static swig_lua_attribute swig_CardsMoveOneTimeStruct_attributes[] = {
     { "card_ids", _wrap_CardsMoveOneTimeStruct_card_ids_get, _wrap_CardsMoveOneTimeStruct_card_ids_set },
+    { "cards", _wrap_CardsMoveOneTimeStruct_cards_get, _wrap_CardsMoveOneTimeStruct_cards_set },
     { "from_places", _wrap_CardsMoveOneTimeStruct_from_places_get, _wrap_CardsMoveOneTimeStruct_from_places_set },
     { "to_place", _wrap_CardsMoveOneTimeStruct_to_place_get, _wrap_CardsMoveOneTimeStruct_to_place_set },
     { "reason", _wrap_CardsMoveOneTimeStruct_reason_get, _wrap_CardsMoveOneTimeStruct_reason_set },
@@ -43274,6 +44632,73 @@ fail:
 }
 
 
+static int _wrap_JudgeStruct_patterns_set(lua_State* L) {
+  int SWIG_arg = 0;
+  JudgeStruct *arg1 = (JudgeStruct *) 0 ;
+  QStringList arg2 ;
+  
+  SWIG_check_num_args("JudgeStruct::patterns",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JudgeStruct::patterns",1,"JudgeStruct *");
+  if(!lua_istable(L,2)) SWIG_fail_arg("JudgeStruct::patterns",2,"QStringList");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_JudgeStruct,0))){
+    SWIG_fail_ptr("JudgeStruct_patterns_set",1,SWIGTYPE_p_JudgeStruct);
+  }
+  
+  
+  for (size_t i = 0; i < lua_rawlen(L, 2); ++i) {
+    lua_rawgeti(L, 2, i + 1);
+    const char *elem = luaL_checkstring(L, -1);
+    arg2 << elem;
+    lua_pop(L, 1);
+  }
+  
+  if (arg1) (arg1)->patterns = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_JudgeStruct_patterns_get(lua_State* L) {
+  int SWIG_arg = 0;
+  JudgeStruct *arg1 = (JudgeStruct *) 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("JudgeStruct::patterns",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JudgeStruct::patterns",1,"JudgeStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_JudgeStruct,0))){
+    SWIG_fail_ptr("JudgeStruct_patterns_get",1,SWIGTYPE_p_JudgeStruct);
+  }
+  
+  result =  ((arg1)->patterns);
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_JudgeStruct_good_set(lua_State* L) {
   int SWIG_arg = 0;
   JudgeStruct *arg1 = (JudgeStruct *) 0 ;
@@ -43540,6 +44965,7 @@ static swig_lua_attribute swig_JudgeStruct_attributes[] = {
     { "who", _wrap_JudgeStruct_who_get, _wrap_JudgeStruct_who_set },
     { "card", _wrap_JudgeStruct_card_get, _wrap_JudgeStruct_card_set },
     { "pattern", _wrap_JudgeStruct_pattern_get, _wrap_JudgeStruct_pattern_set },
+    { "patterns", _wrap_JudgeStruct_patterns_get, _wrap_JudgeStruct_patterns_set },
     { "good", _wrap_JudgeStruct_good_get, _wrap_JudgeStruct_good_set },
     { "reason", _wrap_JudgeStruct_reason_get, _wrap_JudgeStruct_reason_set },
     { "time_consuming", _wrap_JudgeStruct_time_consuming_get, _wrap_JudgeStruct_time_consuming_set },
@@ -44148,56 +45574,6 @@ fail:
 }
 
 
-static int _wrap_CardResponseStruct_m_isRetrial_set(lua_State* L) {
-  int SWIG_arg = 0;
-  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("CardResponseStruct::m_isRetrial",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",1,"CardResponseStruct *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
-    SWIG_fail_ptr("CardResponseStruct_m_isRetrial_set",1,SWIGTYPE_p_CardResponseStruct);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  if (arg1) (arg1)->m_isRetrial = arg2;
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CardResponseStruct_m_isRetrial_get(lua_State* L) {
-  int SWIG_arg = 0;
-  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("CardResponseStruct::m_isRetrial",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",1,"CardResponseStruct *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
-    SWIG_fail_ptr("CardResponseStruct_m_isRetrial_get",1,SWIGTYPE_p_CardResponseStruct);
-  }
-  
-  result = (bool) ((arg1)->m_isRetrial);
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CardResponseStruct_m_isHandcard_set(lua_State* L) {
   int SWIG_arg = 0;
   CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
@@ -44248,6 +45624,110 @@ fail:
 }
 
 
+static int _wrap_CardResponseStruct_m_isRetrial_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("CardResponseStruct::m_isRetrial",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",1,"CardResponseStruct *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
+    SWIG_fail_ptr("CardResponseStruct_m_isRetrial_set",1,SWIGTYPE_p_CardResponseStruct);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  if (arg1) (arg1)->m_isRetrial = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardResponseStruct_m_isRetrial_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("CardResponseStruct::m_isRetrial",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_isRetrial",1,"CardResponseStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
+    SWIG_fail_ptr("CardResponseStruct_m_isRetrial_get",1,SWIGTYPE_p_CardResponseStruct);
+  }
+  
+  result = (bool) ((arg1)->m_isRetrial);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardResponseStruct_m_data_set(lua_State* L) {
+  int SWIG_arg = 0;
+  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
+  QVariant *arg2 = (QVariant *) 0 ;
+  
+  SWIG_check_num_args("CardResponseStruct::m_data",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_data",1,"CardResponseStruct *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("CardResponseStruct::m_data",2,"QVariant *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
+    SWIG_fail_ptr("CardResponseStruct_m_data_set",1,SWIGTYPE_p_CardResponseStruct);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("CardResponseStruct_m_data_set",2,SWIGTYPE_p_QVariant);
+  }
+  
+  if (arg1) (arg1)->m_data = *arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CardResponseStruct_m_data_get(lua_State* L) {
+  int SWIG_arg = 0;
+  CardResponseStruct *arg1 = (CardResponseStruct *) 0 ;
+  QVariant *result = 0 ;
+  
+  SWIG_check_num_args("CardResponseStruct::m_data",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CardResponseStruct::m_data",1,"CardResponseStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_CardResponseStruct,0))){
+    SWIG_fail_ptr("CardResponseStruct_m_data_get",1,SWIGTYPE_p_CardResponseStruct);
+  }
+  
+  result = (QVariant *)& ((arg1)->m_data);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_QVariant,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_CardResponseStruct(void *obj) {
 CardResponseStruct *arg1 = (CardResponseStruct *) obj;
 delete arg1;
@@ -44264,8 +45744,9 @@ static swig_lua_attribute swig_CardResponseStruct_attributes[] = {
     { "m_card", _wrap_CardResponseStruct_m_card_get, _wrap_CardResponseStruct_m_card_set },
     { "m_who", _wrap_CardResponseStruct_m_who_get, _wrap_CardResponseStruct_m_who_set },
     { "m_isUse", _wrap_CardResponseStruct_m_isUse_get, _wrap_CardResponseStruct_m_isUse_set },
-    { "m_isRetrial", _wrap_CardResponseStruct_m_isRetrial_get, _wrap_CardResponseStruct_m_isRetrial_set },
     { "m_isHandcard", _wrap_CardResponseStruct_m_isHandcard_get, _wrap_CardResponseStruct_m_isHandcard_set },
+    { "m_isRetrial", _wrap_CardResponseStruct_m_isRetrial_get, _wrap_CardResponseStruct_m_isRetrial_set },
+    { "m_data", _wrap_CardResponseStruct_m_data_get, _wrap_CardResponseStruct_m_data_set },
     {0,0,0}
 };
 static swig_lua_method swig_CardResponseStruct_methods[]= {
@@ -45046,6 +46527,30 @@ fail:
 }
 
 
+static int _wrap_ServerInfoStruct_KeepCardOnHiddenGeneral_get(lua_State* L) {
+  int SWIG_arg = 0;
+  ServerInfoStruct *arg1 = (ServerInfoStruct *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ServerInfoStruct::KeepCardOnHiddenGeneral",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ServerInfoStruct::KeepCardOnHiddenGeneral",1,"ServerInfoStruct *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ServerInfoStruct,0))){
+    SWIG_fail_ptr("ServerInfoStruct_KeepCardOnHiddenGeneral_get",1,SWIGTYPE_p_ServerInfoStruct);
+  }
+  
+  result = (bool)(bool) ((arg1)->KeepCardOnHiddenGeneral);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_ServerInfoStruct_DuringGame_get(lua_State* L) {
   int SWIG_arg = 0;
   ServerInfoStruct *arg1 = (ServerInfoStruct *) 0 ;
@@ -45113,6 +46618,7 @@ static swig_lua_attribute swig_ServerInfoStruct_attributes[] = {
     { "FirstShowingReward", _wrap_ServerInfoStruct_FirstShowingReward_get, SWIG_Lua_set_immutable },
     { "BattleRoyalMode", _wrap_ServerInfoStruct_BattleRoyalMode_get, SWIG_Lua_set_immutable },
     { "ViewDeputyGeneral", _wrap_ServerInfoStruct_ViewDeputyGeneral_get, SWIG_Lua_set_immutable },
+    { "KeepCardOnHiddenGeneral", _wrap_ServerInfoStruct_KeepCardOnHiddenGeneral_get, SWIG_Lua_set_immutable },
     { "DuringGame", _wrap_ServerInfoStruct_DuringGame_get, SWIG_Lua_set_immutable },
     {0,0,0}
 };
@@ -45678,6 +47184,37 @@ fail:
 }
 
 
+static int _wrap_Card_sameCardNameWith(lua_State* L) {
+  int SWIG_arg = 0;
+  Card *arg1 = (Card *) 0 ;
+  Card *arg2 = (Card *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Card::sameCardNameWith",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Card::sameCardNameWith",1,"Card const *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Card::sameCardNameWith",2,"Card const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("Card_sameCardNameWith",1,SWIGTYPE_p_Card);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("Card_sameCardNameWith",2,SWIGTYPE_p_Card);
+  }
+  
+  result = (bool)((Card const *)arg1)->sameCardNameWith((Card const *)arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Card_getSkillName__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Card *arg1 = (Card *) 0 ;
@@ -46115,6 +47652,36 @@ static int _wrap_Card_clearFlags(lua_State* L) {
   }
   
   ((Card const *)arg1)->clearFlags();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Card_copyFrom(lua_State* L) {
+  int SWIG_arg = 0;
+  Card *arg1 = (Card *) 0 ;
+  Card *arg2 = (Card *) 0 ;
+  
+  SWIG_check_num_args("Card::copyFrom",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Card::copyFrom",1,"Card *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Card::copyFrom",2,"Card const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("Card_copyFrom",1,SWIGTYPE_p_Card);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("Card_copyFrom",2,SWIGTYPE_p_Card);
+  }
+  
+  (arg1)->copyFrom((Card const *)arg2);
   
   return SWIG_arg;
   
@@ -48154,6 +49721,7 @@ static swig_lua_method swig_Card_methods[]= {
     { "getFullName", _wrap_Card_getFullName},
     { "getLogName", _wrap_Card_getLogName},
     { "getName", _wrap_Card_getName},
+    { "sameCardNameWith", _wrap_Card_sameCardNameWith},
     { "getSkillName", _wrap_Card_getSkillName},
     { "setSkillName", _wrap_Card_setSkillName},
     { "getDescription", _wrap_Card_getDescription},
@@ -48166,6 +49734,7 @@ static swig_lua_method swig_Card_methods[]= {
     { "setFlags", _wrap_Card_setFlags},
     { "hasFlag", _wrap_Card_hasFlag},
     { "clearFlags", _wrap_Card_clearFlags},
+    { "copyFrom", _wrap_Card_copyFrom},
     { "getPackage", _wrap_Card_getPackage},
     { "getClassName", _wrap_Card_getClassName},
     { "isVirtualCard", _wrap_Card_isVirtualCard},
@@ -61357,6 +62926,108 @@ static int _wrap_Room_askForMoveCards(lua_State* L) {
 }
 
 
+static int _wrap_Room_askForQiaobian(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< ServerPlayer * > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  char *arg5 = (char *) 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForQiaobian",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForQiaobian",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForQiaobian",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForQiaobian",3,"QList< ServerPlayer * > const &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForQiaobian",4,"char const *");
+  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::askForQiaobian",5,"char const *");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForQiaobian",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForQiaobian",7,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForQiaobian",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForQiaobian",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForQiaobian",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (char *)lua_tostring(L, 5);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  result = (bool)(arg1)->askForQiaobian(arg2,(QList< ServerPlayer * > const &)*arg3,(char const *)arg4,(char const *)arg5,arg6,arg7);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForTransferFieldCards(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< ServerPlayer * > arg3 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  QList< ServerPlayer * > *argp3 ;
+  QList< int > result;
+  
+  SWIG_check_num_args("Room::askForTransferFieldCards",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForTransferFieldCards",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForTransferFieldCards",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForTransferFieldCards",3,"QList< ServerPlayer * > const");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForTransferFieldCards",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForTransferFieldCards",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForTransferFieldCards",6,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForTransferFieldCards",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForTransferFieldCards",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForTransferFieldCards",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg3 = *argp3;
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  result = (arg1)->askForTransferFieldCards(arg2,arg3,(char const *)arg4,arg5,arg6);
+  {
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Room_doGongxin__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
@@ -62348,7 +64019,7 @@ fail:
 }
 
 
-static int _wrap_Room_sendCompulsoryTriggerLog(lua_State* L) {
+static int _wrap_Room_sendCompulsoryTriggerLog__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -62381,6 +64052,118 @@ static int _wrap_Room_sendCompulsoryTriggerLog(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_Room_sendCompulsoryTriggerLog__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("Room::sendCompulsoryTriggerLog",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::sendCompulsoryTriggerLog",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::sendCompulsoryTriggerLog",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::sendCompulsoryTriggerLog",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_sendCompulsoryTriggerLog",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_sendCompulsoryTriggerLog",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->sendCompulsoryTriggerLog(arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_sendCompulsoryTriggerLog(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_sendCompulsoryTriggerLog__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_Room_sendCompulsoryTriggerLog__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_sendCompulsoryTriggerLog'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::sendCompulsoryTriggerLog(ServerPlayer *,char const *,bool)\n"
+    "    Room::sendCompulsoryTriggerLog(ServerPlayer *,char const *)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -62457,6 +64240,91 @@ fail:
 }
 
 
+static int _wrap_Room_showCard__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > arg3 ;
+  ServerPlayer *arg4 = (ServerPlayer *) 0 ;
+  QList< int > *argp3 ;
+  
+  SWIG_check_num_args("Room::showCard",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::showCard",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::showCard",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::showCard",3,"QList< int >");
+  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("Room::showCard",4,"ServerPlayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_showCard",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_showCard",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_showCard",3,SWIGTYPE_p_QListT_int_t);
+  }
+  arg3 = *argp3;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_showCard",4,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  (arg1)->showCard(arg2,arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_showCard__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > arg3 ;
+  QList< int > *argp3 ;
+  
+  SWIG_check_num_args("Room::showCard",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::showCard",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::showCard",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::showCard",3,"QList< int >");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_showCard",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_showCard",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_showCard",3,SWIGTYPE_p_QListT_int_t);
+  }
+  arg3 = *argp3;
+  
+  (arg1)->showCard(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Room_showCard(lua_State* L) {
   int argc;
   int argv[5]={
@@ -62464,6 +64332,40 @@ static int _wrap_Room_showCard(lua_State* L) {
   };
   
   argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Room_showCard__SWIG_3(L);
+        }
+      }
+    }
+  }
   if (argc == 3) {
     int _v;
     {
@@ -62514,6 +64416,50 @@ static int _wrap_Room_showCard(lua_State* L) {
       }
       if (_v) {
         {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            void *ptr;
+            if (SWIG_isptrtype(L,argv[3])==0 || SWIG_ConvertPtr(L,argv[3], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+              _v = 0;
+            } else {
+              _v = 1;
+            }
+          }
+          if (_v) {
+            return _wrap_Room_showCard__SWIG_2(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
           _v = lua_isnumber(L,argv[2]);
         }
         if (_v) {
@@ -62536,7 +64482,9 @@ static int _wrap_Room_showCard(lua_State* L) {
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_showCard'\n"
     "  Possible C/C++ prototypes are:\n"
     "    Room::showCard(ServerPlayer *,int,ServerPlayer *)\n"
-    "    Room::showCard(ServerPlayer *,int)\n");
+    "    Room::showCard(ServerPlayer *,int)\n"
+    "    Room::showCard(ServerPlayer *,QList< int >,ServerPlayer *)\n"
+    "    Room::showCard(ServerPlayer *,QList< int >)\n");
   lua_error(L);return 0;
 }
 
@@ -62895,6 +64843,186 @@ static int _wrap_Room_retrial(lua_State* L) {
     "    Room::retrial(Card const *,ServerPlayer *,JudgeStruct *,char const *,bool)\n"
     "    Room::retrial(Card const *,ServerPlayer *,JudgeStruct *,char const *)\n");
   lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_getUseExtraTargets__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  CardUseStruct arg2 ;
+  bool arg3 ;
+  CardUseStruct *argp2 ;
+  QList< ServerPlayer * > result;
+  
+  SWIG_check_num_args("Room::getUseExtraTargets",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::getUseExtraTargets",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::getUseExtraTargets",2,"CardUseStruct");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Room::getUseExtraTargets",3,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_getUseExtraTargets",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("Room_getUseExtraTargets",2,SWIGTYPE_p_CardUseStruct);
+  }
+  arg2 = *argp2;
+  
+  arg3 = (lua_toboolean(L, 3)!=0);
+  result = (arg1)->getUseExtraTargets(arg2,arg3);
+  {
+    QList< ServerPlayer * > * resultptr = new QList< ServerPlayer * >((const QList< ServerPlayer * > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_ServerPlayer_p_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_getUseExtraTargets__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  CardUseStruct arg2 ;
+  CardUseStruct *argp2 ;
+  QList< ServerPlayer * > result;
+  
+  SWIG_check_num_args("Room::getUseExtraTargets",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::getUseExtraTargets",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::getUseExtraTargets",2,"CardUseStruct");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_getUseExtraTargets",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("Room_getUseExtraTargets",2,SWIGTYPE_p_CardUseStruct);
+  }
+  arg2 = *argp2;
+  
+  result = (arg1)->getUseExtraTargets(arg2);
+  {
+    QList< ServerPlayer * > * resultptr = new QList< ServerPlayer * >((const QList< ServerPlayer * > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_ServerPlayer_p_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_getUseExtraTargets(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_CardUseStruct, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_Room_getUseExtraTargets__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_CardUseStruct, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_getUseExtraTargets__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_getUseExtraTargets'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::getUseExtraTargets(CardUseStruct,bool)\n"
+    "    Room::getUseExtraTargets(CardUseStruct)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_getUseAliveTargets(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  CardUseStruct arg2 ;
+  CardUseStruct *argp2 ;
+  QList< ServerPlayer * > result;
+  
+  SWIG_check_num_args("Room::getUseAliveTargets",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::getUseAliveTargets",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::getUseAliveTargets",2,"CardUseStruct");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_getUseAliveTargets",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_CardUseStruct,0))){
+    SWIG_fail_ptr("Room_getUseAliveTargets",2,SWIGTYPE_p_CardUseStruct);
+  }
+  arg2 = *argp2;
+  
+  result = (arg1)->getUseAliveTargets(arg2);
+  {
+    QList< ServerPlayer * > * resultptr = new QList< ServerPlayer * >((const QList< ServerPlayer * > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_ServerPlayer_p_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
 }
 
 
@@ -64237,46 +66365,34 @@ fail:
 static int _wrap_Room_broadcastSkillInvoke__SWIG_6(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
-  QString *arg2 = 0 ;
-  QString *arg3 = 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
   int arg4 ;
   ServerPlayer *arg5 = (ServerPlayer *) 0 ;
-  QString *arg6 = 0 ;
+  char *arg6 = (char *) 0 ;
   
   SWIG_check_num_args("Room::broadcastSkillInvoke",6,6)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::broadcastSkillInvoke",1,"Room *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"QString const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"char const *");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("Room::broadcastSkillInvoke",4,"int");
   if(!SWIG_isptrtype(L,5)) SWIG_fail_arg("Room::broadcastSkillInvoke",5,"ServerPlayer const *");
-  if(!lua_isuserdata(L,6)) SWIG_fail_arg("Room::broadcastSkillInvoke",6,"QString const &");
+  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::broadcastSkillInvoke",6,"char const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
     SWIG_fail_ptr("Room_broadcastSkillInvoke",1,SWIGTYPE_p_Room);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",2,SWIGTYPE_p_QString);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",3,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
   arg4 = (int)lua_tonumber(L, 4);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,5,(void**)&arg5,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("Room_broadcastSkillInvoke",5,SWIGTYPE_p_ServerPlayer);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,6,(void**)&arg6,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",6,SWIGTYPE_p_QString);
-  }
-  
-  (arg1)->broadcastSkillInvoke((QString const &)*arg2,(QString const &)*arg3,arg4,(ServerPlayer const *)arg5,(QString const &)*arg6);
+  arg6 = (char *)lua_tostring(L, 6);
+  (arg1)->broadcastSkillInvoke((char const *)arg2,(char const *)arg3,arg4,(ServerPlayer const *)arg5,(char const *)arg6);
   
   return SWIG_arg;
   
@@ -64291,15 +66407,15 @@ fail:
 static int _wrap_Room_broadcastSkillInvoke__SWIG_7(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
-  QString *arg2 = 0 ;
-  QString *arg3 = 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
   int arg4 ;
   ServerPlayer *arg5 = (ServerPlayer *) 0 ;
   
   SWIG_check_num_args("Room::broadcastSkillInvoke",5,5)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::broadcastSkillInvoke",1,"Room *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"QString const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"char const *");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("Room::broadcastSkillInvoke",4,"int");
   if(!SWIG_isptrtype(L,5)) SWIG_fail_arg("Room::broadcastSkillInvoke",5,"ServerPlayer const *");
   
@@ -64307,23 +66423,15 @@ static int _wrap_Room_broadcastSkillInvoke__SWIG_7(lua_State* L) {
     SWIG_fail_ptr("Room_broadcastSkillInvoke",1,SWIGTYPE_p_Room);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",2,SWIGTYPE_p_QString);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",3,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
   arg4 = (int)lua_tonumber(L, 4);
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,5,(void**)&arg5,SWIGTYPE_p_ServerPlayer,0))){
     SWIG_fail_ptr("Room_broadcastSkillInvoke",5,SWIGTYPE_p_ServerPlayer);
   }
   
-  (arg1)->broadcastSkillInvoke((QString const &)*arg2,(QString const &)*arg3,arg4,(ServerPlayer const *)arg5);
+  (arg1)->broadcastSkillInvoke((char const *)arg2,(char const *)arg3,arg4,(ServerPlayer const *)arg5);
   
   return SWIG_arg;
   
@@ -64338,32 +66446,24 @@ fail:
 static int _wrap_Room_broadcastSkillInvoke__SWIG_8(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
-  QString *arg2 = 0 ;
-  QString *arg3 = 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
   int arg4 ;
   
   SWIG_check_num_args("Room::broadcastSkillInvoke",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::broadcastSkillInvoke",1,"Room *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"QString const &");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"QString const &");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("Room::broadcastSkillInvoke",2,"char const *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::broadcastSkillInvoke",3,"char const *");
   if(!lua_isnumber(L,4)) SWIG_fail_arg("Room::broadcastSkillInvoke",4,"int");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
     SWIG_fail_ptr("Room_broadcastSkillInvoke",1,SWIGTYPE_p_Room);
   }
   
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",2,SWIGTYPE_p_QString);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
-    SWIG_fail_ptr("Room_broadcastSkillInvoke",3,SWIGTYPE_p_QString);
-  }
-  
+  arg2 = (char *)lua_tostring(L, 2);
+  arg3 = (char *)lua_tostring(L, 3);
   arg4 = (int)lua_tonumber(L, 4);
-  (arg1)->broadcastSkillInvoke((QString const &)*arg2,(QString const &)*arg3,arg4);
+  (arg1)->broadcastSkillInvoke((char const *)arg2,(char const *)arg3,arg4);
   
   return SWIG_arg;
   
@@ -64490,45 +66590,6 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = lua_isnumber(L,argv[3]);
-          }
-          if (_v) {
-            return _wrap_Room_broadcastSkillInvoke__SWIG_8(L);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
         _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
@@ -64580,6 +66641,35 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
       }
     }
   }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = SWIG_lua_isnilstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isnumber(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_Room_broadcastSkillInvoke__SWIG_8(L);
+          }
+        }
+      }
+    }
+  }
   if (argc == 5) {
     int _v;
     {
@@ -64592,21 +66682,11 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           {
@@ -64641,21 +66721,11 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
     }
     if (_v) {
       {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
+        _v = SWIG_lua_isnilstring(L,argv[1]);
       }
       if (_v) {
         {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
+          _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
           {
@@ -64672,12 +66742,7 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
             }
             if (_v) {
               {
-                void *ptr;
-                if (lua_isuserdata(L,argv[5])==0 || SWIG_ConvertPtr(L,argv[5], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
-                  _v = 0;
-                } else {
-                  _v = 1;
-                }
+                _v = SWIG_lua_isnilstring(L,argv[5]);
               }
               if (_v) {
                 return _wrap_Room_broadcastSkillInvoke__SWIG_6(L);
@@ -64697,9 +66762,9 @@ static int _wrap_Room_broadcastSkillInvoke(lua_State* L) {
     "    Room::broadcastSkillInvoke(char const *,int,ServerPlayer const *)\n"
     "    Room::broadcastSkillInvoke(char const *,int)\n"
     "    Room::broadcastSkillInvoke(char const *,bool,int)\n"
-    "    Room::broadcastSkillInvoke(QString const &,QString const &,int,ServerPlayer const *,QString const &)\n"
-    "    Room::broadcastSkillInvoke(QString const &,QString const &,int,ServerPlayer const *)\n"
-    "    Room::broadcastSkillInvoke(QString const &,QString const &,int)\n");
+    "    Room::broadcastSkillInvoke(char const *,char const *,int,ServerPlayer const *,char const *)\n"
+    "    Room::broadcastSkillInvoke(char const *,char const *,int,ServerPlayer const *)\n"
+    "    Room::broadcastSkillInvoke(char const *,char const *,int)\n");
   lua_error(L);return 0;
 }
 
@@ -66947,7 +69012,76 @@ static int _wrap_Room_doDragonPhoenix(lua_State* L) {
 }
 
 
-static int _wrap_Room_transformDeputyGeneral(lua_State* L) {
+static int _wrap_Room_transformDeputyGeneral__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  bool arg4 ;
+  
+  SWIG_check_num_args("Room::transformDeputyGeneral",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::transformDeputyGeneral",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::transformDeputyGeneral",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::transformDeputyGeneral",3,"char const *");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("Room::transformDeputyGeneral",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_transformDeputyGeneral",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_transformDeputyGeneral",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (lua_toboolean(L, 4)!=0);
+  (arg1)->transformDeputyGeneral(arg2,(char const *)arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_transformDeputyGeneral__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  SWIG_check_num_args("Room::transformDeputyGeneral",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::transformDeputyGeneral",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::transformDeputyGeneral",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::transformDeputyGeneral",3,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_transformDeputyGeneral",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_transformDeputyGeneral",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  (arg1)->transformDeputyGeneral(arg2,(char const *)arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_transformDeputyGeneral__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -66966,6 +69100,140 @@ static int _wrap_Room_transformDeputyGeneral(lua_State* L) {
   }
   
   (arg1)->transformDeputyGeneral(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_transformDeputyGeneral(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_Room_transformDeputyGeneral__SWIG_2(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_transformDeputyGeneral__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_Room_transformDeputyGeneral__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_transformDeputyGeneral'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::transformDeputyGeneral(ServerPlayer *,char const *,bool)\n"
+    "    Room::transformDeputyGeneral(ServerPlayer *,char const *)\n"
+    "    Room::transformDeputyGeneral(ServerPlayer *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_exchangeHeadAndDeputyGeneral(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  
+  SWIG_check_num_args("Room::exchangeHeadAndDeputyGeneral",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::exchangeHeadAndDeputyGeneral",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::exchangeHeadAndDeputyGeneral",2,"ServerPlayer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_exchangeHeadAndDeputyGeneral",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_exchangeHeadAndDeputyGeneral",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  (arg1)->exchangeHeadAndDeputyGeneral(arg2);
   
   return SWIG_arg;
   
@@ -67615,6 +69883,175 @@ static int _wrap_Room_getCardPlace(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_Room_canFindCardPlace(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::canFindCardPlace",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::canFindCardPlace",1,"Room const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Room::canFindCardPlace",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_canFindCardPlace",1,SWIGTYPE_p_Room);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (bool)((Room const *)arg1)->canFindCardPlace(arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_isAllOnPlace__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  Card *arg2 = (Card *) 0 ;
+  Player::Place arg3 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::isAllOnPlace",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::isAllOnPlace",1,"Room const *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::isAllOnPlace",2,"Card const *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Room::isAllOnPlace",3,"Player::Place");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_isAllOnPlace",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_Card,0))){
+    SWIG_fail_ptr("Room_isAllOnPlace",2,SWIGTYPE_p_Card);
+  }
+  
+  arg3 = (Player::Place)(int)lua_tonumber(L, 3);
+  result = (bool)((Room const *)arg1)->isAllOnPlace((Card const *)arg2,arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_isAllOnPlace__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QList< int > *arg2 = 0 ;
+  Player::Place arg3 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::isAllOnPlace",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::isAllOnPlace",1,"Room const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::isAllOnPlace",2,"QList< int > const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Room::isAllOnPlace",3,"Player::Place");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_isAllOnPlace",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_isAllOnPlace",2,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg3 = (Player::Place)(int)lua_tonumber(L, 3);
+  result = (bool)((Room const *)arg1)->isAllOnPlace((QList< int > const &)*arg2,arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_isAllOnPlace(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_Card, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_isAllOnPlace__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_isAllOnPlace__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_isAllOnPlace'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::isAllOnPlace(Card const *,Player::Place) const\n"
+    "    Room::isAllOnPlace(QList< int > const &,Player::Place) const\n");
+  lua_error(L);return 0;
 }
 
 
@@ -70863,6 +73300,448 @@ static int _wrap_Room_moveCards(lua_State* L) {
 }
 
 
+static int _wrap_Room_moveCardsSub__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  CardsMoveStruct arg2 ;
+  bool arg3 ;
+  CardsMoveStruct *argp2 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::moveCardsSub",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::moveCardsSub",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::moveCardsSub",2,"CardsMoveStruct");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Room::moveCardsSub",3,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_moveCardsSub",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_CardsMoveStruct,0))){
+    SWIG_fail_ptr("Room_moveCardsSub",2,SWIGTYPE_p_CardsMoveStruct);
+  }
+  arg2 = *argp2;
+  
+  arg3 = (lua_toboolean(L, 3)!=0);
+  result = (arg1)->moveCardsSub(arg2,arg3);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_moveCardsSub__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QList< CardsMoveStruct > arg2 ;
+  bool arg3 ;
+  QList< CardsMoveStruct > *argp2 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::moveCardsSub",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::moveCardsSub",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::moveCardsSub",2,"QList< CardsMoveStruct >");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Room::moveCardsSub",3,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_moveCardsSub",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QListT_CardsMoveStruct_t,0))){
+    SWIG_fail_ptr("Room_moveCardsSub",2,SWIGTYPE_p_QListT_CardsMoveStruct_t);
+  }
+  arg2 = *argp2;
+  
+  arg3 = (lua_toboolean(L, 3)!=0);
+  result = (arg1)->moveCardsSub(arg2,arg3);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_moveCardsSub(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_CardsMoveStruct, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_moveCardsSub__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QListT_CardsMoveStruct_t, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_Room_moveCardsSub__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_moveCardsSub'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::moveCardsSub(CardsMoveStruct,bool)\n"
+    "    Room::moveCardsSub(QList< CardsMoveStruct >,bool)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_changeMoveData__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QVariant arg2 ;
+  CardsMoveStruct arg3 ;
+  QVariant *argp2 ;
+  CardsMoveStruct *argp3 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::changeMoveData",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::changeMoveData",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::changeMoveData",2,"QVariant");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::changeMoveData",3,"CardsMoveStruct");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_changeMoveData",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_changeMoveData",2,SWIGTYPE_p_QVariant);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_CardsMoveStruct,0))){
+    SWIG_fail_ptr("Room_changeMoveData",3,SWIGTYPE_p_CardsMoveStruct);
+  }
+  arg3 = *argp3;
+  
+  result = (arg1)->changeMoveData(arg2,arg3);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_changeMoveData__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QVariant arg2 ;
+  QList< CardsMoveStruct > arg3 ;
+  QVariant *argp2 ;
+  QList< CardsMoveStruct > *argp3 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::changeMoveData",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::changeMoveData",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::changeMoveData",2,"QVariant");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::changeMoveData",3,"QList< CardsMoveStruct >");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_changeMoveData",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_changeMoveData",2,SWIGTYPE_p_QVariant);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_CardsMoveStruct_t,0))){
+    SWIG_fail_ptr("Room_changeMoveData",3,SWIGTYPE_p_QListT_CardsMoveStruct_t);
+  }
+  arg3 = *argp3;
+  
+  result = (arg1)->changeMoveData(arg2,arg3);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_changeMoveData__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QVariant arg2 ;
+  QList< int > arg3 ;
+  QVariant *argp2 ;
+  QList< int > *argp3 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::changeMoveData",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::changeMoveData",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::changeMoveData",2,"QVariant");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::changeMoveData",3,"QList< int >");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_changeMoveData",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_changeMoveData",2,SWIGTYPE_p_QVariant);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_changeMoveData",3,SWIGTYPE_p_QListT_int_t);
+  }
+  arg3 = *argp3;
+  
+  result = (arg1)->changeMoveData(arg2,arg3);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_changeMoveData(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_CardsMoveStruct, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Room_changeMoveData__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_CardsMoveStruct_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Room_changeMoveData__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Room_changeMoveData__SWIG_2(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_changeMoveData'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::changeMoveData(QVariant,CardsMoveStruct)\n"
+    "    Room::changeMoveData(QVariant,QList< CardsMoveStruct >)\n"
+    "    Room::changeMoveData(QVariant,QList< int >)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_cheakMoveData(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QVariant arg2 ;
+  QVariant *argp2 ;
+  QVariant result;
+  
+  SWIG_check_num_args("Room::cheakMoveData",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::cheakMoveData",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::cheakMoveData",2,"QVariant");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_cheakMoveData",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_cheakMoveData",2,SWIGTYPE_p_QVariant);
+  }
+  arg2 = *argp2;
+  
+  result = (arg1)->cheakMoveData(arg2);
+  {
+    QVariant * resultptr = new QVariant((const QVariant &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QVariant,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Room_activate(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
@@ -70994,6 +73873,50 @@ static int _wrap_Room_askForSkillInvoke__SWIG_0(lua_State* L) {
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   char *arg3 = (char *) 0 ;
   QVariant *arg4 = 0 ;
+  bool arg5 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForSkillInvoke",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForSkillInvoke",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForSkillInvoke",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::askForSkillInvoke",3,"char const *");
+  if(!lua_isuserdata(L,4)) SWIG_fail_arg("Room::askForSkillInvoke",4,"QVariant const &");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForSkillInvoke",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForSkillInvoke",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForSkillInvoke",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_askForSkillInvoke",4,SWIGTYPE_p_QVariant);
+  }
+  
+  arg5 = (lua_toboolean(L, 5)!=0);
+  result = (bool)(arg1)->askForSkillInvoke(arg2,(char const *)arg3,(QVariant const &)*arg4,arg5);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForSkillInvoke__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  QVariant *arg4 = 0 ;
   bool result;
   
   SWIG_check_num_args("Room::askForSkillInvoke",4,4)
@@ -71029,7 +73952,7 @@ fail:
 }
 
 
-static int _wrap_Room_askForSkillInvoke__SWIG_1(lua_State* L) {
+static int _wrap_Room_askForSkillInvoke__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -71065,8 +73988,8 @@ fail:
 
 static int _wrap_Room_askForSkillInvoke(lua_State* L) {
   int argc;
-  int argv[5]={
-    1,2,3,4,5
+  int argv[6]={
+    1,2,3,4,5,6
   };
   
   argc = lua_gettop(L);
@@ -71094,7 +74017,7 @@ static int _wrap_Room_askForSkillInvoke(lua_State* L) {
           _v = SWIG_lua_isnilstring(L,argv[2]);
         }
         if (_v) {
-          return _wrap_Room_askForSkillInvoke__SWIG_1(L);
+          return _wrap_Room_askForSkillInvoke__SWIG_2(L);
         }
       }
     }
@@ -71132,7 +74055,51 @@ static int _wrap_Room_askForSkillInvoke(lua_State* L) {
             }
           }
           if (_v) {
-            return _wrap_Room_askForSkillInvoke__SWIG_0(L);
+            return _wrap_Room_askForSkillInvoke__SWIG_1(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            void *ptr;
+            if (lua_isuserdata(L,argv[3])==0 || SWIG_ConvertPtr(L,argv[3], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+              _v = 0;
+            } else {
+              _v = 1;
+            }
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_Room_askForSkillInvoke__SWIG_0(L);
+            }
           }
         }
       }
@@ -71141,6 +74108,7 @@ static int _wrap_Room_askForSkillInvoke(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_askForSkillInvoke'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Room::askForSkillInvoke(ServerPlayer *,char const *,QVariant const &,bool)\n"
     "    Room::askForSkillInvoke(ServerPlayer *,char const *,QVariant const &)\n"
     "    Room::askForSkillInvoke(ServerPlayer *,char const *)\n");
   lua_error(L);return 0;
@@ -71148,6 +74116,103 @@ static int _wrap_Room_askForSkillInvoke(lua_State* L) {
 
 
 static int _wrap_Room_askForChoice__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  QVariant *arg5 = 0 ;
+  char *arg6 = (char *) 0 ;
+  char *arg7 = (char *) 0 ;
+  QString result;
+  
+  SWIG_check_num_args("Room::askForChoice",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForChoice",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForChoice",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::askForChoice",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForChoice",4,"char const *");
+  if(!lua_isuserdata(L,5)) SWIG_fail_arg("Room::askForChoice",5,"QVariant const &");
+  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::askForChoice",6,"char const *");
+  if(!SWIG_lua_isnilstring(L,7)) SWIG_fail_arg("Room::askForChoice",7,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForChoice",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForChoice",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,5,(void**)&arg5,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_askForChoice",5,SWIGTYPE_p_QVariant);
+  }
+  
+  arg6 = (char *)lua_tostring(L, 6);
+  arg7 = (char *)lua_tostring(L, 7);
+  result = (arg1)->askForChoice(arg2,(char const *)arg3,(char const *)arg4,(QVariant const &)*arg5,(char const *)arg6,(char const *)arg7);
+  lua_pushstring(L, (&result)->toUtf8()); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForChoice__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  char *arg3 = (char *) 0 ;
+  char *arg4 = (char *) 0 ;
+  QVariant *arg5 = 0 ;
+  char *arg6 = (char *) 0 ;
+  QString result;
+  
+  SWIG_check_num_args("Room::askForChoice",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForChoice",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForChoice",2,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,3)) SWIG_fail_arg("Room::askForChoice",3,"char const *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForChoice",4,"char const *");
+  if(!lua_isuserdata(L,5)) SWIG_fail_arg("Room::askForChoice",5,"QVariant const &");
+  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::askForChoice",6,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForChoice",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForChoice",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (char *)lua_tostring(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,5,(void**)&arg5,SWIGTYPE_p_QVariant,0))){
+    SWIG_fail_ptr("Room_askForChoice",5,SWIGTYPE_p_QVariant);
+  }
+  
+  arg6 = (char *)lua_tostring(L, 6);
+  result = (arg1)->askForChoice(arg2,(char const *)arg3,(char const *)arg4,(QVariant const &)*arg5,(char const *)arg6);
+  lua_pushstring(L, (&result)->toUtf8()); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForChoice__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -71191,7 +74256,7 @@ fail:
 }
 
 
-static int _wrap_Room_askForChoice__SWIG_1(lua_State* L) {
+static int _wrap_Room_askForChoice__SWIG_3(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -71230,8 +74295,8 @@ fail:
 
 static int _wrap_Room_askForChoice(lua_State* L) {
   int argc;
-  int argv[6]={
-    1,2,3,4,5,6
+  int argv[8]={
+    1,2,3,4,5,6,7,8
   };
   
   argc = lua_gettop(L);
@@ -71263,7 +74328,7 @@ static int _wrap_Room_askForChoice(lua_State* L) {
             _v = SWIG_lua_isnilstring(L,argv[3]);
           }
           if (_v) {
-            return _wrap_Room_askForChoice__SWIG_1(L);
+            return _wrap_Room_askForChoice__SWIG_3(L);
           }
         }
       }
@@ -71306,7 +74371,110 @@ static int _wrap_Room_askForChoice(lua_State* L) {
               }
             }
             if (_v) {
-              return _wrap_Room_askForChoice__SWIG_0(L);
+              return _wrap_Room_askForChoice__SWIG_2(L);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              void *ptr;
+              if (lua_isuserdata(L,argv[4])==0 || SWIG_ConvertPtr(L,argv[4], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+                _v = 0;
+              } else {
+                _v = 1;
+              }
+            }
+            if (_v) {
+              {
+                _v = SWIG_lua_isnilstring(L,argv[5]);
+              }
+              if (_v) {
+                return _wrap_Room_askForChoice__SWIG_1(L);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = SWIG_lua_isnilstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              void *ptr;
+              if (lua_isuserdata(L,argv[4])==0 || SWIG_ConvertPtr(L,argv[4], (void **) &ptr, SWIGTYPE_p_QVariant, 0)) {
+                _v = 0;
+              } else {
+                _v = 1;
+              }
+            }
+            if (_v) {
+              {
+                _v = SWIG_lua_isnilstring(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = SWIG_lua_isnilstring(L,argv[6]);
+                }
+                if (_v) {
+                  return _wrap_Room_askForChoice__SWIG_0(L);
+                }
+              }
             }
           }
         }
@@ -71316,6 +74484,8 @@ static int _wrap_Room_askForChoice(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_askForChoice'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Room::askForChoice(ServerPlayer *,char const *,char const *,QVariant const &,char const *,char const *)\n"
+    "    Room::askForChoice(ServerPlayer *,char const *,char const *,QVariant const &,char const *)\n"
     "    Room::askForChoice(ServerPlayer *,char const *,char const *,QVariant const &)\n"
     "    Room::askForChoice(ServerPlayer *,char const *,char const *)\n");
   lua_error(L);return 0;
@@ -72791,21 +75961,31 @@ static int _wrap_Room_askForCardChosen(lua_State* L) {
 }
 
 
-static int _wrap_Room_askForCardsChosen(lua_State* L) {
+static int _wrap_Room_askForCardsChosen__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   ServerPlayer *arg3 = (ServerPlayer *) 0 ;
   char *arg4 = (char *) 0 ;
   char *arg5 = (char *) 0 ;
-  QList< Card const * > result;
+  int arg6 ;
+  int arg7 ;
+  bool arg8 ;
+  Card::HandlingMethod arg9 ;
+  QList< int > *arg10 = 0 ;
+  QList< int > result;
   
-  SWIG_check_num_args("Room::askForCardsChosen",5,5)
+  SWIG_check_num_args("Room::askForCardsChosen",10,10)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForCardsChosen",1,"Room *");
   if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForCardsChosen",2,"ServerPlayer *");
   if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Room::askForCardsChosen",3,"ServerPlayer *");
   if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForCardsChosen",4,"char const *");
   if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::askForCardsChosen",5,"char const *");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("Room::askForCardsChosen",6,"int");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::askForCardsChosen",7,"int");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("Room::askForCardsChosen",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForCardsChosen",9,"Card::HandlingMethod");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForCardsChosen",10,"QList< int > const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
     SWIG_fail_ptr("Room_askForCardsChosen",1,SWIGTYPE_p_Room);
@@ -72823,10 +76003,19 @@ static int _wrap_Room_askForCardsChosen(lua_State* L) {
   
   arg4 = (char *)lua_tostring(L, 4);
   arg5 = (char *)lua_tostring(L, 5);
-  result = (arg1)->askForCardsChosen(arg2,arg3,(char const *)arg4,(char const *)arg5);
+  arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (int)lua_tonumber(L, 7);
+  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (Card::HandlingMethod)(int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&arg10,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",10,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  result = (arg1)->askForCardsChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,arg6,arg7,arg8,arg9,(QList< int > const &)*arg10);
   {
-    QList< Card const * > * resultptr = new QList< Card const * >((const QList< Card const * > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_Card_const_p_t,1); SWIG_arg++;
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
   }
   return SWIG_arg;
   
@@ -72835,6 +76024,443 @@ static int _wrap_Room_askForCardsChosen(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForCardsChosen__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  ServerPlayer *arg3 = (ServerPlayer *) 0 ;
+  char *arg4 = (char *) 0 ;
+  char *arg5 = (char *) 0 ;
+  int arg6 ;
+  int arg7 ;
+  bool arg8 ;
+  Card::HandlingMethod arg9 ;
+  QList< int > result;
+  
+  SWIG_check_num_args("Room::askForCardsChosen",9,9)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForCardsChosen",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForCardsChosen",2,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Room::askForCardsChosen",3,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForCardsChosen",4,"char const *");
+  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::askForCardsChosen",5,"char const *");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("Room::askForCardsChosen",6,"int");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::askForCardsChosen",7,"int");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("Room::askForCardsChosen",8,"bool");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForCardsChosen",9,"Card::HandlingMethod");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",3,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (char *)lua_tostring(L, 5);
+  arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (int)lua_tonumber(L, 7);
+  arg8 = (lua_toboolean(L, 8)!=0);
+  arg9 = (Card::HandlingMethod)(int)lua_tonumber(L, 9);
+  result = (arg1)->askForCardsChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,arg6,arg7,arg8,arg9);
+  {
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForCardsChosen__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  ServerPlayer *arg3 = (ServerPlayer *) 0 ;
+  char *arg4 = (char *) 0 ;
+  char *arg5 = (char *) 0 ;
+  int arg6 ;
+  int arg7 ;
+  bool arg8 ;
+  QList< int > result;
+  
+  SWIG_check_num_args("Room::askForCardsChosen",8,8)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForCardsChosen",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForCardsChosen",2,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Room::askForCardsChosen",3,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForCardsChosen",4,"char const *");
+  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::askForCardsChosen",5,"char const *");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("Room::askForCardsChosen",6,"int");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::askForCardsChosen",7,"int");
+  if(!lua_isboolean(L,8)) SWIG_fail_arg("Room::askForCardsChosen",8,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",3,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (char *)lua_tostring(L, 5);
+  arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (int)lua_tonumber(L, 7);
+  arg8 = (lua_toboolean(L, 8)!=0);
+  result = (arg1)->askForCardsChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,arg6,arg7,arg8);
+  {
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForCardsChosen__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  ServerPlayer *arg3 = (ServerPlayer *) 0 ;
+  char *arg4 = (char *) 0 ;
+  char *arg5 = (char *) 0 ;
+  int arg6 ;
+  int arg7 ;
+  QList< int > result;
+  
+  SWIG_check_num_args("Room::askForCardsChosen",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForCardsChosen",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForCardsChosen",2,"ServerPlayer *");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Room::askForCardsChosen",3,"ServerPlayer *");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForCardsChosen",4,"char const *");
+  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::askForCardsChosen",5,"char const *");
+  if(!lua_isnumber(L,6)) SWIG_fail_arg("Room::askForCardsChosen",6,"int");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::askForCardsChosen",7,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForCardsChosen",3,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (char *)lua_tostring(L, 5);
+  arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (int)lua_tonumber(L, 7);
+  result = (arg1)->askForCardsChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,arg6,arg7);
+  {
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForCardsChosen(lua_State* L) {
+  int argc;
+  int argv[11]={
+    1,2,3,4,5,6,7,8,9,10,11
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 7) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = SWIG_lua_isnilstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isnumber(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isnumber(L,argv[6]);
+                }
+                if (_v) {
+                  return _wrap_Room_askForCardsChosen__SWIG_3(L);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = SWIG_lua_isnilstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isnumber(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isnumber(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isboolean(L,argv[7]);
+                  }
+                  if (_v) {
+                    return _wrap_Room_askForCardsChosen__SWIG_2(L);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = SWIG_lua_isnilstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isnumber(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isnumber(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isboolean(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      return _wrap_Room_askForCardsChosen__SWIG_1(L);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = SWIG_lua_isnilstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isnumber(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isnumber(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isboolean(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        return _wrap_Room_askForCardsChosen__SWIG_0(L);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_askForCardsChosen'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::askForCardsChosen(ServerPlayer *,ServerPlayer *,char const *,char const *,int,int,bool,Card::HandlingMethod,QList< int > const &)\n"
+    "    Room::askForCardsChosen(ServerPlayer *,ServerPlayer *,char const *,char const *,int,int,bool,Card::HandlingMethod)\n"
+    "    Room::askForCardsChosen(ServerPlayer *,ServerPlayer *,char const *,char const *,int,int,bool)\n"
+    "    Room::askForCardsChosen(ServerPlayer *,ServerPlayer *,char const *,char const *,int,int)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -74827,1078 +78453,6 @@ static int _wrap_Room_askForUseSlashTo(lua_State* L) {
 }
 
 
-static int _wrap_Room_GlobalCardChosen__SWIG_0(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  Room::ChoosingType arg9 ;
-  bool arg10 ;
-  Card::HandlingMethod arg11 ;
-  QList< int > *arg12 = 0 ;
-  bool arg13 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",13,13)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::GlobalCardChosen",9,"Room::ChoosingType");
-  if(!lua_isboolean(L,10)) SWIG_fail_arg("Room::GlobalCardChosen",10,"bool");
-  if(!lua_isnumber(L,11)) SWIG_fail_arg("Room::GlobalCardChosen",11,"Card::HandlingMethod");
-  if(!lua_isuserdata(L,12)) SWIG_fail_arg("Room::GlobalCardChosen",12,"QList< int > const &");
-  if(!lua_isboolean(L,13)) SWIG_fail_arg("Room::GlobalCardChosen",13,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  arg9 = (Room::ChoosingType)(int)lua_tonumber(L, 9);
-  arg10 = (lua_toboolean(L, 10)!=0);
-  arg11 = (Card::HandlingMethod)(int)lua_tonumber(L, 11);
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,12,(void**)&arg12,SWIGTYPE_p_QListT_int_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",12,SWIGTYPE_p_QListT_int_t);
-  }
-  
-  arg13 = (lua_toboolean(L, 13)!=0);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8,arg9,arg10,arg11,(QList< int > const &)*arg12,arg13);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  Room::ChoosingType arg9 ;
-  bool arg10 ;
-  Card::HandlingMethod arg11 ;
-  QList< int > *arg12 = 0 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",12,12)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::GlobalCardChosen",9,"Room::ChoosingType");
-  if(!lua_isboolean(L,10)) SWIG_fail_arg("Room::GlobalCardChosen",10,"bool");
-  if(!lua_isnumber(L,11)) SWIG_fail_arg("Room::GlobalCardChosen",11,"Card::HandlingMethod");
-  if(!lua_isuserdata(L,12)) SWIG_fail_arg("Room::GlobalCardChosen",12,"QList< int > const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  arg9 = (Room::ChoosingType)(int)lua_tonumber(L, 9);
-  arg10 = (lua_toboolean(L, 10)!=0);
-  arg11 = (Card::HandlingMethod)(int)lua_tonumber(L, 11);
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,12,(void**)&arg12,SWIGTYPE_p_QListT_int_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",12,SWIGTYPE_p_QListT_int_t);
-  }
-  
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8,arg9,arg10,arg11,(QList< int > const &)*arg12);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_2(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  Room::ChoosingType arg9 ;
-  bool arg10 ;
-  Card::HandlingMethod arg11 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",11,11)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::GlobalCardChosen",9,"Room::ChoosingType");
-  if(!lua_isboolean(L,10)) SWIG_fail_arg("Room::GlobalCardChosen",10,"bool");
-  if(!lua_isnumber(L,11)) SWIG_fail_arg("Room::GlobalCardChosen",11,"Card::HandlingMethod");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  arg9 = (Room::ChoosingType)(int)lua_tonumber(L, 9);
-  arg10 = (lua_toboolean(L, 10)!=0);
-  arg11 = (Card::HandlingMethod)(int)lua_tonumber(L, 11);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8,arg9,arg10,arg11);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_3(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  Room::ChoosingType arg9 ;
-  bool arg10 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",10,10)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::GlobalCardChosen",9,"Room::ChoosingType");
-  if(!lua_isboolean(L,10)) SWIG_fail_arg("Room::GlobalCardChosen",10,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  arg9 = (Room::ChoosingType)(int)lua_tonumber(L, 9);
-  arg10 = (lua_toboolean(L, 10)!=0);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8,arg9,arg10);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_4(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  Room::ChoosingType arg9 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",9,9)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::GlobalCardChosen",9,"Room::ChoosingType");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  arg9 = (Room::ChoosingType)(int)lua_tonumber(L, 9);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8,arg9);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_5(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  int arg8 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",8,8)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::GlobalCardChosen",8,"int");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  arg8 = (int)lua_tonumber(L, 8);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7,arg8);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_6(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  int arg7 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",7,7)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  if(!lua_isnumber(L,7)) SWIG_fail_arg("Room::GlobalCardChosen",7,"int");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  arg7 = (int)lua_tonumber(L, 7);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6,arg7);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen__SWIG_7(lua_State* L) {
-  int SWIG_arg = 0;
-  Room *arg1 = (Room *) 0 ;
-  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
-  QList< ServerPlayer * > arg3 ;
-  char *arg4 = (char *) 0 ;
-  char *arg5 = (char *) 0 ;
-  char *arg6 = (char *) 0 ;
-  QList< ServerPlayer * > *argp3 ;
-  QList< int > result;
-  
-  SWIG_check_num_args("Room::GlobalCardChosen",6,6)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::GlobalCardChosen",1,"Room *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::GlobalCardChosen",2,"ServerPlayer *");
-  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::GlobalCardChosen",3,"QList< ServerPlayer * >");
-  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::GlobalCardChosen",4,"char const *");
-  if(!SWIG_lua_isnilstring(L,5)) SWIG_fail_arg("Room::GlobalCardChosen",5,"char const *");
-  if(!SWIG_lua_isnilstring(L,6)) SWIG_fail_arg("Room::GlobalCardChosen",6,"char const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",1,SWIGTYPE_p_Room);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",2,SWIGTYPE_p_ServerPlayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("Room_GlobalCardChosen",3,SWIGTYPE_p_QListT_ServerPlayer_p_t);
-  }
-  arg3 = *argp3;
-  
-  arg4 = (char *)lua_tostring(L, 4);
-  arg5 = (char *)lua_tostring(L, 5);
-  arg6 = (char *)lua_tostring(L, 6);
-  result = (arg1)->GlobalCardChosen(arg2,arg3,(char const *)arg4,(char const *)arg5,(char const *)arg6);
-  {
-    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
-  }
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_Room_GlobalCardChosen(lua_State* L) {
-  int argc;
-  int argv[14]={
-    1,2,3,4,5,6,7,8,9,10,11,12,13,14
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 6) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                return _wrap_Room_GlobalCardChosen__SWIG_7(L);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 7) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  return _wrap_Room_GlobalCardChosen__SWIG_6(L);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 8) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    return _wrap_Room_GlobalCardChosen__SWIG_5(L);
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 9) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    {
-                      _v = lua_isnumber(L,argv[8]);
-                    }
-                    if (_v) {
-                      return _wrap_Room_GlobalCardChosen__SWIG_4(L);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 10) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    {
-                      _v = lua_isnumber(L,argv[8]);
-                    }
-                    if (_v) {
-                      {
-                        _v = lua_isboolean(L,argv[9]);
-                      }
-                      if (_v) {
-                        return _wrap_Room_GlobalCardChosen__SWIG_3(L);
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 11) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    {
-                      _v = lua_isnumber(L,argv[8]);
-                    }
-                    if (_v) {
-                      {
-                        _v = lua_isboolean(L,argv[9]);
-                      }
-                      if (_v) {
-                        {
-                          _v = lua_isnumber(L,argv[10]);
-                        }
-                        if (_v) {
-                          return _wrap_Room_GlobalCardChosen__SWIG_2(L);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 12) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    {
-                      _v = lua_isnumber(L,argv[8]);
-                    }
-                    if (_v) {
-                      {
-                        _v = lua_isboolean(L,argv[9]);
-                      }
-                      if (_v) {
-                        {
-                          _v = lua_isnumber(L,argv[10]);
-                        }
-                        if (_v) {
-                          {
-                            void *ptr;
-                            if (lua_isuserdata(L,argv[11])==0 || SWIG_ConvertPtr(L,argv[11], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
-                              _v = 0;
-                            } else {
-                              _v = 1;
-                            }
-                          }
-                          if (_v) {
-                            return _wrap_Room_GlobalCardChosen__SWIG_1(L);
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 13) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        {
-          void *ptr;
-          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
-            _v = 0;
-          } else {
-            _v = 1;
-          }
-        }
-        if (_v) {
-          {
-            _v = SWIG_lua_isnilstring(L,argv[3]);
-          }
-          if (_v) {
-            {
-              _v = SWIG_lua_isnilstring(L,argv[4]);
-            }
-            if (_v) {
-              {
-                _v = SWIG_lua_isnilstring(L,argv[5]);
-              }
-              if (_v) {
-                {
-                  _v = lua_isnumber(L,argv[6]);
-                }
-                if (_v) {
-                  {
-                    _v = lua_isnumber(L,argv[7]);
-                  }
-                  if (_v) {
-                    {
-                      _v = lua_isnumber(L,argv[8]);
-                    }
-                    if (_v) {
-                      {
-                        _v = lua_isboolean(L,argv[9]);
-                      }
-                      if (_v) {
-                        {
-                          _v = lua_isnumber(L,argv[10]);
-                        }
-                        if (_v) {
-                          {
-                            void *ptr;
-                            if (lua_isuserdata(L,argv[11])==0 || SWIG_ConvertPtr(L,argv[11], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
-                              _v = 0;
-                            } else {
-                              _v = 1;
-                            }
-                          }
-                          if (_v) {
-                            {
-                              _v = lua_isboolean(L,argv[12]);
-                            }
-                            if (_v) {
-                              return _wrap_Room_GlobalCardChosen__SWIG_0(L);
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_GlobalCardChosen'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int,Room::ChoosingType,bool,Card::HandlingMethod,QList< int > const &,bool)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int,Room::ChoosingType,bool,Card::HandlingMethod,QList< int > const &)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int,Room::ChoosingType,bool,Card::HandlingMethod)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int,Room::ChoosingType,bool)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int,Room::ChoosingType)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int,int)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *,int)\n"
-    "    Room::GlobalCardChosen(ServerPlayer *,QList< ServerPlayer * >,char const *,char const *,char const *)\n");
-  lua_error(L);return 0;
-}
-
-
 static int _wrap_Room_askForAG(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
@@ -77336,6 +79890,1523 @@ static int _wrap_Room_askForYiji(lua_State* L) {
     "    Room::askForYiji(ServerPlayer *,QList< int > &,char const *,bool)\n"
     "    Room::askForYiji(ServerPlayer *,QList< int > &,char const *)\n"
     "    Room::askForYiji(ServerPlayer *,QList< int > &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  QList< ServerPlayer * > arg10 ;
+  CardMoveReason arg11 ;
+  char *arg12 = (char *) 0 ;
+  char *arg13 = (char *) 0 ;
+  bool arg14 ;
+  QList< ServerPlayer * > *argp10 ;
+  CardMoveReason *argp11 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",14,14)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForRende",10,"QList< ServerPlayer * >");
+  if(!lua_isuserdata(L,11)) SWIG_fail_arg("Room::askForRende",11,"CardMoveReason");
+  if(!SWIG_lua_isnilstring(L,12)) SWIG_fail_arg("Room::askForRende",12,"char const *");
+  if(!SWIG_lua_isnilstring(L,13)) SWIG_fail_arg("Room::askForRende",13,"char const *");
+  if(!lua_isboolean(L,14)) SWIG_fail_arg("Room::askForRende",14,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&argp10,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForRende",10,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg10 = *argp10;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&argp11,SWIGTYPE_p_CardMoveReason,0))){
+    SWIG_fail_ptr("Room_askForRende",11,SWIGTYPE_p_CardMoveReason);
+  }
+  arg11 = *argp11;
+  
+  arg12 = (char *)lua_tostring(L, 12);
+  arg13 = (char *)lua_tostring(L, 13);
+  arg14 = (lua_toboolean(L, 14)!=0);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,(char const *)arg12,(char const *)arg13,arg14);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  QList< ServerPlayer * > arg10 ;
+  CardMoveReason arg11 ;
+  char *arg12 = (char *) 0 ;
+  char *arg13 = (char *) 0 ;
+  QList< ServerPlayer * > *argp10 ;
+  CardMoveReason *argp11 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",13,13)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForRende",10,"QList< ServerPlayer * >");
+  if(!lua_isuserdata(L,11)) SWIG_fail_arg("Room::askForRende",11,"CardMoveReason");
+  if(!SWIG_lua_isnilstring(L,12)) SWIG_fail_arg("Room::askForRende",12,"char const *");
+  if(!SWIG_lua_isnilstring(L,13)) SWIG_fail_arg("Room::askForRende",13,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&argp10,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForRende",10,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg10 = *argp10;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&argp11,SWIGTYPE_p_CardMoveReason,0))){
+    SWIG_fail_ptr("Room_askForRende",11,SWIGTYPE_p_CardMoveReason);
+  }
+  arg11 = *argp11;
+  
+  arg12 = (char *)lua_tostring(L, 12);
+  arg13 = (char *)lua_tostring(L, 13);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,(char const *)arg12,(char const *)arg13);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  QList< ServerPlayer * > arg10 ;
+  CardMoveReason arg11 ;
+  char *arg12 = (char *) 0 ;
+  QList< ServerPlayer * > *argp10 ;
+  CardMoveReason *argp11 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",12,12)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForRende",10,"QList< ServerPlayer * >");
+  if(!lua_isuserdata(L,11)) SWIG_fail_arg("Room::askForRende",11,"CardMoveReason");
+  if(!SWIG_lua_isnilstring(L,12)) SWIG_fail_arg("Room::askForRende",12,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&argp10,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForRende",10,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg10 = *argp10;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&argp11,SWIGTYPE_p_CardMoveReason,0))){
+    SWIG_fail_ptr("Room_askForRende",11,SWIGTYPE_p_CardMoveReason);
+  }
+  arg11 = *argp11;
+  
+  arg12 = (char *)lua_tostring(L, 12);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,(char const *)arg12);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  QList< ServerPlayer * > arg10 ;
+  CardMoveReason arg11 ;
+  QList< ServerPlayer * > *argp10 ;
+  CardMoveReason *argp11 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",11,11)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForRende",10,"QList< ServerPlayer * >");
+  if(!lua_isuserdata(L,11)) SWIG_fail_arg("Room::askForRende",11,"CardMoveReason");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&argp10,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForRende",10,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg10 = *argp10;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,11,(void**)&argp11,SWIGTYPE_p_CardMoveReason,0))){
+    SWIG_fail_ptr("Room_askForRende",11,SWIGTYPE_p_CardMoveReason);
+  }
+  arg11 = *argp11;
+  
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_4(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  QList< ServerPlayer * > arg10 ;
+  QList< ServerPlayer * > *argp10 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",10,10)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  if(!lua_isuserdata(L,10)) SWIG_fail_arg("Room::askForRende",10,"QList< ServerPlayer * >");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,10,(void**)&argp10,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_askForRende",10,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg10 = *argp10;
+  
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_5(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  int arg9 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",9,9)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  if(!lua_isnumber(L,9)) SWIG_fail_arg("Room::askForRende",9,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  arg9 = (int)lua_tonumber(L, 9);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_6(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  int arg8 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",8,8)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  if(!lua_isnumber(L,8)) SWIG_fail_arg("Room::askForRende",8,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  arg8 = (int)lua_tonumber(L, 8);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7,arg8);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_7(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",7,7)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  if(!lua_isboolean(L,7)) SWIG_fail_arg("Room::askForRende",7,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  arg7 = (lua_toboolean(L, 7)!=0);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6,arg7);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_8(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",6,6)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  if(!lua_isboolean(L,6)) SWIG_fail_arg("Room::askForRende",6,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  arg6 = (lua_toboolean(L, 6)!=0);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5,arg6);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_9(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::askForRende",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4,arg5);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_10(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  char *arg4 = (char *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::askForRende",4,"char const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  arg4 = (char *)lua_tostring(L, 4);
+  result = (bool)(arg1)->askForRende(arg2,*arg3,(char const *)arg4);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende__SWIG_11(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  QList< int > *arg3 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::askForRende",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::askForRende",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::askForRende",2,"ServerPlayer *");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("Room::askForRende",3,"QList< int > &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_askForRende",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_askForRende",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("Room_askForRende",3,SWIGTYPE_p_QListT_int_t);
+  }
+  
+  result = (bool)(arg1)->askForRende(arg2,*arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_askForRende(lua_State* L) {
+  int argc;
+  int argv[15]={
+    1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_Room_askForRende__SWIG_11(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_Room_askForRende__SWIG_10(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_Room_askForRende__SWIG_9(L);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                return _wrap_Room_askForRende__SWIG_8(L);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  return _wrap_Room_askForRende__SWIG_7(L);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    return _wrap_Room_askForRende__SWIG_6(L);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      return _wrap_Room_askForRende__SWIG_5(L);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        return _wrap_Room_askForRende__SWIG_4(L);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 11) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        {
+                          void *ptr;
+                          if (lua_isuserdata(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_CardMoveReason, 0)) {
+                            _v = 0;
+                          } else {
+                            _v = 1;
+                          }
+                        }
+                        if (_v) {
+                          return _wrap_Room_askForRende__SWIG_3(L);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 12) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        {
+                          void *ptr;
+                          if (lua_isuserdata(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_CardMoveReason, 0)) {
+                            _v = 0;
+                          } else {
+                            _v = 1;
+                          }
+                        }
+                        if (_v) {
+                          {
+                            _v = SWIG_lua_isnilstring(L,argv[11]);
+                          }
+                          if (_v) {
+                            return _wrap_Room_askForRende__SWIG_2(L);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 13) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        {
+                          void *ptr;
+                          if (lua_isuserdata(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_CardMoveReason, 0)) {
+                            _v = 0;
+                          } else {
+                            _v = 1;
+                          }
+                        }
+                        if (_v) {
+                          {
+                            _v = SWIG_lua_isnilstring(L,argv[11]);
+                          }
+                          if (_v) {
+                            {
+                              _v = SWIG_lua_isnilstring(L,argv[12]);
+                            }
+                            if (_v) {
+                              return _wrap_Room_askForRende__SWIG_1(L);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 14) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_int_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isboolean(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isboolean(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isnumber(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isnumber(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        void *ptr;
+                        if (lua_isuserdata(L,argv[9])==0 || SWIG_ConvertPtr(L,argv[9], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+                          _v = 0;
+                        } else {
+                          _v = 1;
+                        }
+                      }
+                      if (_v) {
+                        {
+                          void *ptr;
+                          if (lua_isuserdata(L,argv[10])==0 || SWIG_ConvertPtr(L,argv[10], (void **) &ptr, SWIGTYPE_p_CardMoveReason, 0)) {
+                            _v = 0;
+                          } else {
+                            _v = 1;
+                          }
+                        }
+                        if (_v) {
+                          {
+                            _v = SWIG_lua_isnilstring(L,argv[11]);
+                          }
+                          if (_v) {
+                            {
+                              _v = SWIG_lua_isnilstring(L,argv[12]);
+                            }
+                            if (_v) {
+                              {
+                                _v = lua_isboolean(L,argv[13]);
+                              }
+                              if (_v) {
+                                return _wrap_Room_askForRende__SWIG_0(L);
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_askForRende'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int,QList< ServerPlayer * >,CardMoveReason,char const *,char const *,bool)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int,QList< ServerPlayer * >,CardMoveReason,char const *,char const *)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int,QList< ServerPlayer * >,CardMoveReason,char const *)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int,QList< ServerPlayer * >,CardMoveReason)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int,QList< ServerPlayer * >)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int,int)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool,int)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool,bool)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool,bool)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *,bool)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &,char const *)\n"
+    "    Room::askForRende(ServerPlayer *,QList< int > &)\n");
   lua_error(L);return 0;
 }
 
@@ -79980,6 +84051,30 @@ static int _wrap_Room_cancelTarget(lua_State* L) {
 }
 
 
+static int _wrap_Room_doCareeristRule(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("Room::doCareeristRule",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::doCareeristRule",1,"Room *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_doCareeristRule",1,SWIGTYPE_p_Room);
+  }
+  
+  result = (bool)(arg1)->doCareeristRule();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_Room_nextPlayer(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
@@ -80166,6 +84261,8 @@ static swig_lua_method swig_Room_methods[]= {
     { "getLord", _wrap_Room_getLord},
     { "askForGuanxing", _wrap_Room_askForGuanxing},
     { "askForMoveCards", _wrap_Room_askForMoveCards},
+    { "askForQiaobian", _wrap_Room_askForQiaobian},
+    { "askForTransferFieldCards", _wrap_Room_askForTransferFieldCards},
     { "doGongxin", _wrap_Room_doGongxin},
     { "drawCard", _wrap_Room_drawCard},
     { "fillAG", _wrap_Room_fillAG},
@@ -80178,6 +84275,8 @@ static swig_lua_method swig_Room_methods[]= {
     { "showCard", _wrap_Room_showCard},
     { "showAllCards", _wrap_Room_showAllCards},
     { "retrial", _wrap_Room_retrial},
+    { "getUseExtraTargets", _wrap_Room_getUseExtraTargets},
+    { "getUseAliveTargets", _wrap_Room_getUseAliveTargets},
     { "doNotify", _wrap_Room_doNotify},
     { "doBroadcastNotify", _wrap_Room_doBroadcastNotify},
     { "notifyMoveCards", _wrap_Room_notifyMoveCards},
@@ -80211,6 +84310,7 @@ static swig_lua_method swig_Room_methods[]= {
     { "resetAI", _wrap_Room_resetAI},
     { "doDragonPhoenix", _wrap_Room_doDragonPhoenix},
     { "transformDeputyGeneral", _wrap_Room_transformDeputyGeneral},
+    { "exchangeHeadAndDeputyGeneral", _wrap_Room_exchangeHeadAndDeputyGeneral},
     { "swapSeat", _wrap_Room_swapSeat},
     { "setFixedDistance", _wrap_Room_setFixedDistance},
     { "getFront", _wrap_Room_getFront},
@@ -80225,6 +84325,8 @@ static swig_lua_method swig_Room_methods[]= {
     { "removeTag", _wrap_Room_removeTag},
     { "setEmotion", _wrap_Room_setEmotion},
     { "getCardPlace", _wrap_Room_getCardPlace},
+    { "canFindCardPlace", _wrap_Room_canFindCardPlace},
+    { "isAllOnPlace", _wrap_Room_isAllOnPlace},
     { "getCardIdsOnTable", _wrap_Room_getCardIdsOnTable},
     { "getCardOwner", _wrap_Room_getCardOwner},
     { "setCardMapping", _wrap_Room_setCardMapping},
@@ -80234,6 +84336,9 @@ static swig_lua_method swig_Room_methods[]= {
     { "moveCardTo", _wrap_Room_moveCardTo},
     { "moveCardsAtomic", _wrap_Room_moveCardsAtomic},
     { "moveCards", _wrap_Room_moveCards},
+    { "moveCardsSub", _wrap_Room_moveCardsSub},
+    { "changeMoveData", _wrap_Room_changeMoveData},
+    { "cheakMoveData", _wrap_Room_cheakMoveData},
     { "activate", _wrap_Room_activate},
     { "askForLuckCard", _wrap_Room_askForLuckCard},
     { "askForSuit", _wrap_Room_askForSuit},
@@ -80249,10 +84354,10 @@ static swig_lua_method swig_Room_methods[]= {
     { "askForCard", _wrap_Room_askForCard},
     { "askForUseCard", _wrap_Room_askForUseCard},
     { "askForUseSlashTo", _wrap_Room_askForUseSlashTo},
-    { "GlobalCardChosen", _wrap_Room_GlobalCardChosen},
     { "askForAG", _wrap_Room_askForAG},
     { "askForCardShow", _wrap_Room_askForCardShow},
     { "askForYiji", _wrap_Room_askForYiji},
+    { "askForRende", _wrap_Room_askForRende},
     { "askForPindianRace", _wrap_Room_askForPindianRace},
     { "askForPlayerChosen", _wrap_Room_askForPlayerChosen},
     { "askForGeneral", _wrap_Room_askForGeneral},
@@ -80266,6 +84371,7 @@ static swig_lua_method swig_Room_methods[]= {
     { "updateCardsOnLose", _wrap_Room_updateCardsOnLose},
     { "updateCardsOnGet", _wrap_Room_updateCardsOnGet},
     { "chooseGenerals", _wrap_Room_chooseGenerals},
+    { "doCareeristRule", _wrap_Room_doCareeristRule},
     { "nextPlayer", _wrap_Room_nextPlayer},
     { "writeToConsole", _wrap_Room_writeToConsole},
     { "throwEvent", _wrap_Room_throwEvent},
@@ -86905,6 +91011,317 @@ fail:
 }
 
 
+static int _wrap_ViewAsSkill_getViewAsCardNames__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ViewAsSkill *arg1 = (ViewAsSkill *) 0 ;
+  QList< Card const * > *arg2 = 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("ViewAsSkill::getViewAsCardNames",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ViewAsSkill::getViewAsCardNames",1,"ViewAsSkill const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ViewAsSkill::getViewAsCardNames",2,"QList< Card const * > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ViewAsSkill,0))){
+    SWIG_fail_ptr("ViewAsSkill_getViewAsCardNames",1,SWIGTYPE_p_ViewAsSkill);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QListT_Card_const_p_t,0))){
+    SWIG_fail_ptr("ViewAsSkill_getViewAsCardNames",2,SWIGTYPE_p_QListT_Card_const_p_t);
+  }
+  
+  result = ((ViewAsSkill const *)arg1)->getViewAsCardNames((QList< Card const * > const &)*arg2);
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ViewAsSkill_getViewAsCardNames__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ViewAsSkill *arg1 = (ViewAsSkill *) 0 ;
+  QStringList result;
+  
+  SWIG_check_num_args("ViewAsSkill::getViewAsCardNames",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ViewAsSkill::getViewAsCardNames",1,"ViewAsSkill const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ViewAsSkill,0))){
+    SWIG_fail_ptr("ViewAsSkill_getViewAsCardNames",1,SWIGTYPE_p_ViewAsSkill);
+  }
+  
+  result = ((ViewAsSkill const *)arg1)->getViewAsCardNames();
+  
+  lua_createtable(L, (&result)->length(), 0);
+  
+  for (int i = 0; i < (&result)->length(); ++i) {
+    QString str = (&result)->at(i);
+    lua_pushstring(L, str.toUtf8());
+    lua_rawseti(L, -2, i + 1);
+  }
+  
+  SWIG_arg++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ViewAsSkill_getViewAsCardNames(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ViewAsSkill, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_ViewAsSkill_getViewAsCardNames__SWIG_1(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ViewAsSkill, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QListT_Card_const_p_t, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_ViewAsSkill_getViewAsCardNames__SWIG_0(L);
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ViewAsSkill_getViewAsCardNames'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ViewAsSkill::getViewAsCardNames(QList< Card const * > const &) const\n"
+    "    ViewAsSkill::getViewAsCardNames() const\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  ViewAsSkill *arg1 = (ViewAsSkill *) 0 ;
+  QString *arg2 = 0 ;
+  QList< Card const * > *arg3 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ViewAsSkill::isEnabledtoViewAsCard",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",1,"ViewAsSkill const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",2,"QString const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",3,"QList< Card const * > const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ViewAsSkill,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",1,SWIGTYPE_p_ViewAsSkill);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",2,SWIGTYPE_p_QString);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QListT_Card_const_p_t,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",3,SWIGTYPE_p_QListT_Card_const_p_t);
+  }
+  
+  result = (bool)((ViewAsSkill const *)arg1)->isEnabledtoViewAsCard((QString const &)*arg2,(QList< Card const * > const &)*arg3);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  ViewAsSkill *arg1 = (ViewAsSkill *) 0 ;
+  QString *arg2 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ViewAsSkill::isEnabledtoViewAsCard",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",1,"ViewAsSkill const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",2,"QString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ViewAsSkill,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",1,SWIGTYPE_p_ViewAsSkill);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QString,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",2,SWIGTYPE_p_QString);
+  }
+  
+  result = (bool)((ViewAsSkill const *)arg1)->isEnabledtoViewAsCard((QString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  ViewAsSkill *arg1 = (ViewAsSkill *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("ViewAsSkill::isEnabledtoViewAsCard",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ViewAsSkill::isEnabledtoViewAsCard",1,"ViewAsSkill const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_ViewAsSkill,0))){
+    SWIG_fail_ptr("ViewAsSkill_isEnabledtoViewAsCard",1,SWIGTYPE_p_ViewAsSkill);
+  }
+  
+  result = (bool)((ViewAsSkill const *)arg1)->isEnabledtoViewAsCard();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ViewAsSkill_isEnabledtoViewAsCard(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ViewAsSkill, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_2(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ViewAsSkill, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_ViewAsSkill, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QString, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_QListT_Card_const_p_t, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_ViewAsSkill_isEnabledtoViewAsCard__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'ViewAsSkill_isEnabledtoViewAsCard'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ViewAsSkill::isEnabledtoViewAsCard(QString const &,QList< Card const * > const &) const\n"
+    "    ViewAsSkill::isEnabledtoViewAsCard(QString const &) const\n"
+    "    ViewAsSkill::isEnabledtoViewAsCard() const\n");
+  lua_error(L);return 0;
+}
+
+
 static void swig_delete_ViewAsSkill(void *obj) {
 ViewAsSkill *arg1 = (ViewAsSkill *) obj;
 delete arg1;
@@ -86919,6 +91336,8 @@ static swig_lua_method swig_ViewAsSkill_methods[]= {
     { "isEnabledAtResponse", _wrap_ViewAsSkill_isEnabledAtResponse},
     { "isResponseOrUse", _wrap_ViewAsSkill_isResponseOrUse},
     { "getExpandPile", _wrap_ViewAsSkill_getExpandPile},
+    { "getViewAsCardNames", _wrap_ViewAsSkill_getViewAsCardNames},
+    { "isEnabledtoViewAsCard", _wrap_ViewAsSkill_isEnabledtoViewAsCard},
     {0,0}
 };
 static swig_lua_method swig_ViewAsSkill_meta[] = {
@@ -87372,6 +91791,124 @@ fail:
 }
 
 
+static int _wrap_LuaViewAsSkill_vs_card_names_set(lua_State* L) {
+  int SWIG_arg = 0;
+  LuaViewAsSkill *arg1 = (LuaViewAsSkill *) 0 ;
+  LuaFunction arg2 ;
+  
+  SWIG_check_num_args("LuaViewAsSkill::vs_card_names",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaViewAsSkill::vs_card_names",1,"LuaViewAsSkill *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaViewAsSkill,0))){
+    SWIG_fail_ptr("LuaViewAsSkill_vs_card_names_set",1,SWIGTYPE_p_LuaViewAsSkill);
+  }
+  
+  
+  if (lua_isfunction(L, 2)) {
+    lua_pushvalue(L, 2);
+    arg2 = luaL_ref(L, LUA_REGISTRYINDEX);
+  } else {
+    arg2 = 0;
+  }
+  
+  if (arg1) (arg1)->vs_card_names = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LuaViewAsSkill_vs_card_names_get(lua_State* L) {
+  int SWIG_arg = 0;
+  LuaViewAsSkill *arg1 = (LuaViewAsSkill *) 0 ;
+  LuaFunction result;
+  
+  SWIG_check_num_args("LuaViewAsSkill::vs_card_names",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaViewAsSkill::vs_card_names",1,"LuaViewAsSkill *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaViewAsSkill,0))){
+    SWIG_fail_ptr("LuaViewAsSkill_vs_card_names_get",1,SWIGTYPE_p_LuaViewAsSkill);
+  }
+  
+  result =  ((arg1)->vs_card_names);
+  
+  lua_rawgeti(L, LUA_REGISTRYINDEX, result);
+  SWIG_arg ++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LuaViewAsSkill_enabled_to_vs_card_set(lua_State* L) {
+  int SWIG_arg = 0;
+  LuaViewAsSkill *arg1 = (LuaViewAsSkill *) 0 ;
+  LuaFunction arg2 ;
+  
+  SWIG_check_num_args("LuaViewAsSkill::enabled_to_vs_card",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaViewAsSkill::enabled_to_vs_card",1,"LuaViewAsSkill *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaViewAsSkill,0))){
+    SWIG_fail_ptr("LuaViewAsSkill_enabled_to_vs_card_set",1,SWIGTYPE_p_LuaViewAsSkill);
+  }
+  
+  
+  if (lua_isfunction(L, 2)) {
+    lua_pushvalue(L, 2);
+    arg2 = luaL_ref(L, LUA_REGISTRYINDEX);
+  } else {
+    arg2 = 0;
+  }
+  
+  if (arg1) (arg1)->enabled_to_vs_card = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LuaViewAsSkill_enabled_to_vs_card_get(lua_State* L) {
+  int SWIG_arg = 0;
+  LuaViewAsSkill *arg1 = (LuaViewAsSkill *) 0 ;
+  LuaFunction result;
+  
+  SWIG_check_num_args("LuaViewAsSkill::enabled_to_vs_card",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaViewAsSkill::enabled_to_vs_card",1,"LuaViewAsSkill *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaViewAsSkill,0))){
+    SWIG_fail_ptr("LuaViewAsSkill_enabled_to_vs_card_get",1,SWIGTYPE_p_LuaViewAsSkill);
+  }
+  
+  result =  ((arg1)->enabled_to_vs_card);
+  
+  lua_rawgeti(L, LUA_REGISTRYINDEX, result);
+  SWIG_arg ++;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_LuaViewAsSkill_in_pile_set(lua_State* L) {
   int SWIG_arg = 0;
   LuaViewAsSkill *arg1 = (LuaViewAsSkill *) 0 ;
@@ -87449,6 +91986,8 @@ static swig_lua_attribute swig_LuaViewAsSkill_attributes[] = {
     { "enabled_at_play", _wrap_LuaViewAsSkill_enabled_at_play_get, _wrap_LuaViewAsSkill_enabled_at_play_set },
     { "enabled_at_response", _wrap_LuaViewAsSkill_enabled_at_response_get, _wrap_LuaViewAsSkill_enabled_at_response_set },
     { "enabled_at_nullification", _wrap_LuaViewAsSkill_enabled_at_nullification_get, _wrap_LuaViewAsSkill_enabled_at_nullification_set },
+    { "vs_card_names", _wrap_LuaViewAsSkill_vs_card_names_get, _wrap_LuaViewAsSkill_vs_card_names_set },
+    { "enabled_to_vs_card", _wrap_LuaViewAsSkill_enabled_to_vs_card_get, _wrap_LuaViewAsSkill_enabled_to_vs_card_set },
     { "in_pile", _wrap_LuaViewAsSkill_in_pile_get, _wrap_LuaViewAsSkill_in_pile_set },
     {0,0,0}
 };
@@ -94875,6 +99414,52 @@ fail:
 }
 
 
+static int _wrap_AI_askForTransferFieldCards(lua_State* L) {
+  int SWIG_arg = 0;
+  AI *arg1 = (AI *) 0 ;
+  QList< ServerPlayer * > arg2 ;
+  QString *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  QList< ServerPlayer * > *argp2 ;
+  int result;
+  
+  SWIG_check_num_args("AI::askForTransferFieldCards",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AI::askForTransferFieldCards",1,"AI *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("AI::askForTransferFieldCards",2,"QList< ServerPlayer * > const");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("AI::askForTransferFieldCards",3,"QString const &");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("AI::askForTransferFieldCards",4,"bool");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("AI::askForTransferFieldCards",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AI,0))){
+    SWIG_fail_ptr("AI_askForTransferFieldCards",1,SWIGTYPE_p_AI);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("AI_askForTransferFieldCards",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
+    SWIG_fail_ptr("AI_askForTransferFieldCards",3,SWIGTYPE_p_QString);
+  }
+  
+  arg4 = (lua_toboolean(L, 4)!=0);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  result = (int)(arg1)->askForTransferFieldCards(arg2,(QString const &)*arg3,arg4,arg5);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_AI_askForNullification(lua_State* L) {
   int SWIG_arg = 0;
   AI *arg1 = (AI *) 0 ;
@@ -94981,30 +99566,32 @@ fail:
 static int _wrap_AI_askForCardsChosen(lua_State* L) {
   int SWIG_arg = 0;
   AI *arg1 = (AI *) 0 ;
-  QList< ServerPlayer * > *arg2 = 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   QString *arg3 = 0 ;
   QString *arg4 = 0 ;
   int arg5 ;
   int arg6 ;
-  QList< int > *arg7 = 0 ;
+  Card::HandlingMethod arg7 ;
+  QList< int > *arg8 = 0 ;
   QList< int > result;
   
-  SWIG_check_num_args("AI::askForCardsChosen",7,7)
+  SWIG_check_num_args("AI::askForCardsChosen",8,8)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("AI::askForCardsChosen",1,"AI *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("AI::askForCardsChosen",2,"QList< ServerPlayer * > const &");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("AI::askForCardsChosen",2,"ServerPlayer *");
   if(!lua_isuserdata(L,3)) SWIG_fail_arg("AI::askForCardsChosen",3,"QString const &");
   if(!lua_isuserdata(L,4)) SWIG_fail_arg("AI::askForCardsChosen",4,"QString const &");
   if(!lua_isnumber(L,5)) SWIG_fail_arg("AI::askForCardsChosen",5,"int");
   if(!lua_isnumber(L,6)) SWIG_fail_arg("AI::askForCardsChosen",6,"int");
-  if(!lua_isuserdata(L,7)) SWIG_fail_arg("AI::askForCardsChosen",7,"QList< int > const &");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("AI::askForCardsChosen",7,"Card::HandlingMethod");
+  if(!lua_isuserdata(L,8)) SWIG_fail_arg("AI::askForCardsChosen",8,"QList< int > const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_AI,0))){
     SWIG_fail_ptr("AI_askForCardsChosen",1,SWIGTYPE_p_AI);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("AI_askForCardsChosen",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("AI_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
   }
   
   
@@ -95019,12 +99606,13 @@ static int _wrap_AI_askForCardsChosen(lua_State* L) {
   
   arg5 = (int)lua_tonumber(L, 5);
   arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (Card::HandlingMethod)(int)lua_tonumber(L, 7);
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_QListT_int_t,0))){
-    SWIG_fail_ptr("AI_askForCardsChosen",7,SWIGTYPE_p_QListT_int_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,8,(void**)&arg8,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("AI_askForCardsChosen",8,SWIGTYPE_p_QListT_int_t);
   }
   
-  result = (arg1)->askForCardsChosen((QList< ServerPlayer * > const &)*arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,(QList< int > const &)*arg7);
+  result = (arg1)->askForCardsChosen(arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,arg7,(QList< int > const &)*arg8);
   {
     QList< int > * resultptr = new QList< int >((const QList< int > &) result);
     SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
@@ -95354,6 +99942,7 @@ static swig_lua_method swig_AI_methods[]= {
     { "askForChoice", _wrap_AI_askForChoice},
     { "askForDiscard", _wrap_AI_askForDiscard},
     { "askForMoveCards", _wrap_AI_askForMoveCards},
+    { "askForTransferFieldCards", _wrap_AI_askForTransferFieldCards},
     { "askForNullification", _wrap_AI_askForNullification},
     { "askForCardChosen", _wrap_AI_askForCardChosen},
     { "askForCardsChosen", _wrap_AI_askForCardsChosen},
@@ -95682,6 +100271,52 @@ fail:
 }
 
 
+static int _wrap_TrustAI_askForTransferFieldCards(lua_State* L) {
+  int SWIG_arg = 0;
+  TrustAI *arg1 = (TrustAI *) 0 ;
+  QList< ServerPlayer * > arg2 ;
+  QString *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  QList< ServerPlayer * > *argp2 ;
+  int result;
+  
+  SWIG_check_num_args("TrustAI::askForTransferFieldCards",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TrustAI::askForTransferFieldCards",1,"TrustAI *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("TrustAI::askForTransferFieldCards",2,"QList< ServerPlayer * > const");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("TrustAI::askForTransferFieldCards",3,"QString const &");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("TrustAI::askForTransferFieldCards",4,"bool");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("TrustAI::askForTransferFieldCards",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TrustAI,0))){
+    SWIG_fail_ptr("TrustAI_askForTransferFieldCards",1,SWIGTYPE_p_TrustAI);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("TrustAI_askForTransferFieldCards",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
+    SWIG_fail_ptr("TrustAI_askForTransferFieldCards",3,SWIGTYPE_p_QString);
+  }
+  
+  arg4 = (lua_toboolean(L, 4)!=0);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  result = (int)(arg1)->askForTransferFieldCards(arg2,(QString const &)*arg3,arg4,arg5);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_TrustAI_askForNullification(lua_State* L) {
   int SWIG_arg = 0;
   TrustAI *arg1 = (TrustAI *) 0 ;
@@ -95788,30 +100423,32 @@ fail:
 static int _wrap_TrustAI_askForCardsChosen(lua_State* L) {
   int SWIG_arg = 0;
   TrustAI *arg1 = (TrustAI *) 0 ;
-  QList< ServerPlayer * > *arg2 = 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   QString *arg3 = 0 ;
   QString *arg4 = 0 ;
   int arg5 ;
   int arg6 ;
-  QList< int > *arg7 = 0 ;
+  Card::HandlingMethod arg7 ;
+  QList< int > *arg8 = 0 ;
   QList< int > result;
   
-  SWIG_check_num_args("TrustAI::askForCardsChosen",7,7)
+  SWIG_check_num_args("TrustAI::askForCardsChosen",8,8)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TrustAI::askForCardsChosen",1,"TrustAI *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("TrustAI::askForCardsChosen",2,"QList< ServerPlayer * > const &");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("TrustAI::askForCardsChosen",2,"ServerPlayer *");
   if(!lua_isuserdata(L,3)) SWIG_fail_arg("TrustAI::askForCardsChosen",3,"QString const &");
   if(!lua_isuserdata(L,4)) SWIG_fail_arg("TrustAI::askForCardsChosen",4,"QString const &");
   if(!lua_isnumber(L,5)) SWIG_fail_arg("TrustAI::askForCardsChosen",5,"int");
   if(!lua_isnumber(L,6)) SWIG_fail_arg("TrustAI::askForCardsChosen",6,"int");
-  if(!lua_isuserdata(L,7)) SWIG_fail_arg("TrustAI::askForCardsChosen",7,"QList< int > const &");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("TrustAI::askForCardsChosen",7,"Card::HandlingMethod");
+  if(!lua_isuserdata(L,8)) SWIG_fail_arg("TrustAI::askForCardsChosen",8,"QList< int > const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_TrustAI,0))){
     SWIG_fail_ptr("TrustAI_askForCardsChosen",1,SWIGTYPE_p_TrustAI);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("TrustAI_askForCardsChosen",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("TrustAI_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
   }
   
   
@@ -95826,12 +100463,13 @@ static int _wrap_TrustAI_askForCardsChosen(lua_State* L) {
   
   arg5 = (int)lua_tonumber(L, 5);
   arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (Card::HandlingMethod)(int)lua_tonumber(L, 7);
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_QListT_int_t,0))){
-    SWIG_fail_ptr("TrustAI_askForCardsChosen",7,SWIGTYPE_p_QListT_int_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,8,(void**)&arg8,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("TrustAI_askForCardsChosen",8,SWIGTYPE_p_QListT_int_t);
   }
   
-  result = (arg1)->askForCardsChosen((QList< ServerPlayer * > const &)*arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,(QList< int > const &)*arg7);
+  result = (arg1)->askForCardsChosen(arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,arg7,(QList< int > const &)*arg8);
   {
     QList< int > * resultptr = new QList< int >((const QList< int > &) result);
     SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
@@ -96195,6 +100833,7 @@ static swig_lua_method swig_TrustAI_methods[]= {
     { "askForChoice", _wrap_TrustAI_askForChoice},
     { "askForDiscard", _wrap_TrustAI_askForDiscard},
     { "askForMoveCards", _wrap_TrustAI_askForMoveCards},
+    { "askForTransferFieldCards", _wrap_TrustAI_askForTransferFieldCards},
     { "askForNullification", _wrap_TrustAI_askForNullification},
     { "askForCardChosen", _wrap_TrustAI_askForCardChosen},
     { "askForCardsChosen", _wrap_TrustAI_askForCardsChosen},
@@ -96463,6 +101102,52 @@ fail:
 }
 
 
+static int _wrap_LuaAI_askForTransferFieldCards(lua_State* L) {
+  int SWIG_arg = 0;
+  LuaAI *arg1 = (LuaAI *) 0 ;
+  QList< ServerPlayer * > arg2 ;
+  QString *arg3 = 0 ;
+  bool arg4 ;
+  bool arg5 ;
+  QList< ServerPlayer * > *argp2 ;
+  int result;
+  
+  SWIG_check_num_args("LuaAI::askForTransferFieldCards",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaAI::askForTransferFieldCards",1,"LuaAI *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LuaAI::askForTransferFieldCards",2,"QList< ServerPlayer * > const");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("LuaAI::askForTransferFieldCards",3,"QString const &");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("LuaAI::askForTransferFieldCards",4,"bool");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("LuaAI::askForTransferFieldCards",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaAI,0))){
+    SWIG_fail_ptr("LuaAI_askForTransferFieldCards",1,SWIGTYPE_p_LuaAI);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("LuaAI_askForTransferFieldCards",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg2 = *argp2;
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_QString,0))){
+    SWIG_fail_ptr("LuaAI_askForTransferFieldCards",3,SWIGTYPE_p_QString);
+  }
+  
+  arg4 = (lua_toboolean(L, 4)!=0);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  result = (int)(arg1)->askForTransferFieldCards(arg2,(QString const &)*arg3,arg4,arg5);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_LuaAI_askForChoice(lua_State* L) {
   int SWIG_arg = 0;
   LuaAI *arg1 = (LuaAI *) 0 ;
@@ -96558,30 +101243,32 @@ fail:
 static int _wrap_LuaAI_askForCardsChosen(lua_State* L) {
   int SWIG_arg = 0;
   LuaAI *arg1 = (LuaAI *) 0 ;
-  QList< ServerPlayer * > *arg2 = 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   QString *arg3 = 0 ;
   QString *arg4 = 0 ;
   int arg5 ;
   int arg6 ;
-  QList< int > *arg7 = 0 ;
+  Card::HandlingMethod arg7 ;
+  QList< int > *arg8 = 0 ;
   QList< int > result;
   
-  SWIG_check_num_args("LuaAI::askForCardsChosen",7,7)
+  SWIG_check_num_args("LuaAI::askForCardsChosen",8,8)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LuaAI::askForCardsChosen",1,"LuaAI *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LuaAI::askForCardsChosen",2,"QList< ServerPlayer * > const &");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("LuaAI::askForCardsChosen",2,"ServerPlayer *");
   if(!lua_isuserdata(L,3)) SWIG_fail_arg("LuaAI::askForCardsChosen",3,"QString const &");
   if(!lua_isuserdata(L,4)) SWIG_fail_arg("LuaAI::askForCardsChosen",4,"QString const &");
   if(!lua_isnumber(L,5)) SWIG_fail_arg("LuaAI::askForCardsChosen",5,"int");
   if(!lua_isnumber(L,6)) SWIG_fail_arg("LuaAI::askForCardsChosen",6,"int");
-  if(!lua_isuserdata(L,7)) SWIG_fail_arg("LuaAI::askForCardsChosen",7,"QList< int > const &");
+  if(!lua_isnumber(L,7)) SWIG_fail_arg("LuaAI::askForCardsChosen",7,"Card::HandlingMethod");
+  if(!lua_isuserdata(L,8)) SWIG_fail_arg("LuaAI::askForCardsChosen",8,"QList< int > const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_LuaAI,0))){
     SWIG_fail_ptr("LuaAI_askForCardsChosen",1,SWIGTYPE_p_LuaAI);
   }
   
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
-    SWIG_fail_ptr("LuaAI_askForCardsChosen",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("LuaAI_askForCardsChosen",2,SWIGTYPE_p_ServerPlayer);
   }
   
   
@@ -96596,12 +101283,13 @@ static int _wrap_LuaAI_askForCardsChosen(lua_State* L) {
   
   arg5 = (int)lua_tonumber(L, 5);
   arg6 = (int)lua_tonumber(L, 6);
+  arg7 = (Card::HandlingMethod)(int)lua_tonumber(L, 7);
   
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,7,(void**)&arg7,SWIGTYPE_p_QListT_int_t,0))){
-    SWIG_fail_ptr("LuaAI_askForCardsChosen",7,SWIGTYPE_p_QListT_int_t);
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,8,(void**)&arg8,SWIGTYPE_p_QListT_int_t,0))){
+    SWIG_fail_ptr("LuaAI_askForCardsChosen",8,SWIGTYPE_p_QListT_int_t);
   }
   
-  result = (arg1)->askForCardsChosen((QList< ServerPlayer * > const &)*arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,(QList< int > const &)*arg7);
+  result = (arg1)->askForCardsChosen(arg2,(QString const &)*arg3,(QString const &)*arg4,arg5,arg6,arg7,(QList< int > const &)*arg8);
   {
     QList< int > * resultptr = new QList< int >((const QList< int > &) result);
     SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
@@ -96952,6 +101640,7 @@ static swig_lua_method swig_LuaAI_methods[]= {
     { "activate", _wrap_LuaAI_activate},
     { "askForDiscard", _wrap_LuaAI_askForDiscard},
     { "askForMoveCards", _wrap_LuaAI_askForMoveCards},
+    { "askForTransferFieldCards", _wrap_LuaAI_askForTransferFieldCards},
     { "askForChoice", _wrap_LuaAI_askForChoice},
     { "askForCardChosen", _wrap_LuaAI_askForCardChosen},
     { "askForCardsChosen", _wrap_LuaAI_askForCardsChosen},
@@ -97142,6 +101831,7 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("CardUsed", CardUsed)},
     {SWIG_LUA_CONSTTAB_INT("TargetChoosing", TargetChoosing)},
     {SWIG_LUA_CONSTTAB_INT("TargetConfirming", TargetConfirming)},
+    {SWIG_LUA_CONSTTAB_INT("TargetRecord", TargetRecord)},
     {SWIG_LUA_CONSTTAB_INT("TargetChosen", TargetChosen)},
     {SWIG_LUA_CONSTTAB_INT("TargetConfirmed", TargetConfirmed)},
     {SWIG_LUA_CONSTTAB_INT("CardEffect", CardEffect)},
@@ -97159,6 +101849,7 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {SWIG_LUA_CONSTTAB_INT("GeneralHidden", GeneralHidden)},
     {SWIG_LUA_CONSTTAB_INT("GeneralRemoved", GeneralRemoved)},
     {SWIG_LUA_CONSTTAB_INT("GeneralTransforming", GeneralTransforming)},
+    {SWIG_LUA_CONSTTAB_INT("GeneralTransformed", GeneralTransformed)},
     {SWIG_LUA_CONSTTAB_INT("CommandVerifying", CommandVerifying)},
     {SWIG_LUA_CONSTTAB_INT("DFDebut", DFDebut)},
     {SWIG_LUA_CONSTTAB_INT("VHDebut", VHDebut)},

@@ -45,11 +45,11 @@ return {
 	["illustrator:nagi"] = "38455466",
 
 	["tianzi"] = "天资",
-	[":tianzi"] = "摸牌阶段，你可以额外摸一张牌。出牌阶段限一次，你可以令此回合内你的手牌上限-1，若如此做，此回合的弃牌阶段结束时，你摸等同于此阶段内弃置的锦囊牌的张数的牌并展示之。",
+	[":tianzi"] = "• Giai đoạn rút bài, bạn có thể rút thêm 1 lá.\n• Một lần trong giai đoạn ra bài, bạn có thể lệnh giới hạn trữ bài của bạn -1 trong lượt này;\n▶ Khi kết thúc giai đoạn bỏ bài trong lượt này, bạn rút bài bằng số công cụ tiến vào chồng bài bỏ trong giai đoạn này.",
 	["@tianzi_draw"] = "天资",
 
 	["yuzhai"] = "御宅",
-	[":yuzhai"] = "结束阶段开始时，若于此回合内你弃置的牌的张数大于你的体力值，你可以弃置一名其他角色的一张手牌。",
+	[":yuzhai"] = "Khi bắt đầu giai đoạn kết thúc, nếu số lá bạn đã bỏ trong lượt này > số máu của bạn, bạn có thể bỏ 1 lá trên tay người khác.",
 	["@yuzhai_cards"] = "御宅计数",
 	["yuzhai-invoke"] = "请选择一名其他角色，发动“御宅”",
 
@@ -71,11 +71,11 @@ return {
 	-- [":wushu"] = "每当你的黑色牌因判定而置入弃牌堆时，你可以将之交给一名角色。",
 
 	["mizou"] = "迷走",
-	[":mizou"] = "出牌阶段限一次，你可以弃置所有手牌（至少一张），然后所有与你势力相同的角色各摸一张牌，若没有与你势力相同的其他角色，你多摸一张牌。",
+	[":mizou"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ tất cả bài trên tay (tối thiểu 1), lệnh tất cả người cùng thế lực với bạn rút 1 lá;\n▷ Nếu không có người khác có cùng thế lực với bạn, bạn rút thêm 1 lá.",
 	["@mizou-targetchoose"] = "请选择一名与你势力相同的其他角色",
 
 	["duhun"] = "度魂",
-	[":duhun"] = "与你势力相同的其他角色死亡时，你可以摸一张牌，然后取消执行奖惩。",
+	[":duhun"] = "Khi 1 người khác có cùng thế lực với bạn trận vong, bạn có thể rút 1 lá, bỏ qua chấp hành thưởng phạt.",
 	
 	----C005
 	["suiseiseki"] = "Suiseiseki", 
@@ -147,10 +147,10 @@ return {
 	["illustrator:akari"] = "31838608",
 
 	["wucun"] = "无存",
-	[":wucun"] = "其他角色的准备阶段开始时，你可以选择一项：1、若你的武将牌均明置，暗置此武将牌；2、明置此武将牌，视为该角色对你使用一张【调虎离山】。若如此做，且你的手牌数不为全场最多，你摸一张牌。",
+	[":wucun"] = "Khi bắt đầu giai đoạn chuẩn bị của 1 người khác, bạn có thể chọn 1 mục:\n1. Nếu bạn đã mở tất cả tướng, bạn úp tướng này;\n2. Nếu tướng này đang úp, xem như họ sử dụng [Điệu Hổ Ly Sơn] với bạn;\n▷ Nếu bạn không phải người có nhiều bàn trên tay nhất, bạn rút 1 lá.",
 
 	["kongni"] = "空匿",
-	[":kongni"] = "锁定技，若你的装备区里没有牌，黑色【杀】对你无效；若你的装备区里有牌，红色【杀】对你无效。",
+	[":kongni"] = "Tỏa định kỹ: Nếu vùng trang bị của bạn:\n* Không có bài: [Sát] Đen không có hiệu quả với bạn;\n* Có bài: [Sát] Đỏ không có hiệu quả với bạn.",
 
 	----C009
 	["t_kyouko"] = "Kyouko Toshinou", 

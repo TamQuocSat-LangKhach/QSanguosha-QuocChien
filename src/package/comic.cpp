@@ -15,9 +15,9 @@ public:
         frequency = NotFrequent;
     }
 
-    virtual QMap<ServerPlayer *, QStringList> triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &) const
+    virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
-        QMap<ServerPlayer *, QStringList> skill_list;
+        TriggerList skill_list;
         if (player != NULL && player->isAlive() && player->getPhase() == Player::Start)
         {
             QList<ServerPlayer *> akaris = room->findPlayersBySkillName(objectName());
@@ -504,7 +504,7 @@ class Duhun : public TriggerSkill
 public:
     Duhun() : TriggerSkill("duhun")
     {
-        events << BuryVictim;
+        events << Death;
         frequency = Frequent;
     }
 
@@ -526,8 +526,8 @@ public:
     {
         if (room->askForSkillInvoke(ask_who, objectName(), qVariantFromValue(data.value<DeathStruct>().who)))
         {
-            room->drawCards(ask_who, 1, objectName());
             room->broadcastSkillInvoke(objectName(), ask_who);
+            room->drawCards(ask_who, 1, objectName());
             return true;
         }
         return false;
@@ -540,7 +540,7 @@ public:
         if (from == NULL || from->isDead())
             return false;
 
-        room->setPlayerFlag(from, "Duhun_flag");
+        room->setPlayerFlag(from, "no_reward_punish_flag");
         return false;
     }
 };

@@ -1434,11 +1434,6 @@ public:
     }
 };
 
-ShowKongwu::ShowKongwu()
-    : ShowDistanceCard()
-{
-}
-
 class Kongwu : public DistanceSkill
 {
 public:
@@ -3432,11 +3427,6 @@ public:
     }
 };
 
-ShowBingshan::ShowBingshan()
-    : ShowDistanceCard()
-{
-}
-
 class Bingshan : public DistanceSkill
 {
 public:
@@ -4051,6 +4041,5 @@ void MoesenPackage::addGameGenerals()
     addMetaObject<TianjianCard>();
     addMetaObject<ShenaiCard>();
     addMetaObject<QiangqiCard>();
-    addMetaObject<ShowKongwu>();
     addMetaObject<ModanVoidCard>();
 }

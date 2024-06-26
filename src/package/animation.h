@@ -4,14 +4,6 @@
 #include "moesen-package.h"
 #include "card.h"
 
-class ShowMashu : public ShowDistanceCard
-{
-    Q_OBJECT
-
-public:
-    Q_INVOKABLE ShowMashu();
-};
-
 class WuweiCard : public SkillCard
 {
     Q_OBJECT

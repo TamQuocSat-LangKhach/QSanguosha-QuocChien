@@ -903,8 +903,14 @@ bool GameRule::effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *playe
             else if (kill_count > 7)
                 room->setEmotion(killer, "zylove", false, 4000);
 
-            if (!killer->hasShownSkill("juejue") || !killer->isFriendWith(player))
+            if (!killer->hasFlag("no_reward_punish_flag"))
+            {
                 rewardAndPunish(killer, player);
+            }
+            else
+            {
+                killer->setFlags("-no_reward_punish_flag");
+            }
         }
 
         if (player->getGeneral()->isLord() && player == data.value<DeathStruct>().who) {

@@ -328,7 +328,7 @@ return {
 	["#zhuling"] = "Kiên Thành Túc Tướng",
 	["zhuling"] = "Chu Linh",
 	["juejue"] = "Trấn Vệ",
-	[":juejue"] = "• Khi bắt đầu giai đoạn bỏ bài, bạn có thể mất 1 máu; Nếu làm vậy, khi kết thúc giai đoạn này, nếu trong giai đoạn này bạn có bỏ bài, bạn lệnh tất cả người khác chọn 1 mục:\n1. Họ đưa X lá trên tay vào chồng bài bỏ (X là số lá bạn đã bỏ trong giai đoạn này);\n2. Bạn gây 1 sát thương cho họ.\n• Khi bạn giết người cùng thế lực với bạn, bạn bỏ qua chấp hành thưởng phạt.",
+	[":juejue"] = "• Khi bắt đầu giai đoạn bỏ bài, bạn có thể mất 1 máu;\n▶ Khi kết thúc giai đoạn này, nếu trong giai đoạn này bạn có bỏ bài, bạn lệnh tất cả người khác chọn 1 mục:\n1. Họ đưa X lá trên tay vào chồng bài bỏ (X là số lá bạn đã bỏ trong giai đoạn này);\n2. Bạn gây 1 sát thương cho họ.\n• Bạn bỏ qua chấp hành thưởng phạt nếu bạn giết người cùng thế lực với bạn.",
 	["fangyuan"] = "Ngư Lân",
 	[":fangyuan"] = "Trận pháp kỹ: Quan hệ vây công:\n• Nếu bạn là người vây công, giới hạn trữ bài của người vây công +1, giới hạn trữ bài của người bị vây công -1.\n• Khi bắt đầu giai đoạn kết thúc, nếu bạn là người bị vây công trong quan hệ vây công, bạn xem như sử dụng [Sát] với 1 người vây công",
 	["@fangyuan-slash"] = "Ngư Lân: Chọn 1 người đang vây công bạn, xem như sử dụng [Sát] với họ",

@@ -1770,7 +1770,21 @@ const Card *Room::askForCard(ServerPlayer *player, const QString &pattern, const
                     dropHuashenCardbySkillName(player, card->showSkill());
 
                 thread->trigger(CardUsed, this, player, use_data);
-                thread->trigger(CardFinished, this, player, use_data);
+                if (card_use.card->hasFlag("cardNotTriggerCardFinished"))
+                {
+                    clearCardFlag(card_use.card);
+
+                    if (card_use.card->isNDTrick())
+                        removeTag(card_use.card->toString() + "HegNullificationTargets");
+
+                    foreach(ServerPlayer *p, getAlivePlayers())
+                        doNotify(p, QSanProtocol::S_COMMAND_NULLIFICATION_ASKED, QString("."));
+
+                    if (card_use.card->isKindOf("Slash"))
+                        card_use.from->tag.remove("Jink_" + card_use.card->toString());
+                }
+                else
+                    thread->trigger(CardFinished, this, player, use_data);
 
                 QList<int> table_cardids = getCardIdsOnTable(card);
                 if (!table_cardids.isEmpty()) {

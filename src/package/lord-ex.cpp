@@ -4385,13 +4385,26 @@ class JuejueEffect : public TriggerSkill
 public:
     JuejueEffect() : TriggerSkill("#juejue-effect")
     {
-        events << EventPhaseEnd;
+        events << EventPhaseEnd << Death;
         frequency = Compulsory;
     }
 
-    virtual QStringList triggerable(TriggerEvent , Room *, ServerPlayer *player, QVariant &, ServerPlayer * &) const
+    virtual void record(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (player->getPhase() == Player::Discard && player->hasFlag("juejueInvoked") && player->getMark("GlobalRuleDisCardCount") > 0)
+        if (event == Death)
+        {
+            DeathStruct death = data.value<DeathStruct>();
+            ServerPlayer* killer = death.damage->from;
+            if (killer && killer == player && killer->hasShownSkill("juejue") && killer->isFriendWith(death.who))
+            {
+                room->setPlayerFlag(killer, "no_reward_punish_flag");
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent event, Room *, ServerPlayer *player, QVariant &, ServerPlayer * &) const
+    {
+        if (event == EventPhaseEnd && player->getPhase() == Player::Discard && player->hasFlag("juejueInvoked") && player->getMark("GlobalRuleDisCardCount") > 0)
             return QStringList(objectName());
         return QStringList();
     }
