@@ -556,7 +556,7 @@ void MizouCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &) c
     QList<ServerPlayer *> candidates;
     foreach (auto p, room->getAlivePlayers())
     {
-        if (source->isFriendWith(p) || source->willBeFriendWith(p))
+        if (source->willBeFriendWith(p))
         {
             candidates << p;
         }
@@ -759,7 +759,8 @@ void MingmingCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &
         room->setPlayerDisableShow(source, "d", "rosesuigintou");
     }
 
-    ArcheryAttack *aa = new ArcheryAttack(Card::NoSuit, 0);
+    ArcheryAttack *aa = new ArcheryAttack(Card::SuitToBeDecided, 0);
+    aa->addSubcards(getSubcards());
     aa->setSkillName("mingming");
 
     QList<ServerPlayer *> targets;
@@ -936,7 +937,7 @@ public:
     Heli() : TriggerSkill("heli")
     {
         view_as_skill = new HeliVS;
-        events << QuitDying;
+        events << Dying;
     }
 
     virtual bool canPreshow() const
@@ -972,22 +973,22 @@ public:
 
     void doHuoshui(Room *room, ServerPlayer *zoushi, bool set) const
     {
-        if (set && !zoushi->tag["huoshui"].toBool()) {
+        if (set && !zoushi->tag["ziwo"].toBool()) {
             foreach(ServerPlayer *p, room->getOtherPlayers(zoushi))
-                room->setPlayerDisableShow(p, "hd", "huoshui");
+                room->setPlayerDisableShow(p, "hd", "ziwo");
 
-            zoushi->tag["huoshui"] = true;
-        } else if (!set && zoushi->tag["huoshui"].toBool()) {
+            zoushi->tag["ziwo"] = true;
+        } else if (!set && zoushi->tag["ziwo"].toBool()) {
             foreach(ServerPlayer *p, room->getOtherPlayers(zoushi))
-                room->removePlayerDisableShow(p, "huoshui");
+                room->removePlayerDisableShow(p, "ziwo");
 
-            zoushi->tag["huoshui"] = false;
+            zoushi->tag["ziwo"] = false;
         }
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (player == NULL || triggerEvent == CardUsed) return;
+        if (player == NULL) return;
         if (triggerEvent != Death && !player->isAlive()) return;
         ServerPlayer *c = room->getCurrent();
         if (c == NULL || (triggerEvent != EventPhaseStart && c->getPhase() == Player::NotActive) || c != player)
@@ -997,7 +998,7 @@ public:
             return;
         if ((triggerEvent == GeneralShown || triggerEvent == DFDebut || triggerEvent == GeneralHidden) && (!player->ownSkill(this) || player->inHeadSkills(this) != data.toBool()))
             return;
-        if (triggerEvent == GeneralRemoved && data.toString().split(":").first() != "zoushi")
+        if (triggerEvent == GeneralRemoved && data.toString().split(":").first() != "t_kyouko")
             return;
         if (triggerEvent == EventPhaseStart && !(player->getPhase() == Player::RoundStart || player->getPhase() == Player::NotActive))
             return;
@@ -1211,33 +1212,36 @@ public:
     }
 };
 
-ZhiyuCard::ZhiyuCard()
+ZhiyuTsukasaCard::ZhiyuTsukasaCard()
 {
 }
 
-bool ZhiyuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool ZhiyuTsukasaCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
     if (!targets.isEmpty())
         return false;
 
-    return (Self->isFriendWith(to_select) || Self->willBeFriendWith(to_select)) && to_select->isWounded() && to_select != Self;
+    return Self->isFriendWith(to_select) && to_select->isWounded() && to_select != Self;
 }
 
-void ZhiyuCard::onEffect(const CardEffectStruct &effect) const
+void ZhiyuTsukasaCard::onEffect(const CardEffectStruct &effect) const
 {
     Room *room = effect.from->getRoom();
     RecoverStruct recover;
     recover.card = this;
     recover.who = effect.from;
 
-    room->recover(effect.from, recover, true);
-    room->recover(effect.to, recover, true);
+    QList<ServerPlayer *> targets;
+    targets << effect.from << effect.to;
+    room->sortByActionOrder(targets);
+    foreach(ServerPlayer *target, targets)
+        room->recover(target, recover, false);
 }
 
-class Zhiyu : public ViewAsSkill
+class ZhiyuTsukasa : public ViewAsSkill
 {
 public:
-    Zhiyu() : ViewAsSkill("zhiyu")
+    ZhiyuTsukasa() : ViewAsSkill("zhiyu_tsukasa")
     {
     }
 
@@ -1259,7 +1263,7 @@ public:
         if (cards.length() != 2)
             return NULL;
 
-        ZhiyuCard *zhiyuCard = new ZhiyuCard();
+        ZhiyuTsukasaCard *zhiyuCard = new ZhiyuTsukasaCard();
         zhiyuCard->addSubcards(cards);
         zhiyuCard->setShowSkill(objectName());
         return zhiyuCard;
@@ -1296,10 +1300,7 @@ public:
 
     virtual bool effect(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer*) const
     {
-        if (player->inHeadSkills(this))
-            player->hideGeneral(true);
-        else
-            player->hideGeneral(false);
+        player->hideGeneral(player->inHeadSkills(this));
         player->drawCards(1);
         return false;
     }
@@ -1344,15 +1345,12 @@ public:
             slash->setShowSkill(objectName());
             return slash;
         }
-        else
+        else if (reason == CardUseStruct::CARD_USE_REASON_RESPONSE_USE)
         {
-            if (reason == CardUseStruct::CARD_USE_REASON_RESPONSE_USE)
-            {
                 Nullification *nulli = new Nullification(Card::NoSuit, 0);
                 nulli->setSkillName(objectName());
                 nulli->setShowSkill(objectName());
                 return nulli;
-            }
         }
         return NULL;
     }
@@ -1486,7 +1484,7 @@ public:
 
     virtual QStringList triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer* &) const
     {
-        if (!TriggerSkill::triggerable(player))
+        if (!TriggerSkill::triggerable(player) || player->hasShownSkill(this))
             return QStringList();
 
         if (event == CardsMoveOneTime)
@@ -1498,7 +1496,7 @@ public:
 
             // Zhaihun's last effect: if someone gets red card, konata recover 1 hp
             if (move.reason.m_skillName == objectName() && move.reason.m_playerId == player->objectName() && Sanguosha->getEngineCard(move.card_ids.first()) 
-                && Sanguosha->getCard(move.card_ids.first())->isRed() && player->isWounded())
+                && Sanguosha->getCard(move.card_ids.first())->isRed() && player->isWounded() && move.to->hasShownOneGeneral() && !player->isFriendWith(move.to))
                 return QStringList(objectName());
 
             return QStringList();
@@ -1548,23 +1546,11 @@ public:
         return QStringList();
     }
 
-    virtual bool cost(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &, ServerPlayer*) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer*) const
     {
-        if (event == CardsMoveOneTime)
-        {
-            room->broadcastSkillInvoke(objectName(), 2);
-            room->notifySkillInvoked(player, objectName());
-            return true;
-        }
-        else
-        {
-            if (player->hasShownSkill(this) || player->askForSkillInvoke(this))
-            {
-                room->notifySkillInvoked(player, objectName());
-                return true;
-            }
-        }
-        return false;
+        room->broadcastSkillInvoke(objectName(), 2);
+        room->notifySkillInvoked(player, objectName());
+        return true;
     }
 
     virtual bool effect(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &, ServerPlayer*) const
@@ -1633,7 +1619,7 @@ public:
     {
         if (!TriggerSkill::triggerable(player)) return QStringList();
         PhaseChangeStruct change = data.value<PhaseChangeStruct>();
-        if (change.to == Player::Play && !player->hasFlag("qinlve_failed") && player->getHandcardNum() > 0 && !player->isSkipped(change.to))
+        if (change.to == Player::Play && player->getHandcardNum() > 0 && !player->isSkipped(change.to))
         {
             bool invoke = false;
             foreach (ServerPlayer *p, room->getOtherPlayers(player))
@@ -2224,9 +2210,9 @@ public:
         }
     }
 
-    virtual QMap<ServerPlayer *, QStringList> triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
+    virtual TriggerList triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
     {
-        QMap<ServerPlayer *, QStringList> skill_list;
+        TriggerList skill_list;
         if (player == NULL || player->getPhase() != Player::Discard)
             return skill_list;
 
@@ -2323,7 +2309,7 @@ public:
 
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
-        if (TriggerSkill::triggerable(player) && player->getPhase() == Player::Start && player->canDiscard(player, "h"))
+        if (TriggerSkill::triggerable(player) && player->getPhase() == Player::Start && player->canDiscard(player, "he"))
         {
             return QStringList(objectName());
         }
@@ -2586,6 +2572,7 @@ public:
 // Aocai by QSanguosha V2 , maybe Para. Modified by OmnisReen
 
 #include "json.h"
+
 class LaoyueViewAsSkill : public ZeroCardViewAsSkill
 {
 public:
@@ -3220,10 +3207,13 @@ public:
 
     virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
-        room->transformDeputyGeneral(player);
-        room->getThread()->delay(1500);
-
-        room->drawCards(player, player->getMark("jiechu_num") - 1, objectName());
+        room->drawCards(player, player->getMark("jiechu_num"), objectName());
+        if (player->canTransform() && player->getMark("jiechutransformUsed") == 0
+                && room->askForChoice(player, "transform_jiechu", "yes+no", QVariant(), "@transform-ask:::"+objectName()) == "yes") {
+            room->addPlayerMark(player, "jiechutransformUsed");
+            room->broadcastSkillInvoke("transform", player->isMale());
+            room->transformDeputyGeneral(player);
+        }
         return false;
     }
 };
@@ -3273,7 +3263,7 @@ void MoesenPackage::addComicGenerals()
     t_kyouko->addSkill(new Baozou);
 
     General *tsukasa = new General(this, "tsukasa", "shu", 3, false); // C010
-    tsukasa->addSkill(new Zhiyu);
+    tsukasa->addSkill(new ZhiyuTsukasa);
     tsukasa->addSkill(new Maoshi);
     tsukasa->addCompanion("kagami");
 
@@ -3313,7 +3303,7 @@ void MoesenPackage::addComicGenerals()
     addMetaObject<ShuimengCard>();
     addMetaObject<MingmingCard>();
     addMetaObject<HeliCard>();
-    addMetaObject<ZhiyuCard>();
+    addMetaObject<ZhiyuTsukasaCard>();
     addMetaObject<BaozouCard>();
     addMetaObject<LingshangCard>();
     addMetaObject<KaihuaCard>();

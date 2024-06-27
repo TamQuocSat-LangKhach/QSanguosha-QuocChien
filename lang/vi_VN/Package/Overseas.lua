@@ -29,6 +29,12 @@ return {
 	["@sidi-recover"] = "Ty Địch: Chọn 1 người để hồi máu.",
 	["@sidi-cardtype"] = "Ty Địch: Lệnh %dest không được sử dụng 1 loại bài trong lượt này.",
 	["@sidi-skill"] = "Ty Địch: Lệnh 1 kỹ năng của %dest vô hiệu trong lượt này.",
+	
+	["sidi_limit"] = "Ty Địch",
+	["sidi_invalidity"] = "Ty Địch",
+	["log_BasicCard"] = "Cơ bản",
+	["log_EquipCard"] = "Trang bị",
+	["log_TrickCard"] = "Công cụ",
 
 
 	["#liaohua"] = "Lịch Tận Thương Tang",

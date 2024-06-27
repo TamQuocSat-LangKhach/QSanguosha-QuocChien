@@ -10,13 +10,13 @@ return {
 	["illustrator:sakura"] = "47194043",
 
 	["fengyin"] = "封印",
-	[":fengyin"] = "当你于出牌阶段内使用的【杀】对与你势力不同的目标角色造成伤害时，若其有副将的武将牌，你可以防止此伤害，然后令该角色选择一项：1、弃置装备区里的所有牌并失去1点体力；2、移除副将的武将牌。\n每回合限一次。",
+	[":fengyin"] = "Một lần trong giai đoạn ra bài, khi bạn gây sát thương cho mục tiêu của [Sát], nếu họ có thế lực xác định khác với bạn (bạn có thể mở tướng này để xác định thế lực) và có Phó tướng, bạn có thể chặn sát thương này, lệnh mục tiêu chọn 1 mục:\n1. Nếu họ có trang bị, họ bỏ toàn bộ bài trong vùng Trang Bị và mất 1 máu.\n2. Họ loại bỏ Phó tướng.",
 	["@fengyin_put"] = "你可以发动“封印”，你可以将一张牌置于牌堆顶",
 	["fengyin:discard"] = "弃置装备区里的所有牌并失去1点体力",
 	["fengyin:remove"] = "移除副将的武将牌",
 
 	["jiechu"] = "解除",
-	[":jiechu"] = "结束阶段开始时，若于此回合内有角色明置、暗置或移除了武将牌，你可以变更副将，然后摸X张牌（X为明置、暗置或移除武将牌的次数）。",
+	[":jiechu"] = "Khi bắt đầu giai đoạn kết thúc, nếu có người đã mở/úp/đổi tướng trong lượt này, bạn có thể rút X lá (X là số lần mở/úp/đổi tướng trong lượt này), sau đó bạn có thể đổi phó tướng.",
 	["@jiechu_times"] = "解除",
 
 	----C002
@@ -30,7 +30,7 @@ return {
 	["illustrator:hinagiku"] = "official pics",
 
     ["jiandao"] = "剑道",
-    [":jiandao"] = "每当你使用【杀】指定一名目标角色时，你可以选择一项：\n1、令与其手牌数相同的所有其他角色成为额外目标；\n2、令与其装备区的牌的张数相同的所有其他角色成为额外目标。\n每回合限一次。",
+    [":jiandao"] = "Một lần trong lượt mỗi người, sau khi bạn chỉ định 1 mục tiêu duy nhất cho [Sát], bạn có thể chọn 1 mục:\n1. Lệnh tất cả người khác có số bài trên tay bằng với mục tiêu trở thành mục tiêu của [Sát] này;\n2. Lệnh tất cả người khác có là trong vùng trang bị bằng với mục tiêu trở thành mục tiêu của [Sát] này.",
     ["jiandao:hand"] = " 手牌数相等的其他角色",
     ["jiandao:equip"] = "装备牌数相等的其他角色",
 
@@ -71,7 +71,7 @@ return {
 	-- [":wushu"] = "每当你的黑色牌因判定而置入弃牌堆时，你可以将之交给一名角色。",
 
 	["mizou"] = "迷走",
-	[":mizou"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ tất cả bài trên tay (tối thiểu 1), lệnh tất cả người cùng thế lực với bạn rút 1 lá;\n▷ Nếu không có người khác có cùng thế lực với bạn, bạn rút thêm 1 lá.",
+	[":mizou"] = "Một lần trong giai đoạn ra bài, nếu bạn có bài trên tay, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn bỏ tất cả bài trên tay;\n- Bạn lệnh tất cả người cùng thế lực với bạn rút 1 lá;\n▷ Nếu không có người khác có cùng thế lực với bạn, bạn rút thêm 1 lá.",
 	["@mizou-targetchoose"] = "请选择一名与你势力相同的其他角色",
 
 	["duhun"] = "度魂",
@@ -87,16 +87,16 @@ return {
 	["cv:suiseiseki"] = "桑谷夏子",
 	["illustrator:suiseiseki"] = "43012104",
 
-	["shuimeng"] = "水梦",
-	[":shuimeng"] = "出牌阶段限一次，你可以弃置X张手牌并指定一名角色，若如此做，你令其摸X张牌（X为至少为2的变量）。",
+	["shuimeng"] = "Thủy Mộng",
+	[":shuimeng"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ X lá trên tay và chọn 1 người, lệnh họ rút Y lá (X tối thiểu 2, Y bằng X).",
 	["shuimeng_discard"] = "请弃置两张牌发动“水梦”",
 	["shuimeng_discard_any"] = "请弃置至少两张牌发动“水梦”",
 
-	["rosesuiseiseki"] = "蔷薇",
-	[":rosesuiseiseki"] = "主将技，每当你使用“水梦”时，可以将你的副将牌暗置，若如此做，你不能明置副将直到你的下个回合开始，然后此次使用“水梦”的弃牌消耗改为2，X改为该角色的手牌数（至多为5）。",
+	["rosesuiseiseki"] = "Tường Vi",
+	[":rosesuiseiseki"] = "Chủ tướng kỹ: Khi bạn phát động »Thủy Mộng«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa mô tả lần phát động »Thủy Mộng« này X bằng 2, Y là số lá trên tay họ, tối đa 5",
 
-	["meijiesuiseiseki"] = "媒戒",
-	[":meijiesuiseiseki"] = "副将技，锁定技，若你的主将未被移出游戏，你的手牌上限+1。",
+	["meijiesuiseiseki"] = "Môi Giới",
+	[":meijiesuiseiseki"] = "Phó tướng kỹ, Tỏa định kỹ: Nếu bạn có chủ tướng, giới hạn trữ bài của bạn +1.",
 
 	----C006
 	["suigintou"] = "Suigintou ", 
@@ -108,14 +108,14 @@ return {
 	["cv:suigintou"] = "田中理惠",
 	["illustrator:suigintou"] = "56610300",
 
-	["mingming"] = "冥冥",
-	[":mingming"] = "出牌阶段，你可以弃置两张相同花色的黑色手牌，若如此做，视为你使用一张【万箭齐发】。",
+	["mingming"] = "Minh Minh",
+	[":mingming"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 2 lá Đen trên tay có cùng chất thành [Vạn Tiễn Tề Phát].",
 
-	["rosesuigintou"] = "蔷薇",
-	[":rosesuigintou"] = "主将技，每当你使用“冥冥”时，可以将你的副将牌暗置，若如此做，你不能明置副将直到你的下个回合开始，然后此次使用“冥冥”的弃牌消耗改为1张黑色手牌。",
+	["rosesuigintou"] = "Tường Vi",
+	[":rosesuigintou"] = "Chủ tướng kỹ: Khi bạn phát động »Minh Minh«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa yêu cầu của lần phát động »Minh Minh« này thành 1 lá Đen trên tay.",
 
-	["meijiesuigintou"] = "媒戒",
-	[":meijiesuigintou"] = "副将技，锁定技，若你的主将未被移出游戏，“冥冥”的弃牌消耗改为两张黑色手牌。",	
+	["meijiesuigintou"] = "Môi Giới",
+	[":meijiesuigintou"] = "Phó tướng kỹ, Tỏa định kỹ: Nếu bạn có chủ tướng, sửa yêu cầu phát động »Minh Minh« thành 2 lá Đen trên tay.",	
 
 	----C007
 	["shinku"] = "Shinku", 
@@ -127,14 +127,14 @@ return {
 	["cv:shinku"] = "沢城みゆき",
 	["illustrator:shinku"] = "25865657",
 
-	["heli"] = "荷莉",
-	[":heli"] = "出牌阶段，你可以弃置X张红色手牌并指定一名其他角色（X为该角色的体力值，且至少为1），若如此做，你对其造成1点伤害。若其因受到此伤害而进入濒死状态，当此濒死结算结束后，“荷莉”于此回合内无效。",
+	["heli"] = "Hà Lị",
+	[":heli"] = "Giai đoạn ra bài, bạn có thể bỏ X lá Đỏ và chọn 1 người khác (X là số máu của họ), bạn gây 1 sát thương cho họ;\n▶ Khi họ tiến vào trạng thái hấp hối do kỹ năng này gây ra, lệnh kỹ năng này vô hiệu trong lượt này.",
 
-	["roseshinku"] = "蔷薇",
-	[":roseshinku"] = "主将技，每当你使用“荷莉”时，可以将你的副将牌暗置，若如此做，你不能明置副将直到你的下个回合开始，然后此次使用“荷莉”的弃牌消耗改为1张红色手牌。",
+	["roseshinku"] = "Tường Vi",
+	[":roseshinku"] = "Chủ tướng kỹ: Khi bạn phát động »Hà Lị«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa yêu cầu của lần phát động »Minh Minh« này thành bỏ 1 lá Đỏ trên tay.",
 
-	["meijieshinku"] = "媒戒",
-	[":meijieshinku"] = "副将技，锁定技，若你的主将未被移出游戏，“荷莉”的弃牌消耗改为X张手牌。",
+	["meijieshinku"] = "Môi Giới",
+	[":meijieshinku"] = "Phó tướng kỹ, Tỏa định kỹ: Nếu bạn có chủ tướng, sửa yêu cầu phát động »Minh Minh« thành bỏ X lá trên tay.",
 	
 	----C008
 	["akari"] = "Akari Akaza", 
@@ -163,13 +163,13 @@ return {
 	["illustrator:t_kyouko"] = "41391831",
 
 	["baozou"] = "暴走",
-	[":baozou"] = "每当你使用【杀】对目标角色造成伤害后，你可以弃置一张牌，然后翻开牌堆顶牌，若为【杀】，你可以视为使用之（不计入出牌阶段使用【杀】次数限制）；若不为【杀】，你获得之。",
+	[":baozou"] = "Sau khi bạn gây sát thương cho mục tiêu của [Sát], bạn có thể bỏ 1 lá và lật lá trên đầu chồng bài, nếu lá đó là:\n* [Sát]: Bạn có thể sử dụng lá này;\n* Không phải [Sát]: Bạn thu lấy lá đó.",
 	["@baozou_discard"] = "你可以弃置一张牌，发动“暴走”",
 	["@baozou"] = "“暴走”发动，你可以使用此【杀】",
 	["~baozou"] = "请选择目标角色->点击【确定】",
 
 	["ziwo"] = "自我",
-	[":ziwo"] = "锁定技，其他角色于你的回合内不能明置其武将牌。",
+	[":ziwo"] = "Tỏa định kỹ: Trong lượt của bạn: Người khác không thể mở tướng.",
 	
 	----C010
 	["tsukasa"] = "Tsukasa Hiiragi", 
@@ -181,11 +181,11 @@ return {
 	["cv:tsukasa"] = "中原麻衣",
 	["illustrator:tsukasa"] = "45832131",
 
-	["zhiyu"] = "治愈",
-	[":zhiyu"] = "出牌阶段限一次，你可以弃置两张手牌并指定一名已受伤的与你势力相同的其他角色，然后你与其各回复1点体力。",
+	["zhiyu_tsukasa"] = "Trị Dũ",
+	[":zhiyu_tsukasa"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người có cùng thế lực với bạn và đang bị thương, bạn và họ hồi 1 máu.",
 
-	["maoshi"] = "冒失",
-	[":maoshi"] = "每当你失去装备区里的牌时，你可以摸两张牌。",
+	["maoshi"] = "Mạo Thất",
+	[":maoshi"] = "Sau khi bạn mất bài trong vùng trang bị, bạn rút 2 lá.",
 	
 	----C011
 	["kagami"] = "Kagami Hiiragi", 
@@ -198,10 +198,10 @@ return {
 	["illustrator:kagami"] = "45832131",
 
 	["tsukkomi"] = "突込",
-	[":tsukkomi"] = "每当你需要使用一张【杀】或【无懈可击】时，你可以明置此武将牌，然后视为你使用之。每阶段限一次。",
+	[":tsukkomi"] = "Một lần trong 1 giai đoạn, khi bạn cần sử dụng [Sát]/[Vô Giải Khả Kích], nếu tướng này đang úp, bạn có thể mở tướng này, xem như sử dụng lá đó.",
 
 	["aolin"] = "傲凛",
-	[":aolin"] = "每当你使用的【杀】对目标角色造成伤害后，若你的武将牌均明置，你可以将此武将牌暗置之，然后摸一张牌。",
+	[":aolin"] = "Sau khi bạn gây sát thương cho mục tiêu của [Sát], nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này và rút 1 lá.",
 
 	----C012
 	["konata"] = "Konata Izumi", 
@@ -214,11 +214,11 @@ return {
 	["illustrator:konata"] = "official pics",
 
 	["xipin"] = "惜贫",
-	[":xipin"] = "每当你需要使用或打出一张【闪】时，你可以令所有其他有手牌的角色依次选择是否交给你一张手牌，若没有角色选择交给你一张手牌，视为你使用了一张【闪】。",
+	[":xipin"] = "Khi bạn được yêu cầu sử dụng/đánh ra [Thiểm], bạn có thể yêu cầu tất cả người khác giao cho bạn 1 lá;\n▷ Nếu không có ai giao bài cho bạn, bạn xem như đã sử dụng/đánh ra 1 [Thiểm].",
 	["@xipin_give"] = "请选择一张手牌，或取消",
 
 	["zhaihun"] = "宅魂",
-	[":zhaihun"] = "弃牌阶段结束时，你攻击范围内的其他角色可以依次获得一张此阶段内因弃置而进入弃牌堆的牌，每有一名角色以此法获得其中的红色牌时，你回复1点体力。",
+	[":zhaihun"] = "Khi kết thúc giai đoạn bỏ bài, những người khác trong tầm đánh của bạn có thể thu lấy 1 lá đã bị bỏ trong giai đoạn này;\n▶ Sau khi 1 người thế lực xác định khác bạn thu lấy lá Đỏ bởi kỹ năng này, bạn hồi 1 máu.",
 	
 	----C013
 	["ika"] = "Ika Musume", 
@@ -231,7 +231,7 @@ return {
 	["illustrator:ika"] = "22329355",
 
 	["qinlve"] = "侵略",
-	[":qinlve"] = "你可以跳过出牌阶段，然后与此回合内未以此法指定过的一名其他角色拼点。若你赢，视为对其使用一张【杀】，然后你可以重复此流程。",
+	[":qinlve"] = "Bạn có thể bỏ qua giai đoạn ra bài và đấu điểm với 1 người khác chưa bị đấu điểm bởi kỹ năng này trong lượt này, nếu bạn thắng, xem như bạn sử dụng 1 [Sát] với họ và bạn có thể lặp lại quá trình này.",
 	["@qinlve_target"] = "你可以指定一名其他角色发动“侵略”",
 	
 	----C014
@@ -265,13 +265,13 @@ return {
 	["cv:saki"] = "植田佳奈",
 	["illustrator:saki"] = "4526786",
 
-	["lingshang"] = "Lĩnh Thượng (Rinshan)",
+	["lingshang"] = "Rinshan",
 	[":lingshang"] = "Sau bạn nhận được bài, bạn có thể bỏ X lá trên tay có cùng chất (X là 4 - Số lá có cùng chất tương ứng trong vùng trang bị), bạn nhận 1 [Kan] và rút 1 lá.",
 	["@lingshang"] = "你可以弃置X张花色相同的牌发动“岭上”",
 	["~lingshang"] = "选择X张花色相同的牌→点击确定",
 	["@gang"] = "杠",
 
-	["kaihua"] = "Khai Hoa (Kaihou)",
+	["kaihua"] = "Kaihou",
 	[":kaihua"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 [Kan] và chọn tùy ý số người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 trang bị;\n2. Lệnh bạn hồi 1 máu;\n3. Lệnh bạn gây cho họ 1 sát thương.",
 	["@kaihua-targetchoose"] = "请选择任意数量的其他角色作为“开花”的目标",
 	["@kaihua_pass"] = "受到“开花”的影响，你需要选择一张装备牌并点击“确定”，或点“取消”选择以下一项：<br />1. %src 回复1点体力<br />2. %src 对你造成1点伤害",
@@ -326,12 +326,12 @@ return {
 	["illustrator:koromo"] = "8759553",
 	
 	["kongyun"] = "Khống Vận",
-	[":kongyun"] = "• Trước khi phán xét Đỏ của 1 người có hiệu lực, bạn có thể đánh ra 1 lá trên tay để hoán đổi kết quả phán xét đó.\n• Trước khi phán xét Đen của 1 người có hiệu lực, bạn có thể mở lá dưới đáy chồng bài rút và hoán đổi kết quả phán xét đó.",
+	[":kongyun"] = "Trước khi phán xét của 1 người có hiệu lực, nếu kết quả phán xét có màu:\n* Đỏ: Bạn có thể đánh ra 1 lá trên tay để hoán đổi kết quả phán xét đó;\n* Đen: Bạn có thể mở lá dưới đáy chồng bài rút và hoán đổi kết quả phán xét đó.",
 	["@kongyun-card"] = CommonTranslationTable["@askforretrial"],
 	["~kongyun"] = "选择一张手牌→点击确定",
 
 	["laoyue"] = "Lao Nguyệt",
-	[":laoyue"] = "Ngoài lượt của bạn, khi bạn cần sử dụng/đánh ra bài cơ bản, bạn có thể xem 2 lá dưới đáy chồng bài rút, sau đó bạn có thể chọn 1 mục:\n1. Bạn sử dụng/đánh ra lá cơ bản có tên tương ứng trong đó;\n2. Hoán đổi chúng với 2 lá trên tay bạn;\n3. Hoán đổi chúng với 2 lá trên đầu chồng bài rút.",
+	[":laoyue"] = "Ngoài lượt của bạn, khi bạn được yêu cầu sử dụng/đánh ra bài cơ bản, bạn có thể xem 2 lá dưới đáy chồng bài rút, sau đó bạn có thể chọn 1 mục:\n1. Bạn sử dụng/đánh ra lá cơ bản có tên tương ứng trong đó;\n2. Hoán đổi chúng với 2 lá trên tay bạn;\n3. Hoán đổi chúng với 2 lá trên đầu chồng bài rút.",
 	["@laoyue-put"] = "请选择两张手牌用于替换牌堆底的两张牌",
 	["laoyue:use"] = "使用或打出",
 	["laoyue:put"] = "用两张手牌替换",

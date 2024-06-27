@@ -83,6 +83,7 @@ config = {
 		"Overseas",
 		"Removed",
 		"LangKhach",
+		"Moesen",
 		"Test",
 		"JiangeDefense"
 	},

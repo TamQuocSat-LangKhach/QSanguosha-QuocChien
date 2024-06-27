@@ -1,5 +1,5 @@
 return {
-	["moesen"] = "萌战MOD",
+	["moesen"] = "Saimoe",
 
 	----A001
 	["madoka"] = "Kaname Madoka", 
