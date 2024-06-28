@@ -1231,11 +1231,11 @@ void ZhiyuTsukasaCard::onEffect(const CardEffectStruct &effect) const
     recover.card = this;
     recover.who = effect.from;
 
-    QList<ServerPlayer *> targets;
-    targets << effect.from << effect.to;
-    room->sortByActionOrder(targets);
-    foreach(ServerPlayer *target, targets)
-        room->recover(target, recover, false);
+    room->recover(effect.to, recover, false);
+    if (!isBlack())
+    {
+        room->recover(effect.from, recover, false);
+    }
 }
 
 class ZhiyuTsukasa : public ViewAsSkill
@@ -1723,7 +1723,7 @@ public:
         {
             CardUseStruct use = data.value<CardUseStruct>();
             if (!TriggerSkill::triggerable(use.from)) return QStringList();
-            if (use.to.length() > 0 && use.from == player && use.card != NULL && use.card->isKindOf("Slash"))
+            if (use.to.length() > 0 && use.from == player && use.card != NULL && use.card->isKindOf("Slash") && use.index == 0)
             {
                 if (player->hasFlag("hadChoosedforecastWillDamage") && player->hasFlag("hadChoosedforecastWontDamage"))
                     return QStringList();

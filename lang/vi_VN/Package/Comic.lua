@@ -163,7 +163,7 @@ return {
 	["illustrator:t_kyouko"] = "41391831",
 
 	["baozou"] = "暴走",
-	[":baozou"] = "Sau khi bạn gây sát thương cho mục tiêu của [Sát], bạn có thể bỏ 1 lá và lật lá trên đầu chồng bài, nếu lá đó là:\n* [Sát]: Bạn có thể sử dụng lá này;\n* Không phải [Sát]: Bạn thu lấy lá đó.",
+	[":baozou"] = "Sau khi bạn gây sát thương cho mục tiêu của [Sát], bạn có thể bỏ 1 lá và lật lá trên đầu chồng bài rút, nếu lá đó là:\n* [Sát]: Bạn có thể sử dụng lá này;\n* Không phải [Sát]: Bạn thu lấy lá đó.",
 	["@baozou_discard"] = "你可以弃置一张牌，发动“暴走”",
 	["@baozou"] = "“暴走”发动，你可以使用此【杀】",
 	["~baozou"] = "请选择目标角色->点击【确定】",
@@ -182,7 +182,7 @@ return {
 	["illustrator:tsukasa"] = "45832131",
 
 	["zhiyu_tsukasa"] = "Trị Dũ",
-	[":zhiyu_tsukasa"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người có cùng thế lực với bạn và đang bị thương, bạn và họ hồi 1 máu.",
+	[":zhiyu_tsukasa"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người khác có cùng thế lực với bạn và đang bị thương, lệnh họ hồi 1 máu, sau đó nếu bạn đã bỏ ít nhất 1 lá đỏ, bạn hồi 1 máu.",
 
 	["maoshi"] = "Mạo Thất",
 	[":maoshi"] = "Sau khi bạn mất bài trong vùng trang bị, bạn rút 2 lá.",
@@ -245,7 +245,7 @@ return {
 	["illustrator:toki"] = "27195089",
 
 	["yujian"] = "Dự Kiến",
-	[":yujian"] = "Giai đoạn ra bài, sau khi bạn xác định mục tiêu của [Sát], bạn dự đoán 1 mục mà chưa chọn trong lượt này:\n1. [Sát] này có gây sát thương;\n2. [Sát] này không gây sát thương;\n▶ Sau khi kết toán xong [Sát] này, nếu dự đoán của bạn là đúng, bạn rút 2 lá.",
+	[":yujian"] = "Sau khi bạn xác định mục tiêu của [Sát], bạn dự đoán 1 mục mà chưa chọn trong lượt này:\n1. [Sát] này có gây sát thương;\n2. [Sát] này không gây sát thương;\n▶ Sau khi kết toán xong [Sát] này, nếu dự đoán của bạn là đúng, bạn rút 2 lá.",
 	["forecastWillDamage"] = "此【杀】造成伤害",
 	["forecastWontDamage"] = "此【杀】未造成伤害",
 	["$YujianAnnounce"] = "%from 发动了“<font color=\"yellow\"><b>预见</b></font>”,声明了 %arg",

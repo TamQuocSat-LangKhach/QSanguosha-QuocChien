@@ -112,8 +112,17 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
         }
     }
     desc.append(QString("<font color=%1>%2</font>").arg(inToolTip ? Config.SkillDescriptionInToolTipColor.name() : Config.SkillDescriptionInOverviewColor.name()).arg(des_src));
+
+    desc.replace("->", "▷");
+    desc.replace("=>", "▶");
+    desc.replace("**", "•");
+    desc.replace(">>", "»");
+    desc.replace("<<", "«");
+    desc.replace(">=", "≥");
+    desc.replace("<=", "≤");
     desc.replace(" < ", " &lt; ");
     desc.replace(" > ", " &gt; ");
+
     desc.replace("\n", "<br/>");
     desc.replace("kỹ năng này", "»" + Sanguosha->translate(skill_name) + "«");
     return desc;

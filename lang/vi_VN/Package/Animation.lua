@@ -45,13 +45,13 @@ return {
 	["illustrator:s_kyouko"] = "38241810",
 
 	["yingqiang"] = "Anh Thương",
-	[":yingqiang"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng ít nhất 2 lá khác chất thành [Sát] không giới hạn khoảng cách;\n▶ Dựa theo chất của những lá đã đem sử dụng bằng kỹ năng này:\n- BÍCH: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu;\n- CƠ: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ);\n- TÉP: Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận;\n- RÔ: Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
+	[":yingqiang"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng ít nhất 2 lá khác chất thành [Sát] không giới hạn khoảng cách;\n▶ Dựa theo chất của những lá đã đem sử dụng bằng kỹ năng này:\n- BÍCH: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu;\n- CƠ: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ);\n- TÉP: [Sát] này nhận hiệu quả của [Thanh Công Kiếm];\n- RÔ: Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
 	["yingqiang_spade"] = "Anh Thương (BÍCH)",
 	[":yingqiang_spade"] = "Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu.",
 	["yingqiang_heart"] = "Anh Thương (CƠ)",
 	[":yingqiang_heart"] = "Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ, tối đa 5).",
 	["yingqiang_club"] = "Anh Thương (TÉP)",
-	[":yingqiang_club"] = "Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
+	[":yingqiang_club"] = "[Sát] này nhận hiệu quả của [Thanh Công Kiếm]",
 	["yingqiang_diamond"] = "Anh Thương (RÔ)",
 	[":yingqiang_diamond"] = "Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
 

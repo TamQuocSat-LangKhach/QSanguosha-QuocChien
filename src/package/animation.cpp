@@ -229,24 +229,21 @@ public:
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         CardUseStruct use = data.value<CardUseStruct>();
-        if (use.from && use.from->isAlive() && use.from == player && use.card && use.card->getSkillName() == "yingqiang")
-        {
-            //room->broadcastSkillInvoke("yingqiang");//the broadcart is written here
-            foreach (int cardid, use.card->getSubcards())
-                if (Sanguosha->getCard(cardid)->getSuit() == Card::Club)
-                    return QStringList(objectName());
+        if (use.from && use.from->isAlive() && use.from == player && use.card && use.card->getSkillName() == "yingqiang") {
+            ServerPlayer *target = use.to.at(use.index);
+            if (target)
+                foreach (int cardid, use.card->getSubcards())
+                    if (Sanguosha->getCard(cardid)->getSuit() == Card::Club)
+                        return QStringList(objectName() + "->" + target->objectName());
         }
         return QStringList();
     }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *target, QVariant &data, ServerPlayer *) const
     {
-        room->notifySkillInvoked(player, "yingqiang");
+        room->notifySkillInvoked(target, "yingqiang");
         CardUseStruct use = data.value<CardUseStruct>();
-        foreach (ServerPlayer *p, use.to.toSet())
-        {
-            p->addQinggangTag(use.card);
-        }
+        target->addQinggangTag(use.card);
         return false;
     }
 };
@@ -263,7 +260,7 @@ public:
     virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
     {
         CardUseStruct use = data.value<CardUseStruct>();
-        if (use.from && use.from == player && player->isAlive() && use.card && use.card->getSkillName() == "yingqiang")
+        if (use.from && use.from == player && player->isAlive() && use.card && use.card->getSkillName() == "yingqiang" && use.index == 0)
             foreach (int cardid, use.card->getSubcards())
             if (Sanguosha->getCard(cardid)->getSuit() == Card::Diamond)
                 return QStringList(objectName());

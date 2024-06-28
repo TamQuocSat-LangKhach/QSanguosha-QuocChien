@@ -2684,7 +2684,7 @@ sgs.LoadTranslationTable{
 	["illustrator:sunhuan"] = "Thinking",
 	["designer:sunhuan"] = "Mộng Yểm Cuồng Triều",
 	["nizhan"] = "Nghịch Trảm",
-	[":nizhan"] = "Trước khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] với họ;\n▶ Sau khi bạn xác định mục tiêu của [Sát] này, ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
+	[":nizhan"] = "Trước khi kết thúc lượt của người khác, nếu bạn đã triệt tiêu lá bài do họ sử dụng trong lượt này hoặc bạn đã mất đi lá cuối cùng trên tay, bạn có thể chọn 1 mục:\n1. Bạn thu lấy 1 lá của họ;\n2. Bạn xem như sử dụng 1 [Sát] với họ, [Sát] này nhận hiệu quả của [Thanh Công Kiếm].",
 
 	["@nizhan-choose"] = "Nghịch Trảm: Chọn 1 hiệu ứng cho %dest",
 	["nizhan:extraction"] = "Thu 1 lá",

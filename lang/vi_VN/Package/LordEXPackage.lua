@@ -283,7 +283,7 @@ return {
     ["huaiyi:red"] = "Đỏ",
     ["huaiyi:black"] = "Đen",
     
-    ["disloyalty"] = "Dị",
+    ["&disloyalty"] = "Di",
 
 	["#test"] = "%arg",
 	

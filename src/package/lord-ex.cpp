@@ -3981,7 +3981,7 @@ void HuaiyiCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &) 
         if (source->isAlive() && to->isAlive() && !to->isNude()) {
             int card_id = room->askForCardChosen(source, to, "he", "huaiyi", false, Card::MethodNone);
             if (Sanguosha->getCard(card_id)->getTypeId() == Card::TypeEquip)
-                source->addToPile("disloyalty", card_id);
+                source->addToPile("&disloyalty", card_id);
             else {
                 CardMoveReason reason(CardMoveReason::S_REASON_EXTRACTION, source->objectName());
                 room->obtainCard(source, Sanguosha->getCard(card_id), reason, false);
@@ -4023,9 +4023,9 @@ public:
     virtual QStringList triggerable(TriggerEvent triggerEvent, Room *, ServerPlayer *player, QVariant &, ServerPlayer* &) const
     {
         if (!TriggerSkill::triggerable(player)) return QStringList();
-        if ((triggerEvent == DrawNCards && !player->getPile("disloyalty").isEmpty()) ||
+        if ((triggerEvent == DrawNCards && !player->getPile("&disloyalty").isEmpty()) ||
                 (triggerEvent == EventPhaseStart && player->getPhase() == Player::Finish
-                 && player->getPile("disloyalty").length() > player->getMaxHp())) {
+                 && player->getPile("&disloyalty").length() > player->getMaxHp())) {
             return QStringList(objectName());
         }
         return QStringList();
@@ -4051,7 +4051,7 @@ public:
     virtual bool effect(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         if (triggerEvent == DrawNCards)
-            data = data.toInt() + player->getPile("disloyalty").length();
+            data = data.toInt() + player->getPile("&disloyalty").length();
         else if (triggerEvent == EventPhaseStart)
             room->killPlayer(player);
         return false;
@@ -5337,7 +5337,7 @@ LordEXPackage::LordEXPackage()
 
     General *gongsunyuan = new General(this, "gongsunyuan", "careerist");
     gongsunyuan->addSkill(new Huaiyi);
-    sunchen->addSkill(new DetachEffectSkill("huaiyi", "disloyalty"));
+    sunchen->addSkill(new DetachEffectSkill("huaiyi", "&disloyalty"));
     gongsunyuan->addSkill(new Zisui);
     insertRelatedSkills("huaiyi", "#huaiyi-clear");
 

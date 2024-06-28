@@ -1,10 +1,13 @@
 return {
 	["keyCard"] = "Kiện",
-	[":keyCard"] = "• Không tiến hành phán xét ở giai đoạn phán xét đối với [Kiện].\n• Sau khi người có [Kiện] trong vùng phán xét nhận sát thương, người đó tiến hành phát xét; nếu kết quả có chất RÔ, đưa lá này vào chồng bài bỏ.\n• Khi lá [Kiện] rời khỏi vùng phán xét của 1 người, lệnh họ hồi 1 máu.",
+	[":keyCard"] = "• Không tiến hành phán xét ở giai đoạn phán xét đối với [Kiện].\n• Sau khi người có [Kiện] trong vùng phán xét nhận sát thương, người đó tiến hành phát xét; nếu kết quả có chất RÔ, đưa lá này vào chồng bài bỏ.\n• Sau khi lá [Kiện] rời khỏi vùng phán xét của 1 người, lệnh họ hồi 1 máu.",
 	["$KeyRecover"] = "%from đã hồi 1 máu vì [%arg] rời vùng phán xét",
 
+	["keyCard-global"] = "[Kiện]",
+	[":keyCard-global"] = "Công cụ thời gian:\n• Không tiến hành phán xét ở giai đoạn phán xét đối với [Kiện].\n• Sau khi người có [Kiện] trong vùng phán xét nhận sát thương, người đó tiến hành phát xét; nếu kết quả có chất RÔ, đưa lá này vào chồng bài bỏ.\n• Sau khi lá [Kiện] rời khỏi vùng phán xét của 1 người, lệnh họ hồi 1 máu.",
+
 	["lingdanCard"] = "Linh Đạn",
-	[":lingdanCard"] = "• Đặt [Linh Đạn] vào vùng phán xét của người khác.\n• Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải lá cơ bản có điểm từ 2~9, họ bỏ 2 lá; sau đó đưa lá này vào chồng bài bỏ.",
+	[":lingdanCard"] = "• Giai đoạn ra bài, đặt [Linh Đạn] vào vùng phán xét của người khác.\n• Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải lá cơ bản có điểm từ 2~9, họ bỏ 2 lá; sau đó đưa lá này vào chồng bài bỏ.",
 	["@Lingdan-discard"] = "[Linh Đạn] có hiệu quả, bỏ 2 lá",
 
 	----G001
@@ -18,7 +21,7 @@ return {
 	["illustrator:nanoha"] = "official pics",
 
 	["liepo"] = "Liệt Phá",
-	[":liepo"] = "Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn chọn 1 mục:\n1. Lệnh cho [Sát] này không thể bị hưởng ứng bởi [Thiểm];\n2. Lệnh sát thương gây cho mục tiêu này là sát thương phổ thông và +1 sát thương.",
+	[":liepo"] = "Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu có lá trong vùng phán xét, bạn chọn 1 mục:\n1. Lệnh cho [Sát] này không thể bị hưởng ứng bởi [Thiểm];\n2. Lệnh sát thương gây cho mục tiêu này là sát thương phổ thông và +1 sát thương.",
 	["cant_use_jink"] = "令该角色不能用【闪】抵消",
 	["change_damage_type"] = "令此【杀】对该角色造成的伤害改为普通伤害并+1",
 	["#LiepoBuff"] = "%from 的“<font color=\"yellow\"><b>烈破</b></font>”效果被触发，伤害从属性伤害改为普通伤害，增加至 %arg 点",
@@ -55,11 +58,11 @@ return {
 	["illustrator:hayate"] = "27716067",
 
 	["yetian"] = "Dạ Thiên",
-	[":yetian"] = "• Sau khi lá công cụ phi thời gian tiến vào chồng bài bỏ do kết toán sử dụng, nếu bạn đã sử dụng [Vô Giải Khả Kích] trong khi kết toán lá đó, bạn có thể đặt lá đó lên tướng này, gọi là [Thư].\n• Tỏa định kỹ, khi bắt đầu giai đoạn chuẩn bị, bạn thực hiện lần lượt:\n- Nếu bạn không có lá trên tay, bạn mất 1 máu;\n- Bạn thu lấy tất cả [Thư].",
+	[":yetian"] = "• Sau khi lá công cụ phổ thông tiến vào chồng bài bỏ do kết toán sử dụng, nếu bạn đã sử dụng [Vô Giải Khả Kích] trong khi kết toán lá đó, bạn có thể đặt lá đó lên tướng này, gọi là [Thư].\n• Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, nếu bạn có [Thư], bạn thực hiện lần lượt:\n- Nếu bạn không có lá trên tay, bạn mất 1 máu;\n- Bạn thu lấy tất cả [Thư].",
 	["book"] = "Thư",
 
 	["tianjian"] = "Thiên Kiếm",
-	[":tianjian"] = "Một lần trong lượt của mỗi người, khi bạn cần sử dụng công cụ phổ thông bất kì, bạn có thể chọn đặt chồng tướng hoặc chuyển hóa sử dụng tất cả bài trên tay (ít nhất 1), xem như bạn sử dụng lá đó.",
+	[":tianjian"] = "Một lần trong lượt của mỗi người, khi bạn cần sử dụng công cụ phổ thông bất kì, bạn có thể nhận trạng thái chồng tướng (nếu đang không chồng tướng) hoặc chuyển hóa sử dụng tất cả bài trên tay (ít nhất 1), xem như bạn sử dụng lá đó.",
 	["tianjianturn"] = "Thiên Kiếm",
 
 	----G004
@@ -73,17 +76,17 @@ return {
 	["illustrator:altria"] = "60405595",
 
 	["fengwang"] = "风王",
-	[":fengwang"] = "出牌阶段，若你没有“剑”，你可以将一张手牌扣置于你的武将牌上，称为“剑”；若你有“剑”，你可以获得你武将牌上的“剑”。\n每当你使用【杀】指定一名角色为目标后，该角色可以观看你的“剑”：若之为武器牌且你与其的距离不大于X（X为“剑”的攻击范围），你令其弃置一张牌，且其需连续使用两张【闪】才能抵消此【杀】；否则，你令此【杀】无效，并将“剑”置入弃牌堆。若其使用了两张【闪】抵消此【杀】，你将“剑”置入弃牌堆。\n锁定技，若你有“剑”，你的攻击范围无限，你使用的【杀】可以额外指定一个目标，且无视防具。\n锁定技，若你未发动过“断钢”，你的武器牌均视为【杀】。准备阶段开始时，弃置你已装备的武器牌。",
+	[":fengwang"] = "** Giai đoạn ra bài, nếu bạn:\n* Không có [Kiếm], bạn có thể đặt 1 lá trên tay úp lên tướng của bạn, gọi là [Kiếm];\n* Có [Kiếm], bạn có thể thu lấy [Kiếm].\n** Sau khi người khác trở thành mục tiêu của [Sát] do bạn sử dụng, họ có thể chọn xem [Kiếm] của bạn:\n* Nếu [Kiếm] này là Vũ khí và khoảng cách từ bạn đến họ <= tầm đánh của [Kiếm], bạn lệnh họ bỏ 1 lá và cần sử dụng 2 [Thiểm] để triệt tiêu [Sát] này;\n* Ngược lại: Đưa [Kiếm] vào chồng bài bỏ và lệnh [Sát] này không có hiệu quả với tất cả mục tiêu.\n** Tỏa định kỹ: Nếu bạn có [Kiếm]: [Sát] do bạn sử dụng không giới hạn tầm đánh, có thể chỉ định thêm 1 mục tiêu và nhận hiệu quả của [Thanh Công Kiếm].\n** Tỏa định kỹ: Nếu bạn chưa phát động >>Đoạn Cương<<: Tất cả Vũ khí trên tay bạn xem như [Sát]; khi bắt đầu giai đoạn chuẩn bị, bạn bỏ tất cả Vũ khí trong vùng trang bị.",
 	["#fengwang-filter"] = "风王",
 	["jian"] = "剑",
 	["#FengwangDoubtFailed"] = "%to 查看了 %from 的 “%arg” 的 “剑”，需要弃置一张牌并连续用两张【闪】才能抵消此【杀】",
 	["#FengwangDoubtSucceed"] = "%to 查看了 %from 的 “%arg” 的 “剑”，此【杀】无效并将 “剑” 置入弃牌堆",
 	["@fengwang-doubt-discard"] = "“剑”是武器牌并且攻击范围不小于其与你的距离，你需要弃置一张牌",
 
-	["duangang"] = "断钢",
-	[":duangang"] = "限定技，出牌阶段开始时，你可以令于此阶段内每次造成的伤害+X（X为你出牌阶段已造成的伤害总和），直到一名角色死亡。",
+	["duangang"] = "Đoạn Cương",
+	[":duangang"] = "Hạn định kỹ: Khi bắt đầu giai đoạn ra bài, bạn có thể phát động kỹ năng này;\n=>Trong giai đoạn này, nếu chưa có ai trận vong trong giai đoạn này, khi bạn gây sát thương, lệnh sát thương này +X (X là tổng số sát thương bạn đã gây ra trong giai đoạn này).",
 	["#DuangangBuff"] = "%from 的“<font color=\"yellow\"><b>断钢</b></font>”效果被触发，伤害从 %arg 点增加至 %arg2 点",
-	["@excalibur"] = "断钢",
+	["@excalibur"] = "Đoạn Cương",
 	["Excalibur"] = "Excalibur",
 
 	----G005
@@ -97,21 +100,21 @@ return {
 	["illustrator:t_rin"] = "53948782",
 
 	["canshi"] = "璨石",
-	[":canshi"] = "每当一名角色受到【杀】造成的伤害后，你可以弃置一张牌，然后你进行一次判定，若结果为：♥，其回复1点体力；♦，其摸两张牌；♣，伤害来源弃置两张牌；♠，伤害来源叠置；若如此做，且你的“宝石”中没有与判定牌花色相同的牌，你将判定牌置于你的武将牌上，称为“宝石”。",
+	[":canshi"] = "Sau khi 1 người nhận sát thương từ lá [Sát], bạn có thể bỏ 1 lá và tiến hành phán xét, nếu kết quả phán xét có chất:\n* CƠ: Họ hồi 1 máu;\n* RÔ: Họ rút 2 lá;\n* TÉP: Nguồn sát thương bỏ 2 lá;\n* BÍCH: Nguồn sát thương thay đổi trạng thái chồng tướng;\n▶ Sau khi phán xét này có hiệu lực, nếu bạn không có [Bảo Thạch] có cùng chất với kết quả phán xét, bạn đặt kết quả phán xét lên tướng này, gọi là [Bảo Thạch].",
 	["@canshi"] = "你可以弃置一张牌发动“璨石”",
 	["canshi_discard"] = "受到“璨石”的影响，请弃置两张牌",
 
 	["gem"] = "宝石",
 
 	["modan"] = "魔弹",
-	[":modan"] = "出牌阶段限一次，你可以将四张不同花色的“宝石”当一张【万箭齐发】使用。一名角色的判定牌生效前，你可以打出一张“宝石”替换之。",
+	[":modan"] = "• Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 4 [Bảo Thạch] khác chất với nhau thành [Vạn Tiễn Tề Phát].\n• Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Bảo Thạch] để thay đổi kết quả phán xét.",
 	["@modan-retrial"] = CommonTranslationTable["@askforretrial"],
 	["~modan"] = "选择一张“宝石”->点击确定",
 	["modanvoid"] = "魔弹",
 
 	----G006
-	["rika"] = "古手梨花", 
-	["&rika"] = "古手梨花", 
+	["rika"] = "Furude Rika", 
+	["&rika"] = "Furude Rika", 
 	["#rika"] = "无尽轮回", 
 	["#&rika"] = "寒蝉鸣泣之时", 
 	["~rika"] = "咪啪~", 
@@ -120,17 +123,17 @@ return {
 	["illustrator:rika"] = "27337974",
 
 	["guiyuan"] = "鬼渊",
-	[":guiyuan"] = "其他角色的准备阶段开始时，你可以将你与其的副将的武将牌横置，然后声明两种基本牌使该角色的两种基本牌的效果交换，直到回合结束。若如此做，你可以选择一项：“皆杀”或“祭囃”：\n“皆杀”：限定技，你可以令该效果适用于所有角色，直到回合结束。\n“祭囃”：限定技，你可以令该效果适用于所有副将的武将牌横置的角色，直到回合结束。",
-	["minagoroshi"] = "皆杀",
-	["matsubayashi"] = "祭囃",
-	["guiyuan:Slash"] = "杀",
-	["guiyuan:Jink"] = "闪",
-	["guiyuan:Peach"] = "桃",
-	["guiyuan:Analeptic"] = "酒",
+	[":guiyuan"] = "Khi bắt đầu giai đoạn chuẩn bị của người khác, nếu bạn và họ không trong trạng thái xích, bạn có thể lệnh bạn vào họ tiến vào trạng thái xích, sau đó hoán đổi 2 danh bài cơ bản của họ trong lượt này;-> Bạn có thể chọn 1 trong 2 mục sau, mỗi mục tối đa 1 lần trong ván đấu:\n1. \"Minagoroshi\": Áp dụng hiệu ứng hoán đổi danh bài với tất cả mọi người trong lượt này;\n2. \"Matsubayashi\":  Áp dụng hiệu ứng hoán đổi danh bài với tất cả người trong trạng thái xích.",
+	["minagoroshi"] = "Minagoroshi",
+	["matsubayashi"] = "Matsubayashi",
+	["guiyuan:Slash"] = "Sát",
+	["guiyuan:Jink"] = "Thiểm",
+	["guiyuan:Peach"] = "Đào",
+	["guiyuan:Analeptic"] = "Tửu",
 	["#GuiyuanSwapEffect"] = "%from 发动了“<font color=\"yellow\"><b>鬼渊</b></font>”，令 %to 的【%arg】与【%arg2】效果交换，直到回合结束。",
 
 	["zuimie"] = "罪灭",
-	[":zuimie"] = "每当一名角色使用【杀】时，你可以重置副将的武将牌，然后令该角色的装备区里的牌失效，直到回合结束。",
+	[":zuimie"] = "Khi 1 người sử dụng [Sát], bạn có thể thoát khỏi trạng thái xích, lệnh họ vô hiệu tất cả lá trong vùng trang bị cho đến hết lượt này.",
 
 	----G007
 	["rena"] = "龙宫礼奈", 
@@ -143,39 +146,39 @@ return {
 	["illustrator:rena"] = "52365142",
 
 	["chaidao"] = "柴刀",
-	[":chaidao"] = "每当你使用【杀】对一名角色造成伤害时，你可以弃置你装备区里的武器牌，令此伤害+1。\n每当你受到其他角色造成的伤害时，若你的装备区里有武器牌，你可以防止此伤害，改为其视为对你使用一张【借刀杀人】。",
+	[":chaidao"] = "Nếu bạn có vũ khí trong vùng trang bị:\n• Khi bạn gây sát thương bằng lá [Sát], bạn có thể bỏ vũ khí trong vùng trang bị của bạn, lệnh sát thương này +1.\n•Khi bạn nhận sát thương, bạn có thể chặn sát thương này, xem như người gây sát thương sử dụng [Tá Đao Sát Nhân] với bạn.",
 	["@chaidao_add_damage"] = "你可以弃置一张装备区里的武器牌，发动“<font color=\"yellow\"><b>柴刀</b></font>”，使此伤害+1",
 	["#ChaidaoBuff"] = "%from 的“<font color=\"yellow\"><b>柴刀</b></font>”效果被触发，伤害增加至 %arg 点",
 	["@chaidao_choose"] = "请选择【借刀杀人】的目标角色",
 
 	----G008
-	["haruka"] = "天海春香", 
-	["&haruka"] = "天海春香", 
+	["haruka"] = "Amami Haruka", 
+	["&haruka"] = "Amami Haruka", 
 	["#haruka"] = "阁下", 
-	["#&haruka"] = "偶像大师", 
+	["#&haruka"] = "THE iDOLM@STER", 
 	["~haruka"] = "", 
 	["designer:haruka"] = "hmqgg",
 	["cv:haruka"] = "中村繪里子",
 	["illustrator:haruka"] = "41139423",
 
-	["yuanqi"] = "元气",
-	[":yuanqi"] = "准备阶段开始时，你可以将其他角色判定区里的一张牌移动到你的判定区里。若如此做，你本回合的判定阶段视为出牌阶段进行。",
+	["yuanqi"] = "Nguyên Khí",
+	[":yuanqi"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể di chuyển 1 lá trong vùng phán xét của người khác vào vùng phán xét của bạn, lệnh thay đổi giai đoạn phán xét của bạn trong lượt này thành giai đoạn ra bài.",
 	
-	["daihei"] = "呆黑",
-	[":daihei"] = "锁定技，结束阶段开始时，若你区域里的牌为全场最多（或之一）且你处于“平置状态”，你摸三张牌，然后将你的武将牌叠置。",
+	["daihei"] = "Ngai Hắc",
+	[":daihei"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn kết thúc, nếu bạn có nhiều bài nhất trong vùng chơi và bạn đang không chồng tướng, bạn rút 3 lá và thay đổi trạng thái chồng tướng.",
 
 	----G009
 	["miki"] = "星井美希", 
 	["&miki"] = "星井美希", 
 	["#miki"] = "星光", 
-	["#&miki"] = "偶像大师", 
+	["#&miki"] = "THE iDOLM@STER", 
 	["~miki"] = "", 
 	["designer:miki"] = "hmqgg",
 	["cv:miki"] = "長谷川明子",
 	["illustrator:miki"] = "55208786",
 
 	["yonglan"] = "慵懒",
-	[":yonglan"] = "出牌阶段，你可以将一张手牌当【乐不思蜀】对与你势力相同的一名角色使用，然后你可以令两名有手牌的角色拼点，视为赢的角色对没赢的角色使用一张【决斗】。",
+	[":yonglan"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá trên tay thành [Lạc Bất Tư Thục] với 1 người cùng thế lực với bạn (Có thể bao gồm bạn), sau đó lệnh 2 người có bài trên tay đấu điểm, người thắng xem như sử dụng 1 [Quyết Đấu] với người thua.",
 	["$yonglan"] = "",
 	["@yonglan"] = "你可以指定两名角色互相拼点",
 	["~yonglan"] = "选择两名角色（先选定的角色为拼点发起者）",
@@ -183,7 +186,7 @@ return {
 	["yonglanpindian"] = "慵懒",
 
 	["zhiyanmiki"] = "直言",
-	[":zhiyanmiki"] = "锁定技，结束阶段开始时，若你于此回合内跳过了至少一个阶段，你选择一项：摸一张牌，或弃置一名角色区域里的一张牌。",
+	[":zhiyanmiki"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn kết thúc, nếu bạn đã bỏ qua ít nhất 1 giai đoạn trong lượt này, bạn chọn 1 mục:\n1. Rút 1 lá;\n2. BỎ 1 lá trong vùng chơi của 1 người.",
 	["zhiyanmiki:draw"] = "摸一张牌",
 	["zhiyanmiki:discard"] = "弃置一名角色区域里的一张牌",
 	["#ZhiyanMikiDraw"] = "%from 发动了 “%arg”，摸了一张牌。",
@@ -200,10 +203,10 @@ return {
 	["illustrator:setsuna"] = "深崎暮人",
 
 	["gaoling"] = "高岭",
-	[":gaoling"] = "锁定技，你的手牌上限+2X。（X为你已损失的体力值）",
+	[":gaoling"] = "Tỏa định kỹ: Giới hạn trữ bài của bạn +2X (X là số máu đã mất của bạn)",
 
 	["chouchu"] = "踌躇",
-	[":chouchu"] = "若你的手牌数为奇数，你可以将一张牌当【闪】使用；若你的手牌数为偶数，每当一名角色受到【杀】造成的伤害后，你可以弃置一张红色手牌令其选择一项：回复1点体力，或将手牌补至三张。",
+	[":chouchu"] = "Nếu số lá trên tay bạn là:\n* Lẻ: Bạn có thể chuyển hóa sử dụng 1 lá thành [Thiểm];\n* Chẵn: Sau khi 1 người nhận sát thương bởi [Sát], bạn có thể bỏ 1 lá Đỏ, lệnh họ chọn 1 mục:\n1. Họ hồi 1 máu;\n2. Họ bổ sung bài trên tay tới 3 lá.",
 	["@chouchu-discard"] = "你可以弃置一张红色手牌，发动“踌躇”",
 	["supplementcards"] = "将手牌补至三张",
 	["chouchu:recover"] = "回复1点体力",
@@ -224,7 +227,7 @@ return {
 	[":bingshan"] = "Tỏa định kỹ: Khoảng cách từ người khác đến bạn +X (X là số máu bạn đã mất).",
 
 	["shenai"] = "深爱",
-	[":shenai"] = "出牌阶段限一次，你可以指定一名角色并弃置Y/2（向下取整）张牌，然后该角色摸Y张牌（至多为5）。（Y为该角色与你的距离）",
+	[":shenai"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người và bỏ X/2 lá (Làm tròn xuống), lệnh họ rút X lá (Tối đa 5) (X là khoảng cách giữa họ và bạn).",
 
 	----G012
 	["nagisa"] = "古河渚", 
@@ -237,11 +240,11 @@ return {
 	["illustrator:nagisa"] = "official pics",
 
 	["guangyu"] = "光玉",
-	[":guangyu"] = "每当你弃置的♥牌进入弃牌堆后，你可以将之置于一名角色的判定区，称为“键”。判定区有“键”的角色的判定阶段开始时，你可以将其判定区里的所有牌置入弃牌堆。",
+	[":guangyu"] = "** Sau khi lá CƠ của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể đặt lá đó vào vùng phán xét của tướng này, gọi là [Kiện].\n** Khi bắt đầu giai đoạn phán xét của 1 người có [Kiện] trong vùng phán xét, bạn có thể đưa tất cả trong vùng phán xét của họ vào chồng bài bỏ.",
 	["@guangyu-put"] = "请指定一名角色，将弃置的♥牌当“键”置于其判定区",
 
 	["yunzhu"] = "云渚",
-	[":yunzhu"] = "每当你回复1点体力后，你可以令与你势力相同的一名其他角色摸一张牌。",
+	[":yunzhu"] = "Sau khi bạn hồi máu, ứng với mỗi máu bạn đã hồi, bạn có thể lệnh 1 người khác cùng thế lực với bạn rút 1 lá.",
 	["yunzhu-invoke"] = "请指定与你势力相同的一名其他角色，令其摸一张牌",
 	
 	----G013
@@ -255,12 +258,12 @@ return {
 	["illustrator:tomoyo"] = "11283570",
 
 	["qiangqi"] = "强气",
-	[":qiangqi"] = "出牌阶段，你可以将一张非♥【杀】置于判定区，称为“键”，然后视为使用一张【杀】（不计入出牌阶段使用【杀】次数限制）。",
+	[":qiangqi"] = "Giai đoạn ra bài, bạn có thể đặt 1 lá [Sát] không phải chất CƠ vào vùng phán xét của bạn, gọi là [Kiện], sau đó xem như sử dụng 1 [Sát] (Không tính số lần sử dụng).",
 
 	["lianji"] = "连击",
-	[":lianji"] = "准备阶段开始时，你可以声明：“横扫”或“连踢”：\n横扫：此回合内你的【杀】对唯一目标造成伤害后，可以将你区域里的一张牌当无距离限制的【杀】使用，且不能指定上一个目标；\n连踢：此回合内你的【杀】未造成伤害时，你可以将你区域里的一张牌当不受出牌阶段使用【杀】次数限制的【杀】使用，且不能指定上一个目标。",
-	["lianti"] = "连踢",
-	["hengsao"] = "横扫",
+	[":lianji"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể chọn 1 hiệu ứng trong lượt này:\n1. \"Hoành Tảo\": Sau khi bạn gây sát thương cho mục tiêu duy nhất của [Sát], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi thành [Sát] không giới hạn tầm đánh, không thể chọn mục tiêu vừa nhận sát thương (Có tính giới hạn sử dụng [Sát]);\n2. \"Liên Kích\": Sau khi [Sát] của bạn bị triệt tiêu bởi [Thiểm], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi thành [Sát], không thể chọn mục tiêu vừa [Thiểm].",
+	["lianti"] = "Liên Kích",
+	["hengsao"] = "Hoành Tảo",
 	["liantieffect"] = "此回合内的【杀】未造成伤害时，可以将区域里的一张牌当不受出牌阶段使用【杀】次数限制的【杀】使用，且不能指定上一个目标。",
 	["hengsaoeffect"] = "此回合内的【杀】对唯一目标造成伤害后，可以将区域里的一张牌当无距离限制的【杀】使用，且不能指定上一个目标",
 	["@lianji-targetchoose"] = "请选择你的【杀】的目标",
@@ -278,14 +281,14 @@ return {
 	["illustrator:fuuko"] = "戌亥あちゅあちゅむち",
 	
 	["haixing"] = "海星",
-	[":haixing"] = "准备阶段开始时，你可以将任意数量的手牌交给其他角色，然后这些角色需交给你一张牌。若你以此法获得的牌数不少于2，你可以令一名角色回复1点体力。",
+	[":haixing"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể giao tùy ý bài trên tay cho tùy ý người khác, sau đó lệnh những người này giao cho bạn 1 lá, nếu số lá bạn đã nhận ≥ 2, bạn có thể lệnh 1 người hồi 1 máu.",
 	["@haixing-card"] = "请选择任意数量的卡牌交给一名角色，该技能可以于此阶段重复发动。",
 	["@haixing-back"] = "你需要还给风子一张牌。",
 	["haixing_recover"] = "请选择一名角色，令其回复一点体力。",
 	["~haixing"] = "选择一张牌->点击【确定】",
 	
 	["taozui"] = "陶醉",
-	[":taozui"] = "你可以跳过判定阶段和摸牌阶段，将一名角色判定区里的一张牌置入弃牌堆，然后将牌堆顶牌置于其判定区，称为“键”。",
+	[":taozui"] = "Bạn có thể bỏ qua giai đoạn phán xét và giai đoạn rút bài, đưa 1 lá trong vùng phán xét của 1 người vào chồng bài bỏ, sau đó đặt lá trên đầu chồng bài rút vào vùng phán xét của họ, gọi là [Kiện]",
 	["@taozui"] = "你可以跳过判定阶段和摸牌阶段发动“陶醉”",
 	["~taozui"] = "选择“陶醉”的目标角色→点击确定",
 
@@ -336,10 +339,10 @@ return {
 	["illustrator:n_rin"] = "2253949",
 
 	["pasheng"] = "怕生",
-	[":pasheng"] = "每当其他角色使用牌指定你为唯一目标时，若其判定区里有牌，你可以取消之。",
+	[":pasheng"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu bạn có lá trong vùng phán xét, hủy bỏ mục tiêu đối với bạn.",
 
 	["jiuzhu"] = "救助",
-	[":jiuzhu"] = "当一名角色处于濒死状态时，若其判定区里没有“键”，你可以将牌堆顶牌置于该角色的判定区，称为“键”。每当一名角色失去体力时，你可以将其判定区里的一张“键”置入弃牌堆。每当一张“键”进入弃牌堆时，你摸一张牌。",
+	[":jiuzhu"] = "• Sau khi 1 người thoát khỏi trạng thái hấp hối, nếu không có [Kiện] trong vùng phán xét của họ, bạn có thể đặt lá trên đầu chồng bài rút vào vùng phán xét của họ, gọi là [Kiện].\n• Khi 1 người có [Kiện] trong vùng phán xét mất máu, bạn có thể đưa lá [Kiện] trong vùng phán xét của họ vào chồng bài bỏ.\n• Khi 1 [Kiện] tiến vào chồng bài bỏ, bạn rút 1 lá.",
 	["#JiuzhuDraw"] = "%from 发动了“%arg”，摸了一张牌",
 	
 	----G018
@@ -353,11 +356,11 @@ return {
 	["illustrator:komari"] = "42699647",
 
 	["luoxuan"] = "螺旋",
-	[":luoxuan"] = "出牌阶段，你可以弃置一张【桃】或手牌里的一张装备牌并选择一名已受伤的角色，若如此做，你令该角色回复1点体力，然后你可以获得该角色装备区里的一张牌。",
+	[":luoxuan"] = "Giai đoạn ra bài, bạn có thể bỏ 1 [Đào] hoặc 1 trang bị trên tay và chọn 1 người đã bị thương, họ hồi 1 máu, sau đó bạn có thể thu lấy 1 lá trong vùng trang bị của họ.",
 	["luoxuan_get"] = "获得该角色装备区里的一张牌",
 	["luoxuan_give_up"] = "不获得",
 
 	["sidai"] = "丝带",
-	[":sidai"] = "限定技，你死亡时可以展示牌堆顶牌，然后将之置于一名其他角色的判定区，称为“键”。若此牌的类别为基本牌，该角色摸两张牌；若此牌的类别为锦囊牌，该角色回复1点体力；若此牌的类别为装备牌，该角色平置其武将牌并重置副将的武将牌。",
+	[":sidai"] = "Khi bạn trận vong, bạn có thể lật lá trên đầu chồng bài rút, sau đó đặt lá đó vào vùng phán xét của 1 người khác, gọi là [Kiện], nếu loại của lá đó là:\n* Cơ bản: Lệnh họ rút 2 lá;\n* Công cụ: Lệnh họ hồi 1 máu;\n* Trang bị: Lệnh họ loại bỏ trạng thái xích và chồng tướng.",
 
 }
