@@ -153,7 +153,7 @@ void HaoqiCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &tar
     QStringList choices;
     if (targets.first()->getHandcardNum() > 0)
         choices << "halfcards";
-    if (!targets.first()->hasShownOneGeneral())
+    if (!targets.first()->hasShownAllGenerals())
         choices << "showallgenerals";
     choices << "turnoverself";
     QString choice = room->askForChoice(targets.first(), objectName(), choices.join("+"));
@@ -1695,9 +1695,9 @@ public:
         return false;
     }
 
-    virtual bool effect(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer *ask_who) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const
     {
-        ask_who->setFlags("Jieao_flag");
+        room->setPlayerProperty(player, "role", "careerist");
         return false;
     }
 };
@@ -2873,7 +2873,7 @@ bool LingjieCard::targetFilter(const QList<const Player *> &targets, const Playe
     if (!targets.isEmpty() || to_select == Self || !to_select->hasShownOneGeneral() || to_select->isChained())
         return false;
 
-    return to_select->canBeChainedBy(Self) && !Self->isFriendWith(to_select) && !Self->willBeFriendWith(to_select);
+    return to_select->canBeChainedBy(Self) && !Self->isFriendWith(to_select);
 }
 
 void LingjieCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const

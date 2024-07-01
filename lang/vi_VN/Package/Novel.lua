@@ -10,10 +10,10 @@ return {
 	["illustrator:taiga"] = "30637291",
 
 	["huxiao"] = "虎啸",
-	[":huxiao"] = "主将技，此武将牌上单独的阴阳鱼个数-1。每当你受到1点伤害后，你可以加1点体力上限。",	
+	[":huxiao"] = "Chủ tướng kỹ, giảm 0.5 máu gốc: Sau khi bạn nhận sát thương, bạn có thể +1 giới hạn máu.",	
 
 	["yexi"] = "夜袭",
-	[":yexi"] = "准备阶段开始时，你可以观看牌堆顶X张牌（X为你已损失的体力值），然后将任意数量的牌置于牌堆顶，其余的牌以任意顺序置于牌堆底。若如此做，你可以选择一项：\n1、将体力上限调整至你当前体力值，然后摸X张牌；\n2、副将技，弃置X张手牌，然后将体力值调整至体力上限。",	
+	[":yexi"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể xem X lá trên đầu chồng bài rút (X là số máu bạn đã mất), sắp xếp tùy ý những lá này lên đầu hoặc xuống đáy chồng bài rút, sau đó bạn chọn 1 mục:\n1. Đặt giới hạn máu của bạn thành số máu hiện tại, sau đó rút X lá;\n2. Phó tướng kỹ: Bỏ X lá trên tay bạn, sau đó hồi đầy máu.",	
 	["@yexi-discard"] = "你需弃置已损失体力值张数的牌，以发动“夜袭②”",
 	["maxhptohp"] = "将体力上限调整至你当前体力值",
 	["hptomaxhp"] = "将体力值调整至体力上限",
@@ -31,10 +31,10 @@ return {
 	["illustrator:shana"] = "40322063",
 
 	["duanzui"] = "断罪",
-	[":duanzui"] = "出牌阶段限一次，你可以将一张装备牌当火【杀】使用，此【杀】可以额外指定一名角色为目标，且不计入出牌阶段使用【杀】次数限制。",
+	[":duanzui"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hoá sử dụng 1 trang bị thành [Hỏa Sát], [Sát] này có thể chỉ định thêm 1 mục tiêu, không tính vào số lần sử dụng.",
 
 	["honglian"] = "红莲",
-	[":honglian"] = "每当你失去一次装备区的牌，或受到一次属性伤害后，你可以摸一张牌。",
+	[":honglian"] = "Sau khi bạn mất 1 lá trong vùng trang bị hoặc nhận sát thương thuộc tính, bạn có thể rút 1 lá.",
 	
 	----N003
 	["louise"] = "露易丝·瓦利埃尔", 
@@ -47,7 +47,7 @@ return {
 	["illustrator:louise"] = "55470621",
 
 	["lingjie"] = "零界",
-	[":lingjie"] = "出牌阶段限一次，你可以指定一名未横置的与你势力不同的角色，然后横置与你势力相同和与其势力相同的所有角色的副将的武将牌。若如此做，你摸等同于两者数量之差的张数的牌（至多为3）。",
+	[":lingjie"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người không trong trạng thái xích, lệnh tất cả người cùng thế lực với bạn và họ nhận trạng thái xích;\n-> Bạn rút bài bằng chênh lệnh số người giữa 2 thế lực, tối đa 3 lá.",
 	["#LingjieChain"] = "%from 的 “%arg” 生效，横置了 %to",
 
 	["xuwu"] = "虚无",
@@ -91,7 +91,7 @@ return {
 	["illustrator:holo"] = "8890195",
 
 	["jisui"] = "稷穗",
-	[":jisui"] = "出牌阶段限一次，你可以选择若干名势力不相同的其他角色，从牌堆顶亮出等量于存活角色数的张数的牌，你和这些角色可以选择用一张手牌替换其中一张，然后你将这些牌置入弃牌堆，或将这些牌置于牌堆顶，视为使用一张【五谷丰登】。",
+	[":jisui"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn tuỳ ý người khác có thế lực xác định khác nhau, thực hiện lần lượt:\n- Lật bài từ chồng bài rút bằng số người còn sống;\n- Bạn và họ có thể hoán đổi 1 lá trên tay với 1 lá trong những lá đã lật;\n- Bạn chọn 1 mục:\n1. Đưa tất cả lá đã lật vào chồng bài bỏ;\n2. Đặt tất cả lá đã lật về chồng bài rút, sau đó xem như sử dụng [Ngũ Cốc Phong Đăng]",
 	["@jisui-exchange"] = "你可以选择一张手牌确定，然后选择“稷穗”展示的一张牌交换",
 	["#JisuiSwapCard"] = "%to 用手牌里的【%arg】与 %from 发动的 “<font color=\"yellow\"><b>稷穗</b></font>” 中的 “%arg2” 交换",
 	["useag"] = "将这些牌置于牌堆顶，视为使用一张【五谷丰登】",
@@ -108,14 +108,14 @@ return {
 	["illustrator:eru"] = "official pics",
 
 	["haoqi"] = "好奇",
-	[":haoqi"] = "出牌阶段限一次，你可以将一半（向下取整）的手牌交给一名其他角色，然后令该角色选择一项：1、交给你一半（向上取整）手牌；2、明置两张武将牌；3、叠置武将牌。",
+	[":haoqi"] = "Một lần trong giai đoạn ra bài, bạn có thể giao 1 nửa (làm tròn xuống) lá trên tay cho 1 người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 nửa (làm tròn lên) lá trên tay họ;\n2. Mở tất cả tướng;\n3. Thay đổi trạng thái chồng tướng.",
 	["halfcards"] = "交给对方一半（向上取整）手牌",
 	["showallgenerals"] = "明置两张武将牌",
 	["turnoverself"] = "将武将牌叠置",
 	["@haoqi-halfcards"] = "请选择你的一半的（向上取整）手牌，交给对方",
 
 	["jinzhi"] = "进制",
-	[":jinzhi"] = "摸牌阶段摸牌时，你可以放弃摸牌，改为进行一次判定，若结果的点数大于上一张判定牌，你可以再次进行判定，然后你获得所有判定牌。",	
+	[":jinzhi"] = "Giai đoạn rút bài, bạn có thể không rút bài, tiến hành phán xét, sau đó lặp lại đến khi kết quả phán xét của bạn có điểm <= kết quả phán xét trước, sau đó thu lấy tất cả kết quả phán xét.",	
 
 	----N007
 	["ruri"] = "五更琉璃", 
@@ -128,7 +128,7 @@ return {
 	["illustrator:ruri"] = "815086240",
 
 	["dushe"] = "毒舌",
-	[":dushe"] = "出牌阶段，你可以将一张【杀】当【过河拆桥】使用。以此法使用的【过河拆桥】可以额外指定你攻击范围内的所有角色为目标。",	
+	[":dushe"] = "Giai đoạn ra bài, bạn có thể chuyển hoá sử dụng [Sát] thành [Quá Hạ Sách Kiều];\n->Sau khi bạn chỉ định mục tiêu cho [Quá Hạ Sách Kiều] này, bạn có thể lệnh tất cả người trong tầm đánh của bạn trở thành mục tiêu.",	
 	["$dushe"] = "",
 
 	----N008
@@ -142,10 +142,10 @@ return {
 	["illustrator:a_azusa"] = "38191081",
 
 	["weihao"] = "伪壕",
-	[":weihao"] = "出牌阶段，你可以令你本回合手牌上限-1，然后摸一张牌。",
+	[":weihao"] = "Giai đoạn ra bài, nếu giới hạn trữ bài của bạn > 0, bạn có thể -1 giới hạn trữ bài trong lượt này, rút 1 lá.",
 	
 	["zhuyi"] = "属意",
-	[":zhuyi"] = "出牌阶段，你可以将手牌中的一张装备牌置于一名其他角色的装备区里，然后你本回合手牌上限+1。",
+	[":zhuyi"] = "Giai đoạn ra bài, bạn có thể đặt 1 trang bị trên tay bạn vào vùng trang bị của người khác, giới hạn trữ bài của bạn +1 trong lượt này.",
 	["$ZhuyiEquip"] = "%from 被装备了 %card",
 	
 	["@weihao"] = "伪壕",
@@ -162,16 +162,16 @@ return {
 	["illustrator:rikka"] = "42201199",
 
 	["fangzhurikka"] = "放逐",
-	[":fangzhurikka"] = "每当你受到1点伤害后，可令一名其他角色摸X张牌（X为你已损失的体力值，且至多为3），然后该角色将其武将牌叠置。",
+	[":fangzhurikka"] = "Sau khi bạn nhận sát thương, ứng với mỗi sát thương, bạn có thể lệnh 1 người khác rút X lá (X là số máu bạn đã mất, tối đa 3), sau đó lệnh họ thay đổi trạng thái chồng tướng.",
 	["fangzhu_rikka-invoke"] = "你可以发动“放逐”<br/> <b>操作提示</b>: 选择一名其他角色→点击确定<br/>",
 
 	["xieyu"] = "邪域",
-	[":xieyu"] = "阵法技，与你处于同一队列的角色使用非延时单体锦囊时，可以额外指定一个目标。",
+	[":xieyu"] = "Trận pháp kỹ: Quan hệ đội hình: Người cùng đội hình với bạn sử dụng công cụ phổ thông phân loại chỉ định đơn mục tiêu có thể chỉ định thêm 1 mục tiêu.",
 	["xieyu-target"] = "邪域",
 
 	----N010
-	["yukino"] = "雪之下雪乃", 
-	["&yukino"] = "雪之下雪乃", 
+	["yukino"] = "Yukinoshita Yukino", 
+	["&yukino"] = "Yukinoshita Yukino", 
 	["#yukino"] = "冰之女王", 
 	["#&yukino"] = "我的青春恋爱物语果然有问题", 
 	["~yukino"] = "", 
@@ -180,12 +180,12 @@ return {
 	["illustrator:yukino"] = "55305971",
 
 	["duran"] = "独然",
-	[":duran"] = "锁定技，体力不少于你的角色与你的距离+1，体力上限多于你的角色与你的距离+1。出牌阶段开始时，你摸X张牌（X为攻击范围内没有你的其他势力数）。",
+	[":duran"] = "Toả định kỹ:\n** Khoảng cách từ người có số máu >= bạn đến bạn +1.\n** Khoảng cách từ người có giới hạn máu >= bạn đến bạn +1;\n** Khi bắt đầu giai đoạn ra bài, bạn rút X lá (X là số thế lực không có bạn trong tầm đánh).",
 	["#DuranCounter"] = "%from 发动“%arg2”，攻击范围内没有 %from 的其他势力有 %arg 个",
 	["#duran-dis"] = "独然",
 
-	["jieao"] = "桀骜",
-	[":jieao"] = "锁定技，当你执行奖惩时，你杀死的角色的势力视为野心家。",
+	["jieao"] = "Kiệt Ngạo",
+	[":jieao"] = "Toả định kỹ: Trước khi bạn chấp hành thưởng phạt, lệnh người vừa trận vong trở thành Dã tâm gia.",
 	
 	----N011
 	["y_yui"] = "由比滨结衣", 
@@ -261,11 +261,11 @@ return {
 	["illustrator:asuna"] = "47371333",
 
 	["shanguang"] = "闪光",
-	[":shanguang"] = "每当你受到伤害后，你可以令伤害来源将一张手牌置于你的武将牌上，称为“烁”。锁定技，你的手牌上限+X（X为“烁”的数量）。",
+	[":shanguang"] = "** Sau khi bạn nhận sát thương, bạn có thể lệnh nguồn sát thương đặt 1 lá lên tướng này, gọi là [Thước].\n** Giới hạn trữ bài của bạn +X (X là số [Thước]).",
 
 	["zhuanyu"] = "馔玉",
-	[":zhuanyu"] = "出牌阶段限一次，你可以将一张“烁”置入弃牌堆，然后摸两张牌。",
-	["shuo"] = "烁",
+	[":zhuanyu"] = "Một lần trong giai đoạn ra bài, bạn có thể đưa 1 [Thước] vào chồng bài bỏ, rút 2 lá.",
+	["shuo"] = "Thước",
 
 	----N015
 	["hitagi"] = "战场原黑仪", 

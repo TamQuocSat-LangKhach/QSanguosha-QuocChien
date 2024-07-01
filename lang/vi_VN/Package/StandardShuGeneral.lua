@@ -44,7 +44,7 @@ return {
 	["#zhugeliang"] = "Trì Mộ Đích Thừa Tướng",
 	["zhugeliang"] = "Gia Cát Lượng",
 	["guanxing"] = "Quan Tinh",
-	[":guanxing"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể xem X lá bài trên đầu chồng bài rút (X là số người còn sống, tối đa 5), sau đó sắp xếp tùy ý những lá này lên đầu hoặc đáy chồng bài rút.",
+	[":guanxing"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể xem X lá bài trên đầu chồng bài rút (X là số người còn sống, tối đa 5), sau đó sắp xếp tùy ý những lá này lên đầu hoặc xuống đáy chồng bài rút.",
 	["kongcheng"] = "Không Thành",
 	[":kongcheng"] = "Tỏa định kỹ:\n• Khi bạn trở thành mục tiêu của [Sát]/[Quyết Đấu], nếu bạn không có bài trên tay, hủy bỏ mục tiêu đối với bạn.\n• Ngoài lượt của bạn, khi bạn nhận được bài do người khác giao cho, nếu bạn không có bài trên tay, đặt những lá bài này lên trên Tướng này, gọi là [Cầm];\n• Khi bắt đầu giai đoạn rút bài, bạn thu lấy tất cả lá [Cầm].",
 	["#GuanxingResult"] = "%from đã phát động »<font color=\"yellow\"><b>Quan Tinh</b></font>«: %arg lên trên, %arg2 xuống dưới",
