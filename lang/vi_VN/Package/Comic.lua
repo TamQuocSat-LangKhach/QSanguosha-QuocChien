@@ -45,7 +45,7 @@ return {
 	["illustrator:nagi"] = "38455466",
 
 	["tianzi"] = "天资",
-	[":tianzi"] = "• Giai đoạn rút bài, bạn có thể rút thêm 1 lá.\n• Một lần trong giai đoạn ra bài, bạn có thể lệnh giới hạn trữ bài của bạn -1 trong lượt này;\n▶ Khi kết thúc giai đoạn bỏ bài trong lượt này, bạn rút bài bằng số công cụ tiến vào chồng bài bỏ trong giai đoạn này.",
+	[":tianzi"] = "• Giai đoạn rút bài, bạn có thể rút thêm 1 lá.\n• Giai đoạn ra bài chủ động 1 lần: Bạn có thể lệnh giới hạn trữ bài của bạn -1 trong lượt này;\n▶ Khi kết thúc giai đoạn bỏ bài trong lượt này, bạn rút bài bằng số công cụ tiến vào chồng bài bỏ trong giai đoạn này.",
 	["@tianzi_draw"] = "天资",
 
 	["yuzhai"] = "御宅",
@@ -88,7 +88,7 @@ return {
 	["illustrator:suiseiseki"] = "43012104",
 
 	["shuimeng"] = "Thủy Mộng",
-	[":shuimeng"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ X lá trên tay và chọn 1 người, lệnh họ rút Y lá (X tối thiểu 2, Y bằng X).",
+	[":shuimeng"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ X lá trên tay và chọn 1 người, lệnh họ rút Y lá (X tối thiểu 2, Y bằng X).",
 	["shuimeng_discard"] = "请弃置两张牌发动“水梦”",
 	["shuimeng_discard_any"] = "请弃置至少两张牌发动“水梦”",
 
@@ -182,7 +182,7 @@ return {
 	["illustrator:tsukasa"] = "45832131",
 
 	["zhiyu_tsukasa"] = "Trị Dũ",
-	[":zhiyu_tsukasa"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 2 lá trên tay và chọn 1 người khác có cùng thế lực với bạn và đang bị thương, lệnh họ hồi 1 máu, sau đó nếu bạn đã bỏ ít nhất 1 lá đỏ, bạn hồi 1 máu.",
+	[":zhiyu_tsukasa"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ 2 lá trên tay và chọn 1 người khác có cùng thế lực với bạn và đang bị thương, lệnh họ hồi 1 máu, sau đó nếu bạn đã bỏ ít nhất 1 lá đỏ, bạn hồi 1 máu.",
 
 	["maoshi"] = "Mạo Thất",
 	[":maoshi"] = "Sau khi bạn mất bài trong vùng trang bị, bạn rút 2 lá.",
@@ -272,7 +272,7 @@ return {
 	["@gang"] = "杠",
 
 	["kaihua"] = "Kaihou",
-	[":kaihua"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 [Kan] và chọn tùy ý số người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 trang bị;\n2. Lệnh bạn hồi 1 máu;\n3. Lệnh bạn gây cho họ 1 sát thương.",
+	[":kaihua"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ 1 [Kan] và chọn tùy ý số người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 trang bị;\n2. Lệnh bạn hồi 1 máu;\n3. Lệnh bạn gây cho họ 1 sát thương.",
 	["@kaihua-targetchoose"] = "请选择任意数量的其他角色作为“开花”的目标",
 	["@kaihua_pass"] = "受到“开花”的影响，你需要选择一张装备牌并点击“确定”，或点“取消”选择以下一项：<br />1. %src 回复1点体力<br />2. %src 对你造成1点伤害",
 	["kaihuaDamage"] = "你受到1点伤害",

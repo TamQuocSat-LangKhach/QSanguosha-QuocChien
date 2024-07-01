@@ -68,7 +68,7 @@ return {
 	["#caiyong"] = "Trực Tình Phi Bạch",
 	["caiyong"] = "Thái Ung",
 	["zhudian"] = "Chú Điển",
-	[":zhudian"] = "Sau khi bạn trở thành mục tiêu của lá Đen do người khác sử dụng, bạn có thể Trùng Chú 1 lá của bạn;\n▷ Nếu lá bạn rút có màu Đen và khác chất với lá được sử dụng, bạn có thể mở lá đó và rút 1 lá.",
+	[":zhudian"] = "Sau khi bạn trở thành mục tiêu của lá Đen do người khác sử dụng, bạn có thể Tái chế 1 lá của bạn;\n▷ Nếu lá bạn rút có màu Đen và khác chất với lá được sử dụng, bạn có thể mở lá đó và rút 1 lá.",
 	["botong"] = "Bác Thông",
 	[":botong"] = "Bạn có thể chuyển hóa sử dụng 4 lá khác chất thành 1 lá cơ bản;\n▶ Sau khi lá này kết toán xong, bạn có thể đem những lá này tùy ý giao cho những người khác.",
 	

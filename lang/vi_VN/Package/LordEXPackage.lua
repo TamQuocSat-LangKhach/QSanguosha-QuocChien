@@ -97,7 +97,7 @@ return {
     ["quanji"] = "Quyền Kế",
     [":quanji"] = "• Một lần trong lượt của mỗi người ứng với mỗi thời điểm, sau khi bạn gây hoặc nhận sát thương, bạn có thể rút 1 lá, sau đó đặt ngửa 1 lá lên tướng này, gọi là [Quyền].\n• Giới hạn trữ bài của bạn +X (X là số [Quyền]).",
     ["paiyi"] = "Bài Dị",
-    [":paiyi"] = "Một lần trong giai đoạn ra bài, bạn có thể đưa 1 [Quyền] vào chồng bài bỏ và chọn 1 người, họ rút X lá (X là số [Quyền] bạn có, tối đa 7);\n▷ Nếu số bài trên tay họ > bạn, bạn gây 1 sát thương cho họ.",
+    [":paiyi"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể đưa 1 [Quyền] vào chồng bài bỏ và chọn 1 người, họ rút X lá (X là số [Quyền] bạn có, tối đa 7);\n▷ Nếu số bài trên tay họ > bạn, bạn gây 1 sát thương cho họ.",
 
     ["@quanji-push"] = "Quyền Kế: Đặt 1 lá lên tướng làm [Quyền]",
     ["power_pile"] = "Quyền",
@@ -106,9 +106,9 @@ return {
     ["#dongzhao"] = "Di Tôn Dị Đỉnh",
     ["dongzhao"] = "Đổng Chiêu",
     ["quanjin"] = "Khuyến Tiến",
-    [":quanjin"] = "Một lần trong giai đoạn ra bài, bạn có thể giao 1 lá trên tay cho người từng nhận sát thương trong giai đoạn này và lệnh họ chấp hành 1 [Quân Lệnh]:\n* Nếu họ chấp hành, bạn rút 1 lá;\n* Nếu họ không chấp hành và bạn không phải người có nhiều bài trên tay nhất, bạn bổ sung bài trên tay đến khi bằng người có nhiều bài trên tay nhất, tối đa rút thêm 5 lá.",
+    [":quanjin"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể giao 1 lá trên tay cho người từng nhận sát thương trong giai đoạn này và lệnh họ chấp hành 1 [Quân Lệnh]:\n* Nếu họ chấp hành, bạn rút 1 lá;\n* Nếu họ không chấp hành và bạn không phải người có nhiều bài trên tay nhất, bạn bổ sung bài trên tay đến khi bằng người có nhiều bài trên tay nhất, tối đa rút thêm 5 lá.",
     ["zaoyun"] = "Tạc Vận",
-    [":zaoyun"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người thế lực xác định với bạn và khoảng cách từ bạn đến họ lớn hơn 1 và bỏ X lá bài trên tay (X là khoảng cách từ bạn đến họ -1), lệnh khoảng cách từ bạn đến họ là 1 trong lượt này, sau đó bạn gây 1 sát thương cho họ.",
+    [":zaoyun"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người thế lực xác định với bạn và khoảng cách từ bạn đến họ lớn hơn 1 và bỏ X lá bài trên tay (X là khoảng cách từ bạn đến họ -1), lệnh khoảng cách từ bạn đến họ là 1 trong lượt này, sau đó bạn gây 1 sát thương cho họ.",
 
     ["#xushu"] = "Nan Vi Hoàn Thần",
     ["xushu"] = "Từ Thứ",
@@ -274,7 +274,7 @@ return {
     ["#gongsunyuan"] = "Giáo Đồ Huyền Hải",
     ["gongsunyuan"] = "Công Tôn Uyên",
     ["huaiyi"] = "Hoài Dị",
-    [":huaiyi"] = "• Một lần trong giai đoạn ra bài, bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Dị].",
+    [":huaiyi"] = "• Giai đoạn ra bài chủ động 1 lần: Bạn có thể mở toàn bộ bài trên tay, nếu có đủ 2 màu, bạn thực hiện lần lượt:\n- Bạn chọn 1 màu và bỏ những lá trên tay có màu này;\n- Bạn chọn tối đa X người có bài, thu lấy 1 lá của họ (X là số lá bạn vừa bỏ), nếu lá được thu lấy là trang bị thì đặt lá đó lên tướng này thay vì thu lấy, gọi là [Dị].\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Dị].",
     ["zisui"] = "Tứ Tuy",
     [":zisui"] = "Tỏa định kỹ:\n• Giai đoạn rút bài, nếu có [Dị], bạn rút thêm X lá (X là số [Dị]).\n• Khi bắt đầu giai đoạn kết thúc, nếu số [Dị] > giới hạn máu của bạn, bạn trận vong.",
     

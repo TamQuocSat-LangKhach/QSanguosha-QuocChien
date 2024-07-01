@@ -87,7 +87,7 @@ return {
 	["chenwudongxi"] = "Trấn Vũ & Đổng Tập",
 	["&chenwudongxi"] = "Trấn Vũ Đổng Tập",
 	["duanxie"] = "Đoạn Tiết",
-	[":duanxie"] = "Một lần trong giai đoạn ra bài, bạn có thể lệnh X người không trong trạng thái xích nhận trạng thái xích (X là số máu đã mất của bạn, tối thiểu 1), sau đó bạn nhận trạng thái xích.",
+	[":duanxie"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể lệnh X người không trong trạng thái xích nhận trạng thái xích (X là số máu đã mất của bạn, tối thiểu 1), sau đó bạn nhận trạng thái xích.",
 	["fenming"] = "Phấn Mệnh",
 	[":fenming"] = "Khi bắt đầu giai đoạn kết thúc, nếu bạn trong trạng thái xích, bạn có thể bỏ đi 1 lá của những người trong trạng thái xích.",
 
@@ -129,7 +129,7 @@ return {
 	["&huangjinsymbol"] = "Có thể chuyển hóa 1 [Thiên Binh] thành [Sát]",
 	["#HongfaTianbing"] = "%from đã phát động »<font color=\"yellow\"><b>Hoàng Cân Thiên Bình Phủ</b></font>«, số người trong thế lực Quần là %arg.",
 	["wendao"] = "Vấn Đạo",
-	[":wendao"] = "Một lần trong giai đoạn ra bài, bạn có thể bỏ 1 lá Đỏ ngoại trừ [Thái Bình Yêu Thuật] và thu lấy [Thái Bình Yêu Thuật] trong chồng bài bỏ hoặc trên bàn chơi.",
+	[":wendao"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ 1 lá Đỏ ngoại trừ [Thái Bình Yêu Thuật] và thu lấy [Thái Bình Yêu Thuật] trong chồng bài bỏ hoặc trên bàn chơi.",
 	["huangjinsymbol:prevent"] = "Có thể phát động »Hoằng Pháp«, bỏ 1 [Thiên Binh] để chặn mất máu.",
 	["@huangjinsymbol-discard"] = "Bỏ 1 [Thiên Binh]",
 	["@hongfa-tianbing"] = "<font color='#ffcc33'><b>%src</b></font> Có thể phát động »Hoằng Pháp«, số người trong thế lực Quần +X",

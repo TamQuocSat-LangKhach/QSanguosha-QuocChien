@@ -107,7 +107,7 @@ return {
 	["gem"] = "宝石",
 
 	["modan"] = "魔弹",
-	[":modan"] = "• Một lần trong giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 4 [Bảo Thạch] khác chất với nhau thành [Vạn Tiễn Tề Phát].\n• Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Bảo Thạch] để thay đổi kết quả phán xét.",
+	[":modan"] = "• Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hóa sử dụng 4 [Bảo Thạch] khác chất với nhau thành [Vạn Tiễn Tề Phát].\n• Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Bảo Thạch] để thay đổi kết quả phán xét.",
 	["@modan-retrial"] = CommonTranslationTable["@askforretrial"],
 	["~modan"] = "选择一张“宝石”->点击确定",
 	["modanvoid"] = "魔弹",
@@ -227,7 +227,7 @@ return {
 	[":bingshan"] = "Tỏa định kỹ: Khoảng cách từ người khác đến bạn +X (X là số máu bạn đã mất).",
 
 	["shenai"] = "深爱",
-	[":shenai"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người và bỏ X/2 lá (Làm tròn xuống), lệnh họ rút X lá (Tối đa 5) (X là khoảng cách giữa họ và bạn).",
+	[":shenai"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người và bỏ X/2 lá (Làm tròn xuống), lệnh họ rút X lá (Tối đa 5) (X là khoảng cách giữa họ và bạn).",
 
 	----G012
 	["nagisa"] = "古河渚", 

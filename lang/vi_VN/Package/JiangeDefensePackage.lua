@@ -195,7 +195,7 @@ return {
     ["#jg_zhangliao"] = "Ngụy Võ Anh Hồn",
     ["jg_zhangliao"] = "Bách Kế Văn Viễn",
     ["jgjiaoxie"] = "Chước Giới",
-    [":jgjiaoxie"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 đến 2 Khí giới Thục có bài, lệnh họ giao cho bạn 1 lá.",
+    [":jgjiaoxie"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 đến 2 Khí giới Thục có bài, lệnh họ giao cho bạn 1 lá.",
     ["jgshuailing"] = "Soái Lệnh",
     [":jgshuailing"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn rút bài của người Ngụy, lệnh họ tiến hành phán xét, nếu kết quả có màu Đen, họ thu lấy kết quả phán xét.",
     

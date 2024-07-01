@@ -47,7 +47,7 @@ return {
 	["huanshi"] = "Hoãn Thích",
 	[":huanshi"] = "Trước khi phán xét của người cùng thế lực với bạn có hiệu lực, bạn có thể đánh ra 1 lá để thay thế kết quả phán xét đó.",
 	["hongyuan"] = "Hoằng Viện",
-	[":hongyuan"] = "•Khi bạn rút bài vì hiệu quả của »Hợp Tung«, bạn có thể lệnh 1 người khác có cùng thế lực với bạn rút bài thay bạn.\n• Một lần trong giai đoạn ra bài, bạn có thể mở 1 lá trên tay, lá đó khi ở trên tay bạn trong giai đoạn này xem như có ký hiệu »Hợp Tung«.",
+	[":hongyuan"] = "• Khi bạn rút bài vì hiệu quả của »Hợp Tung«, bạn có thể lệnh 1 người khác có cùng thế lực với bạn rút bài thay bạn.\n• Giai đoạn ra bài chủ động 1 lần: Bạn có thể mở 1 lá trên tay, lá đó khi ở trên tay bạn trong giai đoạn này xem như có ký hiệu »Hợp Tung«.",
 	["mingzhe"] = "Minh Triết",
 	[":mingzhe"] = "Ngoài lượt của bạn:\n• Khi bạn sử dụng/đánh ra lá Đỏ, bạn có thể rút 1 lá.\n• Khi bạn mất đi bài trong vùng trang bị, nếu trong đó có lá Đỏ, bạn có thể rút 1 lá",
 
@@ -114,7 +114,7 @@ return {
 	["#liufuren"] = "Khốc Đố Đích Hải Đường",
 	["liufuren"] = "Lưu Phu Nhân",
 	["zhuidu"] = "Truy Đố",
-	[":zhuidu"] = "Một lần trong giai đoạn ra bài, khi bạn gây sát thương, bạn có thể lệnh người nhận sát thương chọn 1 mục:\n1. Sát thương này +1;\n2. Nếu họ có lá trong vùng trang bị, bỏ đi tất cả bài trong vùng trang bị;\n▷ Nếu họ có giới tính nữ, bạn có thể bỏ 1 lá, lệnh họ thực hiện cả 2 mục.",
+	[":zhuidu"] = "Giai đoạn ra bài giới hạn 1 lần, khi bạn gây sát thương, bạn có thể lệnh người nhận sát thương chọn 1 mục:\n1. Sát thương này +1;\n2. Nếu họ có lá trong vùng trang bị, bỏ đi tất cả bài trong vùng trang bị;\n▷ Nếu họ có giới tính nữ, bạn có thể bỏ 1 lá, lệnh họ thực hiện cả 2 mục.",
 	["shigong"] = "Kỳ Cung",
 	[":shigong"] = "Hạn định kỹ: Ngoài lượt của bạn, khi bạn tiến vào trạng thái hấp hối, bạn có thể loại bỏ Phó tướng của bạn, sau đó lệnh người đang có lượt chọn 1 mục:\n1. Họ nhận 1 kỹ năng không phân loại từ lá tướng mà bạn vừa loại bỏ, lệnh bạn hồi đầy máu;\n2. Lệnh bạn hồi đến 1 máu.",
 
@@ -139,7 +139,7 @@ return {
 	["jinwu"] = "Căng Võ",
 	[":jinwu"] = "Khi bắt đầu giai đoạn ra bài, bạn có thể yêu cầu bạn chấp hành 1 quân lệnh:\n* Nếu chấp hành, bạn xem như sử dụng 1 [Sát];\n* Nếu không chấp hành, bạn kết thúc giai đoạn này.",
 	["zhuke"] = "Trúc Khoa",
-	[":zhuke"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc:\n• Sau khi bạn chọn chấp hành quân lệnh, bạn có thể chọn lại quân lệnh để chấp hành.\n• Khi bạn nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh 1 người cùng thế lực với bạn hồi 1 máu.",
+	[":zhuke"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc:\n• Sau khi bạn chọn chấp hành quân lệnh, bạn có thể chọn lại quân lệnh để chấp hành.\n• Sau khi bạn nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh 1 người cùng thế lực với bạn hồi 1 máu.",
 	["quanjia"] = "Khuyến Giá",
 	[":quanjia"] = "Phó tướng kỹ: Sau khi bạn mở tướng này lần đầu tiên, bạn phát động kỹ năng này, thực hiện lần lượt:\n- Triệu hoán thế lực, có thể hưởng ứng triệu hoán này mà không trở thành dã tâm;\n- Người cùng thế lực với bạn rút 1 lá\n- Người có kỹ năng »Nhân Đức« nhận kỹ năng »Chương Vũ« và »Thụ Việt«",
 
@@ -157,13 +157,13 @@ return {
     ["@kenshang-choose"] = "Khấn Thương: Chọn 1 kỹ năng để mất đi",
     ["#KenshangTarget"] = "%from thay đổi mục tiêu của [Sát] thành %to ",
 	["xiaoqi"] = "Kiêu Kị",
-	[":xiaoqi"] = "Khi bạn sử dụng [Sát], bạn có thể chuyển hóa [Sát] này thành [Quyết Đấu];\n▶ Tối đa X lần trong lúc giải quyết hiệu quả của [Quyết Đấu] này, bạn có thể xem như đã đánh ra lá [Sát] để hưởng ứng (X là số lá tướng đã mở trên bàn chơi có kỹ năng gốc »Mã Thuật«)",
+	[":xiaoqi"] = "Khi bạn sử dụng [Sát], bạn có thể chuyển hóa [Sát] này -> [Quyết Đấu];\n▶ Tối đa X lần trong lúc giải quyết hiệu quả của [Quyết Đấu] này, bạn có thể xem như đã đánh ra lá [Sát] để hưởng ứng (X là số lá tướng đã mở trên bàn chơi có kỹ năng gốc »Mã Thuật«)",
 
     ["#xianglang"] = "Giáo Thư Huyên Phiên",
     ["xianglang"] = "Hướng Lãng",
     ["kanji"] = "Khám Tập",
-    [":kanji"] = "Một lần trong giai đoạn ra bài, bạn có thể mở tất cả bài trên tay, thực hiện lần lượt:\n- Nếu tất cả lá đã mở đều khác chất, bạn rút 2 lá;\n- Sau đó, nếu bạn có đủ 4 chất trên tay, bạn bỏ qua giai đoạn bỏ bài lượt này.",
+    [":kanji"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể mở tất cả bài trên tay, thực hiện lần lượt:\n- Nếu tất cả lá đã mở đều khác chất, bạn rút 2 lá;\n- Sau đó, nếu bạn có đủ 4 chất trên tay, bạn bỏ qua giai đoạn bỏ bài lượt này.",
     ["qianzheng"] = "Khiên Chính",
-    [":qianzheng"] = "Một lần trong lượt mỗi người, sau khi bạn trở thành mục tiêu của [Sát]/Công cụ phổ thông do người khác sử dụng, bạn có thể Trùng Chú 2 lá;\n▶ Nếu 2 lá này khác phân loại bài với lá được sử dụng, sau khi lá được sử dụng kết toán xong, bạn thu lấy lá đó.",
-    ["@qianzheng-cost"] = "Có thể phát động »Khiên Chính«, Trùng Chú 2 lá",
+    [":qianzheng"] = "Một lần trong lượt mỗi người, sau khi bạn trở thành mục tiêu của [Sát]/Công cụ phổ thông do người khác sử dụng, bạn có thể Tái chế 2 lá;\n▶ Nếu 2 lá này khác phân loại bài với lá được sử dụng, sau khi lá được sử dụng kết toán xong, bạn thu lấy lá đó.",
+    ["@qianzheng-cost"] = "Có thể phát động »Khiên Chính«, Tái chế 2 lá",
 }

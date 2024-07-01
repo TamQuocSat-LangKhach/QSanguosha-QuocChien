@@ -32,10 +32,10 @@ local t = {
 	["@slash_extra_targets"] = "Hãy chọn thêm mục tiêu khác cho lá [Sát]",
 
 	["fire_slash"] = "Sát Hỏa",
-	[":fire_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Hỏa cho mục tiêu.",
+	[":fire_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Chủ động sử dụng tối đa 1 lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Hỏa cho mục tiêu.",
 
 	["thunder_slash"] = "Sát Lôi",
-	[":thunder_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Một lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Lôi cho mục tiêu.",
+	[":thunder_slash"] = "Bài cơ bản\n\n<b>Giới hạn</b>: Chủ động sử dụng tối đa 1 lần trong giai đoạn ra bài đối với tất cả loại [Sát]\n<b>Lựa chọn</b>: 1 người trong tầm đánh.\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Gây 1 sát thương Lôi cho mục tiêu.",
 
 	["jink"] = "Thiểm",
 	[":jink"] = "Bài cơ bản\n\n<b>Thời điểm</b>: Khi lá [Sát] có hiệu quả với bạn\n<b>Hiệu quả</b>: Triệt tiêu hiệu quả của lá[Sát] này với bạn.",
@@ -162,7 +162,7 @@ local t = {
 	[":lightning"] = "Bài công cụ thời gian\n\n<b>Mục tiêu</b>: Bạn\n<b>Hiệu quả</b>: Giai đoạn phán xét của mục tiêu, tiến hành phán xét, nếu kết quả phán xét:\n* Từ 2~9 BÍCH: Mục tiêu nhận 3 sát thương Lôi; đưa [Thiểm Điện] này vào chồng bài bỏ;\n* Ngược lại: [Thiểm Điện] chuyển sang vùng phán xét của người tiếp theo.",
 
 	["iron_chain"] = "Thiết Tác Liên Hoàn",
-	[":iron_chain"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu thay đổi trạng thái xích.\n<b>Trùng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":iron_chain"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1-2 người\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Mục tiêu thay đổi trạng thái xích.\n<b>Tái chế</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 
 	["fire_attack"] = "Hỏa Công",
 	[":fire_attack"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người có bài trên tay\n<b>Mục tiêu</b>: Người đã chọn.\n<b>Hiệu quả</b>: Mục tiêu mở 1 lá trên tay, bạn có thể bỏ 1 lá trên tay có cùng chất với lá họ đã mở để gây 1 sát thương Hỏa cho mục tiêu.",
@@ -176,7 +176,7 @@ local t = {
 	[":await_exhausted"] = "Bài công cụ\n\n<b>Mục tiêu</b>: Tất cả người có cùng thế lực với bạn.\n<b>Hiệu quả</b>: Mục tiêu rút 2 lá và bỏ 2 lá.",
 
 	["known_both"] = "Tri Bỉ Tri Kỉ",
-	[":known_both"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người khác có tướng chưa mở hoặc có bài trên tay\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Bạn chọn xem tất cả bài trên tay hoặc 1 tướng úp của mục tiêu.\n<b>Trùng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":known_both"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người khác có tướng chưa mở hoặc có bài trên tay\n<b>Mục tiêu</b>: Người đã chọn\n<b>Hiệu quả</b>: Bạn chọn xem tất cả bài trên tay hoặc 1 tướng úp của mục tiêu.\n<b>Tái chế</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 	["#KnownBothView"] = "%from đã xem được %arg của %to" ,
 	["$KnownBothViewGeneral"] = "%from đã xem được %arg của %to, chính là %arg2" ,
 	["@known_both-choose"] = "Tri Bỉ Tri Kỉ: Vui lòng chọn hành động lên %dest",

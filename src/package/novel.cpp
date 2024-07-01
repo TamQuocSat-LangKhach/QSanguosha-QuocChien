@@ -1901,9 +1901,9 @@ public:
         events << TurnedOver;
     }
 
-    virtual QMap<ServerPlayer *, QStringList> triggerable(TriggerEvent, Room *room, ServerPlayer *target, QVariant &) const
+    virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *target, QVariant &) const
     {
-        QMap<ServerPlayer *, QStringList> skill_list;
+        TriggerList skill_list;
 
         if (target == NULL || !target->isAlive())
             return skill_list;
@@ -2076,9 +2076,9 @@ public:
         }
     }
 
-    virtual QMap<ServerPlayer *, QStringList> triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
+    virtual TriggerList triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &) const
     {
-        QMap<ServerPlayer *, QStringList> skill_list;
+        TriggerList skill_list;
 
         if (player == NULL || !player->isAlive())
             return skill_list;
@@ -2157,11 +2157,14 @@ public:
         if (from != NULL && player->askForSkillInvoke(this, QVariant::fromValue(data)))
         {
             QList<ServerPlayer *> luckyDogs;
-            if (player->hasShownSkill("zhongxie") && player->hasShownAllGenerals() && player->getMark("HasDedicatedMaxHp") == 1)
+            int first = player->getGeneral()->getMaxHpHead();
+            int second = player->getGeneral2()->getMaxHpDeputy();
+            if (player->hasShownSkill("zhongxie") && player->hasShownAllGenerals() && ((first + second) & 1) != 0)
             {
                 luckyDogs << player;
             }
             luckyDogs << from;
+            room->sortByActionOrder(luckyDogs);
             room->drawCards(luckyDogs, 1, objectName());
             room->broadcastSkillInvoke(objectName(), player);
             return true;
@@ -2230,8 +2233,12 @@ public:
         if (player->isKongcheng())
             return false;
 
-        if (player->hasShownSkill("zhongxie") && player->hasShownAllGenerals() && player->getMark("HasDedicatedMaxHp") == 0)
+        int first = player->getGeneral()->getMaxHpHead();
+        int second = player->getGeneral2()->getMaxHpDeputy();
+        if (player->hasShownSkill("zhongxie") && player->hasShownAllGenerals() && ((first + second) & 1) == 0)
+        {
             return true;
+        }
 
         return !player->hasUsed("BaoyanCard");
     }

@@ -31,7 +31,7 @@ return {
 	["illustrator:shana"] = "40322063",
 
 	["duanzui"] = "断罪",
-	[":duanzui"] = "Một lần trong giai đoạn ra bài, bạn có thể chuyển hoá sử dụng 1 trang bị thành [Hỏa Sát], [Sát] này có thể chỉ định thêm 1 mục tiêu, không tính vào số lần sử dụng.",
+	[":duanzui"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hoá sử dụng 1 trang bị thành [Hỏa Sát], [Sát] này có thể chỉ định thêm 1 mục tiêu, không tính vào số lần sử dụng.",
 
 	["honglian"] = "红莲",
 	[":honglian"] = "Sau khi bạn mất 1 lá trong vùng trang bị hoặc nhận sát thương thuộc tính, bạn có thể rút 1 lá.",
@@ -47,11 +47,11 @@ return {
 	["illustrator:louise"] = "55470621",
 
 	["lingjie"] = "零界",
-	[":lingjie"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn 1 người không trong trạng thái xích, lệnh tất cả người cùng thế lực với bạn và họ nhận trạng thái xích;\n-> Bạn rút bài bằng chênh lệnh số người giữa 2 thế lực, tối đa 3 lá.",
+	[":lingjie"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người không trong trạng thái xích, lệnh tất cả người cùng thế lực với bạn và họ nhận trạng thái xích;\n-> Bạn rút bài bằng chênh lệnh số người giữa 2 thế lực, tối đa 3 lá.",
 	["#LingjieChain"] = "%from 的 “%arg” 生效，横置了 %to",
 
 	["xuwu"] = "虚无",
-	[":xuwu"] = "出牌阶段，或每当你受到一次伤害后，你可以重铸一张装备牌，然后若你的装备区里没有牌，你摸一张牌。",
+	[":xuwu"] = "Giai đoạn ra bài chủ động hoặc sau khi bạn nhận sát thương, bạn có thể Tái chế 1 lá trang bị, sau đó nếu vùng trang bị của bạn không có bài, bạn rút 1 lá.",
 	["@xuwu-recast"] = "请选择一张装备牌，重铸之",
 	["~xuwu"] = "选择一张装备牌→点击确定",
 
@@ -69,11 +69,11 @@ return {
 	["illustrator:aria"] = "19981312",
 
 	["jingdi"] = "敬敌",
-	[":jingdi"] = "出牌阶段，你可以横置副将的武将牌，然后弃置此回合内未以此法指定过的一名其他势力的角色的一张牌。",
+	[":jingdi"] = "Giai đoạn ra bài chủ động: Nếu bạn không trong trạng thái xích, bạn có thể nhận trạng thái xích, bỏ 1 lá của 1 người có thế lực khác bạn và chưa bị lựa chọn bởi kỹ năng này trong lượt này.",
 	-- [":jingdi"] = "出牌阶段限一次，你可以将一张手牌中的非连横牌交给一名对你造成过伤害的角色，然后你摸一张牌。",	
 
 	["wujie"] = "武戒",
-	[":wujie"] = "每当你使用点数为偶数的牌时，你可以重置或横置一名角色副将的武将牌。",
+	[":wujie"] = "Khi bạn sử dụng 1 lá có điểm chẵn, bạn có thể lệnh 1 người thay đổi trạng thái xích.",
 	["@wujie-targetchoose"] = "你可以发动“武戒”：选择一名角色，将其副将的武将牌横置/重置",
 	["#WujieChain"] = "%from 发动了 “%arg”，将 %to 副将的武将牌横置",
 	["#WujieUnchain"] = "%from 发动了 “%arg”，将 %to 副将的武将牌重置",
@@ -91,7 +91,7 @@ return {
 	["illustrator:holo"] = "8890195",
 
 	["jisui"] = "稷穗",
-	[":jisui"] = "Một lần trong giai đoạn ra bài, bạn có thể chọn tuỳ ý người khác có thế lực xác định khác nhau, thực hiện lần lượt:\n- Lật bài từ chồng bài rút bằng số người còn sống;\n- Bạn và họ có thể hoán đổi 1 lá trên tay với 1 lá trong những lá đã lật;\n- Bạn chọn 1 mục:\n1. Đưa tất cả lá đã lật vào chồng bài bỏ;\n2. Đặt tất cả lá đã lật về chồng bài rút, sau đó xem như sử dụng [Ngũ Cốc Phong Đăng]",
+	[":jisui"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn tuỳ ý người khác có thế lực xác định khác nhau, thực hiện lần lượt:\n- Lật bài từ chồng bài rút bằng số người còn sống;\n- Bạn và họ có thể hoán đổi 1 lá trên tay với 1 lá trong những lá đã lật;\n- Bạn chọn 1 mục:\n1. Đưa tất cả lá đã lật vào chồng bài bỏ;\n2. Đặt tất cả lá đã lật về chồng bài rút, sau đó xem như sử dụng [Ngũ Cốc Phong Đăng]",
 	["@jisui-exchange"] = "你可以选择一张手牌确定，然后选择“稷穗”展示的一张牌交换",
 	["#JisuiSwapCard"] = "%to 用手牌里的【%arg】与 %from 发动的 “<font color=\"yellow\"><b>稷穗</b></font>” 中的 “%arg2” 交换",
 	["useag"] = "将这些牌置于牌堆顶，视为使用一张【五谷丰登】",
@@ -108,7 +108,7 @@ return {
 	["illustrator:eru"] = "official pics",
 
 	["haoqi"] = "好奇",
-	[":haoqi"] = "Một lần trong giai đoạn ra bài, bạn có thể giao 1 nửa (làm tròn xuống) lá trên tay cho 1 người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 nửa (làm tròn lên) lá trên tay họ;\n2. Mở tất cả tướng;\n3. Thay đổi trạng thái chồng tướng.",
+	[":haoqi"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể giao 1 nửa (làm tròn xuống) lá trên tay cho 1 người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 nửa (làm tròn lên) lá trên tay họ;\n2. Mở tất cả tướng;\n3. Thay đổi trạng thái chồng tướng.",
 	["halfcards"] = "交给对方一半（向上取整）手牌",
 	["showallgenerals"] = "明置两张武将牌",
 	["turnoverself"] = "将武将牌叠置",
@@ -198,13 +198,13 @@ return {
 	["illustrator:y_yui"] = "34938515",
 
 	["xianli"] = "鲜丽",
-	[":xianli"] = "主将技，此武将牌上单独的阴阳鱼个数-1。出牌阶段限一次，你可以选择一名有暗置武将牌的角色，然后令其选择一项：1、令你摸一张牌；2、明置一张武将牌并弃置一张牌。",
+	[":xianli"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần, bạn có thể chọn 1 người có tướng úp, lệnh họ chọn 1 mục:\n1. Lệnh bạn rút 1 lá;\n2. Mở 1 tướng và bỏ 1 lá.",
 	["drawonecard"] = "令来源摸一张牌",
 	["showonegeneral"] = "明置一张武将牌并弃置一张牌",
 	["@xianli-askdiscard"] = "受到“鲜丽”的影响，请选择一张牌弃置",
 
 	["yuanxin"] = "援心",
-	[":yuanxin"] = "一名角色的结束阶段开始时，若你于此回合内回复了体力，你可以失去1点体力，然后令一名其他角色回复1点体力。若如此做，你摸两张牌。",
+	[":yuanxin"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu lượt này bạn đã hồi máu, bạn có thể mất 1 máu, lệnh 1 người khác hồi 1 máu, sau đó bạn rút 2 lá.",
 	["@yuanxin_choosetarget"] = "请选择“援心”的目标角色",
 
 	----N012
@@ -218,11 +218,11 @@ return {
 	["illustrator:mikoto"] = "36171150",
 
 	["dianji"] = "电击",
-	[":dianji"] = "弃牌阶段结束时，若你于此回合内没有使用过【杀】，你可以将你的武将牌叠置，然后对一名角色造成1点雷电伤害。",
+	[":dianji"] = "Khi kết thúc giai đoạn bỏ bài, nếu trong lượt này bạn chưa sử dụng [Sát], bạn có thể thay đổi trạng thái chồng tướng, gây 1 sát thương Lôi cho 1 người.",
 	["@dianji_target"] = "“电击”生效，请选择一名角色对其造成1点雷电伤害",
 
 	["cichang"] = "磁场",
-	[":cichang"] = "每当一名角色叠置其武将牌后，若其处于“叠置状态”，你可以弃置一张基本牌，令其平置其武将牌，然后若你弃置的牌为火【杀】或雷【杀】，你可以令两名角色横置其副将的武将牌；若你弃置的牌为【桃】或【酒】，你摸两张牌。",
+	[":cichang"] = "Sau khi 1 người nhận trạng thái chồng tướng, bạn có thể bỏ 1 lá cơ bản, lệnh họ thoát khỏi trạng thái chồng tướng;\n-> Nếu lá bạn bỏ là:\n* [Sát] thuộc tính: Bạn có thể lệnh 2 người nhận trạng thái xích;\n* [Đào]/[Tửu]: Bạn rút 2 lá.",
 	["@cichang_discard"] = "你可以弃置一张基本牌，发动“磁场”",
 	["@cichang_choosetarget"] = "请选择两名角色，将这些角色横置",
 	["#CichangTurnFaceUp"] = "%from 发动了 “%arg”，将 %to 的武将牌平置了",
@@ -245,10 +245,10 @@ return {
 	-- ["$Xianqun_back"] = "%from 的“%arg”被触发， %arg2 的%card被置入装备区。",
 
 	["kongli"] = "空力",
-	[":kongli"] = "每当一名角色叠置其武将牌后处于“叠置状态”，或横置副将的武将牌后，你可以令其摸一张牌，每回合对每名角色限一次。",
+	[":kongli"] = "Giới hạn 1 lần cho mỗi người trong mỗi lượt, sau khi 1 người nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh họ rút 1 lá.",
 
 	["hefeng"] = "和风",
-	[":hefeng"] = "每名角色的回合限一次，每当你需要使用一张【桃】时，你可以将至少一张手牌当【桃】使用，令你的手牌数为全场最少（或之一）。",
+	[":hefeng"] = "Lượt mỗi người giới hạn 1 lần, khi bạn cần sử dụng [Đào], bạn có thể chuyển hóa sử dụng tùy ý bài trên tay -> [Đào] (Ít nhất 1 lá và cần sử dụng số lá để khiến bạn có số bài trên tay ít nhất).",
 
 	----N014
 	["asuna"] = "结城明日奈", 
@@ -264,7 +264,7 @@ return {
 	[":shanguang"] = "** Sau khi bạn nhận sát thương, bạn có thể lệnh nguồn sát thương đặt 1 lá lên tướng này, gọi là [Thước].\n** Giới hạn trữ bài của bạn +X (X là số [Thước]).",
 
 	["zhuanyu"] = "馔玉",
-	[":zhuanyu"] = "Một lần trong giai đoạn ra bài, bạn có thể đưa 1 [Thước] vào chồng bài bỏ, rút 2 lá.",
+	[":zhuanyu"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể đưa 1 [Thước] vào chồng bài bỏ, rút 2 lá.",
 	["shuo"] = "Thước",
 
 	----N015
@@ -277,14 +277,14 @@ return {
 	["cv:hitagi"] = "斎藤千和",
 	["illustrator:hitagi"] = "6693976",
 
-	["qingyou"] = "倾诱",
-	[":qingyou"] = "每当你受到伤害后，你可以令伤害来源摸一张牌，然后手牌数少于伤害来源的角色各弃置其一张牌。",
+	["qingyou"] = "Khuynh Dụ",
+	[":qingyou"] = "Sau khi bạn nhận sát thương, bạn có thể lệnh nguồn sát thương rút 1 lá, sau đó lệnh tất cả người có số bài trên tay ít hơn nguồn sát thương bỏ 1 lá.",
 
-	["baoyan"] = "暴言",
-	[":baoyan"] = "出牌阶段限一次，你可以交给一名其他角色一张【杀】，然后摸一张牌。",
+	["baoyan"] = "Bạo Ngôn",
+	[":baoyan"] = "Giai đoạn ra bài chủ động 1 lần, bạn có thể giao 1 [Sát] cho 1 người khác, sau đó rút 1 lá.",
 
 	["zhongxie"] = "重蟹",
-	[":zhongxie"] = "锁定技，若你的两张武将牌均明置，且：\n1、有单独的阴阳鱼，将“倾诱”的描述“令伤害来源”改为“令你和伤害来源各”。\n2、没有单独的阴阳鱼，将“暴言”的描述“出牌阶段限一次”改为“出牌阶段”。",
+	[":zhongxie"] = "Tỏa định kỹ: Nếu bạn đã mở tất cả tướng nếu tổng máu của 2 lá tướng là:\n* Số có phần thập phân: Sửa mô tả của >>Khuynh Dụ<< thành lệnh bạn và nguồn sát thương rút 1 lá;\n* Số nguyên: Sửa mô tả của >>Bạo Ngôn<< bỏ giới hạn 1 lần.",
 
 	----N016
 	["watashi"] = "人类小姐", 
@@ -296,15 +296,15 @@ return {
 	["cv:watashi"] = "中原麻衣",
 	["illustrator:watashi"] = "28552580",
 
-	["tiaoting"] = "调停",
-	[":tiaoting"] = "结束阶段开始时，你可以指定两名势力不同的其他角色，若如此做，直到你的下个回合开始，其中一名角色对另一名角色第一次造成伤害时，防止之，然后这些角色各摸一张牌。",
-	["@tiaoting-targetchoose"] = "你可以发动“调停”，指定两名势力不同的其他角色",
+	["tiaoting"] = "Điều Đình",
+	[":tiaoting"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể chọn 2 người khác có thế lực xác định khác nhau;\n=> Đến khi bắt đầu lượt tiếp theo của bạn, khi lần đầu 1 trong 2 người đó gây sát thương cho người còn lại, bạn chặn sát thương này, sau đó họ rút 2 lá.",
+	["@tiaoting-targetchoose"] = "你可以发动“Điều Đình”，指定两名势力不同的其他角色",
 	["~tiaoting"] = "点击两名势力不同的其他角色->点击确定",
 	["#TiaotingArmistice"] = "%from 发动了 “%arg”，指定了 %to",
 	["#TiaotingNoDamage"] = "%from 发动了 “%arg”，%to 之间造成的第一次伤害将被防止，且各摸一张牌。",
 
 	["jilu"] = "记录",
-	[":jilu"] = "“调停”指定的角色的结束阶段开始时，若于此回合内你没有发动“调停”，你可摸一张牌。",
+	[":jilu"] = "Khi bắt đầu giai đoạn kết thúc của 1 người được chọn bởi >>Điều Đình<<, nếu bạn chưa phát động >>Điều Đình<< trong lượt này, bạn có thể rút 1 lá.",
 
 	----N017
 	["haruhi"] = "涼宮春日", 

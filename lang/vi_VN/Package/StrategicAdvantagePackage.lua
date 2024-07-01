@@ -47,7 +47,7 @@ return {
 
 
 	["WoodenOx"] = "Mộc Ngưu Lưu Mã",
-	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n• Một lần trong giai đoạn ra bài, nếu số [Tri] < 5, bạn có thể đặt úp 1 lá trên tay lên [Mộc Ngưu Lưu Mã], gọi là [Tri], sau đó bạn có thể di chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Tri].\n• Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, đưa tất cả lá [Tri] vào chồng bài bỏ.",
+	[":WoodenOx"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>:\n• Giai đoạn ra bài chủ động 1 lần: Nếu số [Tri] < 5, bạn có thể đặt úp 1 lá trên tay lên [Mộc Ngưu Lưu Mã], gọi là [Tri], sau đó bạn có thể di chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của người khác.\n• Khi bạn cần lựa chọn bài trên tay cho mục đích sử dụng/đánh ra, bạn có thể lựa chọn lá [Tri].\n• Khi bạn mất [Mộc Ngưu Lưu Mã], nếu lá này không chuyển sang vùng trang bị khác, đưa tất cả lá [Tri] vào chồng bài bỏ.",
 	["@wooden_ox-move"] = "Bạn có thể chuyển [Mộc Ngưu Lưu Mã] sang vùng trang bị của một người khác",
 	["wooden_ox"] = "Tri",
 	["#WoodenOx"] = "%from đánh ra %arg lá %arg2 bài",
@@ -75,7 +75,7 @@ return {
 	["#lure_tiger-prohibit"] = "Điệu Hổ Ly Sơn",
 
 	["fight_together"] = "Lục Lực Đồng Tâm",
-	[":fight_together"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người thuộc đại thế lực hoặc tiểu thế lực\n<b>Mục tiêu</b>: Tất cả người thuộc cùng cấp độ thế lực với người đã chọn.\n<b>Hiệu quả</b>: Nếu mục tiêu đang có trạng thái xích, họ rút 1 lá; nếu không, họ nhận trạng thái xích.\n<b>Trùng Chú</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
+	[":fight_together"] = "Bài công cụ\n\n<b>Lựa chọn</b>: 1 người thuộc đại thế lực hoặc tiểu thế lực\n<b>Mục tiêu</b>: Tất cả người thuộc cùng cấp độ thế lực với người đã chọn.\n<b>Hiệu quả</b>: Nếu mục tiêu đang có trạng thái xích, họ rút 1 lá; nếu không, họ nhận trạng thái xích.\n<b>Tái chế</b>: Có thể đưa lá này vào chồng bài bỏ để rút 1 lá.",
 	["@fight_together-choice"] = "Lục Lực Đồng Tâm: Chọn thế lực hoặc đổi bài",
 	["fight_together:big"] = "Đại Thế Lực",
 	["fight_together:small"] = "Tiểu Thế Lực",
