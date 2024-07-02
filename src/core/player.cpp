@@ -943,8 +943,7 @@ int Player::getPlayerNumWithKingdom(bool include_dead) const
 bool Player::isBigKingdomPlayer() const
 {
     if (hasShownOneGeneral() && hasTreasure("JadeSeal")) return true;
-    int num = getPlayerNumWithKingdom();
-    if (num < 2) return false;
+
     QList<const Player *> siblings = getAliveSiblings();
     bool hasTreasure = false;
     foreach (const Player *p, siblings) {
@@ -955,9 +954,22 @@ bool Player::isBigKingdomPlayer() const
             hasTreasure = true;
         }
     }
+    if (!hasTreasure) {
+        if (hasShownSkill("zhizun")) return true;
+        foreach (const Player *p, siblings) {
+            if (p->hasShownSkill("zhizun")) {
+                if (isFriendWith(p)) {
+                    return true;
+                }
+                hasTreasure = true;
+            }
+        }
+    }
     if (hasTreasure) {
         return false;
     }
+    int num = getPlayerNumWithKingdom();
+    if (num < 2) return false;
     foreach (const Player *p, siblings) {
         if (p->hasShownOneGeneral() && !p->isFriendWith(this) && p->getPlayerNumWithKingdom() > num) return false;
     }

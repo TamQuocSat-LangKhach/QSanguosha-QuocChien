@@ -342,6 +342,14 @@ QStringList ClientPlayer::getBigKingdoms(const QString &, MaxCardsType::MaxCards
             break;
         }
     }
+    if (!jade_seal_owner) {
+        foreach (const Player *p, players) {
+            if (p->hasShownSkill("zhizun")) {
+                jade_seal_owner = p;
+                break;
+            }
+        }
+    }
     if (jade_seal_owner != NULL) {
         if (jade_seal_owner->getRole() == "careerist") {
             big_kingdoms.clear();

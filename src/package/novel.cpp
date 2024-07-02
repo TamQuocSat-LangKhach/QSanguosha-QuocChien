@@ -2669,27 +2669,24 @@ public:
         events << DrawNCards << EventPhaseChanging;
     }
 
-    virtual QStringList triggerable(TriggerEvent event, Room *, ServerPlayer *player, QVariant &data, ServerPlayer * &) const
+    virtual void record(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        if (!TriggerSkill::triggerable(player))
+        if (event == EventPhaseChanging)
+        {
+            if (data.value<PhaseChangeStruct>().to == Player::RoundStart && player->hasShownSkill(this))
+            {
+                room->addPlayerMark(player, "@zixun");
+            }
+        }
+    }
+
+    virtual QStringList triggerable(TriggerEvent event, Room *, ServerPlayer *player, QVariant &, ServerPlayer * &) const
+    {
+        if (!TriggerSkill::triggerable(player) || event != DrawNCards)
         {
             return QStringList();
         }
-
-        if (event == EventPhaseChanging)
-        {
-            auto change = data.value<PhaseChangeStruct>();
-            if (change.from == Player::NotActive && player->hasShownSkill(this))
-            {
-                player->setMark("@zixun", player->getMark("@zixun") + 1);
-            }
-        }
-        else
-        {
-            return QStringList(objectName());
-        }
-
-        return QStringList();
+        return QStringList(objectName());
     }
 
     virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *) const

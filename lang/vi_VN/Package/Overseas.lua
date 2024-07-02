@@ -162,8 +162,8 @@ return {
     ["#xianglang"] = "Giáo Thư Huyên Phiên",
     ["xianglang"] = "Hướng Lãng",
     ["kanji"] = "Khám Tập",
-    [":kanji"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể mở tất cả bài trên tay, thực hiện lần lượt:\n- Nếu tất cả lá đã mở đều khác chất, bạn rút 2 lá;\n- Sau đó, nếu bạn có đủ 4 chất trên tay, bạn bỏ qua giai đoạn bỏ bài lượt này.",
+    [":kanji"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể mở tất cả bài trên tay, thực hiện lần lượt:\n- Nếu tất cả lá đã mở đều khác chất, bạn rút 2 lá;\n- Sau đó, nếu bạn có đủ 4 chất trên tay và trước đó không, bạn bỏ qua giai đoạn bỏ bài lượt này.",
     ["qianzheng"] = "Khiên Chính",
-    [":qianzheng"] = "Một lần trong lượt mỗi người, sau khi bạn trở thành mục tiêu của [Sát]/Công cụ phổ thông do người khác sử dụng, bạn có thể Tái chế 2 lá;\n▶ Nếu 2 lá này khác phân loại bài với lá được sử dụng, sau khi lá được sử dụng kết toán xong, bạn thu lấy lá đó.",
+    [":qianzheng"] = "Lượt mỗi người giới hạn 1 lần, sau khi bạn trở thành mục tiêu của [Sát]/Công cụ phổ thông do người khác sử dụng, bạn có thể Tái chế 2 lá;\n▶ Nếu 2 lá này khác phân loại bài với lá được sử dụng, sau khi lá được sử dụng kết toán xong, bạn thu lấy lá đó.",
     ["@qianzheng-cost"] = "Có thể phát động »Khiên Chính«, Tái chế 2 lá",
 }

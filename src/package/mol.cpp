@@ -2238,7 +2238,7 @@ public:
         if (player == NULL || player->isDead() || player->getPhase() != Player::Finish) return skill_list;
         QList<ServerPlayer *> owners = room->findPlayersBySkillName(objectName());
         foreach (ServerPlayer *ask_who, owners) {
-            if (!ask_who->getPile("food").isEmpty() && ask_who->isFriendWith(player) && ask_who != player
+            if (!ask_who->getPile("food").isEmpty() && ask_who->isFriendWith(player)
                     && !ask_who->distanceTo(player) != -1 && ask_who->distanceTo(player) <= ask_who->getPile("food").length())
                 skill_list.insert(ask_who, QStringList(objectName()));
         }

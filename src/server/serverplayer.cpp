@@ -2387,6 +2387,14 @@ QStringList ServerPlayer::getBigKingdoms(const QString &reason, MaxCardsType::Ma
             break;
         }
     }
+    if (!jade_seal_owner) {
+        foreach (ServerPlayer *p, room->getAlivePlayers()) {
+            if (p->hasShownSkill("zhizun")) {
+                jade_seal_owner = p;
+                break;
+            }
+        }
+    }
     MaxCardsType::MaxCardsCount type = jade_seal_owner ? MaxCardsType::Max : _type;
     // if there is someone has JadeSeal, needn't trigger event because of the fucking effect of JadeSeal
     QMap<QString, int> kingdom_map;

@@ -1406,49 +1406,32 @@ const Card * XiehangUseCard::validate(CardUseStruct &cardUse) const
     {
         QStringList big_kingdoms = source->getBigKingdoms("xiehang", MaxCardsType::Normal);
         bool can_use = !big_kingdoms.isEmpty() && !source->isCardLimited(this, Card::MethodUse);
-        QStringList choices;
         QList<ServerPlayer *> bigs, smalls, bigs_void, smalls_void;
         if (can_use) {
             foreach(ServerPlayer *p, room->getAllPlayers()) {
                 QString kingdom = p->objectName();
-                if (big_kingdoms.length() == 1 && big_kingdoms.first().startsWith("sgs")) { // for JadeSeal
-                    if (big_kingdoms.contains(kingdom)) {
-                        if (room->isProhibited(source, p, this))
-                            bigs_void << p;
-                        else
-                            bigs << p;
-                    }
-                    else {
-                        if (room->isProhibited(source, p, this))
-                            smalls_void << p;
-                        else
-                            smalls << p;
-                    }
+                if (!p->hasShownOneGeneral()) {
+                    if (room->isProhibited(source, p, this))
+                        smalls_void << p;
+                    else
+                        smalls << p;
+                    continue;
+                }
+                if (p->getRole() == "careerist")
+                    kingdom = "careerist";
+                else
+                    kingdom = p->getKingdom();
+                if (big_kingdoms.contains(kingdom)) {
+                    if (room->isProhibited(source, p, this))
+                        bigs_void << p;
+                    else
+                        bigs << p;
                 }
                 else {
-                    if (!p->hasShownOneGeneral()) {
-                        if (room->isProhibited(source, p, this))
-                            smalls_void << p;
-                        else
-                            smalls << p;
-                        continue;
-                    }
-                    if (p->getRole() == "careerist")
-                        kingdom = "careerist";
+                    if (room->isProhibited(source, p, this))
+                        smalls_void << p;
                     else
-                        kingdom = p->getKingdom();
-                    if (big_kingdoms.contains(kingdom)) {
-                        if (room->isProhibited(source, p, this))
-                            bigs_void << p;
-                        else
-                            bigs << p;
-                    }
-                    else {
-                        if (room->isProhibited(source, p, this))
-                            smalls_void << p;
-                        else
-                            smalls << p;
-                    }
+                        smalls << p;
                 }
             }
             if (!bigs.isEmpty() || !smalls.isEmpty())
@@ -1605,7 +1588,7 @@ public:
     virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const
     {
         CardUseStruct use = data.value<CardUseStruct>();
-        if (room->askForDiscard(use.from, objectName(), 1, 1, true, true, "@powei-discard"))
+        if (room->askForDiscard(use.from, objectName(), 1, 1, true, true, "@powei-discard:" + player->objectName()))
         {
             room->cancelTarget(use, player); // Room::cancelTarget(use, player);
             data = QVariant::fromValue(use);
@@ -2042,7 +2025,7 @@ public:
         use.nullified_list << "_ALL_TARGETS";
         data = QVariant::fromValue(use);
 
-        const Card *card = room->askForCard(use.from, "slash", "@pinghe", QVariant(), Card::MethodNone);
+        const Card *card = room->askForCard(use.from, "slash", "@pinghe:" + ask_who->objectName(), QVariant(), Card::MethodNone);
         if (card != NULL)
         {
             room->showCard(use.from, card->getEffectiveId());
@@ -2674,7 +2657,7 @@ public:
                     continue;
 
                 choices.append("cancel");
-                QString choice = room->askForChoice(p, "HuamingGeneralShowRequest", choices.join("+"));
+                QString choice = room->askForChoice(p, "HuamingGeneralShowRequest:" + player->objectName(), choices.join("+"));
 
                 if (choice == "show_head_general")
                     p->showGeneral(true);

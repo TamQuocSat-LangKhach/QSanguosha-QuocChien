@@ -3149,13 +3149,13 @@ public:
         if (damage.to->hasEquip())
             choices << "discard";
         choices << "remove";
-        QString choice = room->askForChoice(damage.to, objectName(), choices.join("+"));
+        QString choice = room->askForChoice(damage.to, objectName(), choices.join("+"), data, "@fengyin-choose", "discard+remove");
         if (choice == "discard") {
             damage.to->throwAllEquips();
             room->loseHp(damage.to);
-        } else {
+        } else
             damage.to->removeGeneral(false);
-        }
+
         return true;
     }
 };

@@ -178,7 +178,7 @@ void MilitaryOrder::onEffect(const CardEffectStruct &effect) const
         QStringList choicelist;
         choicelist << "slash";
         foreach(const Skill *skill, effect.to->getSkillList(true, true)) {
-            if (skill && skill->getDescription().contains("lần trong giai đoạn ra bài")) {
+            if (skill && skill->getDescription().contains("Giai đoạn ra bài chủ động ")) {
                 const ViewAsSkill *vsSkill = Sanguosha->getViewAsSkill(skill->objectName());
                 if (vsSkill) {
                     choicelist << skill->objectName();

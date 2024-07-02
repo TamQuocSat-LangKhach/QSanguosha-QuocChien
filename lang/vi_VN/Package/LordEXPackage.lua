@@ -112,11 +112,18 @@ return {
 
     ["#xushu"] = "Nan Vi Hoàn Thần",
     ["xushu"] = "Từ Thứ",
-    ["qiance"] = "Khiêm Sách",
-	[":qiance"] = "Sau khi người cùng thế lực với bạn xác định mục tiêu của lá công cụ, họ có thể lệnh những mục tiêu thuộc Đại thế lực không thể hướng ứng với lá này.",
+
+	["wuyan"] = "Vô Ngôn",
+	[":wuyan"] = "Ngụy thế lực kỹ, Tỏa định kỹ:\n** Khi bạn gây/nhận sát thương bởi lá công cụ, bạn chặn sát thương này.",
+	["jianyan"] = "Kiến Ngôn",
+	[":jianyan"] = "Thục thế lực kỹ: Giai đoạn ra bài chủ động 1 lần, bạn có thể chọn 1 loại/màu của bài, <b>Kiểm tra</b> và lệnh 1 người giới tính nam thu lấy lá đó.",
 	["jujian"] = "Cử Tiến",
-	[":jujian"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Khi 1 người cùng thế lực với bạn tiến vào trạng thái hấp hối, bạn có thể lệnh họ hồi đến 1 máu, sau đó bạn đổi Tướng này.",
-	["@qiance"] = "Có thể phát động »Khiêm Sách« của %src",
+	[":jujian"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể bỏ 1 lá phi cơ bản và chọn 1 người khác có cùng thế lực với bạn (giới hạn với mỗi người 1 lần), lệnh họ đổi phó tướng (bỏ qua giới hạn đổi phó tướng), nếu lá tướng sau khi đổi có Tỏa định kỹ, bạn và họ rút 2 lá.",
+	["@jianyan-choice"] = "»Kiến Ngôn«: Chọn loại bài hoặc màu mà bạn muốn tìm",
+	["@jianyan-give"] = "»Kiến Ngôn«: Chọn 1 người nam để đưa lá [%arg %arg2] cho họ",
+	["#JianyanChoice"] = "%from đã chọn %arg",
+	["#JianyanFail"] = "Không có %arg trong chồng bài và chồng bài bỏ, việc xử lý kết thúc",
+	["@jujian-card"] = "Có thể phát động »Cử Tiến«, bỏ 1 lá phi cơ bản và chọn 1 người đổi phó tướng"
     
     ["#wujing"] = "Hàn Mã Lưu Kim",
     ["wujing"] = "Ngô Cảnh",

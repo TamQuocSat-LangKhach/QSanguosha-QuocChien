@@ -19,7 +19,7 @@ return {
 	[":tunchu"] = "Giai đoạn rút bài, bạn có thể rút thêm 2 lá;\n▷ Bạn không thể sử dụng [Sát] trong lượt này;\n▶ Khi kết thúc giai đoạn rút bài, bạn đặt từ 1 đến 2 lá trên tay lên tướng này, gọi là [Lương]." ,
 	["shuliang"] = "Thâu Lương",
 	["@shuliang"] = "Có thể bỏ 1 [Lương] để cho %src rút 2 lá.",
-	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người khác có cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",
+	[":shuliang"] = "Khi bắt đầu giai đoạn kết thúc của 1 người có cùng thế lực với bạn, nếu khoảng cách từ bạn đến họ ≤ số [Lương], bạn có thể đưa 1 [Lương] vào chồng bài bỏ, lệnh họ rút 2 lá.",
 	
 		
     ["lingcao"] = "Lăng Tháo",
@@ -46,8 +46,8 @@ return {
 	["juzhan:deputy"] = "Phó tướng",
 
 
-	["SwitchYang"] = "Dương",
-	["SwitchYin"] = "Âm",
+	["SwitchYang"] = "Chẵn",
+	["SwitchYin"] = "Lẻ",
 
 	["#zhuran"] = "Bất Động Chi Đốc",
 	--["designer:zhuran"] = "",
@@ -66,6 +66,6 @@ return {
 	["biaozhao"] = "Biểu Triệu",
 	[":biaozhao"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 2 người khác có thể lực xác định khác nhau, thực hiện lần lượt:\n- Bạn xem như sử dụng [Tri Kỷ Tri Bỉ] với người thứ nhất;\n- Bạn giao 1 lá cho người thứ 2;\n- Bạn rút 1 lá.",
 	["yechou"] = "Nghiệp Cừu",
-	[":yechou"] = "Tỏa định kỹ: Khi bạn trận vong, bạn xem như sử dụng 3 [Sát] với người giết bạn;\n▷ [Sát] thứ 1 không thể bị hưởng ứng;\n▷ [Sát] thứ 2 bỏ qua phòng cụ của họ;\n▷ [Sát] thứ 3 +1 sát thương;\n▶ Nếu họ tiến vào trạng thái hấp hối bởi kỹ năng này, người cùng thế lực với họ ngoại trừ họ không thế sử dụng [Đào] với họ",
+	[":yechou"] = "Tỏa định kỹ: Khi bạn trận vong, bạn xem như sử dụng 3 [Sát] với người giết bạn;\n▷ [Sát] thứ 1 không thể bị hưởng ứng;\n▷ [Sát] thứ 2 nhận hiệu quả của [Thanh Công Kiếm];\n▷ [Sát] thứ 3 +1 sát thương;\n▶ Nếu họ tiến vào trạng thái hấp hối bởi kỹ năng này, người cùng thế lực với họ ngoại trừ họ không thế sử dụng [Đào] với họ",
 	["@biaozhao-give"] = "Biểu Triệu: Chọn 1 lá giao cho %dest",
 }

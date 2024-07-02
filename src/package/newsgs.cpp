@@ -3358,7 +3358,7 @@ QuanjianCard::QuanjianCard()
 
 bool QuanjianCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
-    return targets.isEmpty() && Self->isFriendWith(to_select);
+    return targets.isEmpty() && to_select != Self;
 }
 
 void QuanjianCard::onEffect(const CardEffectStruct &effect) const
@@ -3533,7 +3533,7 @@ public:
         else if (card->isKindOf("Nullification"))
             x = 4;
         else
-            x = GetHanNumFromString(Sanguosha->translate(card->objectName()));
+            x = GetNumFromString(Sanguosha->translate(card->objectName()));
 
         QString choice = room->askForChoice(player, objectName(), choices.join("+"), QVariant(),
                                             "@zhiren-choice:::" +QString::number(x), "busuan+discard+cancel");
@@ -3575,7 +3575,7 @@ public:
             else if (card->isKindOf("Nullification"))
                 x = 4;
             else
-                x = GetHanNumFromString(Sanguosha->translate(card->objectName()));
+                x = GetNumFromString(Sanguosha->translate(card->objectName()));
             QList<int> guanxing = room->getNCards(x);
             LogMessage log;
             log.type = "$ViewDrawPile";
@@ -3596,16 +3596,10 @@ public:
     }
 
 private:
-    static int GetHanNumFromString(QString str)     //获取汉字个数
+    static int GetNumFromString(QString str)
     {
-       int count = 0;
-       QRegExp regex = QRegExp(QString("^[\u4E00-\u9FA5]{0,}$"));
-       for(int i = 0; i < str.length(); i++)
-       {
-           if(regex.exactMatch(QString(str[i])))
-               count++;
-       }
-       return count;
+        QStringList words = str.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+        return words.count();
     }
 
 };

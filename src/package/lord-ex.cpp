@@ -954,117 +954,65 @@ class Biluan : public DistanceSkill
 public:
     Biluan() : DistanceSkill("biluan")
     {
-
     }
 
     virtual int getCorrect(const Player *, const Player *to) const
     {
         if (to->hasShownSkill(objectName()))
-            return qMax(to->getEquips().length(), 1);
-        else
-            return 0;
+            return to->getEquips().length();
+
+        return 0;
     }
 };
 
-class Lixia : public PhaseChangeSkill
+class Lixia : public TriggerSkill
 {
 public:
-    Lixia() : PhaseChangeSkill("lixia")
+    Lixia() : TriggerSkill("lixia")
     {
-
-    }
-    virtual QStringList triggerable(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer* &) const
-    {
-        return QStringList();
-    }
-
-    virtual bool cost(TriggerEvent, Room *, ServerPlayer *, QVariant &, ServerPlayer *) const
-    {
-        return false;
-    }
-
-    virtual bool onPhaseChange(ServerPlayer *) const
-    {
-        return false;
-    }
-};
-
-class LixiaOther : public PhaseChangeSkill
-{
-public:
-    LixiaOther() : PhaseChangeSkill("#lixia-other")
-    {
+        events << EventPhaseStart;
         frequency = Compulsory;
     }
 
     virtual TriggerList triggerable(TriggerEvent, Room *room, ServerPlayer *player, QVariant &) const
     {
         TriggerList skill_list;
-        if (player == NULL || player->isDead() || !player->hasShownOneGeneral() || player->getPhase() != Player::Start) return skill_list;
-        QList<ServerPlayer *> shixies = room->findPlayersBySkillName("lixia");
+        if (player == NULL || player->isDead() || player->getPhase() != Player::Start) return skill_list;
+        QList<ServerPlayer *> shixies = room->findPlayersBySkillName(objectName());
         foreach (ServerPlayer *shixie, shixies) {
-            if (!player->isFriendWith(shixie) && shixie->hasEquip() && shixie->hasShownSkill("lixia"))
+            if (!player->inMyAttackRange(shixie) && !shixie->willBeFriendWith(player))
                 skill_list.insert(shixie, QStringList(objectName()));
         }
         return skill_list;
     }
 
-    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *owner) const
+    virtual bool cost(TriggerEvent, Room *room, ServerPlayer *, QVariant &, ServerPlayer *ask_who) const
     {
-        if (room->askForChoice(player, "lixia", "yes+no", QVariant(), "@lixia:" + owner->objectName()) == "yes") {
-            LogMessage log;
-            log.type = "#InvokeOthersSkill";
-            log.from = player;
-            log.to << owner;
-            log.arg = "lixia";
-            room->sendLog(log);
-            room->broadcastSkillInvoke("lixia", owner);
-            room->notifySkillInvoked(owner, "lixia");
+        bool invoke = false;
+        if (ask_who->hasShownSkill(objectName())) {
+            invoke = true;
+            room->sendCompulsoryTriggerLog(ask_who, objectName());
+        } else
+            invoke = ask_who->askForSkillInvoke(this);
+
+        if (invoke) {
+            room->broadcastSkillInvoke(objectName(), qrand()%2+1, ask_who);
             return true;
         }
         return false;
     }
 
-    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *shixie) const
+    virtual bool effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &, ServerPlayer *ask_who) const
     {
-        if (!player->canDiscard(shixie, "e")) return false;
-        int card_id = room->askForCardChosen(player, shixie, "e", "lixia", false, Card::MethodDiscard);
-        CardMoveReason reason(CardMoveReason::S_REASON_DISMANTLE, player->objectName(), shixie->objectName(), "lixia", QString());
-        CardsMoveStruct dis_move(card_id, NULL, Player::DiscardPile, reason);
-        QVariant data = room->moveCardsSub(dis_move, true);
-        QVariantList move_datas = data.toList();
-        bool skip = true;
-        foreach (QVariant move_data, move_datas) {
-            CardsMoveOneTimeStruct move = move_data.value<CardsMoveOneTimeStruct>();
-            if (move.from == shixie && move.reason.m_reason == CardMoveReason::S_REASON_DISMANTLE) {
-                for (int i = 0; i < move.card_ids.length(); ++i) {
-                    const Card *card = Card::Parse(move.cards.at(i));
-                    if (card && (move.from_places.at(i) == Player::PlaceHand || move.from_places.at(i) == Player::PlaceEquip)) {
-                        skip = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if (skip) return false;
-        QStringList choices;
-        choices << "draw%from:"+ shixie->objectName() << "losehp";
-        QStringList all_choices = choices;
-        all_choices << "discard";
-        if (player->forceToDiscard(2, true, true).length() > 1)
-            choices << "discard";
-        QString choice = room->askForChoice(player, "lixia_effect", choices.join("+"), QVariant(), "@lixia-choose:" + shixie->objectName(), all_choices.join("+"));
-        if (choice.contains("draw"))
-            shixie->drawCards(2, "lixia");
-        if (choice == "losehp")
+        if (player->canDiscard(ask_who, "e") && room->askForChoice(player, "lixia_choose", "draw+discard", QVariant(), "@lixia-choose:" + ask_who->objectName()) == "discard") {
+            CardMoveReason reason = CardMoveReason(CardMoveReason::S_REASON_DISMANTLE, player->objectName(), ask_who->objectName(), objectName(), NULL);
+            const Card *card = Sanguosha->getCard(room->askForCardChosen(player, ask_who, "e", objectName(), false, Card::MethodDiscard));
+            room->broadcastSkillInvoke(objectName(), 3, ask_who);
+            room->throwCard(card, reason, ask_who, player);
             room->loseHp(player);
-        if (choice == "discard")
-            room->askForDiscard(player, "lixia_discard", 2, 2, false, true);
-        return false;
-    }
+        } else
+            ask_who->drawCards(1, objectName());
 
-    virtual bool onPhaseChange(ServerPlayer *) const
-    {
         return false;
     }
 };
@@ -5211,8 +5159,6 @@ LordEXPackage::LordEXPackage()
     General *shixie = new General(this, "shixie", "wu", 3);
     shixie->addSkill(new Biluan);
     shixie->addSkill(new Lixia);
-    shixie->addSkill(new LixiaOther);
-    insertRelatedSkills("lixia", "#lixia-other");
     shixie->setSubordinateKingdom("qun");
 
     General *tangzi = new General(this, "tangzi", "wei");

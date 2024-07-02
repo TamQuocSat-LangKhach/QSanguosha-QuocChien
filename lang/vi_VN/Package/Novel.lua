@@ -1,7 +1,7 @@
 return {
 	----N001
-	["taiga"] = "逢坂大河", 
-	["&taiga"] = "逢坂大河", 
+	["taiga"] = "Aisaka Taiga", 
+	["&taiga"] = "Aisaka Taiga", 
 	["#taiga"] = "掌中萌虎", 
 	["#&taiga"] = "龙与虎", 
 	["~taiga"] = "让....人火大啊", 
@@ -14,15 +14,15 @@ return {
 
 	["yexi"] = "夜袭",
 	[":yexi"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể xem X lá trên đầu chồng bài rút (X là số máu bạn đã mất), sắp xếp tùy ý những lá này lên đầu hoặc xuống đáy chồng bài rút, sau đó bạn chọn 1 mục:\n1. Đặt giới hạn máu của bạn thành số máu hiện tại, sau đó rút X lá;\n2. Phó tướng kỹ: Bỏ X lá trên tay bạn, sau đó hồi đầy máu.",	
-	["@yexi-discard"] = "你需弃置已损失体力值张数的牌，以发动“夜袭②”",
+	["@yexi-discard"] = "你需弃置已损失体力值张数的牌，以发动»夜袭②«",
 	["maxhptohp"] = "将体力上限调整至你当前体力值",
 	["hptomaxhp"] = "将体力值调整至体力上限",
-	["#Yeximaxhptohp"] = "%from 发动了 “<font color=\"yellow\"><b>夜袭</b></font>”，将体力上限从 %arg 调整到了 %arg2",
-	["#Yexihptomaxhp"] = "%from 发动了 “<font color=\"yellow\"><b>夜袭</b></font>”，将体力从 %arg2 调整到了 %arg",
+	["#Yeximaxhptohp"] = "%from 发动了 »<font color=\"yellow\"><b>夜袭</b></font>«，将体力上限从 %arg 调整到了 %arg2",
+	["#Yexihptomaxhp"] = "%from 发动了 »<font color=\"yellow\"><b>夜袭</b></font>«，将体力从 %arg2 调整到了 %arg",
 
 	----N002
-	["shana"] = "夏娜", 
-	["&shana"] = "夏娜", 
+	["shana"] = "Shana", 
+	["&shana"] = "Shana", 
 	["#shana"] = "炎发灼眼的讨伐者", 
 	["#&shana"] = "灼眼的夏娜", 
 	["~shana"] = "为什么，为什么，为什么你现在要说这些...", 
@@ -37,8 +37,8 @@ return {
 	[":honglian"] = "Sau khi bạn mất 1 lá trong vùng trang bị hoặc nhận sát thương thuộc tính, bạn có thể rút 1 lá.",
 	
 	----N003
-	["louise"] = "露易丝·瓦利埃尔", 
-	["&louise"] = "露易丝", 
+	["louise"] = "Louise de La Vallière", 
+	["&louise"] = "Louise", 
 	["#louise"] = "零之露易丝", 
 	["#&louise"] = "零之使魔", 
 	["~louise"] = "才人，才人，救我", 
@@ -48,7 +48,7 @@ return {
 
 	["lingjie"] = "零界",
 	[":lingjie"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người không trong trạng thái xích, lệnh tất cả người cùng thế lực với bạn và họ nhận trạng thái xích;\n-> Bạn rút bài bằng chênh lệnh số người giữa 2 thế lực, tối đa 3 lá.",
-	["#LingjieChain"] = "%from 的 “%arg” 生效，横置了 %to",
+	["#LingjieChain"] = "%from 的 »%arg« 生效，横置了 %to",
 
 	["xuwu"] = "虚无",
 	[":xuwu"] = "Giai đoạn ra bài chủ động hoặc sau khi bạn nhận sát thương, bạn có thể Tái chế 1 lá trang bị, sau đó nếu vùng trang bị của bạn không có bài, bạn rút 1 lá.",
@@ -59,8 +59,8 @@ return {
 	--[":bianchi"] = "出牌阶段限一次，你可以对一名攻击范围内的其他角色造成一点伤害，然后令其摸X张牌（X为该角色失去的体力值）。若该角色因此而进入濒死阶段，将你的武将牌叠置。",	
 	
 	----N004
-	["aria"] = "神崎·H·亚里亚", 
-	["&aria"] = "亚里亚", 
+	["aria"] = "Kanzaki H. Aria", 
+	["&aria"] = "Aria", 
 	["#aria"] = "双枪双剑", 
 	["#&aria"] = "绯弹的亚里亚", 
 	["~aria"] = "不要啊，不要啊，金次", 
@@ -74,15 +74,15 @@ return {
 
 	["wujie"] = "武戒",
 	[":wujie"] = "Khi bạn sử dụng 1 lá có điểm chẵn, bạn có thể lệnh 1 người thay đổi trạng thái xích.",
-	["@wujie-targetchoose"] = "你可以发动“武戒”：选择一名角色，将其副将的武将牌横置/重置",
-	["#WujieChain"] = "%from 发动了 “%arg”，将 %to 副将的武将牌横置",
-	["#WujieUnchain"] = "%from 发动了 “%arg”，将 %to 副将的武将牌重置",
+	["@wujie-targetchoose"] = "你可以发动»武戒«：选择一名角色，将其副将的武将牌横置/重置",
+	["#WujieChain"] = "%from 发动了 »%arg«，将 %to 副将的武将牌横置",
+	["#WujieUnchain"] = "%from 发动了 »%arg«，将 %to 副将的武将牌重置",
 	-- [":wujie"] = "每轮每名角色限一次，你造成或受到伤害时，若该伤害值不小于目标的体力值，伤害来源可以令目标回复一点体力，然后伤害来源获得一个额外的出牌阶段。",
 	-- ["@wujie_used"] = "武戒已用",
 
 	----N005
-	["holo"] = "赫萝", 
-	["&holo"] = "赫萝", 
+	["holo"] = "Holo", 
+	["&holo"] = "Holo", 
 	["#holo"] = "贤狼", 
 	["#&holo"] = "狼与香辛料",
 	["~holo"] = "真是的，怎么这么傻", 
@@ -92,14 +92,14 @@ return {
 
 	["jisui"] = "稷穗",
 	[":jisui"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn tuỳ ý người khác có thế lực xác định khác nhau, thực hiện lần lượt:\n- Lật bài từ chồng bài rút bằng số người còn sống;\n- Bạn và họ có thể hoán đổi 1 lá trên tay với 1 lá trong những lá đã lật;\n- Bạn chọn 1 mục:\n1. Đưa tất cả lá đã lật vào chồng bài bỏ;\n2. Đặt tất cả lá đã lật về chồng bài rút, sau đó xem như sử dụng [Ngũ Cốc Phong Đăng]",
-	["@jisui-exchange"] = "你可以选择一张手牌确定，然后选择“稷穗”展示的一张牌交换",
-	["#JisuiSwapCard"] = "%to 用手牌里的【%arg】与 %from 发动的 “<font color=\"yellow\"><b>稷穗</b></font>” 中的 “%arg2” 交换",
+	["@jisui-exchange"] = "你可以选择一张手牌确定，然后选择»稷穗«展示的一张牌交换",
+	["#JisuiSwapCard"] = "%to 用手牌里的【%arg】与 %from 发动的 »<font color=\"yellow\"><b>稷穗</b></font>« 中的 »%arg2« 交换",
 	["useag"] = "将这些牌置于牌堆顶，视为使用一张【五谷丰登】",
 	["discardput"] = "将这些牌置入弃牌堆",
 
 	----N006
-	["eru"] = "千反田爱瑠", 
-	["&eru"] = "千反田爱瑠", 
+	["eru"] = "Chitanda Eru", 
+	["&eru"] = "Chitanda Eru", 
 	["#eru"] = "千金大小姐", 
 	["#&eru"] = "冰菓", 
 	["~eru"] = "", 
@@ -118,8 +118,8 @@ return {
 	[":jinzhi"] = "Giai đoạn rút bài, bạn có thể không rút bài, tiến hành phán xét, sau đó lặp lại đến khi kết quả phán xét của bạn có điểm <= kết quả phán xét trước, sau đó thu lấy tất cả kết quả phán xét.",	
 
 	----N007
-	["ruri"] = "五更琉璃", 
-	["&ruri"] = "五更琉璃", 
+	["ruri"] = "Gokou Ruri", 
+	["&ruri"] = "Gokou Ruri", 
 	["#ruri"] = "堕天圣黑猫", 
 	["#&ruri"] = "我的妹妹不可能这么可爱！", 
 	["~ruri"] = "", 
@@ -132,8 +132,8 @@ return {
 	["$dushe"] = "",
 
 	----N008
-	["a_azusa"] = "小豆梓", 
-	["&a_azusa"] = "小豆梓", 
+	["a_azusa"] = "Azuki Azusa", 
+	["&a_azusa"] = "Azuki Azusa", 
 	["#a_azusa"] = "小豆子", 
 	["#&a_azusa"] = "变态王子与不笑猫。", 
 	["~a_azusa"] = "为什么要欺骗别人呢，别再跟我说话了", 
@@ -152,8 +152,8 @@ return {
 	["@zhenhao"] = "真壕",
 
 	----N009
-	["rikka"] = "小鸟游六花", 
-	["&rikka"] = "小鸟游六花", 
+	["rikka"] = "Takanashi Rikka", 
+	["&rikka"] = "Takanashi Rikka", 
 	["#rikka"] = "邪王真眼", 
 	["#&rikka"] = "中二病也要谈恋爱！",
 	["~rikka"] = "", 
@@ -163,7 +163,7 @@ return {
 
 	["fangzhurikka"] = "放逐",
 	[":fangzhurikka"] = "Sau khi bạn nhận sát thương, ứng với mỗi sát thương, bạn có thể lệnh 1 người khác rút X lá (X là số máu bạn đã mất, tối đa 3), sau đó lệnh họ thay đổi trạng thái chồng tướng.",
-	["fangzhu_rikka-invoke"] = "你可以发动“放逐”<br/> <b>操作提示</b>: 选择一名其他角色→点击确定<br/>",
+	["fangzhu_rikka-invoke"] = "你可以发动»放逐«<br/> <b>操作提示</b>: 选择一名其他角色→点击确定<br/>",
 
 	["xieyu"] = "邪域",
 	[":xieyu"] = "Trận pháp kỹ: Quan hệ đội hình: Người cùng đội hình với bạn sử dụng công cụ phổ thông phân loại chỉ định đơn mục tiêu có thể chỉ định thêm 1 mục tiêu.",
@@ -181,15 +181,15 @@ return {
 
 	["duran"] = "独然",
 	[":duran"] = "Toả định kỹ:\n** Khoảng cách từ người có số máu >= bạn đến bạn +1.\n** Khoảng cách từ người có giới hạn máu >= bạn đến bạn +1;\n** Khi bắt đầu giai đoạn ra bài, bạn rút X lá (X là số thế lực không có bạn trong tầm đánh).",
-	["#DuranCounter"] = "%from 发动“%arg2”，攻击范围内没有 %from 的其他势力有 %arg 个",
+	["#DuranCounter"] = "%from 发动»%arg2«，攻击范围内没有 %from 的其他势力有 %arg 个",
 	["#duran-dis"] = "独然",
 
 	["jieao"] = "Kiệt Ngạo",
 	[":jieao"] = "Toả định kỹ: Trước khi bạn chấp hành thưởng phạt, lệnh người vừa trận vong trở thành Dã tâm gia.",
 	
 	----N011
-	["y_yui"] = "由比滨结衣", 
-	["&y_yui"] = "由比滨结衣",
+	["y_yui"] = "Yuigahama Yui", 
+	["&y_yui"] = "Yuigahama Yui",
 	["#y_yui"] = "团子", 
 	["#&y_yui"] = "我的青春恋爱物语果然有问题",
 	["~y_yui"] = "", 
@@ -201,15 +201,15 @@ return {
 	[":xianli"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần, bạn có thể chọn 1 người có tướng úp, lệnh họ chọn 1 mục:\n1. Lệnh bạn rút 1 lá;\n2. Mở 1 tướng và bỏ 1 lá.",
 	["drawonecard"] = "令来源摸一张牌",
 	["showonegeneral"] = "明置一张武将牌并弃置一张牌",
-	["@xianli-askdiscard"] = "受到“鲜丽”的影响，请选择一张牌弃置",
+	["@xianli-askdiscard"] = "受到»鲜丽«的影响，请选择一张牌弃置",
 
 	["yuanxin"] = "援心",
 	[":yuanxin"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu lượt này bạn đã hồi máu, bạn có thể mất 1 máu, lệnh 1 người khác hồi 1 máu, sau đó bạn rút 2 lá.",
-	["@yuanxin_choosetarget"] = "请选择“援心”的目标角色",
+	["@yuanxin_choosetarget"] = "请选择»援心«的目标角色",
 
 	----N012
-	["mikoto"] = "御坂美琴", 
-	["&mikoto"] = "御坂美琴", 
+	["mikoto"] = "Misaka Mikoto", 
+	["&mikoto"] = "Misaka Mikoto", 
 	["#mikoto"] = "超电磁炮", 
 	["#&mikoto"] = "某科学的超电磁炮", 
 	["~mikoto"] = "救救我。。。", 
@@ -219,19 +219,19 @@ return {
 
 	["dianji"] = "电击",
 	[":dianji"] = "Khi kết thúc giai đoạn bỏ bài, nếu trong lượt này bạn chưa sử dụng [Sát], bạn có thể thay đổi trạng thái chồng tướng, gây 1 sát thương Lôi cho 1 người.",
-	["@dianji_target"] = "“电击”生效，请选择一名角色对其造成1点雷电伤害",
+	["@dianji_target"] = "»电击«生效，请选择一名角色对其造成1点雷电伤害",
 
 	["cichang"] = "磁场",
 	[":cichang"] = "Sau khi 1 người nhận trạng thái chồng tướng, bạn có thể bỏ 1 lá cơ bản, lệnh họ thoát khỏi trạng thái chồng tướng;\n-> Nếu lá bạn bỏ là:\n* [Sát] thuộc tính: Bạn có thể lệnh 2 người nhận trạng thái xích;\n* [Đào]/[Tửu]: Bạn rút 2 lá.",
-	["@cichang_discard"] = "你可以弃置一张基本牌，发动“磁场”",
+	["@cichang_discard"] = "你可以弃置一张基本牌，发动»磁场«",
 	["@cichang_choosetarget"] = "请选择两名角色，将这些角色横置",
-	["#CichangTurnFaceUp"] = "%from 发动了 “%arg”，将 %to 的武将牌平置了",
-	["#CichangTurnFaceDown"] = "%from 发动了 “%arg”，将 %to 的武将牌叠置了", -- its face down status
-	["#CichangChain"] = "%from 发动了 “%arg”，将 %to 的武将牌横置了",
+	["#CichangTurnFaceUp"] = "%from 发动了 »%arg«，将 %to 的武将牌平置了",
+	["#CichangTurnFaceDown"] = "%from 发动了 »%arg«，将 %to 的武将牌叠置了", -- its face down status
+	["#CichangChain"] = "%from 发动了 »%arg«，将 %to 的武将牌横置了",
 
 	----N013
-	["ruiko"] = "佐天泪子", 
-	["&ruiko"] = "佐天泪子", 
+	["ruiko"] = "Saten Ruiko", 
+	["&ruiko"] = "Saten Ruiko", 
 	["#ruiko"] = "第四波动", 
 	["#&ruiko"] = "某科学的超电磁炮", 
 	["~ruiko"] = "", 
@@ -240,9 +240,9 @@ return {
 	["illustrator:ruiko"] = "9854031",
 
 	-- ["xianqun"] = "掀裙",
-	-- [":xianqun"] = "出牌阶段限一次，你可以指定一名装备区里有牌的其他角色，你将该角色装备区里的一张牌置于其武将牌上，称为“裙”。该角色的下个回合结束后，将“裙”置入该角色的装备区里。",	
+	-- [":xianqun"] = "出牌阶段限一次，你可以指定一名装备区里有牌的其他角色，你将该角色装备区里的一张牌置于其武将牌上，称为»裙«。该角色的下个回合结束后，将»裙«置入该角色的装备区里。",	
 	-- ["ruiko_qun"] = "裙",
-	-- ["$Xianqun_back"] = "%from 的“%arg”被触发， %arg2 的%card被置入装备区。",
+	-- ["$Xianqun_back"] = "%from 的»%arg«被触发， %arg2 的%card被置入装备区。",
 
 	["kongli"] = "空力",
 	[":kongli"] = "Giới hạn 1 lần cho mỗi người trong mỗi lượt, sau khi 1 người nhận trạng thái xích hoặc trạng thái chồng tướng, bạn có thể lệnh họ rút 1 lá.",
@@ -251,8 +251,8 @@ return {
 	[":hefeng"] = "Lượt mỗi người giới hạn 1 lần, khi bạn cần sử dụng [Đào], bạn có thể chuyển hóa sử dụng tùy ý bài trên tay -> [Đào] (Ít nhất 1 lá và cần sử dụng số lá để khiến bạn có số bài trên tay ít nhất).",
 
 	----N014
-	["asuna"] = "结城明日奈", 
-	["&asuna"] = "亚丝娜", 
+	["asuna"] = "Yuuki Asuna", 
+	["&asuna"] = "Asuna", 
 	["#asuna"] = "闪光",
 	["#&asuna"] = "刀剑神域",
 	["~asuna"] = "对不起...永别了...", 
@@ -268,8 +268,8 @@ return {
 	["shuo"] = "Thước",
 
 	----N015
-	["hitagi"] = "战场原黑仪", 
-	["&hitagi"] = "战场原黑仪", 
+	["hitagi"] = "Senjougahara Hitagi", 
+	["&hitagi"] = "Senjougahara Hitagi", 
 	["#hitagi"] = "冷傲之蟹", 
 	["#&hitagi"] = "<物语>系列",
 	["~hitagi"] = "", 
@@ -287,10 +287,10 @@ return {
 	[":zhongxie"] = "Tỏa định kỹ: Nếu bạn đã mở tất cả tướng nếu tổng máu của 2 lá tướng là:\n* Số có phần thập phân: Sửa mô tả của >>Khuynh Dụ<< thành lệnh bạn và nguồn sát thương rút 1 lá;\n* Số nguyên: Sửa mô tả của >>Bạo Ngôn<< bỏ giới hạn 1 lần.",
 
 	----N016
-	["watashi"] = "人类小姐", 
-	["&watashi"] = "人类小姐", 
+	["watashi"] = "Watashi", 
+	["&watashi"] = "Watashi", 
 	["#watashi"] = "我", 
-	["#&watashi"] = "人类衰退之后", 
+	["#&watashi"] = "Jinrui wa Suitaishimashita", 
 	["~watashi"] = "那就这样吧，再见", 
 	["designer:watashi"] = "钉子",
 	["cv:watashi"] = "中原麻衣",
@@ -298,46 +298,46 @@ return {
 
 	["tiaoting"] = "Điều Đình",
 	[":tiaoting"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể chọn 2 người khác có thế lực xác định khác nhau;\n=> Đến khi bắt đầu lượt tiếp theo của bạn, khi lần đầu 1 trong 2 người đó gây sát thương cho người còn lại, bạn chặn sát thương này, sau đó họ rút 2 lá.",
-	["@tiaoting-targetchoose"] = "你可以发动“Điều Đình”，指定两名势力不同的其他角色",
+	["@tiaoting-targetchoose"] = "你可以发动»Điều Đình«，指定两名势力不同的其他角色",
 	["~tiaoting"] = "点击两名势力不同的其他角色->点击确定",
-	["#TiaotingArmistice"] = "%from 发动了 “%arg”，指定了 %to",
-	["#TiaotingNoDamage"] = "%from 发动了 “%arg”，%to 之间造成的第一次伤害将被防止，且各摸一张牌。",
+	["#TiaotingArmistice"] = "%from 发动了 »%arg«，指定了 %to",
+	["#TiaotingNoDamage"] = "%from 发动了 »%arg«，%to 之间造成的第一次伤害将被防止，且各摸一张牌。",
 
 	["jilu"] = "记录",
-	[":jilu"] = "Khi bắt đầu giai đoạn kết thúc của 1 người được chọn bởi >>Điều Đình<<, nếu bạn chưa phát động >>Điều Đình<< trong lượt này, bạn có thể rút 1 lá.",
+	[":jilu"] = "Khi bắt đầu giai đoạn kết thúc của 1 người được chọn bởi >>Điều Đình<<, nếu bạn chưa phát động hiệu quả của >>Điều Đình<< trong lượt này, bạn có thể rút 1 lá.",
 
 	----N017
-	["haruhi"] = "涼宮春日", 
-	["&haruhi"] = "涼宮春日", 
+	["haruhi"] = "Suzumiya Haruhi", 
+	["&haruhi"] = "Suzumiya Haruhi", 
 	["#haruhi"] = "团长大人", 
-	["#&haruhi"] = "凉宫春日的忧郁", 
+	["#&haruhi"] = "The Melancholy of Haruhi Suzumiya", 
 	["~haruhi"] = "", 
 	["designer:haruhi"] = "钉子",
 	["cv:haruhi"] = "平野綾",
 	["illustrator:haruhi"] = "46397378",
 
 	["zhizun"] = "至尊",
-	[":zhizun"] = "锁定技，若此武将牌明置，你所属的势力成为唯一的大势力。",
+	[":zhizun"] = "Tỏa định kỹ: Nếu không có [Ngọc Tỷ] trong vùng trang bị của tất cả mọi người, thế lực của bạn là đại thế lực duy nhất.",
 
 	["gexin"] = "革新",
-	[":gexin"] = "出牌阶段，若上个进行回合的角色不为你，你可以将一张黑色牌当【挟天子以令诸侯】使用。",
+	[":gexin"] = "Giai đoạn ra bài chủ động: Nếu lượt trước không phải lượt của bạn, bạn có thể chuyển hóa sử dụng lá Đen -> [Hiệp Thiên Tử Dĩ Lệnh Chư Hầu]",
 
 	----N018
-	["yuki"] = "长门有希", 
-	["&yuki"] = "长门有希", 
+	["yuki"] = "Nagato Yuki", 
+	["&yuki"] = "Nagato Yuki", 
 	["#yuki"] = "资讯统合思念体", 
-	["#&yuki"] = "凉宫春日的忧郁", 
+	["#&yuki"] = "The Melancholy of Haruhi Suzumiya", 
 	["~yuki"] = "", 
 	["designer:yuki"] = "钉子",
 	["cv:yuki"] = "茅原実里",
 	["illustrator:yuki"] = "10414653",
 
 	["zixun"] = "资讯",
-	[":zixun"] = "锁定技，摸牌阶段，你改为摸X张牌（X为你此武将明置的回合数，且至多为3）。",
+	[":zixun"] = "Tỏa định kỹ: Giai đoạn rút bài, số lá bạn rút là X (X là số lần bắt đầu lượt của bạn từ khi tướng này được mở, tối đa 3).",
 	["@zixun"] = "资讯",
 
-	["tonghe"] = "统合",
-	[":tonghe"] = "副将技，此武将牌上单独的阴阳鱼个数-1。出牌阶段限一次，你可以令与你距离为一的角色和与其势力相同的角色各弃置一张牌，如果该势力为大势力，则你令这些角色各摸一张牌。",
-	["@tonghe_discard"] = "受到“统合”的影响，你需要弃置一张牌",
+	["tonghe"] = "Thống Hợp",
+	[":tonghe"] = "Phó tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người ở khoảng cách 1, thực hiện lần lượt:\n- Bạn lệnh tất cả người cùng thế lực với họ bỏ 1 lá;\n- Nếu họ thuộc đại thế lực, bạn lệnh tất cả người cùng thế lực với họ rút 1 lá.",
+	["@tonghe_discard"] = "»Thống Hợp« có hiệu quả, bỏ 1 lá",
 
 }

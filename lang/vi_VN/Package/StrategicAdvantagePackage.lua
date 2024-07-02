@@ -55,7 +55,7 @@ return {
 
 	["JadeSeal"] = "Ngọc Tỉ",
 	[":JadeSeal"] = "Bài Trang bị - Bảo vật\n\n<b>Kỹ năng</b>: Tỏa định kỹ: Nếu bạn đã có thế lực:\n" ..
-	"• Thế lực của bạn là Đại thế lực duy nhất, tất cả thế lực khác không có [Ngọc Tỉ] là Tiểu Thế Lực.\n" ..
+	"• Thế lực của bạn là Đại thế lực duy nhất.\n" ..
 	"• Giai đoạn rút bài, bạn rút thêm 1 lá.\n" ..
 	"• Khi bắt đầu giai đoạn ra bài, bạn xem như sử dụng 1 lá [Tri Bỉ Tri Kỉ].\n" ,
 	["@JadeSeal"] = "Phát động [Ngọc Tỉ], xem như dùng 1 [Tri Kỷ Tri Bỉ]",
