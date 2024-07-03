@@ -172,7 +172,7 @@ return {
 	----C010
 	["tsukasa"] = "Hiiragi Tsukasa", 
 	["&tsukasa"] = "Hiiragi Tsukasa", 
-	["#tsukasa"] = "魔醋少女", 
+	["#tsukasa"] = "Ma Thố Thiếu Nữ", 
 	["#&tsukasa"] = "Lucky Star", 
 	["~tsukasa"] = "", 
 	["designer:tsukasa"] = "official designer",
@@ -188,47 +188,47 @@ return {
 	----C011
 	["kagami"] = "Hiiragi Kagami", 
 	["&kagami"] = "Hiiragi Kagami", 
-	["#kagami"] = "傲娇巫女", 
+	["#kagami"] = "Ngạo Kiều Vu Nữ", 
 	["#&kagami"] = "Lucky Star", 
 	["~kagami"] = "", 
 	["designer:kagami"] = "hmqgg",
 	["cv:kagami"] = "小清水亜美",
 	["illustrator:kagami"] = "45832131",
 
-	["tsukkomi"] = "突込",
+	["tsukkomi"] = "Đột Nhập",
 	[":tsukkomi"] = "Một lần trong 1 giai đoạn, khi bạn cần sử dụng [Sát]/[Vô Giải Khả Kích], nếu tướng này đang úp, bạn có thể mở tướng này, xem như sử dụng lá đó.",
 
-	["aolin"] = "傲凛",
+	["aolin"] = "Ngạo Lẫm",
 	[":aolin"] = "Sau khi bạn gây sát thương cho mục tiêu của [Sát], nếu bạn đã mở tất cả tướng, bạn có thể úp tướng này và rút 1 lá.",
 
 	----C012
 	["konata"] = "Izumi Konata", 
 	["&konata"] = "Izumi Konata", 
-	["#konata"] = "御宅之魂", 
+	["#konata"] = "Ngự Trạch Chi Hồn", 
 	["#&konata"] = "Lucky Star", 
 	["~konata"] = "", 
 	["designer:konata"] = "3D吧张鲁",
 	["cv:konata"] = "広橋涼",
 	["illustrator:konata"] = "official pics",
 
-	["xipin"] = "惜贫",
+	["xipin"] = "Tích Bần",
 	[":xipin"] = "Khi bạn được yêu cầu sử dụng/đánh ra [Thiểm], bạn có thể yêu cầu tất cả người khác giao cho bạn 1 lá;\n▷ Nếu không có ai giao bài cho bạn, bạn xem như đã sử dụng/đánh ra 1 [Thiểm].",
-	["@xipin_give"] = "请选择一张手牌，或取消",
+	["@xipin_give"] = "Tích Bần: Có thể giao 1 lá cho %src",
 
-	["zhaihun"] = "宅魂",
+	["zhaihun"] = "Trạch Hồn",
 	[":zhaihun"] = "Khi kết thúc giai đoạn bỏ bài, những người khác trong tầm đánh của bạn có thể thu lấy 1 lá đã bị bỏ trong giai đoạn này;\n▶ Sau khi 1 người thế lực xác định khác bạn thu lấy lá Đỏ bởi kỹ năng này, bạn hồi 1 máu.",
 	
 	----C013
 	["ika"] = "Ika Musume", 
 	["&ika"] = "Ika Musume", 
-	["#ika"] = "花枝招展", 
+	["#ika"] = "Hoa Chi Chiêu Triển", 
 	["#&ika"] = "Shinryaku! Ika Musume", 
 	["~ika"] = "", 
 	["designer:ika"] = "hmqgg",
 	["cv:ika"] = "金元寿子",
 	["illustrator:ika"] = "22329355",
 
-	["qinlve"] = "侵略",
+	["qinlve"] = "Xâm Lược",
 	[":qinlve"] = "Bạn có thể bỏ qua giai đoạn ra bài và đấu điểm với 1 người khác chưa bị đấu điểm bởi kỹ năng này trong lượt này, nếu bạn thắng, xem như bạn sử dụng 1 [Sát] với họ và bạn có thể lặp lại quá trình này.",
 	["@qinlve_target"] = "你可以指定一名其他角色发动»侵略«",
 	
@@ -244,12 +244,12 @@ return {
 
 	["yujian"] = "Dự Kiến",
 	[":yujian"] = "Sau khi bạn xác định mục tiêu của [Sát], bạn dự đoán 1 mục mà chưa chọn trong lượt này:\n1. [Sát] này có gây sát thương;\n2. [Sát] này không gây sát thương;\n▶ Sau khi kết toán xong [Sát] này, nếu dự đoán của bạn là đúng, bạn rút 2 lá.",
-	["forecastWillDamage"] = "此【杀】造成伤害",
-	["forecastWontDamage"] = "此【杀】未造成伤害",
-	["$YujianAnnounce"] = "%from 发动了»<font color=\"yellow\"><b>预见</b></font>«,声明了 %arg",
+	["forecastWillDamage"] = "[Sát] này gây sát thương",
+	["forecastWontDamage"] = "[Sát] này không gây sát thương",
+	["$YujianAnnounce"] = "%from đã phát động »<font color=\"yellow\"><b>Dự Kiến</b></font>«, lựa chọn %arg",
 
 	["tiruo"] = "Thể Nhược",
-	["#Tiruo"] = "%from 的»<font color=\"yellow\"><b>体弱</b></font>«被触发，伤害从 %arg 点减少至 %arg2 点",
+	["#Tiruo"] = "%from đã phát động »<font color=\"yellow\"><b>Thể Nhược</b></font>«, sát thương từ %arg giảm xuống %arg2",
 	[":tiruo"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận, nếu nguồn sát thương có tướng chưa mở, lệnh sát thương này -1.",
 	-- ["@tiruo_discard"] = "%src 对你使用【杀】，你可以弃置一张牌发动»体弱«取消之",
 
@@ -265,17 +265,15 @@ return {
 
 	["lingshang"] = "Rinshan",
 	[":lingshang"] = "Sau bạn nhận được bài, bạn có thể bỏ X lá trên tay có cùng chất (X là 4 - Số lá có cùng chất tương ứng trong vùng trang bị), bạn nhận 1 [Kan] và rút 1 lá.",
-	["@lingshang"] = "你可以弃置X张花色相同的牌发动»岭上«",
-	["~lingshang"] = "选择X张花色相同的牌→点击确定",
-	["@gang"] = "杠",
+	["@lingshang"] = "Có thể phát động »Rinshan«",
+	["@gang"] = "Kan",
 
 	["kaihua"] = "Kaihou",
 	[":kaihua"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ 1 [Kan] và chọn tùy ý số người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 trang bị;\n2. Lệnh bạn hồi 1 máu;\n3. Lệnh bạn gây cho họ 1 sát thương.",
-	["@kaihua-targetchoose"] = "请选择任意数量的其他角色作为»开花«的目标",
-	["@kaihua_pass"] = "受到»开花«的影响，你需要选择一张装备牌并点击»确定«，或点»取消«选择以下一项：<br />1. %src 回复1点体力<br />2. %src 对你造成1点伤害",
-	["kaihuaDamage"] = "你受到1点伤害",
-	["kaihuaRecover"] = "其回复1点体力", 
-	["@kaihuaTimes"] = "»开花«发动次数",
+	["@kaihua-targetchoose"] = "Chọn mục tiêu cho »Kaihou«",
+	["@kaihua_pass"] = "»Kaihou«: Chọn 1 mục 1 trang bị giao cho %src, hoặc \"Hủy\" để chọn mục còn lại",
+	["kaihuaDamage"] = "Nhận 1 sát thương",
+	["kaihuaRecover"] = "Lệnh hồi máu", 
 	
 	----C016
 	["nodoka"] = "Haramura Nodoka", 
@@ -289,13 +287,12 @@ return {
 
 	["sugong"] = "Tốc Công",
 	[":sugong"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể bỏ 1 lá phi cơ bản, tiến hành 1 giai đoạn ra bài.",
-	["@sugong_discard"] = "你可以弃置一张非基本牌，发动»速攻«",
+	["@sugong_discard"] = "Có thể bỏ 1 lá phi cơ bản để phát động »Tốc Công«",
 
 	["suanlv"] = "Toán Suất",
 	[":suanlv"] = "Khi bắt đầu giai đoạn bỏ bài của người khác, bạn có thể đặt 1 lá trên tay bạn lên tướng này, gọi là [Toán];\n▶ Khi kết thúc giai đoạn bỏ bài của người khác, bạn loại bỏ [Toán] và thu lấy tất cả lá cùng màu với [Toán] đã bỏ đi trong giai đoạn này.",
-	["@suanlv"] = "你可以选择一张牌置于你的武将牌上发动»算率«",
-	["~suanlv"] = "选择一张牌→点击确定",
-	["suan"] = "算",
+	["@suanlv"] = "Có thể chọn 1 lá để phát động »Toán Suất«",
+	["suan"] = "Toán",
 
 	----C017
 	["shizuno"] = "Takakamo Shizuno", 
@@ -326,15 +323,14 @@ return {
 	["kongyun"] = "Khống Vận",
 	[":kongyun"] = "Trước khi phán xét của 1 người có hiệu lực, nếu kết quả phán xét có màu:\n* Đỏ: Bạn có thể đánh ra 1 lá trên tay để hoán đổi kết quả phán xét đó;\n* Đen: Bạn có thể mở lá dưới đáy chồng bài rút và hoán đổi kết quả phán xét đó.",
 	["@kongyun-card"] = CommonTranslationTable["@askforretrial"],
-	["~kongyun"] = "选择一张手牌→点击确定",
 
 	["laoyue"] = "Lao Nguyệt",
 	[":laoyue"] = "Ngoài lượt của bạn, khi bạn được yêu cầu sử dụng/đánh ra bài cơ bản, bạn có thể xem 2 lá dưới đáy chồng bài rút, sau đó bạn có thể chọn 1 mục:\n1. Bạn sử dụng/đánh ra lá cơ bản có tên tương ứng trong đó;\n2. Hoán đổi chúng với 2 lá trên tay bạn;\n3. Hoán đổi chúng với 2 lá trên đầu chồng bài rút.",
-	["@laoyue-put"] = "请选择两张手牌用于替换牌堆底的两张牌",
-	["laoyue:use"] = "使用或打出",
-	["laoyue:put"] = "用两张手牌替换",
-	["laoyue:replace"] = "用牌堆顶的两张牌替换",
-	["#LaoyueUse"] = "%from 发动 %arg 使用/打出了牌堆底的第 %arg2 张牌",
-	["#LaoyuePut"] = "%from 发动 %arg 用两张手牌替换了牌堆底的两张牌",
-	["#LaoyueReplace"] = "%from 发动 %arg 用牌堆顶的两张牌替换了牌堆底的两张牌",
+	["@laoyue-put"] = "Chọn 2 lá trên tay để thay thế",
+	["laoyue:use"] = "Sử dụng/đánh ra",
+	["laoyue:put"] = "Hoán đổi với 2 lá trên tay",
+	["laoyue:replace"] = "Hoán đổi với đầu chồng bài",
+	["#LaoyueUse"] = "%from đã phát động %arg, sử dụng/đánh ra %arg2",
+	["#LaoyuePut"] = "%from đã phát động %arg, thay thế bằng 2 lá trên tay",
+	["#LaoyueReplace"] = "%from đã phát động %arg, thay thế bằng 2 lá trên đầu chồng bài rút",
 }
