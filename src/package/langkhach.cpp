@@ -217,10 +217,10 @@ public:
     }
 };
 
-class MilitaryOrderSkill : public TriggerSkill
+class MilitaryOrderSkill : public CardTriggerSkill
 {
 public:
-    MilitaryOrderSkill() : TriggerSkill("military_order")
+    MilitaryOrderSkill() : CardTriggerSkill("military_order")
     {
         events << EventPhaseStart << Death;
         global = true;

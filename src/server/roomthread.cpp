@@ -313,21 +313,26 @@ bool RoomThread::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *ta
                         QStringList who_skills = trigger_who.value(p);
                         if (who_skills.isEmpty()) break;
                         bool has_compulsory = false;
+                        QStringList non_card_skill;
                         foreach (const QString &skill, who_skills) {
                             const TriggerSkill *trskill = Sanguosha->getTriggerSkill(skill); // "yiji"
                             if (!trskill)
                                 trskill = Sanguosha->getTriggerSkill(skill.split("'").last()); // "sgs1'songwei"
                             if (!trskill)
                                 trskill = Sanguosha->getTriggerSkill(skill.split("->").first()); // "tieqi->sgs4+sgs8+sgs1+sgs2"
-                            if (trskill && (p->hasShownSkill(trskill) || trskill->isGlobal() || trskill->isEquipskill())
+                            if (trskill && !trskill->isCardskill()) {
+                                non_card_skill << skill;
+                            }
+                            if (!has_compulsory && trskill && (p->hasShownSkill(trskill) || trskill->isGlobal() || trskill->isEquipskill())
                                 && (trskill->getFrequency() == Skill::Compulsory
                                 //|| trskill->getFrequency() == Skill::NotCompulsory //for Paoxia, Anjian, etc.
                                 || trskill->getFrequency() == Skill::Wake)) {
                                 has_compulsory = true;
-                                break;
                             }
                         }
                         will_trigger.clear();
+                        if (!non_card_skill.isEmpty())
+                            who_skills = non_card_skill;
                         QStringList names, back_up;
                         foreach (const QString &skill_name, who_skills) {
                             if (skill_name.contains("->")) { // "tieqi->sgs4+sgs8+sgs1+sgs2"

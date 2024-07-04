@@ -291,6 +291,11 @@ bool Skill::relateToKingdom(const QString &kingdom) const
     return attached_kingdom.isEmpty() || attached_kingdom == kingdom;
 }
 
+bool Skill::isCardskill() const
+{
+    return inherits("CardTriggerSkill");
+}
+
 bool Skill::isEquipskill() const
 {
     return (inherits("WeaponSkill") || inherits("ArmorSkill") || inherits("TreasureSkill"));
@@ -951,14 +956,14 @@ void DetachEffectSkill::onSkillDetached(Room *, ServerPlayer *, QVariant &) cons
 {
 }
 
-WeaponSkill::WeaponSkill(const QString &name)
+CardTriggerSkill::CardTriggerSkill(const QString &name)
     : TriggerSkill(name)
 {
 }
 
-int WeaponSkill::getPriority() const
+WeaponSkill::WeaponSkill(const QString &name)
+    : CardTriggerSkill(name)
 {
-    return 2;
 }
 
 bool WeaponSkill::triggerable(const ServerPlayer *target) const
@@ -969,13 +974,8 @@ bool WeaponSkill::triggerable(const ServerPlayer *target) const
 }
 
 ArmorSkill::ArmorSkill(const QString &name)
-    : TriggerSkill(name)
+    : CardTriggerSkill(name)
 {
-}
-
-int ArmorSkill::getPriority() const
-{
-    return 2;
 }
 
 bool ArmorSkill::triggerable(const ServerPlayer *target) const
@@ -1011,13 +1011,8 @@ bool ArmorSkill::cost(Room *room, ServerPlayer *target, QVariant &data) const
 }
 
 TreasureSkill::TreasureSkill(const QString &name)
-    : TriggerSkill(name)
+    : CardTriggerSkill(name)
 {
-}
-
-int TreasureSkill::getPriority() const
-{
-    return 2;
 }
 
 bool TreasureSkill::triggerable(const ServerPlayer *target) const

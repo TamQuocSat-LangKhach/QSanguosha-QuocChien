@@ -56,18 +56,18 @@ void Key::onEffect(const CardEffectStruct &effect) const
 }
 
 //for managing anything needed to be done with key
-class keyCardGlobalManagement : public TriggerSkill
+class keyCardGlobalManagement : public CardTriggerSkill
 {
 public:
-    keyCardGlobalManagement() : TriggerSkill("keyCard-global")
+    keyCardGlobalManagement() : CardTriggerSkill("keyCard-global")
     {
         events << CardsMoveOneTime << Damaged;
         global = true;
     }
 
-    virtual QMap<ServerPlayer *, QStringList> triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
+    virtual TriggerList triggerable(TriggerEvent event, Room *room, ServerPlayer *player, QVariant &data) const
     {
-        QMap<ServerPlayer *, QStringList> skill_list;
+        TriggerList skill_list;
         if (event == CardsMoveOneTime)
         {
             CardsMoveOneTimeStruct move = data.value<CardsMoveOneTimeStruct>();

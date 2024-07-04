@@ -1086,18 +1086,13 @@ void ThreatenEmperor::onEffect(const CardEffectStruct &effect) const
     effect.to->setMark("ThreatenEmperorExtraTurn", 1);
 }
 
-class ThreatenEmperorSkill : public TriggerSkill
+class ThreatenEmperorSkill : public CardTriggerSkill
 {
 public:
-    ThreatenEmperorSkill() : TriggerSkill("threaten_emperor")
+    ThreatenEmperorSkill() : CardTriggerSkill("threaten_emperor")
     {
         events << EventPhaseEnd << EventPhaseStart;
         global = true;
-    }
-
-    virtual int getPriority() const
-    {
-        return 1;
     }
 
     virtual void record(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &) const

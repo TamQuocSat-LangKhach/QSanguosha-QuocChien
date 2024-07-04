@@ -73,6 +73,7 @@ public:
     virtual bool relateToPlace(bool head = true) const;
     virtual bool relateToKingdom(const QString &kingdom) const;
 
+    virtual bool isCardskill() const;
     virtual bool isEquipskill() const;
 
     virtual bool buttonVisible(const QString &button_name = QString()) const;
@@ -443,37 +444,42 @@ private:
     QString name, pile_name;
 };
 
-class WeaponSkill : public TriggerSkill
+class CardTriggerSkill : public TriggerSkill
+{
+    Q_OBJECT
+
+public:
+    CardTriggerSkill(const QString &name);
+};
+
+class WeaponSkill : public CardTriggerSkill
 {
     Q_OBJECT
 
 public:
     WeaponSkill(const QString &name);
 
-    virtual int getPriority() const;
     virtual bool triggerable(const ServerPlayer *target) const;
 };
 
-class ArmorSkill : public TriggerSkill
+class ArmorSkill : public CardTriggerSkill
 {
     Q_OBJECT
 
 public:
     ArmorSkill(const QString &name);
 
-    virtual int getPriority() const;
     virtual bool triggerable(const ServerPlayer *target) const;
     virtual bool cost(Room *room, ServerPlayer *player, QVariant &data) const;
 };
 
-class TreasureSkill : public TriggerSkill
+class TreasureSkill : public CardTriggerSkill
 {
     Q_OBJECT
 
 public:
     TreasureSkill(const QString &name);
 
-    virtual int getPriority() const;
     virtual bool triggerable(const ServerPlayer *target) const;
 };
 

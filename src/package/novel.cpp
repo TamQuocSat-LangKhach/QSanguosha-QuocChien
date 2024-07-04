@@ -966,7 +966,7 @@ public:
             }
             else if (choice == "hptomaxhp")
             {
-                if (room->askForDiscard(taiga, objectName(), x, x, false, false, "@yexi-discard"))
+                if (room->askForDiscard(taiga, objectName(), x, x, false, false, "@yexi-discard:::" + x))
                 {
                     room->setPlayerProperty(taiga, "hp", max);
                     room->sendLog(log);
