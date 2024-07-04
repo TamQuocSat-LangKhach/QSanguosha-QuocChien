@@ -123,7 +123,7 @@ return {
 	["@jianyan-give"] = "»Kiến Ngôn«: Chọn 1 người nam để đưa lá [%arg %arg2] cho họ",
 	["#JianyanChoice"] = "%from đã chọn %arg",
 	["#JianyanFail"] = "Không có %arg trong chồng bài và chồng bài bỏ, việc xử lý kết thúc",
-	["@jujian-card"] = "Có thể phát động »Cử Tiến«, bỏ 1 lá phi cơ bản và chọn 1 người đổi phó tướng"
+	["@jujian-card"] = "Có thể phát động »Cử Tiến«, bỏ 1 lá phi cơ bản và chọn 1 người đổi phó tướng",
     
     ["#wujing"] = "Hàn Mã Lưu Kim",
     ["wujing"] = "Ngô Cảnh",

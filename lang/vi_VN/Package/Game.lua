@@ -27,7 +27,7 @@ return {
 	["#LiepoBuff"] = "%from đã phát động »<font color=\"yellow\"><b>Liệt Phá</b></font>« với %to, lệnh [Sát] không có thuộc tính và số sát thương là %arg",
 
 	["shenxing"] = "Thần Tinh",
-	[":shenxing"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá cơ bản thành [Linh Đạn].\n[Linh Đạn]: Công cụ thời gian\n• Giai đoạn ra bài, đặt [Linh Đạn] vào vùng phán xét của người khác.\n• Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải lá cơ bản có điểm từ 2~9, họ bỏ 2 lá; sau đó đưa lá này vào chồng bài bỏ.",
+	[":shenxing"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá cơ bản -> [Linh Đạn].\n[Linh Đạn]: Công cụ thời gian\n• Giai đoạn ra bài, đặt [Linh Đạn] vào vùng phán xét của người khác.\n• Giai đoạn phán xét của mục tiêu, họ tiến hành phán xét, nếu kết quả phán xét không phải lá cơ bản có điểm từ 2~9, họ bỏ 2 lá; sau đó đưa lá này vào chồng bài bỏ.",
 
 	----G002
 	["fate"] = "Fate Testarossa", 
@@ -40,7 +40,7 @@ return {
 	["illustrator:fate"] = "22623415",
 
 	["leiguang"] = "Lôi Quang",
-	[":leiguang"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá Đen trên tay thành [Sát];\n▶ Sau khi [Sát] này kết toán xong, nếu [Sát] này chỉ có 1 mục tiêu, bạn có thể lệnh họ chọn 1 mục:\n1. Bỏ 1 lá;\n2. Lệnh [Sát] này không tính vào số lần sử dụng [Sát] trong giai đoạn này.",
+	[":leiguang"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá Đen trên tay -> [Sát];\n▶ Sau khi [Sát] này kết toán xong, nếu [Sát] này chỉ có 1 mục tiêu, bạn có thể lệnh họ chọn 1 mục:\n1. Bỏ 1 lá;\n2. Lệnh [Sát] này không tính vào số lần sử dụng [Sát] trong giai đoạn này.",
 	["@leiguang_effect"] = "Chọn bỏ 1 lá hoặc [Sát] này không tính vào số lần sử dụng",
 	["#leiguang_more_slash"] = "%from đã phát động »<font color=\"yellow\"><b>Lôi Quang</b></font>«, [Sát] này không bị tính số lần sử dụng",
 
@@ -107,7 +107,7 @@ return {
 	["gem"] = "Bảo Thạch",
 
 	["modan"] = "Ma Đạn",
-	[":modan"] = "• Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hóa sử dụng 4 [Bảo Thạch] khác chất với nhau thành [Vạn Tiễn Tề Phát].\n• Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Bảo Thạch] để thay đổi kết quả phán xét.",
+	[":modan"] = "• Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hóa sử dụng 4 [Bảo Thạch] khác chất với nhau -> [Vạn Tiễn Tề Phát].\n• Trước khi phán xét của 1 người có hiệu lực, bạn có thể đánh ra 1 [Bảo Thạch] để thay đổi kết quả phán xét.",
 	["@modan-retrial"] = CommonTranslationTable["@askforretrial"],
 	["modanvoid"] = "Ma Đạn",
 
@@ -177,100 +177,100 @@ return {
 	["illustrator:miki"] = "55208786",
 
 	["yonglan"] = "Dung Lãn",
-	[":yonglan"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá trên tay thành [Lạc Bất Tư Thục] với 1 người cùng thế lực với bạn (Có thể bao gồm bạn), sau đó bạn có thể lệnh 2 người có bài trên tay đấu điểm, người thắng xem như sử dụng 1 [Quyết Đấu] với người thua.",
+	[":yonglan"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 1 lá trên tay -> [Lạc Bất Tư Thục] với 1 người cùng thế lực với bạn (Có thể bao gồm bạn), sau đó bạn có thể lệnh 2 người có bài trên tay đấu điểm, người thắng xem như sử dụng 1 [Quyết Đấu] với người thua.",
 	["$yonglan"] = "",
 	["@yonglan"] = "Có thể chọn 2 người đấu điểm với nhau",
 	["#YonglanNullified"] = "%arg không thể sử dụng [Quyết Đấu] từ »<font color=\"yellow\"><b>Dung Lãn</b></font>«",
 	["yonglanpindian"] = "Dung Lãn",
 
-	["zhiyanmiki"] = "直言",
-	[":zhiyanmiki"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn kết thúc, nếu bạn đã bỏ qua ít nhất 1 giai đoạn trong lượt này, bạn chọn 1 mục:\n1. Rút 1 lá;\n2. BỎ 1 lá trong vùng chơi của 1 người.",
-	["zhiyanmiki:draw"] = "摸一张牌",
-	["zhiyanmiki:discard"] = "弃置一名角色区域里的一张牌",
-	["#ZhiyanMikiDraw"] = "%from 发动了 »%arg«，摸了一张牌。",
-	["#ZhiyanMikiDiscard"] = "%from 发动了 »%arg«，弃置了 %to 区域里的一张牌。",
+	["zhiyanmiki"] = "Trực Ngôn",
+	[":zhiyanmiki"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn kết thúc, nếu bạn đã bỏ qua ít nhất 1 giai đoạn trong lượt này, bạn chọn 1 mục:\n1. Rút 1 lá;\n2. Bỏ 1 lá trong vùng chơi của 1 người.",
+	["zhiyanmiki:draw"] = "Rút 1 lá",
+	["zhiyanmiki:discard"] = "Bỏ 1 lá trong vùng chơi của 1 người",
+	["#ZhiyanMikiDraw"] = "%from đã phát động »%arg« và rút 1 lá",
+	["#ZhiyanMikiDiscard"] = "%from đã phát động »%arg« và bỏ 1 lá trong vùng chơi của %to",
 
 	----G010
 	["setsuna"] = "Ogiso Setsuna", 
 	["&setsuna"] = "Ogiso Setsuna", 
-	["#setsuna"] = "高岭之花",
+	["#setsuna"] = "Cao Lĩnh Chi Hoa",
 	["#&setsuna"] = "White Album 2", 	
 	["~setsuna"] = "", 
 	["designer:setsuna"] = "昂翼天使;肥羊",
 	["cv:setsuna"] = "米澤円",
 	["illustrator:setsuna"] = "深崎暮人",
 
-	["gaoling"] = "高岭",
+	["gaoling"] = "Cao Lĩnh",
 	[":gaoling"] = "Tỏa định kỹ: Giới hạn trữ bài của bạn +2X (X là số máu đã mất của bạn)",
 
-	["chouchu"] = "踌躇",
-	[":chouchu"] = "Nếu số lá trên tay bạn là:\n* Lẻ: Bạn có thể chuyển hóa sử dụng 1 lá thành [Thiểm];\n* Chẵn: Sau khi 1 người nhận sát thương bởi [Sát], bạn có thể bỏ 1 lá Đỏ, lệnh họ chọn 1 mục:\n1. Họ hồi 1 máu;\n2. Họ bổ sung bài trên tay tới 3 lá.",
-	["@chouchu-discard"] = "你可以弃置一张红色手牌，发动»踌躇«",
-	["supplementcards"] = "将手牌补至三张",
-	["chouchu:recover"] = "回复1点体力",
-	["#Chouchusupplementcards"] = "%from 发动了 »%arg«，令 %to 将手牌补至三张",
-	["#Chouchurecover"] = "%from 发动了 »%arg«，令 %to 回复了1点体力",
+	["chouchu"] = "Trù Trừ",
+	[":chouchu"] = "Nếu số lá trên tay bạn là:\n* Lẻ: Bạn có thể chuyển hóa sử dụng 1 lá -> [Thiểm];\n* Chẵn: Sau khi 1 người nhận sát thương bởi [Sát], bạn có thể bỏ 1 lá Đỏ, lệnh họ chọn 1 mục:\n1. Họ hồi 1 máu;\n2. Họ bổ sung bài trên tay tới 3 lá.",
+	["@chouchu-discard"] = "Có thể bỏ 1 lá Đỏ để phát động »Trù Trừ«",
+	["supplementcards"] = "Bổ sung bài tới 3",
+	["chouchu:recover"] = "Hồi 1 máu",
+	["#Chouchusupplementcards"] = "%from đã phát động »%arg«, %to bổ sung bài tới 3 lá",
+	["#Chouchurecover"] = "%from đã phát động »%arg«, %to hồi 1 máu",
 
 	----G011
 	["kazusa"] = "Touma Kazusa", 
 	["&kazusa"] = "Touma Kazusa", 
-	["#kazusa"] = "侧伴无事俏佳人", 
+	["#kazusa"] = "Trắc Bạn Vô Sự Kiều Giai Nhân", 
 	["#&kazusa"] = "White Album 2", 
 	["~kazusa"] = "", 
 	["designer:kazusa"] = "昂翼天使;肥羊",
 	["cv:kazusa"] = "生天目仁美",
 	["illustrator:kazusa"] = "official pics",
 
-	["bingshan"] = "冰山",
+	["bingshan"] = "Băng Sơn",
 	[":bingshan"] = "Tỏa định kỹ: Khoảng cách từ người khác đến bạn +X (X là số máu bạn đã mất).",
 
-	["shenai"] = "深爱",
+	["shenai"] = "Thâm Ái",
 	[":shenai"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể chọn 1 người và bỏ X/2 lá (Làm tròn xuống), lệnh họ rút X lá (Tối đa 5) (X là khoảng cách giữa họ và bạn).",
 
 	----G012
 	["nagisa"] = "Furukawa Nagisa", 
 	["&nagisa"] = "Furukawa Nagisa", 
-	["#nagisa"] = "光玉的奇迹", 
+	["#nagisa"] = "Quang Ngọc Đích Kỳ Tích", 
 	["#&nagisa"] = "CLANNAD", 
 	["~nagisa"] = "朋也，抱我~", 
 	["designer:nagisa"] = "Sword Elucidator",
 	["cv:nagisa"] = "中原麻衣",
 	["illustrator:nagisa"] = "official pics",
 
-	["guangyu"] = "光玉",
+	["guangyu"] = "Quang Ngọc",
 	[":guangyu"] = "** Sau khi lá CƠ của bạn tiến vào chồng bài bỏ do bỏ bài, bạn có thể đặt lá đó vào vùng phán xét của tướng này, gọi là [Kiện].\n** Khi bắt đầu giai đoạn phán xét của 1 người có [Kiện] trong vùng phán xét, bạn có thể đưa tất cả trong vùng phán xét của họ vào chồng bài bỏ.",
-	["@guangyu-put"] = "请指定一名角色，将弃置的♥牌当»键«置于其判定区",
+	["@guangyu-put"] = "Có thể đặt lá ♥ làm [Kiện] trong vùng phán xét của 1 người",
 
-	["yunzhu"] = "云渚",
+	["yunzhu"] = "Vân Chử",
 	[":yunzhu"] = "Sau khi bạn hồi máu, ứng với mỗi máu bạn đã hồi, bạn có thể lệnh 1 người khác cùng thế lực với bạn rút 1 lá.",
-	["yunzhu-invoke"] = "请指定与你势力相同的一名其他角色，令其摸一张牌",
+	["yunzhu-invoke"] = "Văn Chử: Có thể chọn 1 người rút bài",
 	
 	----G013
 	["tomoyo"] = "Sakagami Tomoyo", 
 	["&tomoyo"] = "Sakagami Tomoyo", 
-	["#tomoyo"] = "武帝", 
+	["#tomoyo"] = "Vũ Đế", 
 	["#&tomoyo"] = "CLANNAD", 
 	["~tomoyo"] = "", 
 	["designer:tomoyo"] = "好烦",
 	["cv:tomoyo"] = "桑島法子",
 	["illustrator:tomoyo"] = "11283570",
 
-	["qiangqi"] = "强气",
+	["qiangqi"] = "Cường Khí",
 	[":qiangqi"] = "Giai đoạn ra bài, bạn có thể đặt 1 lá [Sát] không phải chất CƠ vào vùng phán xét của bạn, gọi là [Kiện], sau đó xem như sử dụng 1 [Sát] (Không tính số lần sử dụng).",
 
-	["lianji"] = "连击",
-	[":lianji"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể chọn 1 hiệu ứng trong lượt này:\n1. \"Hoành Tảo\": Sau khi bạn gây sát thương cho mục tiêu duy nhất của [Sát], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi thành [Sát] không giới hạn tầm đánh, không thể chọn mục tiêu vừa nhận sát thương (Có tính giới hạn sử dụng [Sát]);\n2. \"Liên Kích\": Sau khi [Sát] của bạn bị triệt tiêu bởi [Thiểm], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi thành [Sát], không thể chọn mục tiêu vừa [Thiểm].",
-	["lianti"] = "Liên Kích",
+	["lianji"] = "Liên Kích",
+	[":lianji"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể chọn 1 hiệu ứng trong lượt này:\n1. \"Hoành Tảo\": Sau khi bạn gây sát thương cho mục tiêu duy nhất của [Sát], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi -> [Sát] không giới hạn tầm đánh, không thể chọn mục tiêu vừa nhận sát thương (Có tính giới hạn sử dụng [Sát]);\n2. \"Liên Thích\": Sau khi [Sát] của bạn bị triệt tiêu bởi [Thiểm], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi -> [Sát], không thể chọn mục tiêu vừa [Thiểm].",
+	["lianti"] = "Liên Thích",
 	["hengsao"] = "Hoành Tảo",
-	["liantieffect"] = "此回合内的【杀】未造成伤害时，可以将区域里的一张牌当不受出牌阶段使用【杀】次数限制的【杀】使用，且不能指定上一个目标。",
-	["hengsaoeffect"] = "此回合内的【杀】对唯一目标造成伤害后，可以将区域里的一张牌当无距离限制的【杀】使用，且不能指定上一个目标",
-	["@lianji-targetchoose"] = "请选择你的【杀】的目标",
-	["#LianjiAnnounce"] = "%from 发动了 »<font color=\"yellow\"><b>连击</b></font>«，声明了 »%arg2«，效果为 %arg",
+	["liantieffect"] = "Sau khi [Sát] của bạn bị triệt tiêu bởi [Thiểm], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi -> [Sát], không thể chọn mục tiêu vừa [Thiểm].",
+	["hengsaoeffect"] = "Sau khi bạn gây sát thương cho mục tiêu duy nhất của [Sát], bạn có thể chuyển hóa sử dụng 1 lá trong vùng chơi -> [Sát] không giới hạn tầm đánh, không thể chọn mục tiêu vừa nhận sát thương (Có tính giới hạn sử dụng [Sát]).",
+	["@lianji-targetchoose"] = "Chọn mục tiêu cho [Sát]",
+	["#LianjiAnnounce"] = "%from đã phát động »<font color=\"yellow\"><b>Liên Kích</b></font>«, chọn »%arg2«",
 
 	----G014
 	["fuuko"] = "Ibuki Fuko", 
 	["&fuuko"] = "Ibuki Fuko", 
-	["#fuuko"] = "海星使", 
+	["#fuuko"] = "Hải Tinh Sứ", 
 	["#&fuuko"] = "CLANNAD", 
 	["#$fuuko"] = "冈崎汐", 
 	["~fuuko"] = "成为风子的恋人吧！", 
@@ -278,22 +278,20 @@ return {
 	["cv:fuuko"] = "野中藍",
 	["illustrator:fuuko"] = "戌亥あちゅあちゅむち",
 	
-	["haixing"] = "海星",
+	["haixing"] = "Hải Tinh",
 	[":haixing"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể giao tùy ý bài trên tay cho tùy ý người khác, sau đó lệnh những người này giao cho bạn 1 lá, nếu số lá bạn đã nhận ≥ 2, bạn có thể lệnh 1 người hồi 1 máu.",
-	["@haixing-card"] = "请选择任意数量的卡牌交给一名角色，该技能可以于此阶段重复发动。",
-	["@haixing-back"] = "你需要还给风子一张牌。",
-	["haixing_recover"] = "请选择一名角色，令其回复一点体力。",
-	["~haixing"] = "选择一张牌->点击【确定】",
+	["@haixing-card"] = "Chọn bài trên tay để giao cho người khác",
+	["@haixing-back"] = "Chọn 1 lá để giao lại",
+	["haixing_recover"] = "Chọn 1 người để hồi máu",
 	
-	["taozui"] = "陶醉",
+	["taozui"] = "Đào Túy",
 	[":taozui"] = "Bạn có thể bỏ qua giai đoạn phán xét và giai đoạn rút bài, đưa 1 lá trong vùng phán xét của 1 người vào chồng bài bỏ, sau đó đặt lá trên đầu chồng bài rút vào vùng phán xét của họ, gọi là [Kiện]",
-	["@taozui"] = "你可以跳过判定阶段和摸牌阶段发动»陶醉«",
-	["~taozui"] = "选择»陶醉«的目标角色→点击确定",
+	["@taozui"] = "Có thể phát động »Đào Túy«",
 
 	----G015
 	["misuzu"] = "Kamio Misuzu", 
 	["&misuzu"] = "Kamio Misuzu", 
-	["#misuzu"] = "青空下的少女", 
+	["#misuzu"] = "Thanh Không Hạ Đích Thiếu Nữ", 
 	["#&misuzu"] = "AiR", 
 	["~misuzu"] = "嘎，嘎哦..", 
 	["designer:misuzu"] = "起个名字好烦QAQ;墨忆；Sword Elucidator;hmqgg",
@@ -302,8 +300,8 @@ return {
 
 	["xiaying"] = "Hạ Ảnh",
 	[":xiaying"] = "Tỏa định kỹ: Khi bắt đầu giai đoạn chuẩn bị, bạn phát động kỹ năng này, thực hiện lần lượt:\n- Người khác có cùng thế lực với bạn có thể giao cho bạn tùy ý lá trên tay họ;\n- Nếu số lá bạn nhận từ kỹ năng này ≤ X (X là số người khác có cùng thế lực với bạn), bạn mất 1 máu, đặt lá trên đầu chồng bài rút vào vùng phán xét của bạn, gọi là [Kiện].",
-	["@xiaying_give"] = "你可以交给对方任意数量的手牌",
-	["#XiayingLoseHp"] = "%from 获得的牌的张数为 %arg，不多于 %arg2，失去1点体力。",
+	["@xiaying_give"] = "Có thể giao bài cho %src",
+	["#XiayingLoseHp"] = "%from đã thu lấy %arg lá,  mất 1 máu",
 
 	["yumeng"] = "Vũ Mộng",
 	[":yumeng"] = "Tỏa định kỹ: Giai đoạn rút bài của người cùng thế lực với bạn, bạn lệnh số lá họ rút +X (X là số máu đã mất của bạn, tối đa 2)",
@@ -312,53 +310,53 @@ return {
 	----G016
 	["ayu"] = "Tsukimiya Ayu", 
 	["&ayu"] = "Tsukimiya Ayu", 
-	["#ayu"] = "日光照耀的街道", 
+	["#ayu"] = "Nhật Quang Chiếu Diệu Đích Nhai Đạo", 
 	["#&ayu"] = "Kanon", 
 	["~ayu"] = "", 
 	["designer:ayu"] = "Sword Elucidator",
 	["cv:ayu"] = "堀江由衣",
 	["illustrator:ayu"] = "24172883",
 
-	["huanyuan"] = "幻愿",
+	["huanyuan"] = "Huyễn Nguyện",
 	[":huanyuan"] = "Khi bắt đầu giai đoạn chuẩn bị, nếu số [Kiện] trong vùng phán xét của bạn < 3, bạn có thể chọn bỏ 1 lá CƠ hoặc mất 1 máu, đặt 1 lá trên đầu chồng bài rút vào vùng phán xét của bạn, gọi là [Kiện]. Tỏa định kỹ: Giới hạn [Kiện] trong vùng phán xét của bạn là 3.",
 	["@huanyuan_discard"] = "弃置一张红桃牌，或点击【取消】失去一点体力。",
 
-	["mengxian"] = "梦现",
+	["mengxian"] = "Mộng Hiện",
 	[":mengxian"] = "Khi bạn trong trạng thái hấp hối, nếu số [Kiện] trong vùng phán xét của bạn ≥ 2, bạn có thể đưa 1 [Kiện] vào chồng bài bỏ, sau đó bạn và 1 người do bạn chỉ định rút X lá (X là số [Kiện] bạn có).",
 
 	----G017
 	["n_rin"] = "Natsume Rin", 
 	["&n_rin"] = "Natsume Rin", 
-	["#n_rin"] = "铃喵", 
+	["#n_rin"] = "Linh Miêu", 
 	["#&n_rin"] = "Little Busters！", 
 	["~n_rin"] = "喵~~~~~~", 
 	["designer:n_rin"] = "Sword Elucidator",
 	["cv:n_rin"] = "民安ともえ",
 	["illustrator:n_rin"] = "2253949",
 
-	["pasheng"] = "怕生",
+	["pasheng"] = "Phạ Sinh",
 	[":pasheng"] = "Khi bạn trở thành mục tiêu duy nhất của bài do người khác sử dụng, nếu bạn có lá trong vùng phán xét, hủy bỏ mục tiêu đối với bạn.",
 
-	["jiuzhu"] = "救助",
+	["jiuzhu"] = "Cứu Trợ",
 	[":jiuzhu"] = "• Sau khi 1 người thoát khỏi trạng thái hấp hối, nếu không có [Kiện] trong vùng phán xét của họ, bạn có thể đặt lá trên đầu chồng bài rút vào vùng phán xét của họ, gọi là [Kiện].\n• Khi 1 người có [Kiện] trong vùng phán xét mất máu, bạn có thể đưa lá [Kiện] trong vùng phán xét của họ vào chồng bài bỏ.\n• Khi 1 [Kiện] tiến vào chồng bài bỏ, bạn rút 1 lá.",
-	["#JiuzhuDraw"] = "%from 发动了»%arg«，摸了一张牌",
+	["#JiuzhuDraw"] = "%from đã phát động »%arg«, rút 1 lá",
 	
 	----G018
 	["komari"] = "Kamikita Komari", 
 	["&komari"] = "Kamikita Komari", 
-	["#komari"] = "小毛球", 
+	["#komari"] = "Tiểu Mao Cầu", 
 	["#&komari"] = "Little Busters！", 
 	["~komari"] = "", 
 	["designer:komari"] = "Sword Elucidator",
 	["cv:komari"] = "やなせなつみ",
 	["illustrator:komari"] = "42699647",
 
-	["luoxuan"] = "螺旋",
+	["luoxuan"] = "Loa Triền",
 	[":luoxuan"] = "Giai đoạn ra bài, bạn có thể bỏ 1 [Đào] hoặc 1 trang bị trên tay và chọn 1 người đã bị thương, họ hồi 1 máu, sau đó bạn có thể thu lấy 1 lá trong vùng trang bị của họ.",
 	["luoxuan_get"] = "获得该角色装备区里的一张牌",
 	["luoxuan_give_up"] = "不获得",
 
-	["sidai"] = "丝带",
+	["sidai"] = "Ty Đới",
 	[":sidai"] = "Khi bạn trận vong, bạn có thể lật lá trên đầu chồng bài rút, sau đó đặt lá đó vào vùng phán xét của 1 người khác, gọi là [Kiện], nếu loại của lá đó là:\n* Cơ bản: Lệnh họ rút 2 lá;\n* Công cụ: Lệnh họ hồi 1 máu;\n* Trang bị: Lệnh họ loại bỏ trạng thái xích và chồng tướng.",
 
 }

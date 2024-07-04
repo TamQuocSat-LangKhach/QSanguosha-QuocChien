@@ -6,7 +6,7 @@ return {
 	["beimihu"] = "Himiko",
 	["#beimihu"] = "Yamatai Đích Nữ Vương",
 	["guishu"] = "Quỷ Thuật",
-	[":guishu"] = "Bạn có thể chuyển hóa sử dụng 1 lá BÍCH trên tay thành [Tri Bỉ Tri Kỷ]/[Viễn Giao Cận Công];\n▷ Bạn cần sử dụng xen kẽ 2 lá trên theo cách này trong cùng 1 lượt." ,
+	[":guishu"] = "Bạn có thể chuyển hóa sử dụng 1 lá BÍCH trên tay -> [Tri Bỉ Tri Kỷ]/[Viễn Giao Cận Công];\n▷ Bạn cần sử dụng xen kẽ 2 lá trên theo cách này trong cùng 1 lượt." ,
 	["yuanyu"] = "Viễn Vực",
 	[":yuanyu"] = "Tỏa định kỹ: Khi bạn tính toán sát thương phải nhận, nếu bạn không thuộc tầm đánh của nguồn sát thương, sát thương này -1.",
 
@@ -93,7 +93,7 @@ return {
     ["#tianyu"] = "Quy Lược Minh Luyện",
     ["tianyu"] = "Điền Dự",
     ["zhenxi"] = "Chấn Tập",
-    [":zhenxi"] = "Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn có thể chọn 1 mục:\n1. Bạn bỏ 1 lá của họ;\n2. Bạn chuyển hóa sử dụng 1 lá TÉP phi công cụ thành [Binh Lương Thốn Đoạn] hoặc 1 lá RÔ phi công cụ thành [Lạc Bất Tư Thục] không giới hạn khoảng cách với họ;\n▷ Nếu bạn đã mở 2 tướng và họ có tướng đang úp, bạn có thể chấp hành cả 2 mục với thứ tự tùy ý.",
+    [":zhenxi"] = "Sau khi bạn xác định mục tiêu của [Sát], ứng với mỗi mục tiêu, bạn có thể chọn 1 mục:\n1. Bạn bỏ 1 lá của họ;\n2. Bạn chuyển hóa sử dụng 1 lá TÉP phi công cụ -> [Binh Lương Thốn Đoạn] hoặc 1 lá RÔ phi công cụ -> [Lạc Bất Tư Thục] không giới hạn khoảng cách với họ;\n▷ Nếu bạn đã mở 2 tướng và họ có tướng đang úp, bạn có thể chấp hành cả 2 mục với thứ tự tùy ý.",
     ["jiansu"] = "Kiệm Tố",
     [":jiansu"] = "Phó tướng kỹ, Giảm 0.5 máu gốc:\n• Khi bạn nhận bài ngoài lượt, bạn có thể gọi những lá này trên tay bạn là [Kim] chừng nào lá đó còn trên tay bạn, [Kim] luôn công khai với những người khác.\n• Khi bắt đầu giai đoạn ra bài, bạn có thể bỏ đi tùy ý [Kim], sau đó chọn 1 người đã bị thương có số máu ≤ số [Kim] đã bỏ, lệnh họ hồi 1 máu.",
     ["@zhenxi-choose"] = "Chấn Tập: Chọn sử dụng 1 lá Công cụ thời gian đã chuyển hóa lên %dest hoặc bỏ 1 lá của họ.",

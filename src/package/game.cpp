@@ -706,7 +706,7 @@ public:
 
         foreach (ServerPlayer *p, room->getOtherPlayers(player))
         {
-            if (player->isFriendWith(p) || player->willBeFriendWith(p))
+            if (player->isFriendWith(p))
             {
                 return QStringList(objectName());
             }
@@ -735,7 +735,7 @@ public:
             if (p->isFriendWith(misuzu))
             {
                 shouldGiveNum++;
-                auto exchange = room->askForExchange(p, objectName(), 999, 0, "@xiaying_give", "", ".|.|.|hand");
+                auto exchange = room->askForExchange(p, objectName(), 999, 0, "@xiaying_give:" + misuzu->objectName(), "", ".|.|.|hand");
                 if (!exchange.isEmpty())
                 {
                     DummyCard dummy(exchange);

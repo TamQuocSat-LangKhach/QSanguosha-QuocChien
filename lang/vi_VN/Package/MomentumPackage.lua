@@ -120,11 +120,11 @@ return {
 	["wuxin"] = "Ngộ Tâm",
 	[":wuxin"] = "Khi bắt đầu giai đoạn rút bài, có thể xem X lá đầu chồng bài rút và sắp xếp tùy ý những lá này lên đầu chồng bài rút (X là số người cùng thế lực với bạn).",
 	["hongfa"] = "Hoằng Pháp",
-	[":hongfa"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Hoàng Cân Thiên Bình Phủ«.\n\n»<b>Hoàng Cân Thiên Bình Phủ</b>«:\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người cùng thế lực với bạn).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
+	[":hongfa"] = "Quân chủ kỹ, Tỏa định kỹ: Bạn có »Hoàng Cân Thiên Bình Phủ«.\n\n»<b>Hoàng Cân Thiên Bình Phủ</b>«:\n• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người cùng thế lực với bạn).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] -> [Sát].",
 	["heavenly_army"] = "Thiên Binh",
 	
 	["huangjinsymbol"] = "Hoàng Cân Thiên Bình Phủ",
-	[":huangjinsymbol"] = "• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người cùng thế lực với bạn).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] thành [Sát].",
+	[":huangjinsymbol"] = "• Khi bắt đầu giai đoạn chuẩn bị, nếu bạn không có [Thiên Binh], bạn lấy X lá đầu chồng bài rút đặt ngửa lên tướng này, gọi là [Thiên Binh] (X là số người cùng thế lực với bạn).\n• Khi bạn tính toán số người cùng thế lực với bạn, +1 với mỗi [Thiên Binh].\n• Khi bạn mất máu, bạn có thể đưa 1 [Thiên Binh] vào chồng bài bỏ, chặn việc mất máu.\n• Người thế lực Quần có thể chuyển hóa sử dụng/đánh ra [Thiên Binh] -> [Sát].",
 	
 	["&huangjinsymbol"] = "Có thể chuyển hóa 1 [Thiên Binh] thành [Sát]",
 	["#HongfaTianbing"] = "%from đã phát động »<font color=\"yellow\"><b>Hoàng Cân Thiên Bình Phủ</b></font>«, số người trong thế lực Quần là %arg.",

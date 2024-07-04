@@ -82,7 +82,7 @@ return
 		"chỉ có thể sử dụng hoặc đánh ra như [<font color=\"yellow\"><b>Sát</b></font>] hoặc [<font color=\"yellow\"><b>Thiểm</b></font>].",
 
 	["aozhan"] = "Huyết Chiến",
-	[":aozhan"] = "\n• Bạn không thể sử dụng [Đào] phi chuyển hóa\n• [Đào] được chuyển hóa sử dụng/đánh ra thành [Sát]/[Thiểm].",
+	[":aozhan"] = "\n• Bạn không thể sử dụng [Đào] phi chuyển hóa\n• [Đào] được chuyển hóa sử dụng/đánh ra -> [Sát]/[Thiểm].",
 
 
 	["companion"] = "Châu Liên Hợp Bích",

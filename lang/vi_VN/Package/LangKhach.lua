@@ -29,7 +29,7 @@ return {
 	[":baixiang"] = "Tỏa định kỹ:\n• [Nam Man Nhập Xâm] không có hiệu quả với bạn.\n• Nếu bạn không có Ngựa trong vùng trang bị, khoảng cách từ người khác đến bạn +1, tầm đánh của bạn +1.",
 	["#sa_avoid_baixiang"] = "Bạch Tượng (vô hiệu Nam Man Nhập Xâm)" ,
 	["powang"] = "Bà Vương",
-	[":powang"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hóa sử dụng 1 lá có điểm A/Q/K thành [Nam Man Nhập Xâm] với tất cả người khác thuộc 1 thế lực;\n▶ Khi bạn gây sát thương bởi [Nam Man Nhập Xâm] này, nếu mục tiêu có lá trong vùng trang bị, bạn có thể chặn sát thương này, sau đó bạn bỏ tất cả lá trong vùng trang bị của mục tiêu.",
+	[":powang"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần: Bạn có thể chuyển hóa sử dụng 1 lá có điểm A/Q/K -> [Nam Man Nhập Xâm] với tất cả người khác thuộc 1 thế lực;\n▶ Khi bạn gây sát thương bởi [Nam Man Nhập Xâm] này, nếu mục tiêu có lá trong vùng trang bị, bạn có thể chặn sát thương này, sau đó bạn bỏ tất cả lá trong vùng trang bị của mục tiêu.",
 	["@powang-discard"] = "Bà Vương: Có thể chặn sát thương cho %dest và bỏ tất cả trang bị của họ.",
 	["#PowangDiscard"] = "%from đã phát động »Bà Vương«, chặn sát thương tới %to",
 	["#powang-discard"] = "Bà Vương (Bỏ bài)",

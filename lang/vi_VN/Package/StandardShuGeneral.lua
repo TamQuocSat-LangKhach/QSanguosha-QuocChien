@@ -55,7 +55,7 @@ return {
 	["#zhaoyun"] = "Hổ Uy Tướng Quân",
 	["zhaoyun"] = "Triệu Vân",
 	["longdan"] = "Long Đảm",
-	[":longdan"] = "• Bạn có thể chuyển hóa sử dụng/đánh ra [Thiểm] thành [Sát];\n▶ Sau khi [Sát] này bị triệt tiêu bởi [Thiểm] của mục tiêu, bạn có thể gây 1 sát thương cho 1 người ngoại trừ mục tiêu.\n• Bạn có thể chuyển hóa sử dụng/đánh ra [Sát] thành [Thiểm];\n▶ Sau khi [Thiểm] này triệt tiêu [Sát] của 1 người, bạn có thể hồi 1 máu cho 1 người khác ngoại trừ người sử dụng [Sát].",
+	[":longdan"] = "• Bạn có thể chuyển hóa sử dụng/đánh ra [Thiểm] -> [Sát];\n▶ Sau khi [Sát] này bị triệt tiêu bởi [Thiểm] của mục tiêu, bạn có thể gây 1 sát thương cho 1 người ngoại trừ mục tiêu.\n• Bạn có thể chuyển hóa sử dụng/đánh ra [Sát] -> [Thiểm];\n▶ Sau khi [Thiểm] này triệt tiêu [Sát] của 1 người, bạn có thể hồi 1 máu cho 1 người khác ngoại trừ người sử dụng [Sát].",
 
 	["#longdan-draw"] = "Long đảm [Rút bài]",
 	["#LongdanDraw"] = "%from đã phát động »%arg<font color=\"yellow\"><b>(Ngũ Hổ Tướng Đại Kỳ)</b></font>«, rút 1 lá.",
@@ -115,9 +115,9 @@ return {
 	["bazhen"] = "Bát Trận",
 	[":bazhen"] = "Tỏa định kỹ: Nếu vùng trang bị của bạn không có phòng cụ, bạn xem như có [Bát Quái Trận].",
 	["huoji"] = "Hỏa Kế",
-	[":huoji"] = "Bạn có thể chuyển hóa sử dụng lá Đỏ trên tay thành [Hỏa Công].",
+	[":huoji"] = "Bạn có thể chuyển hóa sử dụng lá Đỏ trên tay -> [Hỏa Công].",
 	["kanpo"] = "Khán Phá",
-	[":kanpo"] = "Bạn có thể chuyển hóa sử dụng lá Đen trên tay thành [Vô Giải Khả Kích].",
+	[":kanpo"] = "Bạn có thể chuyển hóa sử dụng lá Đen trên tay -> [Vô Giải Khả Kích].",
 
 	["#liushan"] = "Vô Vi Chân Mệnh Chủ",
 	["liushan"] = "Lưu Thiện",

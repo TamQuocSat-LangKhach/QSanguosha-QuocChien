@@ -56,7 +56,7 @@ return {
 	----C004
 	["izumi"] = "Saginomiya Isumi", 
 	["&izumi"] = "Saginomiya Isumi", 
-	["#izumi"] = "Mê Đồ Vu Nữ" 
+	["#izumi"] = "Mê Đồ Vu Nữ",
 	["#&izumi"] = "Hayate the Combat Butler", 
 	["~izumi"] = "究竟。。。如何是好。。。", 
 	["designer:izumi"] = "钉子",
@@ -108,7 +108,7 @@ return {
 	["illustrator:suigintou"] = "56610300",
 
 	["mingming"] = "Minh Minh",
-	[":mingming"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 2 lá Đen trên tay có cùng chất thành [Vạn Tiễn Tề Phát].",
+	[":mingming"] = "Giai đoạn ra bài, bạn có thể chuyển hóa sử dụng 2 lá Đen trên tay có cùng chất -> [Vạn Tiễn Tề Phát].",
 
 	["rosesuigintou"] = "Tường Vi",
 	[":rosesuigintou"] = "Chủ tướng kỹ: Khi bạn phát động »Minh Minh«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa yêu cầu của lần phát động »Minh Minh« này thành 1 lá Đen trên tay.",
@@ -130,10 +130,10 @@ return {
 	[":heli"] = "Giai đoạn ra bài, bạn có thể bỏ X lá Đỏ và chọn 1 người khác (X là số máu của họ), bạn gây 1 sát thương cho họ;\n▶ Khi họ tiến vào trạng thái hấp hối do kỹ năng này gây ra, lệnh kỹ năng này vô hiệu trong lượt này.",
 
 	["roseshinku"] = "Tường Vi",
-	[":roseshinku"] = "Chủ tướng kỹ: Khi bạn phát động »Hà Lị«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa yêu cầu của lần phát động »Minh Minh« này thành bỏ 1 lá Đỏ trên tay.",
+	[":roseshinku"] = "Chủ tướng kỹ: Khi bạn phát động »Hà Lị«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa yêu cầu của lần phát động »Hà Lị« này thành bỏ 1 lá Đỏ trên tay.",
 
 	["meijieshinku"] = "Môi Giới",
-	[":meijieshinku"] = "Phó tướng kỹ, Tỏa định kỹ: Nếu bạn có chủ tướng, sửa yêu cầu phát động »Minh Minh« thành bỏ X lá trên tay.",
+	[":meijieshinku"] = "Phó tướng kỹ, Tỏa định kỹ: Nếu bạn có chủ tướng, sửa yêu cầu phát động »Hà Lị« thành bỏ X lá trên tay.",
 	
 	----C008
 	["akari"] = "Akaza Akari", 

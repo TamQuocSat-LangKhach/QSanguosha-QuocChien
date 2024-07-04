@@ -45,7 +45,7 @@ return {
 	["illustrator:s_kyouko"] = "38241810",
 
 	["yingqiang"] = "Anh Thương",
-	[":yingqiang"] = "Giai đoạn ra bài chủ động 1 lần, bạn có thể chuyển hóa sử dụng ít nhất 2 lá khác chất thành [Sát] không giới hạn khoảng cách;\n▶ Dựa theo chất của những lá đã đem sử dụng bằng kỹ năng này:\n- BÍCH: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu;\n- CƠ: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ);\n- TÉP: [Sát] này nhận hiệu quả của [Thanh Công Kiếm];\n- RÔ: Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
+	[":yingqiang"] = "Giai đoạn ra bài chủ động 1 lần, bạn có thể chuyển hóa sử dụng ít nhất 2 lá khác chất -> [Sát] không giới hạn khoảng cách;\n▶ Dựa theo chất của những lá đã đem sử dụng bằng kỹ năng này:\n- BÍCH: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu;\n- CƠ: Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, bạn lệnh họ rút X lá, sau đó thay đổi trạng thái chồng tướng (X lá số máu của họ);\n- TÉP: [Sát] này nhận hiệu quả của [Thanh Công Kiếm];\n- RÔ: Sau khi bạn xác định mục tiêu của [Sát] này, bạn rút 1 lá.",
 	["yingqiang_spade"] = "Anh Thương (BÍCH)",
 	[":yingqiang_spade"] = "Sau khi bạn gây sát thương bằng [Sát] này cho 1 người, nếu khoảng cách từ bạn tới họ ≤1 trước khi máu giảm, ứng với mỗi sát thương, bạn hồi 1 máu.",
 	["yingqiang_heart"] = "Anh Thương (CƠ)",
@@ -66,7 +66,7 @@ return {
 	["illustrator:sayaka"] = "37560505",
 	
 	["wuwei"] = "Vô Úy",
-	[":wuwei"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể mất 1 máu, chuyển hóa sử dụng 1 lá trên tay thành [Sát] không tính số lần sử dụng;\n▶ Khi [Sát] này gây sát thương cho mục tiêu, +1 sát thương.",
+	[":wuwei"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể mất 1 máu, chuyển hóa sử dụng 1 lá trên tay -> [Sát] không tính số lần sử dụng;\n▶ Khi [Sát] này gây sát thương cho mục tiêu, +1 sát thương.",
 
 	----A005
 	["homura"] = "Akemi Homura", 

@@ -28,7 +28,7 @@ return {
 	
 	[":chuli"] = "Giai đoạn ra bài chủ động 1 lần: Nếu bạn có bài, bạn có thể chọn tối đa 3 người có thế lực khác nhau và có bài, thực hiện lần lượt:\n- Bạn bỏ đi 1 lá của bạn và họ;\n- Lệnh người đã mất đi lá BÍCH bởi kỹ năng này rút 1 lá.",
 	["jijiu"] = "Cấp Cứu",
-	[":jijiu"] = "Ngoài lượt của bạn, bạn có thể chuyển hóa sử dụng bài Đỏ thành [Đào].",
+	[":jijiu"] = "Ngoài lượt của bạn, bạn có thể chuyển hóa sử dụng bài Đỏ -> [Đào].",
 
 	["#lvbu"] = "Kích Chỉ Trung Nguyên",
 	["lvbu"] = "Lữ Bố",
@@ -57,7 +57,7 @@ return {
 	["yanliangwenchou"] = "Nhan Lương & Văn Xú",
 	["&yanliangwenchou"] = "Nhan Lương Văn Xú",
 	["shuangxiong"] = "Song Hùng",
-	[":shuangxiong"] = "Giai đoạn rút bài, bạn có thể chọn không rút bài, bạn tiến hành phán xét;\n▶ Sau khi phán xét trên có hiệu lực, bạn thu lấy kết quả phán xét;\n▶ Trong lượt này, bạn có thể chuyển hóa sử dụng bài trên tay khác màu với kết quả phán xét trên thành [Quyết Đấu].",
+	[":shuangxiong"] = "Giai đoạn rút bài, bạn có thể chọn không rút bài, bạn tiến hành phán xét;\n▶ Sau khi phán xét trên có hiệu lực, bạn thu lấy kết quả phán xét;\n▶ Trong lượt này, bạn có thể chuyển hóa sử dụng bài trên tay khác màu với kết quả phán xét trên -> [Quyết Đấu].",
 	["#shuangxiong"] = "Song Hùng (Thu lấy lá phán xét)",
 
 	["#jiaxu"] = "Lãnh Khốc Đích Độc Sĩ",

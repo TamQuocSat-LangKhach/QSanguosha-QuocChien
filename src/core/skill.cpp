@@ -73,18 +73,18 @@ QString Skill::getDescription(bool inToolTip, bool in_game) const
 
     QString skill_name = objectName();
 
-    if (objectName().contains("_")) {
-        skill_name = objectName().split("_").first();
-    }
-
     QString des_src = Sanguosha->translate(":" + skill_name);
+    if (des_src == ":" + skill_name && objectName().contains("_")) {
+        skill_name = objectName().split("_").first();
+        des_src = Sanguosha->translate(":" + skill_name);
+    }
     if (in_game && Sanguosha->getSkill(skill_name) && Sanguosha->getSkill(skill_name)->isAttachedLordSkill()
             && (!Self->isLord() || !Self->getGeneral()->getRelatedSkillNames().contains(skill_name)))
         des_src = Sanguosha->translate("&" + skill_name) != "&" + skill_name ? Sanguosha->translate("&" + skill_name) : des_src;
     if (des_src == ":" + skill_name)
         return desc;
 
-    if (!in_game && des_src.startsWith("•") && desc.isEmpty()) {
+    if (!in_game && (des_src.startsWith("•") || des_src.startsWith("**")) && desc.isEmpty()) {
         desc.prepend("<br/>");
     }
     foreach (const QString &skill_type, Sanguosha->getSkillColorMap().keys()) {

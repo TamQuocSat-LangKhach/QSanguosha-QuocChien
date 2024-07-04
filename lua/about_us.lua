@@ -275,7 +275,7 @@ local pages = {
 		HTMLTable.getHref("Discord", "https://discord.gg/jfm4PKpjmN")
 	},
 	{
-		[0] = "mayu",
+		[0] = "mayumihibari",
 		"Chơi gì cũng nát, có chơi Sát là tạm được",
 		"Biết tin a Lãng muốn phát triển Tam Quốc Sát ở Việt Nam nên quyết định góp chút tài mọn.",
 	},
@@ -335,7 +335,7 @@ sgs.LoadTranslationTable {
 
 	["homepage"] = "Trang chính",
 	["LK"] = "Lãng Khách",
-	["mayu"] = "Mayumi Hibari",
+	["mayumihibari"] = "Mayumi Hibari",
 	["Yanguam"] = "啦啦SLG",
 	["BeginnerSlob"] = "女王受·虫",
 	["36li"] = "36李",

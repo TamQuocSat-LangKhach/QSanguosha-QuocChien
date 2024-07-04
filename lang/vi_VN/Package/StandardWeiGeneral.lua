@@ -71,7 +71,7 @@ return {
 	[":luoshen"] = "Khi bắt đầu giai đoạn chuẩn bị, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn tiến hành phán Xét, nếu kết quả phán xét có màu Đen, bạn có thể lặp lại quá trình này;\n- Bạn thu lấy tất cả kết quả phán xét có màu Đen.",
 	["#luoshen-move"] = "Lạc Thần (Chuyển lá này vào vùng Kết quả phán xét)",
 	["qingguo"] = "Khuynh Quốc",
-	[":qingguo"] = "Bạn có thể chuyển hóa sử dụng/đánh ra lá Đen trên tay thành [Thiểm].",
+	[":qingguo"] = "Bạn có thể chuyển hóa sử dụng/đánh ra lá Đen trên tay -> [Thiểm].",
 
 	["#xiahouyuan"] = "Tật Hành Đích Liệp Báo",
 	["xiahouyuan"] = "Hạ Hầu Uyên",
@@ -97,7 +97,7 @@ return {
 	["#xuhuang"] = "Châu Á Phu Chi Phong",
 	["xuhuang"] = "Từ Hoảng",
 	["duanliang"] = "Đoạn Lương",
-	[":duanliang"] = "Bạn có thể chuyển hóa sử dụng lá Đen không phải Công cụ thành [Binh Lương Thốn Đoạn] không giới hạn khoảng cách;\n▷ Nếu khoảng cách giữa bạn và mục tiêu > 2, bạn không thể phát động kỹ năng này trong giai đoạn này.",
+	[":duanliang"] = "Bạn có thể chuyển hóa sử dụng lá Đen không phải Công cụ -> [Binh Lương Thốn Đoạn] không giới hạn khoảng cách;\n▷ Nếu khoảng cách giữa bạn và mục tiêu > 2, bạn không thể phát động kỹ năng này trong giai đoạn này.",
 
 	["#caoren"] = "Đại Tướng Quân",
 	["caoren"] = "Tào Nhân",

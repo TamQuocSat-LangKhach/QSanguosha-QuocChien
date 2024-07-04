@@ -69,7 +69,7 @@ local t = {
 	[":QinggangSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Tỏa định kỹ: Sau khi bạn xác định mục tiêu của lá [Sát], ứng với mỗi mục tiêu, bạn vô hiệu phòng cụ của họ đến khi xác định số sát thương cuối cùng mà họ phải nhận.",
 
 	["Spear"] = "Trượng Bát Xà Mâu",
-	[":Spear"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Bạn có thể chuyển hóa sử dụng/đánh ra 2 lá trên tay thành [Sát].",
+	[":Spear"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Bạn có thể chuyển hóa sử dụng/đánh ra 2 lá trên tay -> [Sát].",
 
 	["Axe"] = "Quán Thạch Phủ",
 	[":Axe"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 3\n<b>Kỹ năng</b>: Sau khi [Sát] bạn sử dụng bị triệt tiêu bởi [Thiểm] của mục tiêu, bạn có thể bỏ 2 lá, lệnh cho [Sát] này vẫn có hiệu quả đối với mục tiêu này.",
@@ -92,7 +92,7 @@ local t = {
 	[":IceSword"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 2\n<b>Kỹ năng</b>: Khi bạn gây sát thương cho mục tiêu của [Sát], nếu mục tiêu có bài, bạn có thể chặn sát thương này và lần lượt bỏ 2 lá của mục tiêu.",
 
 	["Fan"] = "Chu Tước Vũ Phiến",
-	[":Fan"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Khi bạn sử dụng [Sát] phổ thông, bạn có thể chuyển hóa [Sát] này thành [Sát Hỏa].",
+	[":Fan"] = "Bài trang bị - Vũ khí\n\n<b>Tầm đánh</b>: 4\n<b>Kỹ năng</b>: Khi bạn sử dụng [Sát] phổ thông, bạn có thể chuyển hóa [Sát] này -> [Sát Hỏa].",
 	["fan"] = "Chu Tước Vũ Phiến",
 
 	["SilverLion"] = "Bạch Ngân Sư Tử",
