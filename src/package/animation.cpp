@@ -586,11 +586,6 @@ public:
         }
         else if (event == CardUsed)
         {
-            CardUseStruct use = data.value<CardUseStruct>();
-            QVariantList shiting_list = ask_who->tag["shiting_list"].toList();
-            shiting_list << data;
-            ask_who->tag["shiting_list"] = shiting_list;
-            use.card->setFlags("cardNotTriggerCardFinished");
             return true;
         }
         else if (event == CardFinished)
@@ -634,6 +629,11 @@ public:
         }
         else if (event == CardUsed)
         {
+            CardUseStruct use = data.value<CardUseStruct>();
+            QVariantList shiting_list = ask_who->tag["shiting_list"].toList();
+            shiting_list << data;
+            ask_who->tag["shiting_list"] = shiting_list;
+            use.card->setFlags("cardNotTriggerCardFinished");
             return true;
         }
         else if (event == CardFinished)

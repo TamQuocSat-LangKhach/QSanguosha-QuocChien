@@ -1941,15 +1941,9 @@ public:
         if (card == NULL)
             return false;
 
-        target->setFaceUp(true);
-        room->broadcastProperty(target, "faceup");
-
-        LogMessage log;
-        log.type =  target->faceUp() ? "#CichangTurnFaceUp" : "#CichangTurnFaceDown";
-        log.from = ask_who;
-        log.to << target;
-        log.arg = objectName();
-        room->sendLog(log);
+        if (!target->faceUp()) {
+            target->turnOver();
+        }
 
         if (card->isKindOf("ThunderSlash") || card->isKindOf("FireSlash"))
         {

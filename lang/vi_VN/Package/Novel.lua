@@ -192,13 +192,13 @@ return {
 
 	["xianli"] = "Tiên Lệ",
 	[":xianli"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần, bạn có thể chọn 1 người có tướng úp, lệnh họ chọn 1 mục:\n1. Lệnh bạn rút 1 lá;\n2. Mở 1 tướng và bỏ 1 lá.",
-	["drawonecard"] = "令来源摸一张牌",
-	["showonegeneral"] = "明置一张武将牌并弃置一张牌",
+	["drawonecard"] = "Lệnh nguồn kỹ năng rút 1 lá",
+	["showonegeneral"] = "Mở 1 tướng và bỏ 1 lá",
 	["@xianli-askdiscard"] = "受到»鲜丽«的影响，请选择一张牌弃置",
 
 	["yuanxin"] = "Viện Tâm",
 	[":yuanxin"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu lượt này bạn đã hồi máu, bạn có thể mất 1 máu, lệnh 1 người khác hồi 1 máu, sau đó bạn rút 2 lá.",
-	["@yuanxin_choosetarget"] = "请选择»援心«的目标角色",
+	["@yuanxin_choosetarget"] = "»Viện Tâm«: Chọn 1 người hồi máu",
 
 	----N012
 	["mikoto"] = "Misaka Mikoto", 
@@ -216,11 +216,9 @@ return {
 
 	["cichang"] = "Từ Trường",
 	[":cichang"] = "Sau khi 1 người nhận trạng thái chồng tướng, bạn có thể bỏ 1 lá cơ bản, lệnh họ thoát khỏi trạng thái chồng tướng;\n-> Nếu lá bạn bỏ là:\n* [Sát] thuộc tính: Bạn có thể lệnh 2 người nhận trạng thái xích;\n* [Đào]/[Tửu]: Bạn rút 2 lá.",
-	["@cichang_discard"] = "你可以弃置一张基本牌，发动»磁场«",
-	["@cichang_choosetarget"] = "请选择两名角色，将这些角色横置",
-	["#CichangTurnFaceUp"] = "%from 发动了 »%arg«，将 %to 的武将牌平置了",
-	["#CichangTurnFaceDown"] = "%from 发动了 »%arg«，将 %to 的武将牌叠置了", -- its face down status
-	["#CichangChain"] = "%from 发动了 »%arg«，将 %to 的武将牌横置了",
+	["@cichang_discard"] = "Có thể bỏ 1 lá cơ bản để phát động »Từ Trường«",
+	["@cichang_choosetarget"] = "Chọn 2 người thay nhận trạng thái xích",
+	["#CichangChain"] = "%from đã phát động »%arg«, lệnh %to nhận trạng thái xích",
 
 	----N013
 	["ruiko"] = "Saten Ruiko", 
@@ -286,10 +284,9 @@ return {
 
 	["tiaoting"] = "Điều Đình",
 	[":tiaoting"] = "Khi bắt đầu giai đoạn kết thúc, bạn có thể chọn 2 người khác có thế lực xác định khác nhau;\n=> Đến khi bắt đầu lượt tiếp theo của bạn, khi lần đầu 1 trong 2 người đó gây sát thương cho người còn lại, bạn chặn sát thương này, sau đó họ rút 2 lá.",
-	["@tiaoting-targetchoose"] = "你可以发动»Điều Đình«，指定两名势力不同的其他角色",
-	["~tiaoting"] = "点击两名势力不同的其他角色->点击确定",
-	["#TiaotingArmistice"] = "%from 发动了 »%arg«，指定了 %to",
-	["#TiaotingNoDamage"] = "%from 发动了 »%arg«，%to 之间造成的第一次伤害将被防止，且各摸一张牌。",
+	["@tiaoting-targetchoose"] = "Có thể phát động »Điều Đình«, chọn 2 người có thế lực khác nhau",
+	["#TiaotingArmistice"] = "%from đã phát động »%arg« chọn %to",
+	["#TiaotingNoDamage"] = "»%arg« của %from có hiệu quả, chặn sát thương giữa %to và họ rút 1 lá",
 
 	["jilu"] = "Ký Lục",
 	[":jilu"] = "Khi bắt đầu giai đoạn kết thúc của 1 người được chọn bởi >>Điều Đình<<, nếu bạn chưa phát động hiệu quả của >>Điều Đình<< trong lượt này, bạn có thể rút 1 lá.",
