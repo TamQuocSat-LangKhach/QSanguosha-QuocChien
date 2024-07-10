@@ -102,10 +102,10 @@ return {
 
 	["haoqi"] = "Hiếu Kì",
 	[":haoqi"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể giao 1 nửa (làm tròn xuống) lá trên tay cho 1 người khác, lệnh họ chọn 1 mục:\n1. Giao cho bạn 1 nửa (làm tròn lên) lá trên tay họ;\n2. Mở tất cả tướng;\n3. Thay đổi trạng thái chồng tướng.",
-	["halfcards"] = "交给对方一半（向上取整）手牌",
-	["showallgenerals"] = "明置两张武将牌",
-	["turnoverself"] = "将武将牌叠置",
-	["@haoqi-halfcards"] = "请选择你的一半的（向上取整）手牌，交给对方",
+	["halfcards"] = "Giao 1 nửa lá trên tay",
+	["showallgenerals"] = "Mở tất cả tướng",
+	["turnoverself"] = "Thay đổi trạng thái chồng tướng",
+	["@haoqi-halfcards"] = "Chọn 1 nửa lá trên tay (làm tròn lên)",
 
 	["jinzhi"] = "Tiến Chế",
 	[":jinzhi"] = "Giai đoạn rút bài, bạn có thể không rút bài, tiến hành phán xét, sau đó lặp lại đến khi kết quả phán xét của bạn có điểm <= kết quả phán xét trước, sau đó thu lấy tất cả kết quả phán xét.",	
@@ -139,7 +139,7 @@ return {
 	
 	["zhuyi"] = "Chân Hào",
 	[":zhuyi"] = "Giai đoạn ra bài, bạn có thể đặt 1 trang bị trên tay bạn vào vùng trang bị của người khác, giới hạn trữ bài của bạn +1 trong lượt này.",
-	["$ZhuyiEquip"] = "%from 被装备了 %card",
+	["$ZhuyiEquip"] = "%from được trang bị %card",
 	
 	["@weihao"] = "Ngụy Hào",
 	["@zhenhao"] = "Chân Hào",
@@ -156,7 +156,7 @@ return {
 
 	["fangzhurikka"] = "Phóng Trục",
 	[":fangzhurikka"] = "Sau khi bạn nhận sát thương, ứng với mỗi sát thương, bạn có thể lệnh 1 người khác rút X lá (X là số máu bạn đã mất, tối đa 3), sau đó lệnh họ thay đổi trạng thái chồng tướng.",
-	["fangzhu_rikka-invoke"] = "你可以发动»放逐«<br/> <b>操作提示</b>: 选择一名其他角色→点击确定<br/>",
+	["fangzhu_rikka-invoke"] = "Có thể phát động »Phóng Trục«. <br/>Chọn một người rồi bấm \"Xác nhận\"",
 
 	["xieyu"] = "Tà Vực",
 	[":xieyu"] = "Trận pháp kỹ: Quan hệ đội hình: Người cùng đội hình với bạn sử dụng công cụ phổ thông phân loại chỉ định đơn mục tiêu có thể chỉ định thêm 1 mục tiêu.",
@@ -174,7 +174,7 @@ return {
 
 	["duran"] = "Độc Nhiên",
 	[":duran"] = "Toả định kỹ:\n** Khoảng cách từ người có số máu >= bạn đến bạn +1.\n** Khoảng cách từ người có giới hạn máu >= bạn đến bạn +1;\n** Khi bắt đầu giai đoạn ra bài, bạn rút X lá (X là số thế lực không có bạn trong tầm đánh).",
-	["#DuranCounter"] = "%from 发动»%arg2«，攻击范围内没有 %from 的其他势力有 %arg 个",
+	["#DuranCounter"] = "%from đã phát động »%arg2«, được rút thêm %arg lá",
 	["#duran-dis"] = "Độc Nhiên",
 
 	["jieao"] = "Kiệt Ngạo",
@@ -194,7 +194,7 @@ return {
 	[":xianli"] = "Chủ tướng kỹ, Giảm 0.5 máu gốc: Giai đoạn ra bài chủ động 1 lần, bạn có thể chọn 1 người có tướng úp, lệnh họ chọn 1 mục:\n1. Lệnh bạn rút 1 lá;\n2. Mở 1 tướng và bỏ 1 lá.",
 	["drawonecard"] = "Lệnh nguồn kỹ năng rút 1 lá",
 	["showonegeneral"] = "Mở 1 tướng và bỏ 1 lá",
-	["@xianli-askdiscard"] = "受到»鲜丽«的影响，请选择一张牌弃置",
+	["@xianli-askdiscard"] = "»Tiên Lệ« có hiệu quả: Bỏ 1 lá",
 
 	["yuanxin"] = "Viện Tâm",
 	[":yuanxin"] = "Khi bắt đầu giai đoạn kết thúc của 1 người, nếu lượt này bạn đã hồi máu, bạn có thể mất 1 máu, lệnh 1 người khác hồi 1 máu, sau đó bạn rút 2 lá.",
@@ -212,7 +212,7 @@ return {
 
 	["dianji"] = "Điện Kích",
 	[":dianji"] = "Khi kết thúc giai đoạn bỏ bài, nếu trong lượt này bạn chưa sử dụng [Sát], bạn có thể thay đổi trạng thái chồng tướng, gây 1 sát thương Lôi cho 1 người.",
-	["@dianji_target"] = "»电击«生效，请选择一名角色对其造成1点雷电伤害",
+	["@dianji_target"] = "»Điện Kích«: Chọn 1 người nhận sát thương lôi",
 
 	["cichang"] = "Từ Trường",
 	[":cichang"] = "Sau khi 1 người nhận trạng thái chồng tướng, bạn có thể bỏ 1 lá cơ bản, lệnh họ thoát khỏi trạng thái chồng tướng;\n-> Nếu lá bạn bỏ là:\n* [Sát] thuộc tính: Bạn có thể lệnh 2 người nhận trạng thái xích;\n* [Đào]/[Tửu]: Bạn rút 2 lá.",
