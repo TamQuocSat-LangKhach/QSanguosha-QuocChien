@@ -1959,8 +1959,11 @@ public:
 
             QList<ServerPlayer *> victims = room->askForPlayersChosen(ask_who, candidates, objectName(), 2, 2, "@cichang_choosetarget", false);
 
+            LogMessage log;
+            log.type =  target->faceUp() ? "#CichangTurnFaceUp" : "#CichangTurnFaceDown";
+            log.from = ask_who;
+            log.arg = objectName();
             log.type = "#CichangChain";
-            log.to.clear();
 
             foreach (ServerPlayer *victim, victims)
             {

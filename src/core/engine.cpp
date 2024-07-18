@@ -679,7 +679,7 @@ SkillCard *Engine::cloneSkillCard(const QString &name) const
 #ifndef USE_BUILDBOT
 QSanVersionNumber Engine::getVersionNumber() const
 {
-    return QSanVersionNumber(2, 3, 43);
+    return QSanVersionNumber(2, 3, 43, QSanVersionNumber::beta, 1);
 }
 #endif
 

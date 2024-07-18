@@ -1787,7 +1787,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>Do you want to invoke skill [%1] to %2 ?</source>
-        <translation>Bạn muốn kích hoạt [%1] với %2 ?</translation>
+        <translation>Bạn muốn phát động »%1« với %2 ?</translation>
     </message>
     <message>
         <source>Unknown warning: %1</source>
@@ -1831,7 +1831,7 @@ hãy đợi chủ soái chọn xong tướng</translation>
     </message>
     <message>
         <source>Do you want to invoke skill [%1] ?</source>
-        <translation>Bạn muốn phát động &quot;%1&quot;?</translation>
+        <translation>Bạn muốn phát động »%1«?</translation>
     </message>
     <message>
         <source>Draw pile: &lt;b&gt;%1&lt;/b&gt;, discard pile: &lt;b&gt;%2&lt;/b&gt;, swap times: &lt;b&gt;%3&lt;/b&gt;</source>
