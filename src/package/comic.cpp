@@ -536,12 +536,11 @@ public:
     virtual bool effect(TriggerEvent, Room *room, ServerPlayer *, QVariant &data, ServerPlayer *) const
     {
         DeathStruct death = data.value<DeathStruct>();
-        auto from = death.damage->from;
-        if (from == NULL || from->isDead())
-            return false;
-
-        room->setPlayerFlag(from, "no_reward_punish_flag");
-        return false;
+        ServerPlayer *killer = death.damage ? death.damage->from : NULL;
+        if (killer)
+        {
+            room->setPlayerFlag(killer, "NoRewardPunishFlag");
+        }
     }
 };
 

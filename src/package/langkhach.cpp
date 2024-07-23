@@ -235,7 +235,7 @@ public:
     {
         if (triggerEvent == Death && player->getMark("MilitaryOrder") > 0) {
             DeathStruct death = data.value<DeathStruct>();
-            if (death.who == player) {
+            if (death.who == player || death.damage == NULL || death.damage->from == NULL) {
                 return;
             }
             ServerPlayer *from = death.damage->from;

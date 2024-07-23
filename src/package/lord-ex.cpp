@@ -4342,10 +4342,10 @@ public:
         if (event == Death)
         {
             DeathStruct death = data.value<DeathStruct>();
-            ServerPlayer* killer = death.damage->from;
+            ServerPlayer *killer = death.damage ? death.damage->from : NULL;
             if (killer && killer == player && killer->hasShownSkill("juejue") && killer->isFriendWith(death.who))
             {
-                room->setPlayerFlag(killer, "no_reward_punish_flag");
+                room->setPlayerFlag(killer, "NoRewardPunishFlag");
             }
         }
     }

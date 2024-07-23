@@ -74,7 +74,7 @@ return {
 	[":mizou"] = "Một lần trong giai đoạn ra bài, nếu bạn có bài trên tay, bạn có thể phát động kỹ năng này, thực hiện lần lượt:\n- Bạn bỏ tất cả bài trên tay;\n- Bạn lệnh tất cả người cùng thế lực với bạn rút 1 lá;\n▷ Nếu không có người khác có cùng thế lực với bạn, bạn rút thêm 1 lá.",
 
 	["duhun"] = "Độ Hồn",
-	[":duhun"] = "Khi 1 người khác có cùng thế lực với bạn trận vong, bạn có thể rút 1 lá, bỏ qua chấp hành thưởng phạt.",
+	[":duhun"] = "Khi 1 người khác có cùng thế lực với bạn trận vong, bạn có thể rút 1 lá, lệnh bỏ qua chấp hành thưởng phạt.",
 	
 	----C005
 	["suiseiseki"] = "Suiseiseki", 
@@ -88,8 +88,8 @@ return {
 
 	["shuimeng"] = "Thủy Mộng",
 	[":shuimeng"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể bỏ X lá trên tay và chọn 1 người, lệnh họ rút Y lá (X tối thiểu 2, Y bằng X).",
-	["shuimeng_discard"] = "请弃置两张牌发动»水梦«",
-	["shuimeng_discard_any"] = "请弃置至少两张牌发动»水梦«",
+	["shuimeng_discard"] = "Bỏ 2 lá để phát động »Thủy Mộng«",
+	["shuimeng_discard_any"] = "Bỏ ít nhất 2 lá để phát động »Thủy Mộng«",
 
 	["rosesuiseiseki"] = "Tường Vi",
 	[":rosesuiseiseki"] = "Chủ tướng kỹ: Khi bạn phát động »Thủy Mộng«, bạn có thể úp phó tướng;\n▷ Bạn không thể mở phó tướng cho đến khi bắt đầu lượt tiếp theo của bạn;\n▷ Sửa mô tả lần phát động »Thủy Mộng« này X bằng 2, Y là số lá trên tay họ, tối đa 5",
