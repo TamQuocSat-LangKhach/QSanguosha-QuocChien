@@ -101,7 +101,7 @@ return {
 	["#huangquan"] = "Trung Sự Tam Triều",
 	["huangquan"] = "Hoàng Quyền",
 	["quanjian"] = "Khuyến Gián",
-	[":quanjian"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể yêu cầu 1 người khác chấp hành [Quân Lệnh];\n▶ Nếu họ không chấp hành, khi họ tính toán sát thương kế tiếp phải nhận trong lượt này, sát thương này +1.",
+	[":quanjian"] = "Giai đoạn ra bài chủ động 1 lần: Bạn có thể yêu cầu 1 người khác chấp hành [Quân Lệnh];\n▶ Nếu họ không chấp hành, họ nhận hiệu quả sau trong lượt này: \"Tỏa định kỹ: Khi bạn tính toán sát thương kế tiếp phải nhận, sát thương này +1.\"",
 	["tujue"] = "Đồ Tuyệt",
 	[":tujue"] = "Hạn định kỹ: Khi bạn trong trạng thái hấp hối, nếu bạn có bài, bạn có thể chọn 1 người khác, thực hiện lần lượt:\n- Bạn giao toàn bộ bài cho họ;\n- Bạn hồi X máu;\n- Bạn rút X lá.\n(X là số lá bạn đã giao bởi kỹ năng này, tối đa 3)",
 	["tujue-invoke"] = "Có thể phát động »Đồ Tuyệt«, chọn 1 người để giao bài",

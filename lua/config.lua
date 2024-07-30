@@ -81,6 +81,7 @@ config = {
 		"MOL",
 		"LordEX",
 		"Overseas",
+		"Xiliang",
 		"Removed",
 		"LangKhach",
 		"Moesen",

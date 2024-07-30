@@ -1515,14 +1515,14 @@ public:
     bool isJinkEffected(ServerPlayer *user, const Card *jink);
     void judge(JudgeStruct &judge_struct);
     void sendJudgeResult(const JudgeStruct *judge);
-    QList<int> getNCards(int n, bool update_pile_number = true);
+    QList<int> getNCards(int n, bool update_pile_number = true, bool from_up = true);
     ServerPlayer *getLord(const char *kingdom, bool include_death = false) const;
     void askForGuanxing(ServerPlayer *zhuge, const QList<int> &cards, GuanxingType guanxing_type = GuanxingBothSides);
     AskForMoveCardsStruct askForMoveCards(ServerPlayer *zhuge, const QList<int> &upcards, const QList<int> &downcards, bool visible, const char *reason, const char *pattern, const char *skillName, int min_num, int max_num, bool can_refuse = true, bool moverestricted = false, const QList<int> &notify_visible_list = QList<int>());
     bool askForQiaobian(ServerPlayer *player, const QList<ServerPlayer *> &targets, const char *reason, const char *prompt, bool equipArea, bool judgingArea);
     QList<int> askForTransferFieldCards(ServerPlayer *player, const QList<ServerPlayer *> targets, const char *reason, bool equipArea, bool judgingArea);
 	int doGongxin(ServerPlayer *shenlvmeng, ServerPlayer *target, QList<int> enabled_ids = QList<int>(), const char *skill_name = "shangyi");
-    int drawCard();
+    int drawCard(bool from_up = true);
     void fillAG(const QList<int> &card_ids, ServerPlayer *who = NULL, const QList<int> &disabled_ids = QList<int>(), QList<ServerPlayer *> &watchers = QList<ServerPlayer *>());
     void takeAG(ServerPlayer *player, int card_id, bool move_cards = true);
     void clearAG(ServerPlayer *player = NULL);
@@ -1616,8 +1616,8 @@ public:
     ServerPlayer *getCardOwner(int card_id) const;
     void setCardMapping(int card_id, ServerPlayer *owner, Player::Place place);
 
-    void drawCards(ServerPlayer *player, int n, const char *reason = NULL);
-    void drawCards(QList<ServerPlayer *> players, int n, const char *reason = NULL);
+    void drawCards(ServerPlayer *player, int n, const char *reason = NULL, bool from_up = true);
+    void drawCards(QList<ServerPlayer *> players, int n, const char *reason = NULL, bool from_up = true);
     void drawCards(QList<ServerPlayer *> players, QList<int> n_list, const char *reason = NULL);
     void obtainCard(ServerPlayer *target, const Card *card, bool unhide = true);
     void obtainCard(ServerPlayer *target, int card_id, bool unhide = true);

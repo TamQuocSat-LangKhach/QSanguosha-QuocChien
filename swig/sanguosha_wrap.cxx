@@ -61892,6 +61892,42 @@ static int _wrap_Room_getNCards__SWIG_0(lua_State* L) {
   Room *arg1 = (Room *) 0 ;
   int arg2 ;
   bool arg3 ;
+  bool arg4 ;
+  QList< int > result;
+  
+  SWIG_check_num_args("Room::getNCards",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::getNCards",1,"Room *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Room::getNCards",2,"int");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("Room::getNCards",3,"bool");
+  if(!lua_isboolean(L,4)) SWIG_fail_arg("Room::getNCards",4,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_getNCards",1,SWIGTYPE_p_Room);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  arg3 = (lua_toboolean(L, 3)!=0);
+  arg4 = (lua_toboolean(L, 4)!=0);
+  result = (arg1)->getNCards(arg2,arg3,arg4);
+  {
+    QList< int > * resultptr = new QList< int >((const QList< int > &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_QListT_int_t,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_getNCards__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  int arg2 ;
+  bool arg3 ;
   QList< int > result;
   
   SWIG_check_num_args("Room::getNCards",3,3)
@@ -61920,7 +61956,7 @@ fail:
 }
 
 
-static int _wrap_Room_getNCards__SWIG_1(lua_State* L) {
+static int _wrap_Room_getNCards__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   int arg2 ;
@@ -61952,8 +61988,8 @@ fail:
 
 static int _wrap_Room_getNCards(lua_State* L) {
   int argc;
-  int argv[4]={
-    1,2,3,4
+  int argv[5]={
+    1,2,3,4,5
   };
   
   argc = lua_gettop(L);
@@ -61972,7 +62008,7 @@ static int _wrap_Room_getNCards(lua_State* L) {
         _v = lua_isnumber(L,argv[1]);
       }
       if (_v) {
-        return _wrap_Room_getNCards__SWIG_1(L);
+        return _wrap_Room_getNCards__SWIG_2(L);
       }
     }
   }
@@ -61995,7 +62031,36 @@ static int _wrap_Room_getNCards(lua_State* L) {
           _v = lua_isboolean(L,argv[2]);
         }
         if (_v) {
-          return _wrap_Room_getNCards__SWIG_0(L);
+          return _wrap_Room_getNCards__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isboolean(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isboolean(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_Room_getNCards__SWIG_0(L);
+          }
         }
       }
     }
@@ -62003,6 +62068,7 @@ static int _wrap_Room_getNCards(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_getNCards'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Room::getNCards(int,bool,bool)\n"
     "    Room::getNCards(int,bool)\n"
     "    Room::getNCards(int)\n");
   lua_error(L);return 0;
@@ -63307,7 +63373,34 @@ static int _wrap_Room_doGongxin(lua_State* L) {
 }
 
 
-static int _wrap_Room_drawCard(lua_State* L) {
+static int _wrap_Room_drawCard__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  bool arg2 ;
+  int result;
+  
+  SWIG_check_num_args("Room::drawCard",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::drawCard",1,"Room *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Room::drawCard",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_drawCard",1,SWIGTYPE_p_Room);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  result = (int)(arg1)->drawCard(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_drawCard__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   int result;
@@ -63328,6 +63421,55 @@ static int _wrap_Room_drawCard(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_Room_drawCard(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_Room_drawCard__SWIG_1(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isboolean(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_Room_drawCard__SWIG_0(L);
+      }
+    }
+  }
+  
+  SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_drawCard'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Room::drawCard(bool)\n"
+    "    Room::drawCard()\n");
+  lua_error(L);return 0;
 }
 
 
@@ -70256,6 +70398,45 @@ static int _wrap_Room_drawCards__SWIG_0(lua_State* L) {
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
   int arg3 ;
   char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  
+  SWIG_check_num_args("Room::drawCards",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::drawCards",1,"Room *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("Room::drawCards",2,"ServerPlayer *");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Room::drawCards",3,"int");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::drawCards",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::drawCards",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_drawCards",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_ServerPlayer,0))){
+    SWIG_fail_ptr("Room_drawCards",2,SWIGTYPE_p_ServerPlayer);
+  }
+  
+  arg3 = (int)lua_tonumber(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  (arg1)->drawCards(arg2,arg3,(char const *)arg4,arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_drawCards__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  ServerPlayer *arg2 = (ServerPlayer *) 0 ;
+  int arg3 ;
+  char *arg4 = (char *) 0 ;
   
   SWIG_check_num_args("Room::drawCards",4,4)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::drawCards",1,"Room *");
@@ -70286,7 +70467,7 @@ fail:
 }
 
 
-static int _wrap_Room_drawCards__SWIG_1(lua_State* L) {
+static int _wrap_Room_drawCards__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   ServerPlayer *arg2 = (ServerPlayer *) 0 ;
@@ -70319,7 +70500,48 @@ fail:
 }
 
 
-static int _wrap_Room_drawCards__SWIG_2(lua_State* L) {
+static int _wrap_Room_drawCards__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  Room *arg1 = (Room *) 0 ;
+  QList< ServerPlayer * > arg2 ;
+  int arg3 ;
+  char *arg4 = (char *) 0 ;
+  bool arg5 ;
+  QList< ServerPlayer * > *argp2 ;
+  
+  SWIG_check_num_args("Room::drawCards",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Room::drawCards",1,"Room *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Room::drawCards",2,"QList< ServerPlayer * >");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("Room::drawCards",3,"int");
+  if(!SWIG_lua_isnilstring(L,4)) SWIG_fail_arg("Room::drawCards",4,"char const *");
+  if(!lua_isboolean(L,5)) SWIG_fail_arg("Room::drawCards",5,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_Room,0))){
+    SWIG_fail_ptr("Room_drawCards",1,SWIGTYPE_p_Room);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&argp2,SWIGTYPE_p_QListT_ServerPlayer_p_t,0))){
+    SWIG_fail_ptr("Room_drawCards",2,SWIGTYPE_p_QListT_ServerPlayer_p_t);
+  }
+  arg2 = *argp2;
+  
+  arg3 = (int)lua_tonumber(L, 3);
+  arg4 = (char *)lua_tostring(L, 4);
+  arg5 = (lua_toboolean(L, 5)!=0);
+  (arg1)->drawCards(arg2,arg3,(char const *)arg4,arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Room_drawCards__SWIG_4(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   QList< ServerPlayer * > arg2 ;
@@ -70357,7 +70579,7 @@ fail:
 }
 
 
-static int _wrap_Room_drawCards__SWIG_3(lua_State* L) {
+static int _wrap_Room_drawCards__SWIG_5(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   QList< ServerPlayer * > arg2 ;
@@ -70392,7 +70614,7 @@ fail:
 }
 
 
-static int _wrap_Room_drawCards__SWIG_4(lua_State* L) {
+static int _wrap_Room_drawCards__SWIG_6(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   QList< ServerPlayer * > arg2 ;
@@ -70436,7 +70658,7 @@ fail:
 }
 
 
-static int _wrap_Room_drawCards__SWIG_5(lua_State* L) {
+static int _wrap_Room_drawCards__SWIG_7(lua_State* L) {
   int SWIG_arg = 0;
   Room *arg1 = (Room *) 0 ;
   QList< ServerPlayer * > arg2 ;
@@ -70479,8 +70701,8 @@ fail:
 
 static int _wrap_Room_drawCards(lua_State* L) {
   int argc;
-  int argv[5]={
-    1,2,3,4,5
+  int argv[6]={
+    1,2,3,4,5,6
   };
   
   argc = lua_gettop(L);
@@ -70508,7 +70730,7 @@ static int _wrap_Room_drawCards(lua_State* L) {
           _v = lua_isnumber(L,argv[2]);
         }
         if (_v) {
-          return _wrap_Room_drawCards__SWIG_1(L);
+          return _wrap_Room_drawCards__SWIG_2(L);
         }
       }
     }
@@ -70542,7 +70764,7 @@ static int _wrap_Room_drawCards(lua_State* L) {
           }
         }
         if (_v) {
-          return _wrap_Room_drawCards__SWIG_5(L);
+          return _wrap_Room_drawCards__SWIG_7(L);
         }
       }
     }
@@ -70571,7 +70793,7 @@ static int _wrap_Room_drawCards(lua_State* L) {
           _v = lua_isnumber(L,argv[2]);
         }
         if (_v) {
-          return _wrap_Room_drawCards__SWIG_3(L);
+          return _wrap_Room_drawCards__SWIG_5(L);
         }
       }
     }
@@ -70604,7 +70826,7 @@ static int _wrap_Room_drawCards(lua_State* L) {
             _v = SWIG_lua_isnilstring(L,argv[3]);
           }
           if (_v) {
-            return _wrap_Room_drawCards__SWIG_0(L);
+            return _wrap_Room_drawCards__SWIG_1(L);
           }
         }
       }
@@ -70643,7 +70865,7 @@ static int _wrap_Room_drawCards(lua_State* L) {
             _v = SWIG_lua_isnilstring(L,argv[3]);
           }
           if (_v) {
-            return _wrap_Room_drawCards__SWIG_4(L);
+            return _wrap_Room_drawCards__SWIG_6(L);
           }
         }
       }
@@ -70677,7 +70899,85 @@ static int _wrap_Room_drawCards(lua_State* L) {
             _v = SWIG_lua_isnilstring(L,argv[3]);
           }
           if (_v) {
-            return _wrap_Room_drawCards__SWIG_2(L);
+            return _wrap_Room_drawCards__SWIG_4(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_ServerPlayer, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_Room_drawCards__SWIG_0(L);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_Room, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_QListT_ServerPlayer_p_t, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = SWIG_lua_isnilstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isboolean(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_Room_drawCards__SWIG_3(L);
+            }
           }
         }
       }
@@ -70686,8 +70986,10 @@ static int _wrap_Room_drawCards(lua_State* L) {
   
   SWIG_Lua_pusherrstring(L,"Wrong arguments for overloaded function 'Room_drawCards'\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Room::drawCards(ServerPlayer *,int,char const *,bool)\n"
     "    Room::drawCards(ServerPlayer *,int,char const *)\n"
     "    Room::drawCards(ServerPlayer *,int)\n"
+    "    Room::drawCards(QList< ServerPlayer * >,int,char const *,bool)\n"
     "    Room::drawCards(QList< ServerPlayer * >,int,char const *)\n"
     "    Room::drawCards(QList< ServerPlayer * >,int)\n"
     "    Room::drawCards(QList< ServerPlayer * >,QList< int >,char const *)\n"

@@ -934,13 +934,13 @@ QString DetachEffectSkill::getPileName() const
 
 QStringList DetachEffectSkill::triggerable(TriggerEvent, Room *, ServerPlayer *target, QVariant &data, ServerPlayer * &) const
 {
-    if (target && data.toString().split(":").first() == name) {
-        if (Config.KeepCardOnHiddenGeneral && target && target->isAlive() && target->ownSkill(name))
-            return QStringList();
-        else
-            return QStringList(objectName());
-    }
-    return QStringList();
+    return target
+            && data.toString().split(":").first() == name
+            && (
+                !Config.KeepCardOnHiddenGeneral
+                || !target->isAlive()
+                || !target->ownSkill(name))
+             ? QStringList(objectName()) : QStringList();
 }
 
 bool DetachEffectSkill::effect(TriggerEvent, Room *room, ServerPlayer *player, QVariant &data, ServerPlayer *) const

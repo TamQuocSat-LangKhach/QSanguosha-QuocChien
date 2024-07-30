@@ -53,7 +53,7 @@ return {
 	--["designer:zhuran"] = "",
 	["zhuran"] = "Chu Nhiên",
 	["danshou"] = "Đàm Thủ",
-	[":danshou"] = "Một lần trong mỗi vòng chơi, khi bắt đầu giai đoạn chuẩn bị của 1 người, bạn có thể bỏ tất cả bài trong vùng chơi của bạn;\n▶ Khi bắt đầu 1 giai đoạn trong lượt này (Ngoại trừ giai đoạn chuẩn bị và kết thúc), nếu số lá trên tay bạn ≤ số lá bị bỏ bởi kỹ năng này, bạn chọn 1 mục:\n1. Tích Lũy +1 trong lượt này;\n2. Bạn rút X lá và loại bỏ tất cả Tích Lũy (X là số Tích Lũy của bạn +1);\n ▷ Nếu X=4, bạn có thể gây sát thương cho người đang có lượt.",
+	[":danshou"] = "Một lần trong mỗi vòng chơi, khi bắt đầu giai đoạn chuẩn bị của 1 người, bạn có thể bỏ tất cả bài trong vùng chơi của bạn;\n▶ Khi bắt đầu 1 giai đoạn trong lượt này (Ngoại trừ giai đoạn chuẩn bị và kết thúc), nếu số lá trên tay bạn ≤ số lá bị bỏ bởi kỹ năng này, bạn chọn 1 mục:\n1. Tích Lũy +1 trong lượt này;\n2. Bạn rút X lá (X là số Tích Lũy của bạn +1);\n ▷ Nếu X=4, bạn có thể gây sát thương cho người đang có lượt.",
 
 	["#danshou-choose"] = "Đàm Thủ: Chọn rút %arg lá hoặc Tích Lũy thêm cho lần sau",
 	["danshou:draw"] = "Rút bài",

@@ -128,6 +128,7 @@ SOURCES += \
     src/package/lord-ex.cpp \
     src/package/newsgs.cpp \
     src/package/mol.cpp\
+	src/package/xiliang.cpp \
     src/package/langkhach.cpp\
     src/package/joy.cpp\
 	src/package/moesen-package.cpp \
@@ -256,6 +257,7 @@ HEADERS += \
     src/package/lord-ex.h \
     src/package/newsgs.h \
     src/package/mol.h\
+	src/package/xiliang.h \
     src/package/langkhach.h\
     src/package/joy.h\
 	src/package/animation.h \
